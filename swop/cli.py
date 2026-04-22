@@ -11,10 +11,13 @@ Commands:
 """
 
 import argparse
+import json
 import sys
+from pathlib import Path
 from typing import List, Optional
 
 from swop.core import SwopRuntime
+from swop.refactor import RefactorPipeline
 
 
 def _build_runtime(mode: str) -> SwopRuntime:
@@ -67,6 +70,33 @@ def _cmd_export(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_refactor(args: argparse.Namespace) -> int:
+    pipeline = RefactorPipeline(
+        frontend=Path(args.frontend),
+        backend=Path(args.backend) if args.backend else None,
+        db=Path(args.db) if args.db else None,
+        routes=args.route or [],
+        out_dir=Path(args.out),
+        strategy=args.strategy,
+        frontend_pages_subdir=args.pages_subdir,
+    )
+    result = pipeline.run()
+    summary = result.summary()
+    if args.json:
+        print(json.dumps(summary, indent=2, default=str))
+    else:
+        print(f"[REFACTOR] graph nodes={summary['nodes']} edges={summary['edges']}")
+        print(f"[REFACTOR] clusters={summary['clusters']} modules={len(summary['modules'])}")
+        for module in summary["modules"]:
+            print(
+                f"  - {module['name']:<32} route={module['route']} "
+                f"pages={len(module['pages'])} models={len(module['models'])}"
+            )
+        if summary["compose"]:
+            print(f"[REFACTOR] docker-compose -> {summary['compose']}")
+    return 0
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="swop", description="Swop runtime reconciler")
     parser.add_argument(
@@ -91,6 +121,34 @@ def _build_parser() -> argparse.ArgumentParser:
     p_export = sub.add_parser("export", help="Export graph to an external format")
     p_export.add_argument("target", choices=["docker"])
     p_export.set_defaults(func=_cmd_export)
+
+    p_refactor = sub.add_parser(
+        "refactor",
+        help="Extract modules from a full-stack project into an output directory",
+    )
+    p_refactor.add_argument("--frontend", required=True, help="Path to the frontend project root")
+    p_refactor.add_argument("--backend", default=None, help="Path to the backend project root")
+    p_refactor.add_argument("--db", default=None, help="Path to the database project root")
+    p_refactor.add_argument(
+        "--route",
+        action="append",
+        default=[],
+        help="Route seed (repeatable), e.g. --route /connect-data",
+    )
+    p_refactor.add_argument("--out", default="modules", help="Output directory for extracted modules")
+    p_refactor.add_argument(
+        "--strategy",
+        choices=["seeded", "louvain"],
+        default="seeded",
+        help="Clustering strategy",
+    )
+    p_refactor.add_argument(
+        "--pages-subdir",
+        default="src/pages",
+        help="Subdirectory of the frontend root containing page files",
+    )
+    p_refactor.add_argument("--json", action="store_true", help="Emit a JSON summary instead of text")
+    p_refactor.set_defaults(func=_cmd_refactor)
 
     return parser
 

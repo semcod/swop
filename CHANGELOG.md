@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-04-22
+
+### Docs
+- Update README.md
+
+### Other
+- Update swop/cli.py
+- Update swop/refactor/pipeline.py
+
 ## [0.1.5] - 2026-04-22
 
 ### Docs
