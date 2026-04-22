@@ -2,7 +2,7 @@
 swop - bi-directional runtime reconciler for full-stack state graphs.
 """
 
-__version__ = "0.1.7"
+__version__ = "0.1.8"
 
 from swop.core import SwopRuntime, SynqerRuntime
 from swop.graph import (
