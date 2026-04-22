@@ -17,6 +17,8 @@ from pathlib import Path
 from typing import List, Optional
 
 from swop.core import SwopRuntime
+from swop.graph import DataModel, ModelField
+from swop.markpact import DoqlBridge, ManifestParser, build_project_graph
 from swop.refactor import RefactorPipeline
 
 
@@ -97,6 +99,70 @@ def _cmd_refactor(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_generate(args: argparse.Namespace) -> int:
+    manifest_path = Path(args.manifest)
+    if not manifest_path.exists():
+        print(f"[ERROR] Manifest not found: {manifest_path}", file=sys.stderr)
+        return 2
+
+    print(f"[GENERATE] Parsing manifest: {manifest_path}")
+    parser = ManifestParser(base_dir=manifest_path.parent)
+    blocks = parser.parse_file(manifest_path)
+
+    doql_blocks = [b for b in blocks if b.kind == "doql"]
+    graph_blocks = [b for b in blocks if b.kind == "graph"]
+    file_blocks = [b for b in blocks if b.kind == "file"]
+
+    print(f"[GENERATE] Found {len(blocks)} blocks: doql={len(doql_blocks)} graph={len(graph_blocks)} file={len(file_blocks)}")
+
+    if doql_blocks:
+        bridge = DoqlBridge(strict=args.strict)
+        spec = bridge.from_blocks(blocks)
+        graph = build_project_graph(spec)
+    elif graph_blocks:
+        import yaml
+        graph = SwopRuntime().graph
+        for block in graph_blocks:
+            data = yaml.safe_load(block.body)
+            for model_name, fields in data.get("models", {}).items():
+                graph.models[model_name] = DataModel(
+                    name=model_name,
+                    fields={f: ModelField(f, "string") for f in fields},
+                )
+            for svc_name, routes in data.get("services", {}).items():
+                graph.services[svc_name] = Service(name=svc_name, routes={r: {} for r in routes})
+    else:
+        print("[ERROR] No markpact:doql or markpact:graph blocks found.", file=sys.stderr)
+        return 2
+
+    print(f"[GENERATE] ProjectGraph: {len(graph.models)} models, {len(graph.services)} services, {len(graph.ui_bindings)} ui_bindings")
+
+    runtime = SwopRuntime(mode=args.mode)
+    runtime.graph = graph
+
+    if args.sync:
+        drift = runtime.run_sync()
+        if drift.exists():
+            print(f"[GENERATE] Drift detected (mode={args.mode})")
+            return 1 if args.mode == "STRICT" else 0
+        print("[GENERATE] Sync completed — no drift.")
+
+    if args.output_yaml:
+        out_path = Path(args.output_yaml)
+        out_path.write_text(runtime.state_yaml(), encoding="utf-8")
+        print(f"[GENERATE] YAML state written to {out_path}")
+
+    if args.output_docker:
+        out_path = Path(args.output_docker)
+        out_path.write_text(runtime.docker_compose(), encoding="utf-8")
+        print(f"[GENERATE] docker-compose written to {out_path}")
+
+    if args.sync and not args.output_yaml and not args.output_docker:
+        print(runtime.state_yaml())
+
+    return 0
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="swop", description="Swop runtime reconciler")
     parser.add_argument(
@@ -149,6 +215,38 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p_refactor.add_argument("--json", action="store_true", help="Emit a JSON summary instead of text")
     p_refactor.set_defaults(func=_cmd_refactor)
+
+    p_generate = sub.add_parser(
+        "generate",
+        help="Generate a swop ProjectGraph from a Markpact manifest",
+    )
+    p_generate.add_argument(
+        "--from-markpact",
+        dest="manifest",
+        required=True,
+        help="Path to a Markpact manifest (.md) with markpact:* blocks",
+    )
+    p_generate.add_argument(
+        "--strict",
+        action="store_true",
+        help="Fail fast on any DOQL parse error",
+    )
+    p_generate.add_argument(
+        "--sync",
+        action="store_true",
+        help="Run sync engine after building the graph",
+    )
+    p_generate.add_argument(
+        "--output-yaml",
+        default=None,
+        help="Write runtime state YAML to this path",
+    )
+    p_generate.add_argument(
+        "--output-docker",
+        default=None,
+        help="Write docker-compose YAML to this path",
+    )
+    p_generate.set_defaults(func=_cmd_generate)
 
     return parser
 

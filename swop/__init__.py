@@ -2,7 +2,7 @@
 swop - bi-directional runtime reconciler for full-stack state graphs.
 """
 
-__version__ = "0.1.8"
+__version__ = "0.2.1"
 
 from swop.core import SwopRuntime, SynqerRuntime
 from swop.graph import (
@@ -18,6 +18,12 @@ from swop.reconcile import Drift, DriftDetector, DriftError, ResyncEngine
 from swop.refactor import RefactorPipeline, RefactorResult
 from swop.sync import SyncEngine
 from swop.versioning import Versioning
+from swop.markpact import (
+    ManifestParser,
+    DoqlBridge,
+    build_project_graph,
+    ManifestSyncEngine,
+)
 
 __all__ = [
     "SwopRuntime",
@@ -38,4 +44,8 @@ __all__ = [
     "Versioning",
     "RefactorPipeline",
     "RefactorResult",
+    "ManifestParser",
+    "DoqlBridge",
+    "build_project_graph",
+    "ManifestSyncEngine",
 ]

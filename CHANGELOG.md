@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-04-22
+
+### Docs
+- Update README.md
+- Update examples/manifest.md
+
+### Test
+- Update tests/test_markpact.py
+
+### Other
+- Update VERSION
+- Update swop/__init__.py
+- Update swop/cli.py
+- Update swop/markpact/doql_bridge.py
+- Update swop/markpact/graph_builder.py
+- Update swop/markpact/parser.py
+- Update swop/markpact/sync_engine.py
+- Update swop/refactor/compose_builder.py
+
 ## [0.1.8] - 2026-04-22
 
 ### Docs
