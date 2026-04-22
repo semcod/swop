@@ -19,7 +19,17 @@ from typing import List, Optional
 from swop.core import SwopRuntime
 from swop.graph import DataModel, ModelField
 from swop.markpact import DoqlBridge, ManifestParser, ManifestSyncEngine, build_project_graph
+from swop.config import SwopConfigError, load_config
+from swop.manifests import generate_manifests
+from swop.proto import (
+    compile_proto_python,
+    compile_proto_typescript,
+    generate_proto_from_manifests,
+)
 from swop.refactor import RefactorPipeline
+from swop.scan import scan_project
+from swop.scan.render import render_json, write_report
+from swop.tools import init_project, run_doctor
 
 
 def _build_runtime(mode: str) -> SwopRuntime:
@@ -70,6 +80,140 @@ def _cmd_export(args: argparse.Namespace) -> int:
         print(f"unknown export target: {args.target}", file=sys.stderr)
         return 2
     return 0
+
+
+def _cmd_doctor(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    report = run_doctor(root)
+    print(report.format())
+    return 0 if report.ok else 1
+
+
+def _cmd_init(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    result = init_project(
+        root,
+        project_name=args.name,
+        force=args.force,
+        update_gitignore=not args.no_gitignore,
+    )
+    print(f"[INIT] swop project scaffolded at {root}")
+    print(result.format())
+    return 0
+
+
+def _cmd_scan(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    config_path = Path(args.config) if args.config else root / "swop.yaml"
+    try:
+        config = load_config(config_path)
+    except SwopConfigError as exc:
+        print(f"[ERROR] {exc}", file=sys.stderr)
+        return 2
+
+    report = scan_project(config, incremental=args.incremental)
+
+    if args.json_out or args.html_out:
+        written = write_report(
+            report,
+            json_path=Path(args.json_out) if args.json_out else None,
+            html_path=Path(args.html_out) if args.html_out else None,
+        )
+        for label, path in written.items():
+            print(f"[SCAN] report ({label}) -> {path}")
+
+    if args.json:
+        print(render_json(report))
+    else:
+        print(report.format_text())
+
+    if args.strict_heuristics and report.via().get("heuristic", 0):
+        print(
+            f"[SCAN] {report.via()['heuristic']} detections via heuristic "
+            "(strict mode: failing)",
+            file=sys.stderr,
+        )
+        return 1
+    if args.strict_errors and report.errors:
+        return 1
+    return 0
+
+
+def _cmd_gen_manifests(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    config_path = Path(args.config) if args.config else root / "swop.yaml"
+    try:
+        config = load_config(config_path)
+    except SwopConfigError as exc:
+        print(f"[ERROR] {exc}", file=sys.stderr)
+        return 2
+
+    report = scan_project(config, incremental=args.incremental)
+    if args.skip_heuristics:
+        report.detections = [d for d in report.detections if d.via != "heuristic"]
+
+    out_dir = Path(args.out) if args.out else config.state_path / "manifests"
+    result = generate_manifests(report, config, out_dir=out_dir)
+    print(result.format())
+    if not result.files:
+        return 0
+    return 0
+
+
+def _cmd_gen_proto(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    config_path = Path(args.config) if args.config else root / "swop.yaml"
+    try:
+        config = load_config(config_path)
+    except SwopConfigError as exc:
+        print(f"[ERROR] {exc}", file=sys.stderr)
+        return 2
+
+    manifests_dir = Path(args.manifests) if args.manifests else config.state_path / "manifests"
+    if not manifests_dir.exists():
+        print(
+            f"[ERROR] manifests directory not found: {manifests_dir}\n"
+            f"        run `swop gen manifests` first.",
+            file=sys.stderr,
+        )
+        return 2
+
+    out_dir = Path(args.out) if args.out else config.state_path / "generated" / "proto"
+    result = generate_proto_from_manifests(manifests_dir, out_dir)
+    print(result.format())
+    return 0
+
+
+def _cmd_gen_grpc_python(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    config_path = Path(args.config) if args.config else root / "swop.yaml"
+    try:
+        config = load_config(config_path)
+    except SwopConfigError as exc:
+        print(f"[ERROR] {exc}", file=sys.stderr)
+        return 2
+
+    proto_dir = Path(args.proto) if args.proto else config.state_path / "generated" / "proto"
+    out_dir = Path(args.out) if args.out else config.state_path / "generated" / "python"
+    result = compile_proto_python(proto_dir, out_dir, grpc=not args.no_grpc)
+    print(result.format())
+    return 0 if result.ok else 1
+
+
+def _cmd_gen_grpc_ts(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    config_path = Path(args.config) if args.config else root / "swop.yaml"
+    try:
+        config = load_config(config_path)
+    except SwopConfigError as exc:
+        print(f"[ERROR] {exc}", file=sys.stderr)
+        return 2
+
+    proto_dir = Path(args.proto) if args.proto else config.state_path / "generated" / "proto"
+    out_dir = Path(args.out) if args.out else config.state_path / "generated" / "ts"
+    result = compile_proto_typescript(proto_dir, out_dir, ts_plugin=args.plugin)
+    print(result.format())
+    return 0 if result.ok else 1
 
 
 def _cmd_refactor(args: argparse.Namespace) -> int:
@@ -137,7 +281,26 @@ def _cmd_generate(args: argparse.Namespace) -> int:
 
     print(f"[GENERATE] ProjectGraph: {len(graph.models)} models, {len(graph.services)} services, {len(graph.ui_bindings)} ui_bindings")
 
-    # Materialise markpact:file blocks to disk
+    # File-level sync (manifest <-> filesystem)
+    if args.check_files:
+        engine = ManifestSyncEngine(base_dir=manifest_path.parent)
+        diffs = engine.diff(manifest_path)
+        drifted = [d for d in diffs if d[1] != "ok" and d[1] != "untracked"]
+        print(f"[GENERATE] Check files: {len(diffs)} tracked, {len(drifted)} drifted")
+        for path, status, detail in diffs:
+            if status != "untracked":
+                print(f"  [{status}] {path} ({detail})")
+        if drifted and args.mode == "STRICT":
+            return 1
+
+    if args.from_disk or args.from_disk_dry_run:
+        engine = ManifestSyncEngine(base_dir=manifest_path.parent)
+        updated = engine.update_manifest(manifest_path, dry_run=args.from_disk_dry_run)
+        mode_str = "(dry-run)" if args.from_disk_dry_run else ""
+        print(f"[GENERATE] Update manifest from disk {mode_str}: {len(updated)} block(s)")
+        for u in updated:
+            print(f"  <- {u}")
+
     if args.sync_files or args.sync_files_dry_run:
         engine = ManifestSyncEngine(base_dir=manifest_path.parent)
         written = engine.sync_to_disk(manifest_path, dry_run=args.sync_files_dry_run)
@@ -198,6 +361,205 @@ def _build_parser() -> argparse.ArgumentParser:
     p_export.add_argument("target", choices=["docker"])
     p_export.set_defaults(func=_cmd_export)
 
+    p_doctor = sub.add_parser("doctor", help="Verify the local swop environment")
+    p_doctor.add_argument(
+        "--root",
+        default=None,
+        help="Project root to check (default: current working directory)",
+    )
+    p_doctor.set_defaults(func=_cmd_doctor)
+
+    p_init = sub.add_parser(
+        "init",
+        help="Scaffold swop.yaml and .swop/ in the current project",
+    )
+    p_init.add_argument(
+        "--root",
+        default=None,
+        help="Project root to initialise (default: current working directory)",
+    )
+    p_init.add_argument(
+        "--name",
+        default=None,
+        help="Project name written to swop.yaml (default: folder name)",
+    )
+    p_init.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite an existing swop.yaml",
+    )
+    p_init.add_argument(
+        "--no-gitignore",
+        action="store_true",
+        help="Do not add swop entries to .gitignore",
+    )
+    p_init.set_defaults(func=_cmd_init)
+
+    p_scan = sub.add_parser(
+        "scan",
+        help="Walk source roots and classify every CQRS artifact",
+    )
+    p_scan.add_argument(
+        "--root",
+        default=None,
+        help="Project root containing swop.yaml (default: cwd)",
+    )
+    p_scan.add_argument(
+        "--config",
+        default=None,
+        help="Path to swop.yaml (default: <root>/swop.yaml)",
+    )
+    p_scan.add_argument(
+        "--incremental",
+        dest="incremental",
+        action="store_true",
+        default=True,
+        help="Use the fingerprint cache (default: on)",
+    )
+    p_scan.add_argument(
+        "--no-incremental",
+        dest="incremental",
+        action="store_false",
+        help="Disable the fingerprint cache and re-parse every file",
+    )
+    p_scan.add_argument(
+        "--json",
+        action="store_true",
+        help="Print the full report to stdout as JSON",
+    )
+    p_scan.add_argument(
+        "--json-out",
+        default=None,
+        dest="json_out",
+        help="Write a JSON report to this file",
+    )
+    p_scan.add_argument(
+        "--html-out",
+        default=None,
+        dest="html_out",
+        help="Write an HTML report to this file",
+    )
+    p_scan.add_argument(
+        "--strict-heuristics",
+        action="store_true",
+        help="Exit non-zero if any detection came from a heuristic",
+    )
+    p_scan.add_argument(
+        "--strict-errors",
+        action="store_true",
+        help="Exit non-zero if any file failed to parse",
+    )
+    p_scan.set_defaults(func=_cmd_scan)
+
+    p_gen = sub.add_parser(
+        "gen",
+        help="Generate manifests, proto, gRPC bindings or services",
+    )
+    gen_sub = p_gen.add_subparsers(dest="gen_command", required=True)
+
+    p_gen_manifests = gen_sub.add_parser(
+        "manifests",
+        help="Write per-context commands/queries/events YAML manifests",
+    )
+    p_gen_manifests.add_argument(
+        "--root",
+        default=None,
+        help="Project root containing swop.yaml (default: cwd)",
+    )
+    p_gen_manifests.add_argument(
+        "--config",
+        default=None,
+        help="Path to swop.yaml (default: <root>/swop.yaml)",
+    )
+    p_gen_manifests.add_argument(
+        "--out",
+        default=None,
+        help="Output directory for manifests (default: <state_dir>/manifests)",
+    )
+    p_gen_manifests.add_argument(
+        "--incremental",
+        dest="incremental",
+        action="store_true",
+        default=True,
+        help="Use the fingerprint cache (default: on)",
+    )
+    p_gen_manifests.add_argument(
+        "--no-incremental",
+        dest="incremental",
+        action="store_false",
+        help="Disable the fingerprint cache and re-parse every file",
+    )
+    p_gen_manifests.add_argument(
+        "--skip-heuristics",
+        action="store_true",
+        help="Only include detections from explicit @command/@query/@event decorators",
+    )
+    p_gen_manifests.set_defaults(func=_cmd_gen_manifests)
+
+    p_gen_proto = gen_sub.add_parser(
+        "proto",
+        help="Render .proto files from per-context manifests",
+    )
+    p_gen_proto.add_argument("--root", default=None, help="Project root (default: cwd)")
+    p_gen_proto.add_argument("--config", default=None, help="Path to swop.yaml")
+    p_gen_proto.add_argument(
+        "--manifests",
+        default=None,
+        help="Manifests directory (default: <state_dir>/manifests)",
+    )
+    p_gen_proto.add_argument(
+        "--out",
+        default=None,
+        help="Output directory (default: <state_dir>/generated/proto)",
+    )
+    p_gen_proto.set_defaults(func=_cmd_gen_proto)
+
+    p_gen_grpc_py = gen_sub.add_parser(
+        "grpc-python",
+        help="Compile .proto files into Python + gRPC stubs",
+    )
+    p_gen_grpc_py.add_argument("--root", default=None, help="Project root (default: cwd)")
+    p_gen_grpc_py.add_argument("--config", default=None, help="Path to swop.yaml")
+    p_gen_grpc_py.add_argument(
+        "--proto",
+        default=None,
+        help="Proto input directory (default: <state_dir>/generated/proto)",
+    )
+    p_gen_grpc_py.add_argument(
+        "--out",
+        default=None,
+        help="Python output directory (default: <state_dir>/generated/python)",
+    )
+    p_gen_grpc_py.add_argument(
+        "--no-grpc",
+        action="store_true",
+        help="Generate only pb2 (no grpc stubs)",
+    )
+    p_gen_grpc_py.set_defaults(func=_cmd_gen_grpc_python)
+
+    p_gen_grpc_ts = gen_sub.add_parser(
+        "grpc-ts",
+        help="Compile .proto files into TypeScript bindings (requires protoc + ts-proto)",
+    )
+    p_gen_grpc_ts.add_argument("--root", default=None, help="Project root (default: cwd)")
+    p_gen_grpc_ts.add_argument("--config", default=None, help="Path to swop.yaml")
+    p_gen_grpc_ts.add_argument(
+        "--proto",
+        default=None,
+        help="Proto input directory (default: <state_dir>/generated/proto)",
+    )
+    p_gen_grpc_ts.add_argument(
+        "--out",
+        default=None,
+        help="TS output directory (default: <state_dir>/generated/ts)",
+    )
+    p_gen_grpc_ts.add_argument(
+        "--plugin",
+        default=None,
+        help="Path to protoc-gen-ts_proto (default: resolved from PATH)",
+    )
+    p_gen_grpc_ts.set_defaults(func=_cmd_gen_grpc_ts)
+
     p_refactor = sub.add_parser(
         "refactor",
         help="Extract modules from a full-stack project into an output directory",
@@ -255,6 +617,21 @@ def _build_parser() -> argparse.ArgumentParser:
         "--sync-files-dry-run",
         action="store_true",
         help="Report which files would be written without writing them",
+    )
+    p_generate.add_argument(
+        "--check-files",
+        action="store_true",
+        help="Report drift between markpact:file blocks and the filesystem",
+    )
+    p_generate.add_argument(
+        "--from-disk",
+        action="store_true",
+        help="Reverse sync: rewrite markpact:file block bodies with disk content",
+    )
+    p_generate.add_argument(
+        "--from-disk-dry-run",
+        action="store_true",
+        help="Report which blocks would be updated from disk without writing",
     )
     p_generate.add_argument(
         "--output-yaml",

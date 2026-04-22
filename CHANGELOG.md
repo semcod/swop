@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-04-22
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_config.py
+- Update tests/test_cqrs.py
+- Update tests/test_manifests.py
+- Update tests/test_markpact.py
+- Update tests/test_proto.py
+- Update tests/test_scan.py
+- Update tests/test_tools.py
+
+### Other
+- Update examples/src/api.py
+- Update examples/src/models.py
+- Update swop/__init__.py
+- Update swop/cli.py
+- Update swop/config.py
+- Update swop/cqrs/__init__.py
+- Update swop/cqrs/decorators.py
+- Update swop/cqrs/registry.py
+- Update swop/manifests/__init__.py
+- Update swop/manifests/generator.py
+- ... and 12 more files
+
 ## [0.2.3] - 2026-04-22
 
 ### Docs

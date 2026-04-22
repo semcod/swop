@@ -2,9 +2,27 @@
 swop - bi-directional runtime reconciler for full-stack state graphs.
 """
 
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 
+from swop.config import (
+    BoundedContextConfig,
+    BusConfig,
+    ReadModelConfig,
+    SwopConfig,
+    SwopConfigError,
+    load_config,
+)
 from swop.core import SwopRuntime, SynqerRuntime
+from swop.cqrs import (
+    CqrsRecord,
+    CqrsRegistry,
+    command,
+    event,
+    get_registry,
+    handler,
+    query,
+    reset_registry,
+)
 from swop.graph import (
     DataModel,
     GraphVersion,
@@ -15,7 +33,27 @@ from swop.graph import (
 )
 from swop.introspect import BackendIntrospector, FrontendIntrospector
 from swop.reconcile import Drift, DriftDetector, DriftError, ResyncEngine
+from swop.manifests import (
+    ManifestFile,
+    ManifestGenerationResult,
+    generate_manifests,
+)
+from swop.proto import (
+    CompilationResult,
+    ProtoFile,
+    ProtoGenerationResult,
+    compile_proto_python,
+    compile_proto_typescript,
+    generate_proto_from_manifests,
+)
 from swop.refactor import RefactorPipeline, RefactorResult
+from swop.scan import (
+    ContextSummary,
+    Detection,
+    FingerprintCache,
+    ScanReport,
+    scan_project,
+)
 from swop.sync import SyncEngine
 from swop.versioning import Versioning
 from swop.markpact import (
@@ -48,4 +86,37 @@ __all__ = [
     "DoqlBridge",
     "build_project_graph",
     "ManifestSyncEngine",
+    # CQRS
+    "CqrsRecord",
+    "CqrsRegistry",
+    "command",
+    "event",
+    "query",
+    "handler",
+    "get_registry",
+    "reset_registry",
+    # Config
+    "SwopConfig",
+    "SwopConfigError",
+    "BoundedContextConfig",
+    "BusConfig",
+    "ReadModelConfig",
+    "load_config",
+    # Scan
+    "scan_project",
+    "ScanReport",
+    "Detection",
+    "ContextSummary",
+    "FingerprintCache",
+    # Manifests
+    "generate_manifests",
+    "ManifestFile",
+    "ManifestGenerationResult",
+    # Proto / gRPC
+    "generate_proto_from_manifests",
+    "compile_proto_python",
+    "compile_proto_typescript",
+    "ProtoFile",
+    "ProtoGenerationResult",
+    "CompilationResult",
 ]

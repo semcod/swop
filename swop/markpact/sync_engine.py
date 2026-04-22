@@ -150,6 +150,52 @@ class ManifestSyncEngine:
 
         return updated
 
+    def update_manifest(
+        self,
+        manifest_path: Path,
+        *,
+        dry_run: bool = False,
+    ) -> List[str]:
+        """Rewrite ``markpact:file`` block bodies in the manifest with disk content.
+
+        Reverse sync: filesystem → manifest. Only the bodies of tracked file
+        blocks are replaced; block fences, metadata, and surrounding markdown
+        are preserved.
+
+        Returns the list of paths whose blocks were updated.
+        """
+        import re
+
+        text = manifest_path.read_text(encoding="utf-8")
+        pattern = re.compile(
+            r"(?P<open>```(?P<lang>\w+)\s+markpact:file"
+            r"(?:[ \t]+(?P<meta>[^\n]*))?\n)"
+            r"(?P<body>[\s\S]*?)"
+            r"(?P<close>\n```)",
+        )
+
+        updated: List[str] = []
+
+        def _replace(match: "re.Match[str]") -> str:
+            meta = (match.group("meta") or "").strip()
+            path_match = re.search(r"\bpath=(\S+)", meta)
+            if not path_match:
+                return match.group(0)
+            path = path_match.group(1)
+            source = self.base_dir / path
+            if not source.exists():
+                return match.group(0)
+            new_body = source.read_text(encoding="utf-8").rstrip("\n")
+            updated.append(path)
+            return f"{match.group('open')}{new_body}{match.group('close')}"
+
+        new_text = pattern.sub(_replace, text)
+
+        if not dry_run and new_text != text:
+            manifest_path.write_text(new_text, encoding="utf-8")
+
+        return updated
+
 
 def _hash(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()

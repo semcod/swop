@@ -658,3 +658,145 @@ def test_cli_generate_from_markpact(tmp_path: Path) -> None:
     assert out_docker.exists()
     docker_text = out_docker.read_text(encoding="utf-8")
     assert "version" in docker_text
+
+
+def test_cli_generate_sync_files(tmp_path: Path) -> None:
+    from swop.cli import main
+
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+
+    argv = [
+        "generate",
+        "--from-markpact", str(manifest),
+        "--sync-files",
+    ]
+    rc = main(argv)
+    assert rc == 0
+    assert (tmp_path / "src" / "main.py").exists()
+    content = (tmp_path / "src" / "main.py").read_text(encoding="utf-8")
+    assert "print(\"hello\")" in content
+
+
+def test_cli_generate_sync_files_dry_run(tmp_path: Path) -> None:
+    from swop.cli import main
+
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+
+    argv = [
+        "generate",
+        "--from-markpact", str(manifest),
+        "--sync-files-dry-run",
+    ]
+    rc = main(argv)
+    assert rc == 0
+    assert not (tmp_path / "src" / "main.py").exists()
+
+
+def test_update_manifest_reverse_sync(tmp_path: Path) -> None:
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+
+    engine = ManifestSyncEngine(base_dir=tmp_path)
+    engine.sync_to_disk(manifest)
+
+    # Modify the file on disk
+    (tmp_path / "src" / "main.py").write_text('print("modified on disk")\n', encoding="utf-8")
+
+    updated = engine.update_manifest(manifest)
+    assert "src/main.py" in updated
+
+    new_text = manifest.read_text(encoding="utf-8")
+    assert 'print("modified on disk")' in new_text
+    assert 'print("hello")' not in new_text
+
+
+def test_update_manifest_dry_run(tmp_path: Path) -> None:
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+    original = manifest.read_text(encoding="utf-8")
+
+    engine = ManifestSyncEngine(base_dir=tmp_path)
+    engine.sync_to_disk(manifest)
+    (tmp_path / "src" / "main.py").write_text('print("modified")\n', encoding="utf-8")
+
+    updated = engine.update_manifest(manifest, dry_run=True)
+    assert "src/main.py" in updated
+    # Manifest unchanged on disk
+    assert manifest.read_text(encoding="utf-8") == original
+
+
+def test_update_manifest_preserves_untracked_blocks(tmp_path: Path) -> None:
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+
+    engine = ManifestSyncEngine(base_dir=tmp_path)
+    engine.sync_to_disk(manifest)
+    (tmp_path / "src" / "main.py").write_text('print("x")\n', encoding="utf-8")
+    engine.update_manifest(manifest)
+
+    new_text = manifest.read_text(encoding="utf-8")
+    # DOQL block preserved unchanged
+    assert 'app_name: "TestApp"' in new_text
+    assert "markpact:doql" in new_text
+
+
+def test_cli_generate_check_files_ok(tmp_path: Path) -> None:
+    from swop.cli import main
+
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+
+    # Materialise first so files are in sync
+    engine = ManifestSyncEngine(base_dir=tmp_path)
+    engine.sync_to_disk(manifest)
+
+    rc = main(["generate", "--from-markpact", str(manifest), "--check-files"])
+    assert rc == 0
+
+
+def test_cli_generate_check_files_strict_fails_on_drift(tmp_path: Path) -> None:
+    from swop.cli import main
+
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+
+    # Don't sync — file is missing on disk → drift
+    rc = main([
+        "--mode", "STRICT",
+        "generate", "--from-markpact", str(manifest), "--check-files",
+    ])
+    assert rc == 1
+
+
+def test_cli_generate_from_disk(tmp_path: Path) -> None:
+    from swop.cli import main
+
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+
+    # Sync then modify on disk
+    engine = ManifestSyncEngine(base_dir=tmp_path)
+    engine.sync_to_disk(manifest)
+    (tmp_path / "src" / "main.py").write_text('print("cli modified")\n', encoding="utf-8")
+
+    rc = main(["generate", "--from-markpact", str(manifest), "--from-disk"])
+    assert rc == 0
+    assert 'print("cli modified")' in manifest.read_text(encoding="utf-8")
+
+
+def test_cli_generate_from_disk_dry_run(tmp_path: Path) -> None:
+    from swop.cli import main
+
+    manifest = tmp_path / "manifest.md"
+    manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
+    original = manifest.read_text(encoding="utf-8")
+
+    engine = ManifestSyncEngine(base_dir=tmp_path)
+    engine.sync_to_disk(manifest)
+    (tmp_path / "src" / "main.py").write_text('print("dry")\n', encoding="utf-8")
+
+    rc = main(["generate", "--from-markpact", str(manifest), "--from-disk-dry-run"])
+    assert rc == 0
+    assert manifest.read_text(encoding="utf-8") == original
