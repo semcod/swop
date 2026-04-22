@@ -1,114 +1,37 @@
 project: /home/tom/github/semcod/inspect
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 107
-  total_edges: 114
-  modules_count: 19
+  total_nodes: 128
+  total_edges: 131
+  modules_count: 20
 nodes:
-  swop.cli._cmd_gen_services:
-    name: _cmd_gen_services
-    module: swop.cli
-    line: 222
-    cyclomatic_complexity: 12
-    calls_out: 16
-    calls_in: 0
-  swop.proto.generator.render_proto_for_context:
-    name: render_proto_for_context
-    module: swop.proto.generator
-    line: 240
-    cyclomatic_complexity: 12
-    calls_out: 43
-    calls_in: 1
-  swop.manifests.generator._handler_index:
-    name: _handler_index
-    module: swop.manifests.generator
-    line: 112
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  swop.cli._cmd_export:
-    name: _cmd_export
-    module: swop.cli
-    line: 78
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  swop.cqrs.decorators.handler:
-    name: handler
-    module: swop.cqrs.decorators
-    line: 110
-    cyclomatic_complexity: 7
-    calls_out: 12
-    calls_in: 0
-  swop.config._parse_context:
-    name: _parse_context
-    module: swop.config
-    line: 121
+  swop.commands._cmd_doctor:
+    name: _cmd_doctor
+    module: swop.commands
+    line: 77
     cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 1
-  swop.config._pop_known:
-    name: _pop_known
-    module: swop.config
-    line: 111
-    cyclomatic_complexity: 3
-    calls_out: 1
-    calls_in: 3
-  swop.cli._build_parser:
-    name: _build_parser
-    module: swop.cli
-    line: 447
-    cyclomatic_complexity: 1
-    calls_out: 115
-    calls_in: 1
-  swop.resolve.resolver._index_from_manifests:
-    name: _index_from_manifests
-    module: swop.resolve.resolver
-    line: 208
-    cyclomatic_complexity: 15
-    calls_out: 21
-    calls_in: 1
-  swop.scan.scanner._resolve_contexts:
-    name: _resolve_contexts
-    module: swop.scan.scanner
-    line: 181
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  swop.scan.scanner._handler_target_from_method:
-    name: _handler_target_from_method
-    module: swop.scan.scanner
-    line: 447
-    cyclomatic_complexity: 11
-    calls_out: 5
-    calls_in: 1
-  swop.cqrs.decorators._make_decorator:
-    name: _make_decorator
-    module: swop.cqrs.decorators
-    line: 65
-    cyclomatic_complexity: 1
-    calls_out: 11
-    calls_in: 0
-  swop.cqrs.decorators._collect_source:
-    name: _collect_source
-    module: swop.cqrs.decorators
-    line: 41
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 2
-  swop.config._parse_read_models:
-    name: _parse_read_models
-    module: swop.config
-    line: 148
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 1
-  swop.resolve.resolver._index_from_detections:
-    name: _index_from_detections
-    module: swop.resolve.resolver
-    line: 169
-    cyclomatic_complexity: 10
     calls_out: 6
+    calls_in: 0
+  swop.scan.render.render_json:
+    name: render_json
+    module: swop.scan.render
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  swop.commands._generate_outputs:
+    name: _generate_outputs
+    module: swop.commands
+    line: 430
+    cyclomatic_complexity: 5
+    calls_out: 10
+    calls_in: 1
+  swop.resolve.resolver._diff_fields:
+    name: _diff_fields
+    module: swop.resolve.resolver
+    line: 319
+    cyclomatic_complexity: 11
+    calls_out: 43
     calls_in: 1
   swop.services.generator._render_requirements:
     name: _render_requirements
@@ -117,62 +40,104 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 4
     calls_in: 1
+  swop.scan.scanner._kind_by_suffix:
+    name: _kind_by_suffix
+    module: swop.scan.scanner
+    line: 445
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  project.map.toon.resolve_schema_drift:
+    name: resolve_schema_drift
+    module: project.map.toon
+    line: 308
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
+  swop.scan.scanner._extract_detections:
+    name: _extract_detections
+    module: swop.scan.scanner
+    line: 266
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 1
   swop.scan.scanner._unparse:
     name: _unparse
     module: swop.scan.scanner
-    line: 511
+    line: 523
     cyclomatic_complexity: 2
     calls_out: 1
     calls_in: 2
-  swop.reconcile.ResyncEngine._log_drift:
-    name: _log_drift
-    module: swop.reconcile
-    line: 105
-    cyclomatic_complexity: 1
+  swop.config._pop_known:
+    name: _pop_known
+    module: swop.config
+    line: 111
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 3
+  swop.commands._cmd_gen_grpc_python:
+    name: _cmd_gen_grpc_python
+    module: swop.commands
+    line: 177
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 0
+  swop.resolve.resolver._index_from_manifests:
+    name: _index_from_manifests
+    module: swop.resolve.resolver
+    line: 208
+    cyclomatic_complexity: 15
+    calls_out: 21
+    calls_in: 1
+  swop.commands._cmd_export:
+    name: _cmd_export
+    module: swop.commands
+    line: 67
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  swop.commands._cmd_inspect:
+    name: _cmd_inspect
+    module: swop.commands
+    line: 42
+    cyclomatic_complexity: 3
     calls_out: 6
     calls_in: 0
-  swop.manifests.generator._camel_to_dot:
-    name: _camel_to_dot
-    module: swop.manifests.generator
-    line: 226
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 1
-  swop.scan.render.write_report:
-    name: write_report
-    module: swop.scan.render
-    line: 127
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 1
-  swop.cli._build_runtime:
-    name: _build_runtime
-    module: swop.cli
-    line: 38
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 5
-  swop.scan.scanner._extract_fields:
-    name: _extract_fields
+  swop.scan.scanner._classify:
+    name: _classify
     module: swop.scan.scanner
-    line: 479
-    cyclomatic_complexity: 15
-    calls_out: 18
+    line: 358
+    cyclomatic_complexity: 18
+    calls_out: 15
     calls_in: 1
-  swop.cli.main:
-    name: main
-    module: swop.cli
-    line: 872
-    cyclomatic_complexity: 1
+  swop.commands._cmd_diff:
+    name: _cmd_diff
+    module: swop.commands
+    line: 54
+    cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 0
-  swop.services.generator._render_compose:
-    name: _render_compose
-    module: swop.services.generator
-    line: 542
-    cyclomatic_complexity: 6
-    calls_out: 8
+  swop.commands._cmd_refactor:
+    name: _cmd_refactor
+    module: swop.commands
+    line: 313
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 0
+  swop.tools.doctor._first_version:
+    name: _first_version
+    module: swop.tools.doctor
+    line: 122
+    cyclomatic_complexity: 3
+    calls_out: 2
     calls_in: 1
+  swop.commands._cmd_gen_manifests:
+    name: _cmd_gen_manifests
+    module: swop.commands
+    line: 134
+    cyclomatic_complexity: 8
+    calls_out: 11
+    calls_in: 0
   swop.services.generator._camel:
     name: _camel
     module: swop.services.generator
@@ -180,19 +145,243 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 3
     calls_in: 1
-  swop.scan.scanner._base_name:
-    name: _base_name
+  swop.cli.main:
+    name: main
+    module: swop.cli
+    line: 452
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  swop.scan.scanner._handler_method_name:
+    name: _handler_method_name
     module: swop.scan.scanner
-    line: 297
+    line: 481
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  swop.proto.generator.render_proto_for_context:
+    name: render_proto_for_context
+    module: swop.proto.generator
+    line: 240
+    cyclomatic_complexity: 12
+    calls_out: 43
+    calls_in: 1
+  swop.cqrs.decorators._collect_source:
+    name: _collect_source
+    module: swop.cqrs.decorators
+    line: 41
     cyclomatic_complexity: 3
     calls_out: 2
     calls_in: 2
-  swop.services.generator._render_init:
-    name: _render_init
-    module: swop.services.generator
-    line: 232
-    cyclomatic_complexity: 1
+  swop.resolve.resolver._handler_sig:
+    name: _handler_sig
+    module: swop.resolve.resolver
+    line: 448
+    cyclomatic_complexity: 8
+    calls_out: 4
+    calls_in: 2
+  swop.manifests.generator.generate_manifests:
+    name: generate_manifests
+    module: swop.manifests.generator
+    line: 76
+    cyclomatic_complexity: 10
+    calls_out: 11
+    calls_in: 0
+  project.map.toon.load_config:
+    name: load_config
+    module: project.map.toon
+    line: 123
+    cyclomatic_complexity: 0
     calls_out: 0
+    calls_in: 9
+  swop.commands._cmd_generate:
+    name: _cmd_generate
+    module: swop.commands
+    line: 443
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 0
+  swop.manifests.generator._render_source:
+    name: _render_source
+    module: swop.manifests.generator
+    line: 177
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  swop.proto.generator._render_message:
+    name: _render_message
+    module: swop.proto.generator
+    line: 341
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 3
+  swop.config._from_dict:
+    name: _from_dict
+    module: swop.config
+    line: 179
+    cyclomatic_complexity: 8
+    calls_out: 25
+    calls_in: 1
+  swop.versioning.Versioning.commit:
+    name: commit
+    module: swop.versioning
+    line: 16
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  swop.tools.doctor._run_version:
+    name: _run_version
+    module: swop.tools.doctor
+    line: 107
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  swop.watch.engine.rebuild_once:
+    name: rebuild_once
+    module: swop.watch.engine
+    line: 56
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  swop.resolve.resolver._index_from_detections:
+    name: _index_from_detections
+    module: swop.resolve.resolver
+    line: 169
+    cyclomatic_complexity: 10
+    calls_out: 6
+    calls_in: 1
+  swop.commands._cmd_init:
+    name: _cmd_init
+    module: swop.commands
+    line: 84
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 0
+  project.map.toon.run_doctor:
+    name: run_doctor
+    module: project.map.toon
+    line: 393
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
+  swop.manifests.generator._render_field:
+    name: _render_field
+    module: swop.manifests.generator
+    line: 188
+    cyclomatic_complexity: 3
+    calls_out: 0
+    calls_in: 1
+  swop.scan.scanner._resolve_contexts:
+    name: _resolve_contexts
+    module: swop.scan.scanner
+    line: 193
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  swop.services.generator._safe_ident:
+    name: _safe_ident
+    module: swop.services.generator
+    line: 675
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  swop.watch.engine.WatchEngine.poll_once:
+    name: poll_once
+    module: swop.watch.engine
+    line: 143
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 0
+  swop.commands._build_runtime:
+    name: _build_runtime
+    module: swop.commands
+    line: 28
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 5
+  project.map.toon.generate_proto_from_manifests:
+    name: generate_proto_from_manifests
+    module: project.map.toon
+    line: 250
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
+  swop.config._parse_context:
+    name: _parse_context
+    module: swop.config
+    line: 121
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  swop.manifests.generator._handler_index:
+    name: _handler_index
+    module: swop.manifests.generator
+    line: 112
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui:
+    name: _link_models_to_ui
+    module: swop.refactor.pipeline
+    line: 176
+    cyclomatic_complexity: 8
+    calls_out: 7
+    calls_in: 0
+  swop.proto.generator._load_manifest:
+    name: _load_manifest
+    module: swop.proto.generator
+    line: 168
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 3
+  swop.scan.scanner._extract_fields:
+    name: _extract_fields
+    module: swop.scan.scanner
+    line: 491
+    cyclomatic_complexity: 15
+    calls_out: 18
+    calls_in: 1
+  swop.scan.render.write_report:
+    name: write_report
+    module: swop.scan.render
+    line: 127
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  swop.manifests.generator._render_entry:
+    name: _render_entry
+    module: swop.manifests.generator
+    line: 144
+    cyclomatic_complexity: 10
+    calls_out: 7
+    calls_in: 1
+  swop.manifests.generator._render_bus:
+    name: _render_bus
+    module: swop.manifests.generator
+    line: 208
+    cyclomatic_complexity: 6
+    calls_out: 3
+    calls_in: 1
+  swop.services.generator._default_bus_url:
+    name: _default_bus_url
+    module: swop.services.generator
+    line: 607
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  swop.markpact.sync_engine.ManifestSyncEngine.check:
+    name: check
+    module: swop.markpact.sync_engine
+    line: 39
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 0
+  swop.commands._generate_build_graph:
+    name: _generate_build_graph
+    module: swop.commands
+    line: 351
+    cyclomatic_complexity: 14
+    calls_out: 22
     calls_in: 1
   swop.manifests.generator._safe_dirname:
     name: _safe_dirname
@@ -201,153 +390,55 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 2
-  swop.scan.scanner._decorator_name:
-    name: _decorator_name
-    module: swop.scan.scanner
-    line: 287
+  swop.cqrs.decorators._normalize_emits:
+    name: _normalize_emits
+    module: swop.cqrs.decorators
+    line: 53
     cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 3
-  swop.versioning.Versioning.commit:
-    name: commit
-    module: swop.versioning
-    line: 16
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  swop.markpact.sync_engine.ManifestSyncEngine.check:
-    name: check
-    module: swop.markpact.sync_engine
-    line: 39
-    cyclomatic_complexity: 7
-    calls_out: 11
-    calls_in: 0
-  swop.watch.engine.WatchEngine.run:
-    name: run
-    module: swop.watch.engine
-    line: 174
+    calls_out: 5
+    calls_in: 1
+  swop.resolve.resolver._diff_metadata:
+    name: _diff_metadata
+    module: swop.resolve.resolver
+    line: 386
     cyclomatic_complexity: 9
-    calls_out: 5
-    calls_in: 0
-  swop.watch.engine.WatchEngine.poll_once:
-    name: poll_once
-    module: swop.watch.engine
-    line: 142
-    cyclomatic_complexity: 5
-    calls_out: 7
-    calls_in: 0
-  swop.manifests.generator._render_handler:
-    name: _render_handler
-    module: swop.manifests.generator
-    line: 198
-    cyclomatic_complexity: 2
-    calls_out: 0
+    calls_out: 16
     calls_in: 1
-  swop.services.generator._render_worker:
-    name: _render_worker
-    module: swop.services.generator
-    line: 238
-    cyclomatic_complexity: 2
-    calls_out: 0
-    calls_in: 1
-  swop.proto.compiler._run:
-    name: _run
-    module: swop.proto.compiler
-    line: 63
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  swop.scan.scanner._classify:
-    name: _classify
-    module: swop.scan.scanner
-    line: 346
-    cyclomatic_complexity: 18
-    calls_out: 15
-    calls_in: 1
-  swop.tools.doctor._check_binary:
-    name: _check_binary
-    module: swop.tools.doctor
-    line: 129
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 3
-  swop.scan.render.render_json:
-    name: render_json
-    module: swop.scan.render
-    line: 15
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  swop.config._parse_bus:
-    name: _parse_bus
-    module: swop.config
-    line: 135
+  swop.resolve.resolver._diff_entry:
+    name: _diff_entry
+    module: swop.resolve.resolver
+    line: 421
     cyclomatic_complexity: 3
-    calls_out: 9
+    calls_out: 4
     calls_in: 1
-  swop.proto.compiler.compile_proto_python:
-    name: compile_proto_python
-    module: swop.proto.compiler
-    line: 78
-    cyclomatic_complexity: 8
-    calls_out: 21
+  swop.services.generator._render_publisher:
+    name: _render_publisher
+    module: swop.services.generator
+    line: 392
+    cyclomatic_complexity: 1
+    calls_out: 0
     calls_in: 1
-  swop.cli._cmd_gen_grpc_python:
-    name: _cmd_gen_grpc_python
-    module: swop.cli
-    line: 190
-    cyclomatic_complexity: 7
+  swop.commands._generate_check_files:
+    name: _generate_check_files
+    module: swop.commands
+    line: 393
+    cyclomatic_complexity: 9
+    calls_out: 6
+    calls_in: 1
+  swop.cqrs.decorators._make_decorator:
+    name: _make_decorator
+    module: swop.cqrs.decorators
+    line: 65
+    cyclomatic_complexity: 1
     calls_out: 11
     calls_in: 0
-  swop.proto.generator.generate_proto_from_manifests:
-    name: generate_proto_from_manifests
-    module: swop.proto.generator
-    line: 195
-    cyclomatic_complexity: 8
-    calls_out: 20
+  project.map.toon._diff_snapshots:
+    name: _diff_snapshots
+    module: project.map.toon
+    line: 413
+    cyclomatic_complexity: 0
+    calls_out: 0
     calls_in: 1
-  swop.tools.doctor._run_version:
-    name: _run_version
-    module: swop.tools.doctor
-    line: 107
-    cyclomatic_complexity: 5
-    calls_out: 3
-    calls_in: 1
-  swop.proto.generator._iter_contexts:
-    name: _iter_contexts
-    module: swop.proto.generator
-    line: 180
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 1
-  swop.scan.scanner._handler_method_name:
-    name: _handler_method_name
-    module: swop.scan.scanner
-    line: 469
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  swop.cli._cmd_init:
-    name: _cmd_init
-    module: swop.cli
-    line: 95
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 0
-  swop.cli._cmd_generate:
-    name: _cmd_generate
-    module: swop.cli
-    line: 354
-    cyclomatic_complexity: 38
-    calls_out: 58
-    calls_in: 0
-  swop.markpact.sync_engine._hash:
-    name: _hash
-    module: swop.markpact.sync_engine
-    line: 200
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 2
   swop.services.generator._write_context_package:
     name: _write_context_package
     module: swop.services.generator
@@ -358,255 +449,87 @@ nodes:
   swop.scan.scanner._iter_python_files:
     name: _iter_python_files
     module: swop.scan.scanner
-    line: 190
+    line: 202
     cyclomatic_complexity: 10
     calls_out: 11
     calls_in: 1
-  swop.cli._cmd_sync:
-    name: _cmd_sync
-    module: swop.cli
-    line: 47
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 0
-  swop.scan.scanner._render_default:
-    name: _render_default
-    module: swop.scan.scanner
-    line: 518
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 2
-  swop.proto.compiler._iter_proto_files:
-    name: _iter_proto_files
-    module: swop.proto.compiler
-    line: 54
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 2
-  swop.cli._cmd_watch:
-    name: _cmd_watch
-    module: swop.cli
-    line: 267
-    cyclomatic_complexity: 6
-    calls_out: 19
-    calls_in: 0
-  swop.services.generator._render_server:
-    name: _render_server
-    module: swop.services.generator
-    line: 306
-    cyclomatic_complexity: 7
-    calls_out: 9
-    calls_in: 1
-  swop.proto.generator._render_message:
-    name: _render_message
-    module: swop.proto.generator
-    line: 341
-    cyclomatic_complexity: 8
-    calls_out: 10
-    calls_in: 3
-  swop.cli._cmd_gen_proto:
-    name: _cmd_gen_proto
-    module: swop.cli
-    line: 166
-    cyclomatic_complexity: 7
-    calls_out: 13
-    calls_in: 0
-  swop.cli._cmd_diff:
-    name: _cmd_diff
-    module: swop.cli
-    line: 65
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  swop.cli._cmd_doctor:
-    name: _cmd_doctor
-    module: swop.cli
-    line: 88
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 0
-  swop.config.load_config:
-    name: load_config
-    module: swop.config
-    line: 163
-    cyclomatic_complexity: 6
-    calls_out: 12
-    calls_in: 9
-  swop.proto.generator._load_manifest:
-    name: _load_manifest
-    module: swop.proto.generator
-    line: 168
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 3
-  swop.manifests.generator._render_entry:
-    name: _render_entry
-    module: swop.manifests.generator
-    line: 144
-    cyclomatic_complexity: 10
-    calls_out: 7
-    calls_in: 1
-  swop.services.generator._safe_ident:
-    name: _safe_ident
-    module: swop.services.generator
-    line: 675
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  swop.resolve.resolver._handler_sig:
-    name: _handler_sig
-    module: swop.resolve.resolver
-    line: 427
-    cyclomatic_complexity: 8
-    calls_out: 4
-    calls_in: 2
-  swop.manifests.generator._render_manifest:
-    name: _render_manifest
-    module: swop.manifests.generator
-    line: 124
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  swop.cli._cmd_refactor:
-    name: _cmd_refactor
-    module: swop.cli
-    line: 327
-    cyclomatic_complexity: 7
-    calls_out: 16
-    calls_in: 0
-  swop.cli._cmd_gen_manifests:
-    name: _cmd_gen_manifests
-    module: swop.cli
-    line: 145
-    cyclomatic_complexity: 9
-    calls_out: 11
-    calls_in: 0
-  swop.cli._cmd_gen_grpc_ts:
-    name: _cmd_gen_grpc_ts
-    module: swop.cli
-    line: 206
-    cyclomatic_complexity: 7
-    calls_out: 11
-    calls_in: 0
-  swop.manifests.generator.generate_manifests:
-    name: generate_manifests
-    module: swop.manifests.generator
-    line: 76
-    cyclomatic_complexity: 10
-    calls_out: 11
-    calls_in: 3
-  swop.manifests.generator._render_bus:
-    name: _render_bus
-    module: swop.manifests.generator
-    line: 208
-    cyclomatic_complexity: 6
-    calls_out: 3
-    calls_in: 1
-  swop.scan.scanner.scan_project:
-    name: scan_project
-    module: swop.scan.scanner
-    line: 81
-    cyclomatic_complexity: 22
-    calls_out: 31
-    calls_in: 4
-  swop.proto.compiler.compile_proto_typescript:
-    name: compile_proto_typescript
-    module: swop.proto.compiler
-    line: 142
-    cyclomatic_complexity: 10
-    calls_out: 23
-    calls_in: 1
-  swop.tools.init.init_project:
-    name: init_project
-    module: swop.tools.init
-    line: 86
-    cyclomatic_complexity: 14
-    calls_out: 25
-    calls_in: 1
-  swop.watch.engine.rebuild_once:
-    name: rebuild_once
-    module: swop.watch.engine
-    line: 56
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 3
-  swop.manifests.generator._render_source:
-    name: _render_source
-    module: swop.manifests.generator
-    line: 177
-    cyclomatic_complexity: 2
+  project.map.toon.build_project_graph:
+    name: build_project_graph
+    module: project.map.toon
+    line: 205
+    cyclomatic_complexity: 0
     calls_out: 0
     calls_in: 1
-  swop.config._expand_env:
-    name: _expand_env
-    module: swop.config
-    line: 101
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 3
-  swop.proto.generator._safe_ident:
-    name: _safe_ident
-    module: swop.proto.generator
-    line: 407
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 3
+  project.map.toon.compile_proto_typescript:
+    name: compile_proto_typescript
+    module: project.map.toon
+    line: 241
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
   swop.scan.scanner._module_name_from_path:
     name: _module_name_from_path
     module: swop.scan.scanner
-    line: 278
+    line: 290
     cyclomatic_complexity: 7
     calls_out: 4
     calls_in: 1
-  swop.services.generator._default_bus_url:
-    name: _default_bus_url
-    module: swop.services.generator
-    line: 607
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  swop.proto.generator._map_python_type:
-    name: _map_python_type
-    module: swop.proto.generator
-    line: 111
-    cyclomatic_complexity: 15
-    calls_out: 25
-    calls_in: 3
-  swop.core.SwopRuntime.run_sync:
-    name: run_sync
-    module: swop.core
-    line: 77
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 0
-  swop.tools.doctor._first_version:
-    name: _first_version
-    module: swop.tools.doctor
-    line: 122
+  swop.scan.scanner._base_name:
+    name: _base_name
+    module: swop.scan.scanner
+    line: 309
     cyclomatic_complexity: 3
     calls_out: 2
-    calls_in: 1
-  swop.resolve.resolver.resolve_schema_drift:
-    name: resolve_schema_drift
-    module: swop.resolve.resolver
-    line: 121
-    cyclomatic_complexity: 4
-    calls_out: 14
-    calls_in: 1
-  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui:
-    name: _link_models_to_ui
-    module: swop.refactor.pipeline
-    line: 176
-    cyclomatic_complexity: 8
-    calls_out: 7
-    calls_in: 0
-  swop.services.generator._render_publisher:
-    name: _render_publisher
-    module: swop.services.generator
-    line: 392
-    cyclomatic_complexity: 1
+    calls_in: 2
+  swop.scan.scanner._kind_by_base:
+    name: _kind_by_base
+    module: swop.scan.scanner
+    line: 452
+    cyclomatic_complexity: 3
     calls_out: 0
     calls_in: 1
+  swop.watch.engine.WatchEngine.run:
+    name: run
+    module: swop.watch.engine
+    line: 175
+    cyclomatic_complexity: 9
+    calls_out: 5
+    calls_in: 0
+  swop.commands._cmd_gen_services:
+    name: _cmd_gen_services
+    module: swop.commands
+    line: 209
+    cyclomatic_complexity: 12
+    calls_out: 16
+    calls_in: 0
+  swop.commands._cmd_scan:
+    name: _cmd_scan
+    module: swop.commands
+    line: 97
+    cyclomatic_complexity: 14
+    calls_out: 20
+    calls_in: 0
+  swop.reconcile.ResyncEngine._log_drift:
+    name: _log_drift
+    module: swop.reconcile
+    line: 105
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 0
+  swop.commands._cmd_gen_grpc_ts:
+    name: _cmd_gen_grpc_ts
+    module: swop.commands
+    line: 193
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 0
+  swop.commands._cmd_resolve:
+    name: _cmd_resolve
+    module: swop.commands
+    line: 284
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 0
   swop.reconcile.ResyncEngine._auto_heal:
     name: _auto_heal
     module: swop.reconcile
@@ -614,138 +537,117 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 2
     calls_in: 0
-  swop.cli._cmd_resolve:
-    name: _cmd_resolve
-    module: swop.cli
-    line: 298
-    cyclomatic_complexity: 9
-    calls_out: 15
-    calls_in: 0
-  swop.config._from_dict:
-    name: _from_dict
-    module: swop.config
-    line: 179
-    cyclomatic_complexity: 8
-    calls_out: 25
+  swop.proto.compiler._iter_proto_files:
+    name: _iter_proto_files
+    module: swop.proto.compiler
+    line: 54
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  swop.proto.compiler._run:
+    name: _run
+    module: swop.proto.compiler
+    line: 63
+    cyclomatic_complexity: 2
+    calls_out: 3
     calls_in: 1
-  swop.cqrs.decorators._normalize_emits:
-    name: _normalize_emits
-    module: swop.cqrs.decorators
-    line: 53
-    cyclomatic_complexity: 4
+  swop.scan.scanner._handler_target_from_method:
+    name: _handler_target_from_method
+    module: swop.scan.scanner
+    line: 459
+    cyclomatic_complexity: 11
     calls_out: 5
     calls_in: 1
-  swop.scan.scanner._kind_by_suffix:
-    name: _kind_by_suffix
-    module: swop.scan.scanner
-    line: 433
-    cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 1
-  swop.scan.scanner._matches_any:
-    name: _matches_any
-    module: swop.scan.scanner
-    line: 217
-    cyclomatic_complexity: 5
-    calls_out: 4
-    calls_in: 1
-  examples.manifest.print:
-    name: print
-    module: examples.manifest
-    line: 364
+  swop.commands._cmd_gen_proto:
+    name: _cmd_gen_proto
+    module: swop.commands
+    line: 153
+    cyclomatic_complexity: 7
+    calls_out: 13
+    calls_in: 0
+  project.map.toon.apply_resolution:
+    name: apply_resolution
+    module: project.map.toon
+    line: 309
     cyclomatic_complexity: 0
     calls_out: 0
-    calls_in: 67
-  swop.scan.scanner._kind_by_base:
-    name: _kind_by_base
-    module: swop.scan.scanner
-    line: 440
-    cyclomatic_complexity: 3
-    calls_out: 0
     calls_in: 1
-  swop.resolve.resolver.apply_resolution:
-    name: apply_resolution
-    module: swop.resolve.resolver
-    line: 145
-    cyclomatic_complexity: 3
-    calls_out: 2
-    calls_in: 1
-  swop.manifests.generator._render_field:
-    name: _render_field
-    module: swop.manifests.generator
-    line: 188
-    cyclomatic_complexity: 3
-    calls_out: 0
-    calls_in: 1
-  swop.watch.engine._diff_snapshots:
-    name: _diff_snapshots
-    module: swop.watch.engine
-    line: 201
+  swop.commands._generate_sync_files:
+    name: _generate_sync_files
+    module: swop.commands
+    line: 419
     cyclomatic_complexity: 5
-    calls_out: 6
+    calls_out: 5
     calls_in: 1
-  swop.cli._cmd_scan:
-    name: _cmd_scan
-    module: swop.cli
-    line: 108
-    cyclomatic_complexity: 14
-    calls_out: 20
-    calls_in: 0
-  swop.resolve.resolver._handler_shape:
-    name: _handler_shape
-    module: swop.resolve.resolver
-    line: 198
+  swop.config._parse_bus:
+    name: _parse_bus
+    module: swop.config
+    line: 135
     cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 1
+  swop.proto.generator._safe_ident:
+    name: _safe_ident
+    module: swop.proto.generator
+    line: 407
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 3
+  swop.manifests.generator._render_handler:
+    name: _render_handler
+    module: swop.manifests.generator
+    line: 198
+    cyclomatic_complexity: 2
     calls_out: 0
     calls_in: 1
-  swop.cli._cmd_state:
+  swop.scan.scanner._context_for_path:
+    name: _context_for_path
+    module: swop.scan.scanner
+    line: 239
+    cyclomatic_complexity: 8
+    calls_out: 4
+    calls_in: 1
+  project.map.toon.rebuild_once:
+    name: rebuild_once
+    module: project.map.toon
+    line: 412
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 3
+  swop.proto.compiler.compile_proto_python:
+    name: compile_proto_python
+    module: swop.proto.compiler
+    line: 78
+    cyclomatic_complexity: 8
+    calls_out: 21
+    calls_in: 0
+  swop.commands._generate_update_from_disk:
+    name: _generate_update_from_disk
+    module: swop.commands
+    line: 408
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  swop.commands._cmd_state:
     name: _cmd_state
-    module: swop.cli
-    line: 71
+    module: swop.commands
+    line: 60
     cyclomatic_complexity: 1
     calls_out: 4
     calls_in: 0
-  swop.refactor.pipeline._tokenize:
-    name: _tokenize
-    module: swop.refactor.pipeline
-    line: 280
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 4
-  swop.tools.doctor.run_doctor:
-    name: run_doctor
-    module: swop.tools.doctor
-    line: 182
-    cyclomatic_complexity: 2
-    calls_out: 17
-    calls_in: 1
-  swop.scan.scanner._extract_detections:
-    name: _extract_detections
+  swop.scan.scanner._scan_file:
+    name: _scan_file
     module: swop.scan.scanner
-    line: 254
-    cyclomatic_complexity: 7
-    calls_out: 7
+    line: 81
+    cyclomatic_complexity: 13
+    calls_out: 20
     calls_in: 1
-  swop.resolve.resolver._diff_entry:
-    name: _diff_entry
-    module: swop.resolve.resolver
-    line: 319
-    cyclomatic_complexity: 21
-    calls_out: 61
-    calls_in: 1
-  swop.scan.render.render_html:
-    name: render_html
-    module: swop.scan.render
-    line: 24
-    cyclomatic_complexity: 8
-    calls_out: 25
-    calls_in: 1
-  swop.cli._cmd_inspect:
-    name: _cmd_inspect
-    module: swop.cli
-    line: 53
-    cyclomatic_complexity: 3
-    calls_out: 6
+  swop.proto.compiler.compile_proto_typescript:
+    name: compile_proto_typescript
+    module: swop.proto.compiler
+    line: 142
+    cyclomatic_complexity: 10
+    calls_out: 23
     calls_in: 0
   swop.services.generator._render_dockerfile:
     name: _render_dockerfile
@@ -754,6 +656,251 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 0
     calls_in: 1
+  swop.proto.generator._map_python_type:
+    name: _map_python_type
+    module: swop.proto.generator
+    line: 111
+    cyclomatic_complexity: 15
+    calls_out: 25
+    calls_in: 3
+  swop.scan.scanner._render_default:
+    name: _render_default
+    module: swop.scan.scanner
+    line: 530
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 2
+  swop.manifests.generator._camel_to_dot:
+    name: _camel_to_dot
+    module: swop.manifests.generator
+    line: 226
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 1
+  swop.config._expand_env:
+    name: _expand_env
+    module: swop.config
+    line: 101
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 3
+  project.map.toon.scan_project:
+    name: scan_project
+    module: project.map.toon
+    line: 335
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 4
+  swop.scan.scanner._matches_any:
+    name: _matches_any
+    module: swop.scan.scanner
+    line: 229
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 1
+  project.map.toon.write_report:
+    name: write_report
+    module: project.map.toon
+    line: 326
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
+  swop.proto.generator.generate_proto_from_manifests:
+    name: generate_proto_from_manifests
+    module: swop.proto.generator
+    line: 195
+    cyclomatic_complexity: 8
+    calls_out: 20
+    calls_in: 0
+  project.map.toon.compile_proto_python:
+    name: compile_proto_python
+    module: project.map.toon
+    line: 240
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
+  swop.manifests.generator._render_manifest:
+    name: _render_manifest
+    module: swop.manifests.generator
+    line: 124
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  swop.services.generator._render_compose:
+    name: _render_compose
+    module: swop.services.generator
+    line: 542
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 1
+  project.map.toon._tokenize:
+    name: _tokenize
+    module: project.map.toon
+    line: 286
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 4
+  swop.commands._cmd_watch:
+    name: _cmd_watch
+    module: swop.commands
+    line: 254
+    cyclomatic_complexity: 6
+    calls_out: 19
+    calls_in: 0
+  swop.scan.render.render_html:
+    name: render_html
+    module: swop.scan.render
+    line: 24
+    cyclomatic_complexity: 8
+    calls_out: 25
+    calls_in: 1
+  examples.manifest.print:
+    name: print
+    module: examples.manifest
+    line: 364
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 67
+  swop.resolve.resolver.apply_resolution:
+    name: apply_resolution
+    module: swop.resolve.resolver
+    line: 145
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 0
+  swop.services.generator._render_init:
+    name: _render_init
+    module: swop.services.generator
+    line: 232
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  swop.tools.doctor._check_binary:
+    name: _check_binary
+    module: swop.tools.doctor
+    line: 129
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 3
+  swop.cli._build_parser:
+    name: _build_parser
+    module: swop.cli
+    line: 27
+    cyclomatic_complexity: 1
+    calls_out: 115
+    calls_in: 1
+  swop.commands._generate_parse_manifest:
+    name: _generate_parse_manifest
+    module: swop.commands
+    line: 340
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 1
+  project.map.toon._hash:
+    name: _hash
+    module: project.map.toon
+    line: 232
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 2
+  swop.config._parse_read_models:
+    name: _parse_read_models
+    module: swop.config
+    line: 148
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 1
+  swop.services.generator._render_server:
+    name: _render_server
+    module: swop.services.generator
+    line: 306
+    cyclomatic_complexity: 7
+    calls_out: 9
+    calls_in: 1
+  swop.proto.generator._iter_contexts:
+    name: _iter_contexts
+    module: swop.proto.generator
+    line: 180
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 1
+  swop.core.SwopRuntime.run_sync:
+    name: run_sync
+    module: swop.core
+    line: 77
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 0
+  swop.services.generator._render_worker:
+    name: _render_worker
+    module: swop.services.generator
+    line: 238
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  project.map.toon.init_project:
+    name: init_project
+    module: project.map.toon
+    line: 397
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
+  swop.scan.scanner._decorator_name:
+    name: _decorator_name
+    module: swop.scan.scanner
+    line: 299
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 3
+  swop.scan.scanner.scan_project:
+    name: scan_project
+    module: swop.scan.scanner
+    line: 145
+    cyclomatic_complexity: 10
+    calls_out: 14
+    calls_in: 0
+  swop.resolve.resolver.resolve_schema_drift:
+    name: resolve_schema_drift
+    module: swop.resolve.resolver
+    line: 121
+    cyclomatic_complexity: 4
+    calls_out: 14
+    calls_in: 0
+  swop.cqrs.decorators.handler:
+    name: handler
+    module: swop.cqrs.decorators
+    line: 110
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 0
+  project.map.toon.generate_manifests:
+    name: generate_manifests
+    module: project.map.toon
+    line: 168
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 3
+  swop.resolve.resolver._handler_shape:
+    name: _handler_shape
+    module: swop.resolve.resolver
+    line: 198
+    cyclomatic_complexity: 3
+    calls_out: 0
+    calls_in: 1
+  swop.config.load_config:
+    name: load_config
+    module: swop.config
+    line: 163
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 0
+  swop.commands._cmd_sync:
+    name: _cmd_sync
+    module: swop.commands
+    line: 36
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
 edges:
 - caller: swop.config._parse_context
   callee: swop.config._pop_known
@@ -776,132 +923,6 @@ edges:
 - caller: swop.reconcile.ResyncEngine._log_drift
   callee: examples.manifest.print
   call_type: resolved
-- caller: swop.cli._cmd_sync
-  callee: swop.cli._build_runtime
-  call_type: resolved
-- caller: swop.cli._cmd_inspect
-  callee: swop.cli._build_runtime
-  call_type: resolved
-- caller: swop.cli._cmd_inspect
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_diff
-  callee: swop.cli._build_runtime
-  call_type: resolved
-- caller: swop.cli._cmd_state
-  callee: swop.cli._build_runtime
-  call_type: resolved
-- caller: swop.cli._cmd_state
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_export
-  callee: swop.cli._build_runtime
-  call_type: resolved
-- caller: swop.cli._cmd_export
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_doctor
-  callee: swop.tools.doctor.run_doctor
-  call_type: resolved
-- caller: swop.cli._cmd_doctor
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_init
-  callee: swop.tools.init.init_project
-  call_type: resolved
-- caller: swop.cli._cmd_init
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_scan
-  callee: swop.scan.scanner.scan_project
-  call_type: resolved
-- caller: swop.cli._cmd_scan
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.cli._cmd_scan
-  callee: swop.scan.render.write_report
-  call_type: resolved
-- caller: swop.cli._cmd_scan
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_gen_manifests
-  callee: swop.scan.scanner.scan_project
-  call_type: resolved
-- caller: swop.cli._cmd_gen_manifests
-  callee: swop.manifests.generator.generate_manifests
-  call_type: resolved
-- caller: swop.cli._cmd_gen_manifests
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_gen_manifests
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.cli._cmd_gen_proto
-  callee: swop.proto.generator.generate_proto_from_manifests
-  call_type: resolved
-- caller: swop.cli._cmd_gen_proto
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_gen_proto
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.cli._cmd_gen_grpc_python
-  callee: swop.proto.compiler.compile_proto_python
-  call_type: resolved
-- caller: swop.cli._cmd_gen_grpc_python
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_gen_grpc_python
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.cli._cmd_gen_grpc_ts
-  callee: swop.proto.compiler.compile_proto_typescript
-  call_type: resolved
-- caller: swop.cli._cmd_gen_grpc_ts
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_gen_grpc_ts
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.cli._cmd_gen_services
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_gen_services
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.cli._cmd_watch
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_watch
-  callee: swop.watch.engine.rebuild_once
-  call_type: resolved
-- caller: swop.cli._cmd_watch
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.cli._cmd_resolve
-  callee: swop.scan.scanner.scan_project
-  call_type: resolved
-- caller: swop.cli._cmd_resolve
-  callee: swop.resolve.resolver.resolve_schema_drift
-  call_type: resolved
-- caller: swop.cli._cmd_resolve
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.cli._cmd_resolve
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_resolve
-  callee: swop.resolve.resolver.apply_resolution
-  call_type: resolved
-- caller: swop.cli._cmd_refactor
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli._cmd_generate
-  callee: examples.manifest.print
-  call_type: resolved
-- caller: swop.cli.main
-  callee: swop.cli._build_parser
-  call_type: resolved
 - caller: swop.versioning.Versioning.commit
   callee: examples.manifest.print
   call_type: resolved
@@ -913,54 +934,6 @@ edges:
   call_type: resolved
 - caller: swop.scan.render.write_report
   callee: swop.scan.render.render_html
-  call_type: resolved
-- caller: swop.scan.scanner.scan_project
-  callee: swop.scan.scanner._resolve_contexts
-  call_type: resolved
-- caller: swop.scan.scanner.scan_project
-  callee: swop.scan.scanner._iter_python_files
-  call_type: resolved
-- caller: swop.scan.scanner.scan_project
-  callee: swop.config.load_config
-  call_type: resolved
-- caller: swop.scan.scanner._iter_python_files
-  callee: swop.scan.scanner._matches_any
-  call_type: resolved
-- caller: swop.scan.scanner._extract_detections
-  callee: swop.scan.scanner._module_name_from_path
-  call_type: resolved
-- caller: swop.scan.scanner._extract_detections
-  callee: swop.scan.scanner._classify
-  call_type: resolved
-- caller: swop.scan.scanner._extract_detections
-  callee: swop.scan.scanner._extract_fields
-  call_type: resolved
-- caller: swop.scan.scanner._extract_detections
-  callee: swop.scan.scanner._handler_method_name
-  call_type: resolved
-- caller: swop.scan.scanner._classify
-  callee: swop.scan.scanner._kind_by_suffix
-  call_type: resolved
-- caller: swop.scan.scanner._classify
-  callee: swop.scan.scanner._kind_by_base
-  call_type: resolved
-- caller: swop.scan.scanner._classify
-  callee: swop.scan.scanner._decorator_name
-  call_type: resolved
-- caller: swop.scan.scanner._classify
-  callee: swop.scan.scanner._base_name
-  call_type: resolved
-- caller: swop.scan.scanner._classify
-  callee: swop.scan.scanner._handler_target_from_method
-  call_type: resolved
-- caller: swop.scan.scanner._extract_fields
-  callee: swop.scan.scanner._unparse
-  call_type: resolved
-- caller: swop.scan.scanner._extract_fields
-  callee: swop.scan.scanner._render_default
-  call_type: resolved
-- caller: swop.scan.scanner._render_default
-  callee: swop.scan.scanner._unparse
   call_type: resolved
 - caller: swop.services.generator._write_context_package
   callee: swop.services.generator._safe_ident
@@ -996,7 +969,7 @@ edges:
   callee: swop.tools.doctor._first_version
   call_type: resolved
 - caller: swop.markpact.sync_engine.ManifestSyncEngine.check
-  callee: swop.markpact.sync_engine._hash
+  callee: project.map.toon._hash
   call_type: resolved
 - caller: swop.proto.generator.generate_proto_from_manifests
   callee: swop.proto.generator._iter_contexts
@@ -1065,19 +1038,238 @@ edges:
   callee: swop.cqrs.decorators._collect_source
   call_type: resolved
 - caller: swop.refactor.pipeline.RefactorPipeline._link_models_to_ui
-  callee: swop.refactor.pipeline._tokenize
+  callee: project.map.toon._tokenize
+  call_type: resolved
+- caller: swop.cli.main
+  callee: swop.cli._build_parser
+  call_type: resolved
+- caller: swop.scan.scanner._scan_file
+  callee: swop.scan.scanner._context_for_path
+  call_type: resolved
+- caller: swop.scan.scanner._scan_file
+  callee: swop.scan.scanner._extract_detections
+  call_type: resolved
+- caller: swop.scan.scanner.scan_project
+  callee: swop.scan.scanner._resolve_contexts
+  call_type: resolved
+- caller: swop.scan.scanner.scan_project
+  callee: swop.scan.scanner._iter_python_files
+  call_type: resolved
+- caller: swop.scan.scanner.scan_project
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.scan.scanner.scan_project
+  callee: swop.scan.scanner._scan_file
+  call_type: resolved
+- caller: swop.scan.scanner._iter_python_files
+  callee: swop.scan.scanner._matches_any
+  call_type: resolved
+- caller: swop.scan.scanner._extract_detections
+  callee: swop.scan.scanner._module_name_from_path
+  call_type: resolved
+- caller: swop.scan.scanner._extract_detections
+  callee: swop.scan.scanner._classify
+  call_type: resolved
+- caller: swop.scan.scanner._extract_detections
+  callee: swop.scan.scanner._extract_fields
+  call_type: resolved
+- caller: swop.scan.scanner._extract_detections
+  callee: swop.scan.scanner._handler_method_name
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._kind_by_suffix
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._kind_by_base
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._decorator_name
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._base_name
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._handler_target_from_method
+  call_type: resolved
+- caller: swop.scan.scanner._extract_fields
+  callee: swop.scan.scanner._unparse
+  call_type: resolved
+- caller: swop.scan.scanner._extract_fields
+  callee: swop.scan.scanner._render_default
+  call_type: resolved
+- caller: swop.scan.scanner._render_default
+  callee: swop.scan.scanner._unparse
+  call_type: resolved
+- caller: swop.commands._cmd_sync
+  callee: swop.commands._build_runtime
+  call_type: resolved
+- caller: swop.commands._cmd_inspect
+  callee: swop.commands._build_runtime
+  call_type: resolved
+- caller: swop.commands._cmd_inspect
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_diff
+  callee: swop.commands._build_runtime
+  call_type: resolved
+- caller: swop.commands._cmd_state
+  callee: swop.commands._build_runtime
+  call_type: resolved
+- caller: swop.commands._cmd_state
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_export
+  callee: swop.commands._build_runtime
+  call_type: resolved
+- caller: swop.commands._cmd_export
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_doctor
+  callee: project.map.toon.run_doctor
+  call_type: resolved
+- caller: swop.commands._cmd_doctor
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_init
+  callee: project.map.toon.init_project
+  call_type: resolved
+- caller: swop.commands._cmd_init
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_scan
+  callee: project.map.toon.scan_project
+  call_type: resolved
+- caller: swop.commands._cmd_scan
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.commands._cmd_scan
+  callee: project.map.toon.write_report
+  call_type: resolved
+- caller: swop.commands._cmd_scan
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_gen_manifests
+  callee: project.map.toon.scan_project
+  call_type: resolved
+- caller: swop.commands._cmd_gen_manifests
+  callee: project.map.toon.generate_manifests
+  call_type: resolved
+- caller: swop.commands._cmd_gen_manifests
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_gen_manifests
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.commands._cmd_gen_proto
+  callee: project.map.toon.generate_proto_from_manifests
+  call_type: resolved
+- caller: swop.commands._cmd_gen_proto
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_gen_proto
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.commands._cmd_gen_grpc_python
+  callee: project.map.toon.compile_proto_python
+  call_type: resolved
+- caller: swop.commands._cmd_gen_grpc_python
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_gen_grpc_python
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.commands._cmd_gen_grpc_ts
+  callee: project.map.toon.compile_proto_typescript
+  call_type: resolved
+- caller: swop.commands._cmd_gen_grpc_ts
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_gen_grpc_ts
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.commands._cmd_gen_services
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_gen_services
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.commands._cmd_watch
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_watch
+  callee: project.map.toon.rebuild_once
+  call_type: resolved
+- caller: swop.commands._cmd_watch
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.commands._cmd_resolve
+  callee: project.map.toon.scan_project
+  call_type: resolved
+- caller: swop.commands._cmd_resolve
+  callee: project.map.toon.resolve_schema_drift
+  call_type: resolved
+- caller: swop.commands._cmd_resolve
+  callee: project.map.toon.load_config
+  call_type: resolved
+- caller: swop.commands._cmd_resolve
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_resolve
+  callee: project.map.toon.apply_resolution
+  call_type: resolved
+- caller: swop.commands._cmd_refactor
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._generate_parse_manifest
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._generate_build_graph
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._generate_build_graph
+  callee: project.map.toon.build_project_graph
+  call_type: resolved
+- caller: swop.commands._generate_check_files
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._generate_update_from_disk
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._generate_sync_files
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._generate_outputs
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.commands._cmd_generate
+  callee: swop.commands._generate_parse_manifest
+  call_type: resolved
+- caller: swop.commands._cmd_generate
+  callee: swop.commands._generate_build_graph
+  call_type: resolved
+- caller: swop.commands._cmd_generate
+  callee: swop.commands._generate_check_files
+  call_type: resolved
+- caller: swop.commands._cmd_generate
+  callee: swop.commands._generate_update_from_disk
+  call_type: resolved
+- caller: swop.commands._cmd_generate
+  callee: swop.commands._generate_sync_files
+  call_type: resolved
+- caller: swop.commands._cmd_generate
+  callee: swop.commands._generate_outputs
   call_type: resolved
 - caller: swop.watch.engine.rebuild_once
-  callee: swop.scan.scanner.scan_project
+  callee: project.map.toon.scan_project
   call_type: resolved
 - caller: swop.watch.engine.rebuild_once
-  callee: swop.manifests.generator.generate_manifests
+  callee: project.map.toon.generate_manifests
   call_type: resolved
 - caller: swop.watch.engine.WatchEngine.poll_once
-  callee: swop.watch.engine._diff_snapshots
+  callee: project.map.toon._diff_snapshots
   call_type: resolved
 - caller: swop.watch.engine.WatchEngine.poll_once
-  callee: swop.watch.engine.rebuild_once
+  callee: project.map.toon.rebuild_once
   call_type: resolved
 - caller: swop.watch.engine.WatchEngine.run
   callee: examples.manifest.print
@@ -1089,38 +1281,68 @@ edges:
   callee: swop.resolve.resolver._index_from_manifests
   call_type: resolved
 - caller: swop.resolve.resolver.apply_resolution
-  callee: swop.manifests.generator.generate_manifests
+  callee: project.map.toon.generate_manifests
   call_type: resolved
 - caller: swop.resolve.resolver._index_from_detections
   callee: swop.resolve.resolver._handler_shape
   call_type: resolved
-- caller: swop.resolve.resolver._diff_entry
+- caller: swop.resolve.resolver._diff_metadata
   callee: swop.resolve.resolver._handler_sig
+  call_type: resolved
+- caller: swop.resolve.resolver._diff_entry
+  callee: swop.resolve.resolver._diff_fields
+  call_type: resolved
+- caller: swop.resolve.resolver._diff_entry
+  callee: swop.resolve.resolver._diff_metadata
   call_type: resolved
 modules:
   examples.manifest:
   - examples.manifest.print
+  project.map.toon:
+  - project.map.toon._diff_snapshots
+  - project.map.toon._hash
+  - project.map.toon._tokenize
+  - project.map.toon.apply_resolution
+  - project.map.toon.build_project_graph
+  - project.map.toon.compile_proto_python
+  - project.map.toon.compile_proto_typescript
+  - project.map.toon.generate_manifests
+  - project.map.toon.generate_proto_from_manifests
+  - project.map.toon.init_project
+  - project.map.toon.load_config
+  - project.map.toon.rebuild_once
+  - project.map.toon.resolve_schema_drift
+  - project.map.toon.run_doctor
+  - project.map.toon.scan_project
+  - project.map.toon.write_report
   swop.cli:
   - swop.cli._build_parser
-  - swop.cli._build_runtime
-  - swop.cli._cmd_diff
-  - swop.cli._cmd_doctor
-  - swop.cli._cmd_export
-  - swop.cli._cmd_gen_grpc_python
-  - swop.cli._cmd_gen_grpc_ts
-  - swop.cli._cmd_gen_manifests
-  - swop.cli._cmd_gen_proto
-  - swop.cli._cmd_gen_services
-  - swop.cli._cmd_generate
-  - swop.cli._cmd_init
-  - swop.cli._cmd_inspect
-  - swop.cli._cmd_refactor
-  - swop.cli._cmd_resolve
-  - swop.cli._cmd_scan
-  - swop.cli._cmd_state
-  - swop.cli._cmd_sync
-  - swop.cli._cmd_watch
   - swop.cli.main
+  swop.commands:
+  - swop.commands._build_runtime
+  - swop.commands._cmd_diff
+  - swop.commands._cmd_doctor
+  - swop.commands._cmd_export
+  - swop.commands._cmd_gen_grpc_python
+  - swop.commands._cmd_gen_grpc_ts
+  - swop.commands._cmd_gen_manifests
+  - swop.commands._cmd_gen_proto
+  - swop.commands._cmd_gen_services
+  - swop.commands._cmd_generate
+  - swop.commands._cmd_init
+  - swop.commands._cmd_inspect
+  - swop.commands._cmd_refactor
+  - swop.commands._cmd_resolve
+  - swop.commands._cmd_scan
+  - swop.commands._cmd_state
+  - swop.commands._cmd_sync
+  - swop.commands._cmd_watch
+  - swop.commands._generate_build_graph
+  - swop.commands._generate_check_files
+  - swop.commands._generate_outputs
+  - swop.commands._generate_parse_manifest
+  - swop.commands._generate_sync_files
+  - swop.commands._generate_update_from_disk
   swop.config:
   - swop.config._expand_env
   - swop.config._from_dict
@@ -1149,7 +1371,6 @@ modules:
   - swop.manifests.generator.generate_manifests
   swop.markpact.sync_engine:
   - swop.markpact.sync_engine.ManifestSyncEngine.check
-  - swop.markpact.sync_engine._hash
   swop.proto.compiler:
   - swop.proto.compiler._iter_proto_files
   - swop.proto.compiler._run
@@ -1168,9 +1389,10 @@ modules:
   - swop.reconcile.ResyncEngine._log_drift
   swop.refactor.pipeline:
   - swop.refactor.pipeline.RefactorPipeline._link_models_to_ui
-  - swop.refactor.pipeline._tokenize
   swop.resolve.resolver:
   - swop.resolve.resolver._diff_entry
+  - swop.resolve.resolver._diff_fields
+  - swop.resolve.resolver._diff_metadata
   - swop.resolve.resolver._handler_shape
   - swop.resolve.resolver._handler_sig
   - swop.resolve.resolver._index_from_detections
@@ -1184,6 +1406,7 @@ modules:
   swop.scan.scanner:
   - swop.scan.scanner._base_name
   - swop.scan.scanner._classify
+  - swop.scan.scanner._context_for_path
   - swop.scan.scanner._decorator_name
   - swop.scan.scanner._extract_detections
   - swop.scan.scanner._extract_fields
@@ -1196,6 +1419,7 @@ modules:
   - swop.scan.scanner._module_name_from_path
   - swop.scan.scanner._render_default
   - swop.scan.scanner._resolve_contexts
+  - swop.scan.scanner._scan_file
   - swop.scan.scanner._unparse
   - swop.scan.scanner.scan_project
   swop.services.generator:
@@ -1214,15 +1438,11 @@ modules:
   - swop.tools.doctor._check_binary
   - swop.tools.doctor._first_version
   - swop.tools.doctor._run_version
-  - swop.tools.doctor.run_doctor
-  swop.tools.init:
-  - swop.tools.init.init_project
   swop.versioning:
   - swop.versioning.Versioning.commit
   swop.watch.engine:
   - swop.watch.engine.WatchEngine.poll_once
   - swop.watch.engine.WatchEngine.run
-  - swop.watch.engine._diff_snapshots
   - swop.watch.engine.rebuild_once
 entry_points:
 - SUMD._annotation_is_optional
@@ -1349,6 +1569,7 @@ entry_points:
 - SUMD._write
 - SUMD._write_context_package
 - SUMD.apply_resolution
+- SUMD.build_project_graph
 - SUMD.compile_proto_python
 - SUMD.compile_proto_typescript
 - SUMD.create_reading
@@ -1588,7 +1809,6 @@ entry_points:
 - project.map.toon._default_bus_url
 - project.map.toon._diff_context_kind
 - project.map.toon._diff_entry
-- project.map.toon._diff_snapshots
 - project.map.toon._expand_env
 - project.map.toon._extract_decorator_context
 - project.map.toon._extract_decorator_emits
@@ -1603,7 +1823,6 @@ entry_points:
 - project.map.toon._handler_shape
 - project.map.toon._handler_sig
 - project.map.toon._handler_target_from_method
-- project.map.toon._hash
 - project.map.toon._index_from_detections
 - project.map.toon._index_from_manifests
 - project.map.toon._iter_contexts
@@ -1653,37 +1872,21 @@ entry_points:
 - project.map.toon._safe_ident
 - project.map.toon._scan
 - project.map.toon._service_name
-- project.map.toon._tokenize
 - project.map.toon._unparse
 - project.map.toon._write
 - project.map.toon._write_context_package
-- project.map.toon.apply_resolution
-- project.map.toon.build_project_graph
-- project.map.toon.compile_proto_python
-- project.map.toon.compile_proto_typescript
 - project.map.toon.create_reading
 - project.map.toon.customer_project
-- project.map.toon.generate_manifests
-- project.map.toon.generate_proto_from_manifests
-- project.map.toon.generate_services
 - project.map.toon.get_docstring
-- project.map.toon.get_registry
 - project.map.toon.handler
-- project.map.toon.init_project
 - project.map.toon.is_callable
 - project.map.toon.list_devices
-- project.map.toon.load_config
 - project.map.toon.main
 - project.map.toon.project
 - project.map.toon.project_with_manifests
-- project.map.toon.rebuild_once
 - project.map.toon.render_html
-- project.map.toon.render_json
 - project.map.toon.render_proto_for_context
 - project.map.toon.reset_registry
-- project.map.toon.resolve_schema_drift
-- project.map.toon.run_doctor
-- project.map.toon.scan_project
 - project.map.toon.stable_hash
 - project.map.toon.synthetic_project
 - project.map.toon.test_add_model_commits_version
@@ -1839,27 +2042,27 @@ entry_points:
 - project.map.toon.test_update_manifest_preserves_untracked_blocks
 - project.map.toon.test_update_manifest_reverse_sync
 - project.map.toon.tmp_manifest
-- project.map.toon.write_report
-- swop.cli._cmd_diff
-- swop.cli._cmd_doctor
-- swop.cli._cmd_export
-- swop.cli._cmd_gen_grpc_python
-- swop.cli._cmd_gen_grpc_ts
-- swop.cli._cmd_gen_manifests
-- swop.cli._cmd_gen_proto
-- swop.cli._cmd_gen_services
-- swop.cli._cmd_generate
-- swop.cli._cmd_init
-- swop.cli._cmd_inspect
-- swop.cli._cmd_refactor
-- swop.cli._cmd_resolve
-- swop.cli._cmd_scan
-- swop.cli._cmd_state
-- swop.cli._cmd_sync
-- swop.cli._cmd_watch
 - swop.cli.main
+- swop.commands._cmd_diff
+- swop.commands._cmd_doctor
+- swop.commands._cmd_export
+- swop.commands._cmd_gen_grpc_python
+- swop.commands._cmd_gen_grpc_ts
+- swop.commands._cmd_gen_manifests
+- swop.commands._cmd_gen_proto
+- swop.commands._cmd_gen_services
+- swop.commands._cmd_generate
+- swop.commands._cmd_init
+- swop.commands._cmd_inspect
+- swop.commands._cmd_refactor
+- swop.commands._cmd_resolve
+- swop.commands._cmd_scan
+- swop.commands._cmd_state
+- swop.commands._cmd_sync
+- swop.commands._cmd_watch
 - swop.config.SwopConfig.context
 - swop.config.SwopConfig.iter_source_roots
+- swop.config.load_config
 - swop.core.SwopRuntime.__init__
 - swop.core.SwopRuntime.add_model
 - swop.core.SwopRuntime.add_service
@@ -1880,6 +2083,7 @@ entry_points:
 - swop.cqrs.registry.CqrsRegistry.of_kind
 - swop.cqrs.registry.CqrsRegistry.register
 - swop.cqrs.registry.CqrsRegistry.summary
+- swop.cqrs.registry.get_registry
 - swop.cqrs.registry.reset_registry
 - swop.export.docker.DockerExporter.export_yaml
 - swop.export.docker.DockerExporter.to_dict
@@ -1893,9 +2097,27 @@ entry_points:
 - swop.introspect.frontend.FrontendIntrospector.introspect
 - swop.manifests.generator.ManifestGenerationResult.by_context
 - swop.manifests.generator.ManifestGenerationResult.format
+- swop.manifests.generator.generate_manifests
 - swop.markpact.doql_bridge.DoqlBridge.__init__
 - swop.markpact.doql_bridge.DoqlBridge._build_minimal_spec
 - swop.markpact.doql_bridge.DoqlBridge._build_spec
+- swop.markpact.doql_bridge.DoqlBridge._load_api_clients
+- swop.markpact.doql_bridge.DoqlBridge._load_ci_configs
+- swop.markpact.doql_bridge.DoqlBridge._load_data_sources
+- swop.markpact.doql_bridge.DoqlBridge._load_databases
+- swop.markpact.doql_bridge.DoqlBridge._load_deploy
+- swop.markpact.doql_bridge.DoqlBridge._load_documents
+- swop.markpact.doql_bridge.DoqlBridge._load_entities
+- swop.markpact.doql_bridge.DoqlBridge._load_environments
+- swop.markpact.doql_bridge.DoqlBridge._load_infrastructures
+- swop.markpact.doql_bridge.DoqlBridge._load_ingresses
+- swop.markpact.doql_bridge.DoqlBridge._load_integrations
+- swop.markpact.doql_bridge.DoqlBridge._load_interfaces
+- swop.markpact.doql_bridge.DoqlBridge._load_reports
+- swop.markpact.doql_bridge.DoqlBridge._load_roles
+- swop.markpact.doql_bridge.DoqlBridge._load_templates
+- swop.markpact.doql_bridge.DoqlBridge._load_webhooks
+- swop.markpact.doql_bridge.DoqlBridge._load_workflows
 - swop.markpact.doql_bridge.DoqlBridge._merge_fragment
 - swop.markpact.doql_bridge.DoqlBridge._parse_block
 - swop.markpact.doql_bridge.DoqlBridge._try_import_doql
@@ -1921,8 +2143,12 @@ entry_points:
 - swop.markpact.sync_engine.ManifestSyncEngine.sync_from_disk
 - swop.markpact.sync_engine.ManifestSyncEngine.sync_to_disk
 - swop.markpact.sync_engine.ManifestSyncEngine.update_manifest
+- swop.markpact.sync_engine._hash
 - swop.proto.compiler.CompilationResult.format
+- swop.proto.compiler.compile_proto_python
+- swop.proto.compiler.compile_proto_typescript
 - swop.proto.generator.ProtoGenerationResult.format
+- swop.proto.generator.generate_proto_from_manifests
 - swop.reconcile.Drift.exists
 - swop.reconcile.DriftDetector.compute
 - swop.reconcile.ResyncEngine.__init__
@@ -1954,7 +2180,9 @@ entry_points:
 - swop.refactor.pipeline.RefactorPipeline._seed_nodes
 - swop.refactor.pipeline.RefactorPipeline.run
 - swop.refactor.pipeline.RefactorResult.summary
+- swop.refactor.pipeline._tokenize
 - swop.refactor.scanner.backend.BackendScanner.__init__
+- swop.refactor.scanner.backend.BackendScanner._extract_model_fields
 - swop.refactor.scanner.backend.BackendScanner._extract_models
 - swop.refactor.scanner.backend.BackendScanner._extract_routes
 - swop.refactor.scanner.backend.BackendScanner._iter_py
@@ -1975,6 +2203,8 @@ entry_points:
 - swop.resolve.resolver.ResolutionReport.counts
 - swop.resolve.resolver.ResolutionReport.format
 - swop.resolve.resolver.ResolutionReport.to_json
+- swop.resolve.resolver.apply_resolution
+- swop.resolve.resolver.resolve_schema_drift
 - swop.scan.cache.FingerprintCache.__contains__
 - swop.scan.cache.FingerprintCache.__init__
 - swop.scan.cache.FingerprintCache.__len__
@@ -1985,6 +2215,7 @@ entry_points:
 - swop.scan.cache.FingerprintCache.prune
 - swop.scan.cache.FingerprintCache.put
 - swop.scan.cache.FingerprintCache.save
+- swop.scan.render.write_report
 - swop.scan.report.ContextSummary.add
 - swop.scan.report.Detection.from_dict
 - swop.scan.report.Detection.to_dict
@@ -1996,14 +2227,18 @@ entry_points:
 - swop.scan.report.ScanReport.of_kind
 - swop.scan.report.ScanReport.to_dict
 - swop.scan.report.ScanReport.via
+- swop.scan.scanner.scan_project
 - swop.services.generator.ServiceGenerationResult.format
+- swop.services.generator.generate_services
 - swop.sync.SyncEngine.frontend_to_graph
 - swop.sync.SyncEngine.merge_backend
 - swop.sync.SyncEngine.merge_frontend
 - swop.tools.doctor.DoctorCheck.format
 - swop.tools.doctor.DoctorReport.format
 - swop.tools.doctor._check_swop
+- swop.tools.doctor.run_doctor
 - swop.tools.init.InitResult.format
+- swop.tools.init.init_project
 - swop.utils.get_docstring
 - swop.utils.is_callable
 - swop.utils.stable_hash
@@ -2013,3 +2248,5 @@ entry_points:
 - swop.watch.engine.WatchEngine.run
 - swop.watch.engine.WatchEngine.snapshot
 - swop.watch.engine.WatchRebuild.format
+- swop.watch.engine._diff_snapshots
+- swop.watch.engine.rebuild_once

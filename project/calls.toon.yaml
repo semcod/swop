@@ -1,5 +1,5 @@
 # code2llm call graph | /home/tom/github/semcod/inspect
-# nodes: 107 | edges: 114 | modules: 19
+# nodes: 128 | edges: 131 | modules: 20
 # CC̄=1.4
 
 HUBS[20]:
@@ -7,57 +7,71 @@ HUBS[20]:
     CC=1  in:1  out:115  total:116
   examples.manifest.print
     CC=0  in:67  out:0  total:67
-  swop.resolve.resolver._diff_entry
-    CC=21  in:1  out:61  total:62
-  swop.cli._cmd_generate
-    CC=38  in:0  out:58  total:58
+  swop.resolve.resolver._diff_fields
+    CC=11  in:1  out:43  total:44
   swop.proto.generator.render_proto_for_context
     CC=12  in:1  out:43  total:44
-  swop.scan.scanner.scan_project
-    CC=22  in:4  out:31  total:35
   swop.proto.generator._map_python_type
     CC=15  in:3  out:25  total:28
-  swop.tools.init.init_project
-    CC=14  in:1  out:25  total:26
   swop.config._from_dict
     CC=8  in:1  out:25  total:26
   swop.scan.render.render_html
     CC=8  in:1  out:25  total:26
+  swop.commands._generate_build_graph
+    CC=14  in:1  out:22  total:23
   swop.proto.compiler.compile_proto_typescript
-    CC=10  in:1  out:23  total:24
+    CC=10  in:0  out:23  total:23
   swop.resolve.resolver._index_from_manifests
     CC=15  in:1  out:21  total:22
-  swop.proto.compiler.compile_proto_python
-    CC=8  in:1  out:21  total:22
-  swop.proto.generator.generate_proto_from_manifests
-    CC=8  in:1  out:20  total:21
   swop.services.generator._write_context_package
     CC=7  in:1  out:20  total:21
-  swop.config.load_config
-    CC=6  in:9  out:12  total:21
-  swop.cli._cmd_scan
+  swop.proto.compiler.compile_proto_python
+    CC=8  in:0  out:21  total:21
+  swop.scan.scanner._scan_file
+    CC=13  in:1  out:20  total:21
+  swop.commands._cmd_scan
     CC=14  in:0  out:20  total:20
+  swop.proto.generator.generate_proto_from_manifests
+    CC=8  in:0  out:20  total:20
   swop.scan.scanner._extract_fields
     CC=15  in:1  out:18  total:19
-  swop.cli._cmd_watch
+  swop.commands._cmd_watch
     CC=6  in:0  out:19  total:19
-  swop.tools.doctor.run_doctor
-    CC=2  in:1  out:17  total:18
+  swop.resolve.resolver._diff_metadata
+    CC=9  in:1  out:16  total:17
+  swop.scan.scanner._classify
+    CC=18  in:1  out:15  total:16
+  swop.commands._cmd_refactor
+    CC=7  in:0  out:16  total:16
 
 MODULES:
   examples.manifest  [1 funcs]
     print  CC=0  out:0
-  swop.cli  [20 funcs]
+  project.map.toon  [16 funcs]
+    _diff_snapshots  CC=0  out:0
+    _hash  CC=0  out:0
+    _tokenize  CC=0  out:0
+    apply_resolution  CC=0  out:0
+    build_project_graph  CC=0  out:0
+    compile_proto_python  CC=0  out:0
+    compile_proto_typescript  CC=0  out:0
+    generate_manifests  CC=0  out:0
+    generate_proto_from_manifests  CC=0  out:0
+    init_project  CC=0  out:0
+  swop.cli  [2 funcs]
     _build_parser  CC=1  out:115
+    main  CC=1  out:3
+  swop.commands  [24 funcs]
     _build_runtime  CC=1  out:4
     _cmd_diff  CC=2  out:3
     _cmd_doctor  CC=3  out:6
     _cmd_export  CC=2  out:4
     _cmd_gen_grpc_python  CC=7  out:11
     _cmd_gen_grpc_ts  CC=7  out:11
-    _cmd_gen_manifests  CC=9  out:11
+    _cmd_gen_manifests  CC=8  out:11
     _cmd_gen_proto  CC=7  out:13
     _cmd_gen_services  CC=12  out:16
+    _cmd_generate  CC=7  out:11
   swop.config  [7 funcs]
     _expand_env  CC=6  out:10
     _from_dict  CC=8  out:25
@@ -84,9 +98,8 @@ MODULES:
     _render_source  CC=2  out:0
     _safe_dirname  CC=2  out:3
     generate_manifests  CC=10  out:11
-  swop.markpact.sync_engine  [2 funcs]
+  swop.markpact.sync_engine  [1 funcs]
     check  CC=7  out:11
-    _hash  CC=1  out:3
   swop.proto.compiler  [4 funcs]
     _iter_proto_files  CC=1  out:3
     _run  CC=2  out:3
@@ -103,11 +116,12 @@ MODULES:
   swop.reconcile  [2 funcs]
     _auto_heal  CC=4  out:2
     _log_drift  CC=1  out:6
-  swop.refactor.pipeline  [2 funcs]
+  swop.refactor.pipeline  [1 funcs]
     _link_models_to_ui  CC=8  out:7
-    _tokenize  CC=4  out:4
-  swop.resolve.resolver  [7 funcs]
-    _diff_entry  CC=21  out:61
+  swop.resolve.resolver  [9 funcs]
+    _diff_entry  CC=3  out:4
+    _diff_fields  CC=11  out:43
+    _diff_metadata  CC=9  out:16
     _handler_shape  CC=3  out:0
     _handler_sig  CC=8  out:4
     _index_from_detections  CC=10  out:6
@@ -118,9 +132,10 @@ MODULES:
     render_html  CC=8  out:25
     render_json  CC=2  out:2
     write_report  CC=3  out:8
-  swop.scan.scanner  [16 funcs]
+  swop.scan.scanner  [18 funcs]
     _base_name  CC=3  out:2
     _classify  CC=18  out:15
+    _context_for_path  CC=8  out:4
     _decorator_name  CC=4  out:4
     _extract_detections  CC=7  out:7
     _extract_fields  CC=15  out:18
@@ -128,7 +143,6 @@ MODULES:
     _handler_target_from_method  CC=11  out:5
     _iter_python_files  CC=10  out:11
     _kind_by_base  CC=3  out:0
-    _kind_by_suffix  CC=4  out:1
   swop.services.generator  [11 funcs]
     _camel  CC=4  out:3
     _default_bus_url  CC=1  out:1
@@ -140,19 +154,15 @@ MODULES:
     _render_server  CC=7  out:9
     _render_worker  CC=2  out:0
     _safe_ident  CC=3  out:3
-  swop.tools.doctor  [4 funcs]
+  swop.tools.doctor  [3 funcs]
     _check_binary  CC=4  out:5
     _first_version  CC=3  out:2
     _run_version  CC=5  out:3
-    run_doctor  CC=2  out:17
-  swop.tools.init  [1 funcs]
-    init_project  CC=14  out:25
   swop.versioning  [1 funcs]
     commit  CC=1  out:4
-  swop.watch.engine  [4 funcs]
+  swop.watch.engine  [3 funcs]
     poll_once  CC=5  out:7
     run  CC=9  out:5
-    _diff_snapshots  CC=5  out:6
     rebuild_once  CC=2  out:6
 
 EDGES:
@@ -163,46 +173,46 @@ EDGES:
   swop.config.load_config → swop.config._expand_env
   swop.reconcile.ResyncEngine._auto_heal → examples.manifest.print
   swop.reconcile.ResyncEngine._log_drift → examples.manifest.print
-  swop.cli._cmd_sync → swop.cli._build_runtime
-  swop.cli._cmd_inspect → swop.cli._build_runtime
-  swop.cli._cmd_inspect → examples.manifest.print
-  swop.cli._cmd_diff → swop.cli._build_runtime
-  swop.cli._cmd_state → swop.cli._build_runtime
-  swop.cli._cmd_state → examples.manifest.print
-  swop.cli._cmd_export → swop.cli._build_runtime
-  swop.cli._cmd_export → examples.manifest.print
-  swop.cli._cmd_doctor → swop.tools.doctor.run_doctor
-  swop.cli._cmd_doctor → examples.manifest.print
-  swop.cli._cmd_init → swop.tools.init.init_project
-  swop.cli._cmd_init → examples.manifest.print
-  swop.cli._cmd_scan → swop.scan.scanner.scan_project
-  swop.cli._cmd_scan → swop.config.load_config
-  swop.cli._cmd_scan → swop.scan.render.write_report
-  swop.cli._cmd_scan → examples.manifest.print
-  swop.cli._cmd_gen_manifests → swop.scan.scanner.scan_project
-  swop.cli._cmd_gen_manifests → swop.manifests.generator.generate_manifests
-  swop.cli._cmd_gen_manifests → examples.manifest.print
-  swop.cli._cmd_gen_manifests → swop.config.load_config
-  swop.cli._cmd_gen_proto → swop.proto.generator.generate_proto_from_manifests
-  swop.cli._cmd_gen_proto → examples.manifest.print
-  swop.cli._cmd_gen_proto → swop.config.load_config
-  swop.cli._cmd_gen_grpc_python → swop.proto.compiler.compile_proto_python
-  swop.cli._cmd_gen_grpc_python → examples.manifest.print
-  swop.cli._cmd_gen_grpc_python → swop.config.load_config
-  swop.cli._cmd_gen_grpc_ts → swop.proto.compiler.compile_proto_typescript
-  swop.cli._cmd_gen_grpc_ts → examples.manifest.print
-  swop.cli._cmd_gen_grpc_ts → swop.config.load_config
-  swop.cli._cmd_gen_services → examples.manifest.print
-  swop.cli._cmd_gen_services → swop.config.load_config
-  swop.cli._cmd_watch → examples.manifest.print
-  swop.cli._cmd_watch → swop.watch.engine.rebuild_once
-  swop.cli._cmd_watch → swop.config.load_config
-  swop.cli._cmd_resolve → swop.scan.scanner.scan_project
-  swop.cli._cmd_resolve → swop.resolve.resolver.resolve_schema_drift
-  swop.cli._cmd_resolve → swop.config.load_config
-  swop.cli._cmd_resolve → examples.manifest.print
-  swop.cli._cmd_resolve → swop.resolve.resolver.apply_resolution
-  swop.cli._cmd_refactor → examples.manifest.print
-  swop.cli._cmd_generate → examples.manifest.print
-  swop.cli.main → swop.cli._build_parser
   swop.versioning.Versioning.commit → examples.manifest.print
+  swop.core.SwopRuntime.run_sync → examples.manifest.print
+  swop.scan.render.write_report → swop.scan.render.render_json
+  swop.scan.render.write_report → swop.scan.render.render_html
+  swop.services.generator._write_context_package → swop.services.generator._safe_ident
+  swop.services.generator._write_context_package → swop.services.generator._camel
+  swop.services.generator._write_context_package → swop.services.generator._render_init
+  swop.services.generator._write_context_package → swop.services.generator._render_worker
+  swop.services.generator._write_context_package → swop.services.generator._render_server
+  swop.services.generator._write_context_package → swop.services.generator._render_publisher
+  swop.services.generator._write_context_package → swop.services.generator._render_requirements
+  swop.services.generator._write_context_package → swop.services.generator._render_dockerfile
+  swop.services.generator._render_compose → swop.services.generator._default_bus_url
+  swop.tools.doctor._check_binary → swop.tools.doctor._run_version
+  swop.tools.doctor._check_binary → swop.tools.doctor._first_version
+  swop.markpact.sync_engine.ManifestSyncEngine.check → project.map.toon._hash
+  swop.proto.generator.generate_proto_from_manifests → swop.proto.generator._iter_contexts
+  swop.proto.generator.generate_proto_from_manifests → swop.proto.generator._load_manifest
+  swop.proto.generator.generate_proto_from_manifests → swop.proto.generator.render_proto_for_context
+  swop.proto.generator.render_proto_for_context → swop.proto.generator._render_message
+  swop.proto.generator._render_message → swop.proto.generator._safe_ident
+  swop.proto.generator._render_message → swop.proto.generator._map_python_type
+  swop.proto.compiler.compile_proto_python → swop.proto.compiler._iter_proto_files
+  swop.proto.compiler.compile_proto_typescript → swop.proto.compiler._iter_proto_files
+  swop.proto.compiler.compile_proto_typescript → swop.proto.compiler._run
+  swop.manifests.generator.generate_manifests → swop.manifests.generator._handler_index
+  swop.manifests.generator.generate_manifests → swop.manifests.generator._safe_dirname
+  swop.manifests.generator.generate_manifests → swop.manifests.generator._render_manifest
+  swop.manifests.generator._render_manifest → swop.manifests.generator._render_entry
+  swop.manifests.generator._render_entry → swop.manifests.generator._render_source
+  swop.manifests.generator._render_entry → swop.manifests.generator._render_bus
+  swop.manifests.generator._render_entry → swop.manifests.generator._render_field
+  swop.manifests.generator._render_entry → swop.manifests.generator._render_handler
+  swop.manifests.generator._render_bus → swop.manifests.generator._safe_dirname
+  swop.manifests.generator._render_bus → swop.manifests.generator._camel_to_dot
+  swop.cqrs.decorators._make_decorator → swop.cqrs.decorators._normalize_emits
+  swop.cqrs.decorators._make_decorator → swop.cqrs.decorators._collect_source
+  swop.cqrs.decorators.handler → swop.cqrs.decorators._collect_source
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui → project.map.toon._tokenize
+  swop.cli.main → swop.cli._build_parser
+  swop.scan.scanner._scan_file → swop.scan.scanner._context_for_path
+  swop.scan.scanner._scan_file → swop.scan.scanner._extract_detections
+  swop.scan.scanner.scan_project → swop.scan.scanner._resolve_contexts

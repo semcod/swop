@@ -1,16 +1,17 @@
-# inspect | 71f 12176L | python:68,shell:2,less:1 | 2026-04-22
-# stats: 316 func | 94 cls | 71 mod | CC̄=4.8 | critical:33 | cycles:0
-# alerts[5]: CC _cmd_generate=38; CC scan_project=22; CC _diff_entry=21; CC test_render_proto_for_context_builds_expected_shape=20; CC _classify=18
-# hotspots[5]: scan_project fan=26; _cmd_generate fan=24; build_project_graph fan=19; generate_services fan=19; _write_context_package fan=18
+# inspect | 73f 12364L | python:70,shell:2,less:1 | 2026-04-22
+# stats: 325 func | 94 cls | 73 mod | CC̄=4.7 | critical:34 | cycles:0
+# alerts[5]: CC test_render_proto_for_context_builds_expected_shape=20; CC _classify=18; CC test_manifest_yaml_shape_for_command=18; CC _map_python_type=15; CC _index_from_manifests=15
+# hotspots[5]: build_project_graph fan=19; generate_services fan=19; _write_context_package fan=18; _scan_file fan=16; compile_proto_python fan=14
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[71]:
+M[73]:
   app.doql.less,60
   examples/src/api.py,12
   examples/src/models.py,16
   project.sh,36
   swop/__init__.py,150
-  swop/cli.py,880
+  swop/cli.py,460
+  swop/commands.py,473
   swop/config.py,210
   swop/core.py,106
   swop/cqrs/__init__.py,29
@@ -26,9 +27,10 @@ M[71]:
   swop/manifests/__init__.py,24
   swop/manifests/generator.py,245
   swop/markpact/__init__.py,28
-  swop/markpact/doql_bridge.py,625
+  swop/markpact/doql_bridge.py,507
   swop/markpact/graph_builder.py,532
   swop/markpact/parser.py,142
+  swop/markpact/spec_models.py,213
   swop/markpact/sync_engine.py,202
   swop/proto/__init__.py,31
   swop/proto/compiler.py,208
@@ -41,16 +43,16 @@ M[71]:
   swop/refactor/module_builder.py,190
   swop/refactor/pipeline.py,285
   swop/refactor/scanner/__init__.py,8
-  swop/refactor/scanner/backend.py,151
+  swop/refactor/scanner/backend.py,157
   swop/refactor/scanner/db.py,54
   swop/refactor/scanner/frontend.py,129
   swop/resolve/__init__.py,35
-  swop/resolve/resolver.py,436
+  swop/resolve/resolver.py,457
   swop/scan/__init__.py,33
   swop/scan/cache.py,112
   swop/scan/render.py,142
   swop/scan/report.py,210
-  swop/scan/scanner.py,548
+  swop/scan/scanner.py,560
   swop/services/__init__.py,31
   swop/services/generator.py,687
   swop/sync.py,48
@@ -60,7 +62,7 @@ M[71]:
   swop/utils.py,24
   swop/versioning.py,26
   swop/watch/__init__.py,18
-  swop/watch/engine.py,212
+  swop/watch/engine.py,213
   tests/__init__.py,4
   tests/test_cli.py,27
   tests/test_config.py,128
@@ -87,7 +89,11 @@ D:
     Reading:
   swop/__init__.py:
   swop/cli.py:
-    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_cmd_doctor,_cmd_init,_cmd_scan,_cmd_gen_manifests,_cmd_gen_proto,_cmd_gen_grpc_python,_cmd_gen_grpc_ts,_cmd_gen_services,_cmd_watch,_cmd_resolve,_cmd_refactor,_cmd_generate,_build_parser,main
+    e: _build_parser,main
+    _build_parser()
+    main(argv)
+  swop/commands.py:
+    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_cmd_doctor,_cmd_init,_cmd_scan,_cmd_gen_manifests,_cmd_gen_proto,_cmd_gen_grpc_python,_cmd_gen_grpc_ts,_cmd_gen_services,_cmd_watch,_cmd_resolve,_cmd_refactor,_generate_parse_manifest,_generate_build_graph,_generate_check_files,_generate_update_from_disk,_generate_sync_files,_generate_outputs,_cmd_generate
     _build_runtime(mode)
     _cmd_sync(args)
     _cmd_inspect(args)
@@ -105,9 +111,13 @@ D:
     _cmd_watch(args)
     _cmd_resolve(args)
     _cmd_refactor(args)
+    _generate_parse_manifest(args)
+    _generate_build_graph(blocks;args)
+    _generate_check_files(manifest_path;args)
+    _generate_update_from_disk(manifest_path;args)
+    _generate_sync_files(manifest_path;args)
+    _generate_outputs(runtime;args)
     _cmd_generate(args)
-    _build_parser()
-    main(argv)
   swop/config.py:
     e: _expand_env,_pop_known,_parse_context,_parse_bus,_parse_read_models,load_config,_from_dict,SwopConfigError,BoundedContextConfig,BusConfig,ReadModelConfig,SwopConfig
     SwopConfigError:  # Raised when ``swop.yaml`` is malformed.
@@ -177,29 +187,9 @@ D:
     _safe_dirname(name)
   swop/markpact/__init__.py:
   swop/markpact/doql_bridge.py:
-    e: _MinimalEntityField,_MinimalEntity,_MinimalInterface,_MinimalDatabase,_MinimalDeploy,_MinimalWorkflowStep,_MinimalWorkflow,_MinimalRole,_MinimalIntegration,_MinimalWebhook,_MinimalApiClient,_MinimalEnvironment,_MinimalInfrastructure,_MinimalIngress,_MinimalCiConfig,_MinimalDataSource,_MinimalTemplate,_MinimalDocument,_MinimalReport,_MinimalDoqlSpec,MarkpactValidationError,DoqlBridge
-    _MinimalEntityField:
-    _MinimalEntity:
-    _MinimalInterface:
-    _MinimalDatabase:
-    _MinimalDeploy:
-    _MinimalWorkflowStep:
-    _MinimalWorkflow:
-    _MinimalRole:
-    _MinimalIntegration:
-    _MinimalWebhook:
-    _MinimalApiClient:
-    _MinimalEnvironment:
-    _MinimalInfrastructure:
-    _MinimalIngress:
-    _MinimalCiConfig:
-    _MinimalDataSource:
-    _MinimalTemplate:
-    _MinimalDocument:
-    _MinimalReport:
-    _MinimalDoqlSpec:
+    e: MarkpactValidationError,DoqlBridge
     MarkpactValidationError: __init__(2)  # Raised when a manifest block cannot be parsed into a DOQL sp
-    DoqlBridge: __init__(0),_try_import_doql(0),from_blocks(1),_parse_block(1),_merge_fragment(2),_build_spec(1),_build_minimal_spec(1),from_file(1),from_files(1),from_text(1)  # Convert a collection of ``ManifestBlock`` objects into a Doq
+    DoqlBridge: __init__(0),_try_import_doql(0),from_blocks(1),_parse_block(1),_merge_fragment(2),_build_spec(1),_load_entities(2),_load_databases(2),_load_interfaces(2),_load_workflows(2),_load_roles(2),_load_integrations(2),_load_webhooks(2),_load_api_clients(2),_load_data_sources(2),_load_templates(2),_load_documents(2),_load_reports(2),_load_environments(2),_load_infrastructures(2),_load_ingresses(2),_load_ci_configs(2),_load_deploy(2),_build_minimal_spec(1),from_file(1),from_files(1),from_text(1)  # Convert a collection of ``ManifestBlock`` objects into a Doq
   swop/markpact/graph_builder.py:
     e: build_project_graph,_build_models,_build_services,_build_ui_bindings,_build_databases,_build_workflows,_build_roles,_build_integrations,_build_webhooks,_build_api_clients,_build_environments,_build_infrastructures,_build_ingresses,_build_ci_configs,_build_data_sources,_build_templates,_build_documents,_build_reports,_build_deploy
     build_project_graph(spec)
@@ -225,6 +215,28 @@ D:
     e: ManifestBlock,ManifestParser
     ManifestBlock: get_meta_value(1),as_yaml(0),as_json(0)
     ManifestParser: __init__(1),parse_file(1),parse(1),parse_by_kind(2),parse_doql_blocks(1),parse_graph_blocks(1),parse_file_blocks(1),parse_config_blocks(1)  # Parse markpact blocks from markdown manifests.
+  swop/markpact/spec_models.py:
+    e: MinimalEntityField,MinimalEntity,MinimalInterface,MinimalDatabase,MinimalDeploy,MinimalWorkflowStep,MinimalWorkflow,MinimalRole,MinimalIntegration,MinimalWebhook,MinimalApiClient,MinimalEnvironment,MinimalInfrastructure,MinimalIngress,MinimalCiConfig,MinimalDataSource,MinimalTemplate,MinimalDocument,MinimalReport,MinimalDoqlSpec
+    MinimalEntityField:
+    MinimalEntity:
+    MinimalInterface:
+    MinimalDatabase:
+    MinimalDeploy:
+    MinimalWorkflowStep:
+    MinimalWorkflow:
+    MinimalRole:
+    MinimalIntegration:
+    MinimalWebhook:
+    MinimalApiClient:
+    MinimalEnvironment:
+    MinimalInfrastructure:
+    MinimalIngress:
+    MinimalCiConfig:
+    MinimalDataSource:
+    MinimalTemplate:
+    MinimalDocument:
+    MinimalReport:
+    MinimalDoqlSpec:
   swop/markpact/sync_engine.py:
     e: _hash,SyncStatus,ManifestSyncEngine
     SyncStatus:
@@ -290,7 +302,7 @@ D:
     ModelSignals:
     RouteSignals:
     BackendSignals:
-    BackendScanner: __init__(4),_iter_py(1),scan(0),_extract_models(1),_looks_like_model(1),_extract_routes(1)  # Scan a Python backend root for models and routes.
+    BackendScanner: __init__(4),_iter_py(1),scan(0),_extract_model_fields(1),_extract_models(1),_looks_like_model(1),_extract_routes(1)  # Scan a Python backend root for models and routes.
   swop/refactor/scanner/db.py:
     e: DbSignals,DbScanner
     DbSignals:
@@ -301,7 +313,7 @@ D:
     FrontendScanner: __init__(3),_pages_root(0),iter_pages(0),scan(0),scan_file(1),find_pages_for_route(1),_route_token(1),_slug_for(1)  # Scan a frontend project root and emit ``PageSignals`` per pa
   swop/resolve/__init__.py:
   swop/resolve/resolver.py:
-    e: resolve_schema_drift,apply_resolution,_index_from_detections,_handler_shape,_index_from_manifests,_diff_context_kind,_diff_entry,_field_signature,_handler_sig,ChangeKind,Change,ResolutionReport
+    e: resolve_schema_drift,apply_resolution,_index_from_detections,_handler_shape,_index_from_manifests,_diff_context_kind,_diff_fields,_diff_metadata,_diff_entry,_field_signature,_handler_sig,ChangeKind,Change,ResolutionReport
     ChangeKind:
     Change: format(0)
     ResolutionReport: breaking(0),non_breaking(0),counts(0),to_json(0),format(0)
@@ -311,6 +323,8 @@ D:
     _handler_shape(det)
     _index_from_manifests(manifests_root)
     _diff_context_kind(context;kind;current;stored;resolution)
+    _diff_fields(context;kind;name;old_fields;new_fields;resolution)
+    _diff_metadata(context;kind;name;old;new;resolution)
     _diff_entry(context;kind;name;old;new;resolution)
     _field_signature(entry)
     _handler_sig(handler)
@@ -331,7 +345,8 @@ D:
     ContextSummary: add(1),total(0)
     ScanReport: add(1),kinds(0),via(0),of_kind(1),of_context(1),to_dict(0),format_text(0)
   swop/scan/scanner.py:
-    e: scan_project,_new_ctx_summary,_resolve_contexts,_iter_python_files,_matches_any,_context_for_path,_extract_detections,_module_name_from_path,_decorator_name,_base_name,_extract_decorator_emits,_extract_decorator_context,_extract_handler_target,_classify,_kind_by_suffix,_kind_by_base,_handler_target_from_method,_handler_method_name,_extract_fields,_unparse,_render_default,_annotation_is_optional
+    e: _scan_file,scan_project,_new_ctx_summary,_resolve_contexts,_iter_python_files,_matches_any,_context_for_path,_extract_detections,_module_name_from_path,_decorator_name,_base_name,_extract_decorator_emits,_extract_decorator_context,_extract_handler_target,_classify,_kind_by_suffix,_kind_by_base,_handler_target_from_method,_handler_method_name,_extract_fields,_unparse,_render_default,_annotation_is_optional
+    _scan_file(py_path;project_root;config;contexts;cache;incremental;report)
     scan_project(config)
     _new_ctx_summary(name)
     _resolve_contexts(config)
