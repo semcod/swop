@@ -3,7 +3,7 @@ Tests for core module
 """
 
 import inspect as pkg_inspect
-from inspector.core import inspect_object, get_signature
+from swop.core import inspect_object, get_signature
 
 
 def test_inspect_object():
