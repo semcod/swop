@@ -6,8 +6,31 @@ flowchart TD
         SUMD___cmd_diff["_cmd_diff"]
         SUMD___cmd_state["_cmd_state"]
         SUMD___cmd_export["_cmd_export"]
+        SUMD___cmd_refactor["_cmd_refactor"]
+        SUMD___cmd_generate["_cmd_generate"]
         SUMD___build_parser["_build_parser"]
         SUMD__main["main"]
+        SUMD__build_project_graph["build_project_graph"]
+        SUMD___build_models["_build_models"]
+        SUMD___build_services["_build_services"]
+        SUMD___build_ui_bindings["_build_ui_bindings"]
+        SUMD___build_databases["_build_databases"]
+        SUMD___build_workflows["_build_workflows"]
+        SUMD___build_roles["_build_roles"]
+        SUMD___build_integrations["_build_integrations"]
+        SUMD___build_webhooks["_build_webhooks"]
+        SUMD___build_api_clients["_build_api_clients"]
+        SUMD___build_environments["_build_environments"]
+        SUMD___build_infrastructures["_build_infrastructures"]
+        SUMD___build_ingresses["_build_ingresses"]
+        SUMD___build_ci_configs["_build_ci_configs"]
+        SUMD___build_data_sources["_build_data_sources"]
+        SUMD___build_templates["_build_templates"]
+        SUMD___build_documents["_build_documents"]
+        SUMD___build_reports["_build_reports"]
+        SUMD___build_deploy["_build_deploy"]
+        SUMD___hash["_hash"]
+        SUMD___tokenize["_tokenize"]
         SUMD__stable_hash["stable_hash"]
         SUMD__is_callable["is_callable"]
         SUMD__get_docstring["get_docstring"]
@@ -21,6 +44,27 @@ flowchart TD
         SUMD__test_strict_mode_raises_on_invalid_binding["test_strict_mode_raises_on_invalid_"]
         SUMD__test_state_yaml_is_serializable["test_state_yaml_is_serializable"]
         SUMD__test_docker_export_contains_services["test_docker_export_contains_service"]
+        SUMD__tmp_manifest["tmp_manifest"]
+        SUMD__test_parser_finds_all_blocks["test_parser_finds_all_blocks"]
+        SUMD__test_parser_counts_blocks["test_parser_counts_blocks"]
+        SUMD__test_parser_extracts_meta["test_parser_extracts_meta"]
+        SUMD__test_parser_doql_block_body["test_parser_doql_block_body"]
+        SUMD__test_parser_filter_by_kind["test_parser_filter_by_kind"]
+        SUMD__test_parser_includes["test_parser_includes"]
+        SUMD__test_bridge_from_text["test_bridge_from_text"]
+        SUMD__test_bridge_missing_doql_raises["test_bridge_missing_doql_raises"]
+        SUMD__test_bridge_strict_mode["test_bridge_strict_mode"]
+        SUMD__test_bridge_merge_multiple_doql["test_bridge_merge_multiple_doql"]
+        SUMD__test_graph_from_doql_spec["test_graph_from_doql_spec"]
+        SUMD__test_graph_services_from_interfaces["test_graph_services_from_interfaces"]
+        SUMD__test_graph_ui_bindings_from_pages["test_graph_ui_bindings_from_pages"]
+        SUMD__test_graph_databases_as_services["test_graph_databases_as_services"]
+        SUMD__test_sync_check_identical["test_sync_check_identical"]
+    end
+    subgraph examples__manifest
+        examples__manifest__list_devices["list_devices"]
+        examples__manifest__create_reading["create_reading"]
+        examples__manifest__print["print"]
     end
     subgraph project__map
         project__map__toon___build_runtime["_build_runtime"]
@@ -29,8 +73,31 @@ flowchart TD
         project__map__toon___cmd_diff["_cmd_diff"]
         project__map__toon___cmd_state["_cmd_state"]
         project__map__toon___cmd_export["_cmd_export"]
+        project__map__toon___cmd_refactor["_cmd_refactor"]
+        project__map__toon___cmd_generate["_cmd_generate"]
         project__map__toon___build_parser["_build_parser"]
         project__map__toon__main["main"]
+        project__map__toon__build_project_graph["build_project_graph"]
+        project__map__toon___build_models["_build_models"]
+        project__map__toon___build_services["_build_services"]
+        project__map__toon___build_ui_bindings["_build_ui_bindings"]
+        project__map__toon___build_databases["_build_databases"]
+        project__map__toon___build_workflows["_build_workflows"]
+        project__map__toon___build_roles["_build_roles"]
+        project__map__toon___build_integrations["_build_integrations"]
+        project__map__toon___build_webhooks["_build_webhooks"]
+        project__map__toon___build_api_clients["_build_api_clients"]
+        project__map__toon___build_environments["_build_environments"]
+        project__map__toon___build_infrastructures["_build_infrastructures"]
+        project__map__toon___build_ingresses["_build_ingresses"]
+        project__map__toon___build_ci_configs["_build_ci_configs"]
+        project__map__toon___build_data_sources["_build_data_sources"]
+        project__map__toon___build_templates["_build_templates"]
+        project__map__toon___build_documents["_build_documents"]
+        project__map__toon___build_reports["_build_reports"]
+        project__map__toon___build_deploy["_build_deploy"]
+        project__map__toon___hash["_hash"]
+        project__map__toon___tokenize["_tokenize"]
         project__map__toon__stable_hash["stable_hash"]
         project__map__toon__is_callable["is_callable"]
         project__map__toon__get_docstring["get_docstring"]
@@ -44,6 +111,22 @@ flowchart TD
         project__map__toon__test_strict_mode_raises_on_invalid_binding["test_strict_mode_raises_on_invalid_"]
         project__map__toon__test_state_yaml_is_serializable["test_state_yaml_is_serializable"]
         project__map__toon__test_docker_export_contains_services["test_docker_export_contains_service"]
+        project__map__toon__tmp_manifest["tmp_manifest"]
+        project__map__toon__test_parser_finds_all_blocks["test_parser_finds_all_blocks"]
+        project__map__toon__test_parser_counts_blocks["test_parser_counts_blocks"]
+        project__map__toon__test_parser_extracts_meta["test_parser_extracts_meta"]
+        project__map__toon__test_parser_doql_block_body["test_parser_doql_block_body"]
+        project__map__toon__test_parser_filter_by_kind["test_parser_filter_by_kind"]
+        project__map__toon__test_parser_includes["test_parser_includes"]
+        project__map__toon__test_bridge_from_text["test_bridge_from_text"]
+        project__map__toon__test_bridge_missing_doql_raises["test_bridge_missing_doql_raises"]
+        project__map__toon__test_bridge_strict_mode["test_bridge_strict_mode"]
+        project__map__toon__test_bridge_merge_multiple_doql["test_bridge_merge_multiple_doql"]
+        project__map__toon__test_graph_from_doql_spec["test_graph_from_doql_spec"]
+        project__map__toon__test_graph_services_from_interfaces["test_graph_services_from_interfaces"]
+        project__map__toon__test_graph_ui_bindings_from_pages["test_graph_ui_bindings_from_pages"]
+        project__map__toon__test_graph_databases_as_services["test_graph_databases_as_services"]
+        project__map__toon__test_sync_check_identical["test_sync_check_identical"]
     end
     subgraph swop__cli
         swop__cli___build_runtime["_build_runtime"]
@@ -52,6 +135,8 @@ flowchart TD
         swop__cli___cmd_diff["_cmd_diff"]
         swop__cli___cmd_state["_cmd_state"]
         swop__cli___cmd_export["_cmd_export"]
+        swop__cli___cmd_refactor["_cmd_refactor"]
+        swop__cli___cmd_generate{{_cmd_generate CC=22}}
         swop__cli___build_parser["_build_parser"]
         swop__cli__main["main"]
     end
@@ -79,6 +164,36 @@ flowchart TD
         swop__introspect__backend__BackendIntrospector__register_model["register_model"]
         swop__introspect__backend__BackendIntrospector__register_route["register_route"]
     end
+    subgraph swop__markpact
+        swop__markpact__parser__ManifestBlock__get_meta_value["get_meta_value"]
+        swop__markpact__parser__ManifestBlock__as_yaml["as_yaml"]
+        swop__markpact__parser__ManifestBlock__as_json["as_json"]
+        swop__markpact__parser__ManifestParser____init__["__init__"]
+        swop__markpact__parser__ManifestParser__parse_file["parse_file"]
+        swop__markpact__parser__ManifestParser__parse("parse CC=11")
+        swop__markpact__parser__ManifestParser__parse_by_kind["parse_by_kind"]
+        swop__markpact__parser__ManifestParser__parse_doql_blocks["parse_doql_blocks"]
+        swop__markpact__parser__ManifestParser__parse_graph_blocks["parse_graph_blocks"]
+        swop__markpact__parser__ManifestParser__parse_file_blocks["parse_file_blocks"]
+        swop__markpact__parser__ManifestParser__parse_config_blocks["parse_config_blocks"]
+        swop__markpact__sync_engine__ManifestSyncEngine____init__["__init__"]
+        swop__markpact__sync_engine__ManifestSyncEngine__check["check"]
+        swop__markpact__sync_engine__ManifestSyncEngine__diff("diff CC=11")
+        swop__markpact__sync_engine__ManifestSyncEngine__sync_to_disk["sync_to_disk"]
+        swop__markpact__sync_engine__ManifestSyncEngine__sync_from_disk["sync_from_disk"]
+        swop__markpact__sync_engine___hash["_hash"]
+        swop__markpact__doql_bridge__MarkpactValidationError____init__["__init__"]
+        swop__markpact__doql_bridge__DoqlBridge____init__["__init__"]
+        swop__markpact__doql_bridge__DoqlBridge___try_import_doql["_try_import_doql"]
+        swop__markpact__doql_bridge__DoqlBridge__from_blocks("from_blocks CC=13")
+        swop__markpact__doql_bridge__DoqlBridge___parse_block["_parse_block"]
+        swop__markpact__doql_bridge__DoqlBridge___merge_fragment("_merge_fragment CC=9")
+        swop__markpact__doql_bridge__DoqlBridge___build_spec["_build_spec"]
+        swop__markpact__doql_bridge__DoqlBridge___build_minimal_spec{{_build_minimal_spec CC=36}}
+        swop__markpact__doql_bridge__DoqlBridge__from_file["from_file"]
+        swop__markpact__doql_bridge__DoqlBridge__from_files["from_files"]
+        swop__markpact__doql_bridge__DoqlBridge__from_text["from_text"]
+    end
     subgraph swop__reconcile
         swop__reconcile__Drift__exists["exists"]
         swop__reconcile__DriftDetector__compute["compute"]
@@ -89,9 +204,6 @@ flowchart TD
         swop__reconcile__ResyncEngine___log_drift["_log_drift"]
     end
     subgraph swop__refactor
-        swop__refactor__scanner__db__DbScanner____init__["__init__"]
-        swop__refactor__scanner__db__DbScanner__scan["scan"]
-        swop__refactor__scanner__db__DbScanner___scan_file["_scan_file"]
         swop__refactor__graph__RefactorGraph____init__["__init__"]
         swop__refactor__graph__RefactorGraph__add_node["add_node"]
         swop__refactor__graph__RefactorGraph__add_edge["add_edge"]
@@ -99,6 +211,16 @@ flowchart TD
         swop__refactor__graph__RefactorGraph__nodes_of_type["nodes_of_type"]
         swop__refactor__graph__RefactorGraph__as_dict["as_dict"]
         swop__refactor__graph__RefactorGraph__from_iterables["from_iterables"]
+        swop__refactor__pipeline__RefactorResult__summary["summary"]
+        swop__refactor__pipeline__RefactorPipeline____init__["__init__"]
+        swop__refactor__pipeline__RefactorPipeline__run("run CC=10")
+        swop__refactor__pipeline__RefactorPipeline___build_graph("_build_graph CC=8")
+        swop__refactor__pipeline__RefactorPipeline___link_models_to_ui("_link_models_to_ui CC=8")
+        swop__refactor__pipeline__RefactorPipeline___link_models_to_tables["_link_models_to_tables"]
+        swop__refactor__pipeline__RefactorPipeline___seed_nodes["_seed_nodes"]
+        swop__refactor__pipeline__RefactorPipeline___seed_cluster_name["_seed_cluster_name"]
+        swop__refactor__pipeline__RefactorPipeline___cluster_to_spec{{_cluster_to_spec CC=23}}
+        swop__refactor__pipeline___tokenize["_tokenize"]
         swop__refactor__clustering__LouvainLike____init__["__init__"]
         swop__refactor__clustering__LouvainLike__run["run"]
         swop__refactor__clustering__LouvainLike___step("_step CC=8")
@@ -115,6 +237,9 @@ flowchart TD
         swop__refactor__scanner__frontend__FrontendScanner__find_pages_for_route("find_pages_for_route CC=10")
         swop__refactor__scanner__frontend__FrontendScanner___route_token["_route_token"]
         swop__refactor__scanner__frontend__FrontendScanner___slug_for["_slug_for"]
+        swop__refactor__scanner__db__DbScanner____init__["__init__"]
+        swop__refactor__scanner__db__DbScanner__scan["scan"]
+        swop__refactor__scanner__db__DbScanner___scan_file["_scan_file"]
         swop__refactor__scanner__backend__BackendScanner____init__["__init__"]
         swop__refactor__scanner__backend__BackendScanner___iter_py("_iter_py CC=8")
         swop__refactor__scanner__backend__BackendScanner__scan["scan"]
@@ -135,14 +260,27 @@ flowchart TD
     subgraph swop__versioning
         swop__versioning__Versioning__commit["commit"]
     end
+    swop__reconcile__ResyncEngine___auto_heal --> examples__manifest__print
+    swop__reconcile__ResyncEngine___log_drift --> examples__manifest__print
     swop__cli___cmd_sync --> swop__cli___build_runtime
     swop__cli___cmd_inspect --> swop__cli___build_runtime
+    swop__cli___cmd_inspect --> examples__manifest__print
     swop__cli___cmd_diff --> swop__cli___build_runtime
     swop__cli___cmd_state --> swop__cli___build_runtime
+    swop__cli___cmd_state --> examples__manifest__print
     swop__cli___cmd_export --> swop__cli___build_runtime
+    swop__cli___cmd_export --> examples__manifest__print
+    swop__cli___cmd_refactor --> examples__manifest__print
+    swop__cli___cmd_generate --> examples__manifest__print
+    swop__cli___cmd_generate --> project__map__toon__build_project_graph
     swop__cli__main --> swop__cli___build_parser
+    swop__versioning__Versioning__commit --> examples__manifest__print
+    swop__core__SwopRuntime__run_sync --> examples__manifest__print
+    swop__markpact__sync_engine__ManifestSyncEngine__check --> project__map__toon___hash
+    swop__refactor__pipeline__RefactorPipeline___link_models_to_ui --> project__map__toon___tokenize
+    swop__refactor__pipeline__RefactorPipeline___cluster_to_spec --> project__map__toon___tokenize
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class swop__refactor__scanner__backend__BackendScanner___extract_models highCC
-    class swop__refactor__clustering__LouvainLike___step,swop__refactor__clustering__SeededClusterer__run,swop__refactor__scanner__frontend__FrontendScanner__find_pages_for_route,swop__refactor__scanner__backend__BackendScanner___iter_py medCC
+    class swop__cli___cmd_generate,swop__refactor__pipeline__RefactorPipeline___cluster_to_spec,swop__refactor__scanner__backend__BackendScanner___extract_models,swop__markpact__doql_bridge__DoqlBridge___build_minimal_spec highCC
+    class swop__markpact__parser__ManifestParser__parse,swop__markpact__sync_engine__ManifestSyncEngine__diff,swop__refactor__pipeline__RefactorPipeline__run,swop__refactor__pipeline__RefactorPipeline___build_graph,swop__refactor__pipeline__RefactorPipeline___link_models_to_ui,swop__refactor__clustering__LouvainLike___step,swop__refactor__clustering__SeededClusterer__run,swop__refactor__scanner__frontend__FrontendScanner__find_pages_for_route,swop__refactor__scanner__backend__BackendScanner___iter_py,swop__markpact__doql_bridge__DoqlBridge__from_blocks,swop__markpact__doql_bridge__DoqlBridge___merge_fragment medCC

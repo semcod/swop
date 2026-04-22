@@ -1,9 +1,33 @@
-# redup/duplication | 0 groups | 22f 1506L | 2026-04-22
+# redup/duplication | 1 groups | 29f 3555L | 2026-04-22
 
 SUMMARY:
-  files_scanned: 22
-  total_lines:   1506
-  dup_groups:    0
-  dup_fragments: 0
-  saved_lines:   0
-  scan_ms:       4088
+  files_scanned: 29
+  total_lines:   3555
+  dup_groups:    1
+  dup_fragments: 2
+  saved_lines:   27
+  scan_ms:       4169
+
+HOTSPOTS[1] (files with most duplication):
+  swop/markpact/graph_builder.py  dup=54L  groups=1  frags=2  (1.5%)
+
+DUPLICATES[1] (ranked by impact):
+  [efccf54f46437221]   STRU  _build_environments  L=27 N=2 saved=27 sim=1.00
+      swop/markpact/graph_builder.py:261-287  (_build_environments)
+      swop/markpact/graph_builder.py:290-316  (_build_infrastructures)
+
+REFACTOR[1] (ranked by priority):
+  [1] ○ extract_function   → swop/markpact/utils/_build_environments.py
+      WHY: 2 occurrences of 27-line block across 1 files — saves 27 lines
+      FILES: swop/markpact/graph_builder.py
+
+QUICK_WINS[1] (low risk, high savings — do first):
+  [1] extract_function   saved=27L  → swop/markpact/utils/_build_environments.py
+      FILES: graph_builder.py
+
+EFFORT_ESTIMATE (total ≈ 0.9h):
+  medium _build_environments                 saved=27L  ~54min
+
+METRICS-TARGET:
+  dup_groups:  1 → 0
+  saved_lines: 27 lines recoverable

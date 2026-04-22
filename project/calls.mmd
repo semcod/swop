@@ -1,17 +1,53 @@
 flowchart LR
+    subgraph examples__manifest
+        examples__manifest__print["print"]
+    end
+    subgraph project__map
+        project__map__toon___hash["_hash"]
+        project__map__toon___tokenize["_tokenize"]
+    end
     subgraph swop__cli
         swop__cli___build_runtime["_build_runtime"]
-        swop__cli___cmd_diff["_cmd_diff"]
-        swop__cli__main["main"]
-        swop__cli___build_parser["_build_parser"]
-        swop__cli___cmd_export["_cmd_export"]
-        swop__cli___cmd_sync["_cmd_sync"]
-        swop__cli___cmd_inspect["_cmd_inspect"]
         swop__cli___cmd_state["_cmd_state"]
+        swop__cli___cmd_diff["_cmd_diff"]
+        swop__cli___cmd_refactor["_cmd_refactor"]
+        swop__cli___build_parser["_build_parser"]
+        swop__cli___cmd_generate["_cmd_generate"]
+        swop__cli___cmd_inspect["_cmd_inspect"]
+        swop__cli___cmd_sync["_cmd_sync"]
+        swop__cli__main["main"]
+        swop__cli___cmd_export["_cmd_export"]
     end
+    subgraph swop__core
+        swop__core__SwopRuntime__run_sync["run_sync"]
+    end
+    subgraph swop__markpact
+        swop__markpact__sync_engine__ManifestSyncEngine__check["check"]
+    end
+    subgraph swop__reconcile
+        swop__reconcile__ResyncEngine___auto_heal["_auto_heal"]
+        swop__reconcile__ResyncEngine___log_drift["_log_drift"]
+    end
+    subgraph swop__refactor
+        swop__refactor__pipeline__RefactorPipeline___link_models_to_ui["_link_models_to_ui"]
+    end
+    subgraph swop__versioning
+        swop__versioning__Versioning__commit["commit"]
+    end
+    swop__reconcile__ResyncEngine___auto_heal --> examples__manifest__print
+    swop__reconcile__ResyncEngine___log_drift --> examples__manifest__print
     swop__cli___cmd_sync --> swop__cli___build_runtime
     swop__cli___cmd_inspect --> swop__cli___build_runtime
+    swop__cli___cmd_inspect --> examples__manifest__print
     swop__cli___cmd_diff --> swop__cli___build_runtime
     swop__cli___cmd_state --> swop__cli___build_runtime
+    swop__cli___cmd_state --> examples__manifest__print
     swop__cli___cmd_export --> swop__cli___build_runtime
+    swop__cli___cmd_export --> examples__manifest__print
+    swop__cli___cmd_refactor --> examples__manifest__print
+    swop__cli___cmd_generate --> examples__manifest__print
     swop__cli__main --> swop__cli___build_parser
+    swop__versioning__Versioning__commit --> examples__manifest__print
+    swop__core__SwopRuntime__run_sync --> examples__manifest__print
+    swop__markpact__sync_engine__ManifestSyncEngine__check --> project__map__toon___hash
+    swop__refactor__pipeline__RefactorPipeline___link_models_to_ui --> project__map__toon___tokenize

@@ -146,10 +146,10 @@ def test_bridge_from_text() -> None:
     assert spec.entities[0].name == "User"
 
 
-def test_bridge_missing_doql_raises() -> None:
+def test_bridge_missing_any_supported_blocks_raises() -> None:
     bridge = DoqlBridge()
     with pytest.raises(Exception):
-        bridge.from_text("# no doql blocks")
+        bridge.from_text("# no supported blocks")
 
 
 def test_bridge_strict_mode() -> None:
@@ -369,6 +369,273 @@ def test_diff_report(tmp_path: Path) -> None:
 # ──────────────────────────────────────────
 
 
+def test_graph_workflows_as_services() -> None:
+    manifest = """
+```yaml markpact:workflows
+workflows:
+  - name: onboard
+    trigger: signup
+    steps:
+      - action: email
+        target: admin@test.com
+      - action: slack
+        target: "#ops"
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "workflow-onboard" in graph.services
+    wf = graph.services["workflow-onboard"]
+    assert "/trigger/signup" in wf.routes
+    assert "/step/0" in wf.routes
+    assert wf.routes["/step/0"]["action"] == "email"
+
+
+def test_graph_roles_as_services() -> None:
+    manifest = """
+```yaml markpact:roles
+roles:
+  - name: admin
+    permissions:
+      - users:write
+      - devices:delete
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "role-admin" in graph.services
+    assert "/perm/users:write" in graph.services["role-admin"].routes
+
+
+def test_graph_api_clients_as_services() -> None:
+    manifest = """
+```yaml markpact:api_clients
+api_clients:
+  - name: stripe
+    base_url: "https://api.stripe.com"
+    methods:
+      - POST
+      - GET
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "api-stripe" in graph.services
+    assert "/base_url" in graph.services["api-stripe"].routes
+    assert "/method/POST" in graph.services["api-stripe"].routes
+
+
+def test_graph_webhooks_as_services() -> None:
+    manifest = """
+```yaml markpact:webhooks
+webhooks:
+  - name: github-push
+    source: github
+    event: push
+    auth: hmac
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "webhook-github-push" in graph.services
+    assert graph.services["webhook-github-push"].routes["/event"]["event"] == "push"
+
+
+def test_graph_integrations_as_services() -> None:
+    manifest = """
+```yaml markpact:integrations
+integrations:
+  - name: mailgun
+    type: email
+    config:
+      domain: mg.example.com
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "integration-mailgun" in graph.services
+    assert graph.services["integration-mailgun"].routes["/type"]["type"] == "email"
+
+
+def test_graph_environments_as_services() -> None:
+    manifest = """
+```yaml markpact:environments
+environments:
+  - name: prod
+    runtime: kubernetes
+    replicas: 3
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "env-prod" in graph.services
+    assert graph.services["env-prod"].routes["/runtime"]["runtime"] == "kubernetes"
+
+
+def test_graph_infrastructures_as_services() -> None:
+    manifest = """
+```yaml markpact:infrastructures
+infrastructures:
+  - name: do-k8s
+    type: kubernetes
+    provider: digitalocean
+    namespace: app
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "infra-do-k8s" in graph.services
+    assert graph.services["infra-do-k8s"].routes["/provider"]["provider"] == "digitalocean"
+
+
+def test_graph_ingresses_as_services() -> None:
+    manifest = """
+```yaml markpact:ingresses
+ingresses:
+  - name: main
+    type: traefik
+    tls: true
+    rate_limit: "100r/m"
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "ingress-main" in graph.services
+    assert graph.services["ingress-main"].routes["/tls"]["enabled"] is True
+
+
+def test_graph_ci_configs_as_services() -> None:
+    manifest = """
+```yaml markpact:ci_configs
+ci_configs:
+  - name: gh
+    type: github
+    stages:
+      - lint
+      - test
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "ci-gh" in graph.services
+    assert "/stage/0" in graph.services["ci-gh"].routes
+
+
+def test_graph_data_sources_as_services() -> None:
+    manifest = """
+```yaml markpact:data_sources
+data_sources:
+  - name: weather
+    source: json
+    url: "https://api.weather.com"
+    read_only: true
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "data-weather" in graph.services
+    assert graph.services["data-weather"].routes["/url"]["url"] == "https://api.weather.com"
+
+
+def test_graph_templates_as_services() -> None:
+    manifest = """
+```yaml markpact:templates
+templates:
+  - name: alert
+    type: html
+    engine: jinja2
+    vars:
+      - name
+      - value
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "template-alert" in graph.services
+    assert graph.services["template-alert"].routes["/engine"]["engine"] == "jinja2"
+
+
+def test_graph_documents_as_services() -> None:
+    manifest = """
+```yaml markpact:documents
+documents:
+  - name: cert
+    type: pdf
+    template: alert
+    output: "certs/{id}.pdf"
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "doc-cert" in graph.services
+    assert graph.services["doc-cert"].routes["/output"]["output"] == "certs/{id}.pdf"
+
+
+def test_graph_reports_as_services() -> None:
+    manifest = """
+```yaml markpact:reports
+reports:
+  - name: daily
+    schedule: "0 6 * * *"
+    output: pdf
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "report-daily" in graph.services
+    assert graph.services["report-daily"].routes["/schedule"]["schedule"] == "0 6 * * *"
+
+
+def test_graph_deploy_as_service() -> None:
+    manifest = """
+```yaml markpact:doql
+deploy:
+  target: docker-compose
+  rootless: false
+  containers:
+    - name: api
+      image: api:latest
+```
+""".strip()
+    bridge = DoqlBridge()
+    spec = bridge.from_text(manifest)
+    graph = build_project_graph(spec)
+    assert "deploy" in graph.services
+    assert graph.services["deploy"].routes["/target"]["target"] == "docker-compose"
+    assert "/container/0" in graph.services["deploy"].routes
+
+
+def test_bridge_from_files_merge(tmp_path: Path) -> None:
+    m1 = tmp_path / "entities.md"
+    m1.write_text(
+        '```yaml markpact:doql\napp_name: "MergedApp"\nentities:\n  - name: User\n    fields: []\n```',
+        encoding="utf-8",
+    )
+    m2 = tmp_path / "workflows.md"
+    m2.write_text(
+        '```yaml markpact:workflows\nworkflows:\n  - name: signup\n    steps:\n      - action: email\n```',
+        encoding="utf-8",
+    )
+    bridge = DoqlBridge()
+    spec = bridge.from_files([m1, m2])
+    assert spec.app_name == "MergedApp"
+    assert len(spec.entities) == 1
+    assert len(spec.workflows) == 1
+
+
 def test_cli_generate_from_markpact(tmp_path: Path) -> None:
     from swop.cli import main
 
@@ -376,13 +643,18 @@ def test_cli_generate_from_markpact(tmp_path: Path) -> None:
     manifest.write_text(SIMPLE_MANIFEST, encoding="utf-8")
 
     out_yaml = tmp_path / "state.yaml"
+    out_docker = tmp_path / "docker-compose.yaml"
     argv = [
         "generate",
         "--from-markpact", str(manifest),
         "--output-yaml", str(out_yaml),
+        "--output-docker", str(out_docker),
     ]
     rc = main(argv)
     assert rc == 0
     assert out_yaml.exists()
     text = out_yaml.read_text(encoding="utf-8")
     assert "TestApp" in text or "User" in text
+    assert out_docker.exists()
+    docker_text = out_docker.read_text(encoding="utf-8")
+    assert "version" in docker_text

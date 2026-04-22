@@ -19,7 +19,7 @@ from swop.refactor.module_builder import ModuleSpec
 class ComposeBuilder:
     """Render docker-compose manifests for a set of modules."""
 
-    def __init__(self, out_dir: Path, base_port: int = 8200) -> None:
+    def __init__(self, out_dir: Path, base_port: int = 8300) -> None:
         self.out_dir = Path(out_dir)
         self.base_port = base_port
 

@@ -76,7 +76,195 @@ deploy:
 
 ---
 
-## 2. Swop Graph Fragment (JSON)
+## 2. Workflows (YAML)
+
+Business-process definitions inside a dedicated `markpact:workflows` block.
+They map to workflow-* services in the ProjectGraph.
+
+```yaml markpact:workflows
+workflows:
+  - name: onboarding
+    trigger: user_registered
+    steps:
+      - action: email
+        target: admin@sensorhub.local
+        params:
+          subject: "New device registered"
+      - action: slack
+        target: "#ops"
+        params:
+          message: "Check dashboard"
+```
+
+---
+
+## 3. Roles & Permissions (YAML)
+
+RBAC declared as `markpact:roles`. Each role becomes a role-* service node.
+
+```yaml markpact:roles
+roles:
+  - name: admin
+    permissions:
+      - devices:write
+      - readings:write
+      - users:manage
+  - name: operator
+    permissions:
+      - devices:read
+      - readings:read
+```
+
+---
+
+## 4. API Clients (YAML)
+
+External API integrations declared as `markpact:api_clients`.
+
+```yaml markpact:api_clients
+api_clients:
+  - name: twilio
+    base_url: "https://api.twilio.com"
+    auth: bearer
+    methods:
+      - POST
+      - GET
+  - name: stripe
+    base_url: "https://api.stripe.com/v1"
+    auth: secret_key
+    openapi: "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.yaml"
+```
+
+---
+
+## 5. Webhooks (YAML)
+
+Incoming webhook listeners declared as `markpact:webhooks`.
+
+```yaml markpact:webhooks
+webhooks:
+  - name: github-push
+    source: github
+    event: push
+    auth: hmac
+  - name: zapier-trigger
+    source: zapier
+    event: new_record
+```
+
+---
+
+## 6. Data Sources (YAML)
+
+External data feeds declared as `markpact:data_sources`.
+
+```yaml markpact:data_sources
+data_sources:
+  - name: weather-feed
+    source: json
+    url: "https://api.openweathermap.org/data/2.5/weather"
+    cache: 300
+    env_overrides: true
+```
+
+---
+
+## 7. Templates (YAML)
+
+Jinja2/HTML templates declared as `markpact:templates`.
+
+```yaml markpact:templates
+templates:
+  - name: alert-email
+    type: html
+    engine: jinja2
+    file: templates/alert.html
+    vars:
+      - device_name
+      - reading_value
+```
+
+---
+
+## 8. Documents & Reports (YAML)
+
+PDF / DOCX generation definitions.
+
+```yaml markpact:documents
+documents:
+  - name: device-certificate
+    type: pdf
+    template: alert-email
+    output: certs/{serial}.pdf
+    data:
+      serial: "{{device.serial}}"
+```
+
+```yaml markpact:reports
+reports:
+  - name: daily-summary
+    schedule: "0 6 * * *"
+    template: alert-email
+    output: pdf
+    query:
+      table: readings
+      aggregate: daily_avg
+    recipients:
+      email:
+        - ops@sensorhub.local
+```
+
+---
+
+## 9. Infrastructure & CI (YAML)
+
+Deployment targets, environments, ingresses and CI pipelines.
+
+```yaml markpact:environments
+environments:
+  - name: staging
+    runtime: docker-compose
+    replicas: 1
+    env_file: .env.staging
+  - name: production
+    runtime: kubernetes
+    replicas: 3
+    ssh_host: prod1.sensorhub.local
+```
+
+```yaml markpact:infrastructures
+infrastructures:
+  - name: k8s-cluster
+    type: kubernetes
+    provider: digitalocean
+    namespace: sensorhub
+    replicas: 3
+```
+
+```yaml markpact:ingresses
+ingresses:
+  - name: main
+    type: traefik
+    tls: true
+    cert_manager: letsencrypt
+    rate_limit: "100r/m"
+```
+
+```yaml markpact:ci_configs
+ci_configs:
+  - name: github-actions
+    type: github
+    runner: ubuntu-latest
+    stages:
+      - lint
+      - test
+      - build
+      - deploy
+```
+
+---
+
+## 10. Swop Graph Fragment (JSON)
 
 Extra graph primitives can be injected directly via a `markpact:graph`
 block. This merges into the ProjectGraph after the DOQL layer.

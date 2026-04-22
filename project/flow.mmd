@@ -10,30 +10,35 @@ flowchart TD
         swop__cli___cmd_diff["_cmd_diff"]
         swop__cli___cmd_state["_cmd_state"]
         swop__cli___cmd_export["_cmd_export"]
+        swop__cli___cmd_refactor["_cmd_refactor"]
+        swop__cli___cmd_generate["_cmd_generate"]
         swop__cli___build_parser["_build_parser"]
         swop__cli__main["main"]
     end
 
     subgraph Core
-        swop__reconcile__Drift__exists["exists"]
-        swop__reconcile__DriftDetector__compute["compute"]
-        swop__reconcile__ResyncEngine__reconcile["reconcile"]
-        swop__reconcile__ResyncEngine___has_critical["_has_critical"]
-        swop__reconcile__ResyncEngine___auto_heal["_auto_heal"]
-        swop__reconcile__ResyncEngine___log_drift["_log_drift"]
-        swop__versioning__Versioning__commit["commit"]
-        swop__sync__SyncEngine__frontend_to_graph["frontend_to_graph"]
-        swop__sync__SyncEngine__merge_frontend["merge_frontend"]
-        swop__sync__SyncEngine__merge_backend["merge_backend"]
-        swop__utils__stable_hash["stable_hash"]
-        swop__utils__is_callable["is_callable"]
-        swop__utils__get_docstring["get_docstring"]
-        swop__core__SwopRuntime__add_model["add_model"]
-        swop__core__SwopRuntime__add_service["add_service"]
-        ...["+72 more"]
+        project__map__toon___build_runtime["_build_runtime"]
+        project__map__toon___cmd_sync["_cmd_sync"]
+        project__map__toon___cmd_inspect["_cmd_inspect"]
+        project__map__toon___cmd_diff["_cmd_diff"]
+        project__map__toon___cmd_state["_cmd_state"]
+        project__map__toon___cmd_refactor["_cmd_refactor"]
+        project__map__toon___cmd_generate["_cmd_generate"]
+        project__map__toon___build_parser["_build_parser"]
+        project__map__toon__main["main"]
+        project__map__toon___build_models["_build_models"]
+        project__map__toon___build_services["_build_services"]
+        project__map__toon___build_ui_bindings["_build_ui_bindings"]
+        project__map__toon___build_databases["_build_databases"]
+        project__map__toon___build_workflows["_build_workflows"]
+        project__map__toon___build_roles["_build_roles"]
+        ...["+208 more"]
     end
 
     subgraph Exporters
+        project__map__toon___cmd_export["_cmd_export"]
+        project__map__toon__test_cli_export_docker["test_cli_export_docker"]
+        project__map__toon__test_docker_export_contains_services["test_docker_export_contains_se"]
         swop__export__docker__DockerExporter__to_dict["to_dict"]
         swop__export__docker__DockerExporter__export_yaml["export_yaml"]
         swop__export__yaml__StateExporter__to_dict["to_dict"]
@@ -41,9 +46,6 @@ flowchart TD
         SUMD___cmd_export["_cmd_export"]
         SUMD__test_cli_export_docker["test_cli_export_docker"]
         SUMD__test_docker_export_contains_services["test_docker_export_contains_se"]
-        project__map__toon___cmd_export["_cmd_export"]
-        project__map__toon__test_cli_export_docker["test_cli_export_docker"]
-        project__map__toon__test_docker_export_contains_services["test_docker_export_contains_se"]
     end
 
-    class swop__reconcile__Drift__exists,swop__reconcile__DriftDetector__compute,swop__reconcile__ResyncEngine__reconcile,swop__reconcile__ResyncEngine___has_critical,swop__reconcile__ResyncEngine___auto_heal,swop__reconcile__ResyncEngine___log_drift,swop__cli___build_runtime,swop__cli___cmd_sync,swop__cli___cmd_inspect,swop__cli___cmd_diff entry
+    class project__map__toon___build_runtime,project__map__toon___cmd_sync,project__map__toon___cmd_inspect,project__map__toon___cmd_diff,project__map__toon___cmd_state,project__map__toon___cmd_export,project__map__toon___cmd_refactor,project__map__toon___cmd_generate,project__map__toon___build_parser,project__map__toon__main entry

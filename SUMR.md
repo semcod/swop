@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `swop`
-- **version**: `0.1.4`
+- **version**: `0.2.2`
 - **python_requires**: `>=3.8`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -36,7 +36,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: swop;
-  version: 0.1.4;
+  version: 0.2.2;
 }
 
 interface[type="cli"] {
@@ -114,62 +114,113 @@ pfix>=0.1.60
 
 ## Call Graph
 
-*8 nodes · 6 edges · 1 modules · CC̄=2.0*
+*19 nodes · 17 edges · 8 modules · CC̄=1.8*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `_build_parser` *(in swop.cli)* | 1 | 1 | 15 | **16** |
+| `_cmd_generate` *(in swop.cli)* | 22 ⚠ | 0 | 42 | **42** |
+| `_build_parser` *(in swop.cli)* | 1 | 1 | 32 | **33** |
+| `print` *(in examples.manifest)* | 0 | 30 | 0 | **30** |
+| `_cmd_refactor` *(in swop.cli)* | 7 | 0 | 16 | **16** |
+| `check` *(in swop.markpact.sync_engine.ManifestSyncEngine)* | 7 | 0 | 11 | **11** |
 | `_build_runtime` *(in swop.cli)* | 1 | 5 | 4 | **9** |
-| `_cmd_inspect` *(in swop.cli)* | 3 | 0 | 6 | **6** |
-| `_cmd_export` *(in swop.cli)* | 2 | 0 | 4 | **4** |
-| `_cmd_state` *(in swop.cli)* | 1 | 0 | 4 | **4** |
-| `_cmd_diff` *(in swop.cli)* | 2 | 0 | 3 | **3** |
-| `main` *(in swop.cli)* | 1 | 0 | 3 | **3** |
-| `_cmd_sync` *(in swop.cli)* | 3 | 0 | 3 | **3** |
+| `run_sync` *(in swop.core.SwopRuntime)* | 1 | 0 | 8 | **8** |
+| `_link_models_to_ui` *(in swop.refactor.pipeline.RefactorPipeline)* | 8 | 0 | 7 | **7** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/inspect
-# nodes: 8 | edges: 6 | modules: 1
-# CC̄=2.0
+# nodes: 19 | edges: 17 | modules: 8
+# CC̄=1.8
 
 HUBS[20]:
+  swop.cli._cmd_generate
+    CC=22  in:0  out:42  total:42
   swop.cli._build_parser
-    CC=1  in:1  out:15  total:16
+    CC=1  in:1  out:32  total:33
+  examples.manifest.print
+    CC=0  in:30  out:0  total:30
+  swop.cli._cmd_refactor
+    CC=7  in:0  out:16  total:16
+  swop.markpact.sync_engine.ManifestSyncEngine.check
+    CC=7  in:0  out:11  total:11
   swop.cli._build_runtime
     CC=1  in:5  out:4  total:9
+  swop.core.SwopRuntime.run_sync
+    CC=1  in:0  out:8  total:8
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui
+    CC=8  in:0  out:7  total:7
+  swop.reconcile.ResyncEngine._log_drift
+    CC=1  in:0  out:6  total:6
   swop.cli._cmd_inspect
     CC=3  in:0  out:6  total:6
-  swop.cli._cmd_export
-    CC=2  in:0  out:4  total:4
   swop.cli._cmd_state
     CC=1  in:0  out:4  total:4
+  swop.versioning.Versioning.commit
+    CC=1  in:0  out:4  total:4
+  project.map.toon._tokenize
+    CC=0  in:4  out:0  total:4
+  swop.cli._cmd_export
+    CC=2  in:0  out:4  total:4
   swop.cli._cmd_diff
     CC=2  in:0  out:3  total:3
-  swop.cli.main
-    CC=1  in:0  out:3  total:3
   swop.cli._cmd_sync
     CC=3  in:0  out:3  total:3
+  swop.cli.main
+    CC=1  in:0  out:3  total:3
+  project.map.toon._hash
+    CC=0  in:2  out:0  total:2
+  swop.reconcile.ResyncEngine._auto_heal
+    CC=4  in:0  out:2  total:2
 
 MODULES:
-  swop.cli  [8 funcs]
-    _build_parser  CC=1  out:15
+  examples.manifest  [1 funcs]
+    print  CC=0  out:0
+  project.map.toon  [2 funcs]
+    _hash  CC=0  out:0
+    _tokenize  CC=0  out:0
+  swop.cli  [10 funcs]
+    _build_parser  CC=1  out:32
     _build_runtime  CC=1  out:4
     _cmd_diff  CC=2  out:3
     _cmd_export  CC=2  out:4
+    _cmd_generate  CC=22  out:42
     _cmd_inspect  CC=3  out:6
+    _cmd_refactor  CC=7  out:16
     _cmd_state  CC=1  out:4
     _cmd_sync  CC=3  out:3
     main  CC=1  out:3
+  swop.core  [1 funcs]
+    run_sync  CC=1  out:8
+  swop.markpact.sync_engine  [1 funcs]
+    check  CC=7  out:11
+  swop.reconcile  [2 funcs]
+    _auto_heal  CC=4  out:2
+    _log_drift  CC=1  out:6
+  swop.refactor.pipeline  [1 funcs]
+    _link_models_to_ui  CC=8  out:7
+  swop.versioning  [1 funcs]
+    commit  CC=1  out:4
 
 EDGES:
+  swop.reconcile.ResyncEngine._auto_heal → examples.manifest.print
+  swop.reconcile.ResyncEngine._log_drift → examples.manifest.print
   swop.cli._cmd_sync → swop.cli._build_runtime
   swop.cli._cmd_inspect → swop.cli._build_runtime
+  swop.cli._cmd_inspect → examples.manifest.print
   swop.cli._cmd_diff → swop.cli._build_runtime
   swop.cli._cmd_state → swop.cli._build_runtime
+  swop.cli._cmd_state → examples.manifest.print
   swop.cli._cmd_export → swop.cli._build_runtime
+  swop.cli._cmd_export → examples.manifest.print
+  swop.cli._cmd_refactor → examples.manifest.print
+  swop.cli._cmd_generate → examples.manifest.print
   swop.cli.main → swop.cli._build_parser
+  swop.versioning.Versioning.commit → examples.manifest.print
+  swop.core.SwopRuntime.run_sync → examples.manifest.print
+  swop.markpact.sync_engine.ManifestSyncEngine.check → project.map.toon._hash
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui → project.map.toon._tokenize
 ```
 
 ## Refactoring Analysis
@@ -180,60 +231,116 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/inspect
-# nodes: 8 | edges: 6 | modules: 1
-# CC̄=2.0
+# nodes: 19 | edges: 17 | modules: 8
+# CC̄=1.8
 
 HUBS[20]:
+  swop.cli._cmd_generate
+    CC=22  in:0  out:42  total:42
   swop.cli._build_parser
-    CC=1  in:1  out:15  total:16
+    CC=1  in:1  out:32  total:33
+  examples.manifest.print
+    CC=0  in:30  out:0  total:30
+  swop.cli._cmd_refactor
+    CC=7  in:0  out:16  total:16
+  swop.markpact.sync_engine.ManifestSyncEngine.check
+    CC=7  in:0  out:11  total:11
   swop.cli._build_runtime
     CC=1  in:5  out:4  total:9
+  swop.core.SwopRuntime.run_sync
+    CC=1  in:0  out:8  total:8
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui
+    CC=8  in:0  out:7  total:7
+  swop.reconcile.ResyncEngine._log_drift
+    CC=1  in:0  out:6  total:6
   swop.cli._cmd_inspect
     CC=3  in:0  out:6  total:6
-  swop.cli._cmd_export
-    CC=2  in:0  out:4  total:4
   swop.cli._cmd_state
     CC=1  in:0  out:4  total:4
+  swop.versioning.Versioning.commit
+    CC=1  in:0  out:4  total:4
+  project.map.toon._tokenize
+    CC=0  in:4  out:0  total:4
+  swop.cli._cmd_export
+    CC=2  in:0  out:4  total:4
   swop.cli._cmd_diff
     CC=2  in:0  out:3  total:3
-  swop.cli.main
-    CC=1  in:0  out:3  total:3
   swop.cli._cmd_sync
     CC=3  in:0  out:3  total:3
+  swop.cli.main
+    CC=1  in:0  out:3  total:3
+  project.map.toon._hash
+    CC=0  in:2  out:0  total:2
+  swop.reconcile.ResyncEngine._auto_heal
+    CC=4  in:0  out:2  total:2
 
 MODULES:
-  swop.cli  [8 funcs]
-    _build_parser  CC=1  out:15
+  examples.manifest  [1 funcs]
+    print  CC=0  out:0
+  project.map.toon  [2 funcs]
+    _hash  CC=0  out:0
+    _tokenize  CC=0  out:0
+  swop.cli  [10 funcs]
+    _build_parser  CC=1  out:32
     _build_runtime  CC=1  out:4
     _cmd_diff  CC=2  out:3
     _cmd_export  CC=2  out:4
+    _cmd_generate  CC=22  out:42
     _cmd_inspect  CC=3  out:6
+    _cmd_refactor  CC=7  out:16
     _cmd_state  CC=1  out:4
     _cmd_sync  CC=3  out:3
     main  CC=1  out:3
+  swop.core  [1 funcs]
+    run_sync  CC=1  out:8
+  swop.markpact.sync_engine  [1 funcs]
+    check  CC=7  out:11
+  swop.reconcile  [2 funcs]
+    _auto_heal  CC=4  out:2
+    _log_drift  CC=1  out:6
+  swop.refactor.pipeline  [1 funcs]
+    _link_models_to_ui  CC=8  out:7
+  swop.versioning  [1 funcs]
+    commit  CC=1  out:4
 
 EDGES:
+  swop.reconcile.ResyncEngine._auto_heal → examples.manifest.print
+  swop.reconcile.ResyncEngine._log_drift → examples.manifest.print
   swop.cli._cmd_sync → swop.cli._build_runtime
   swop.cli._cmd_inspect → swop.cli._build_runtime
+  swop.cli._cmd_inspect → examples.manifest.print
   swop.cli._cmd_diff → swop.cli._build_runtime
   swop.cli._cmd_state → swop.cli._build_runtime
+  swop.cli._cmd_state → examples.manifest.print
   swop.cli._cmd_export → swop.cli._build_runtime
+  swop.cli._cmd_export → examples.manifest.print
+  swop.cli._cmd_refactor → examples.manifest.print
+  swop.cli._cmd_generate → examples.manifest.print
   swop.cli.main → swop.cli._build_parser
+  swop.versioning.Versioning.commit → examples.manifest.print
+  swop.core.SwopRuntime.run_sync → examples.manifest.print
+  swop.markpact.sync_engine.ManifestSyncEngine.check → project.map.toon._hash
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui → project.map.toon._tokenize
 ```
 
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 40f 4010L | python:21,yaml:8,md:6,shell:2,toml:1,json:1,txt:1 | 2026-04-22
-# CC̄=2.0 | critical:1/114 | dups:0 | cycles:0
+# code2llm | 46f 7059L | python:26,yaml:8,md:7,shell:2,toml:1,txt:1,json:1 | 2026-04-22
+# CC̄=1.8 | critical:4/263 | dups:0 | cycles:0
 
-HEALTH[1]:
+HEALTH[5]:
+  🔴 GOD   swop/markpact/doql_bridge.py = 624L, 22 classes, 11m, max CC=36
+  🟡 CC    _cmd_generate CC=22 (limit:15)
+  🟡 CC    _cluster_to_spec CC=23 (limit:15)
   🟡 CC    _extract_models CC=16 (limit:15)
+  🟡 CC    _build_minimal_spec CC=36 (limit:15)
 
-REFACTOR[1]:
-  1. split 1 high-CC methods  (CC>15)
+REFACTOR[2]:
+  1. split swop/markpact/doql_bridge.py  (god module)
+  2. split 4 high-CC methods  (CC>15)
 
-PIPELINES[67]:
+PIPELINES[106]:
   [1] Src [exists]: exists
       PURITY: 100% pure
   [2] Src [compute]: compute
@@ -246,54 +353,72 @@ PIPELINES[67]:
       PURITY: 100% pure
 
 LAYERS:
-  swop/                           CC̄=3.2    ←in:0  →out:0
+  swop/                           CC̄=4.1    ←in:0  →out:31  !! split
+  │ !! doql_bridge                624L  22C   11m  CC=36     ←0
+  │ !! pipeline                   284L  2C   10m  CC=23     ←0
+  │ !! cli                        262L  0C   10m  CC=22     ←0
   │ clustering                 158L  3C    8m  CC=12     ←0
+  │ sync_engine                155L  2C    6m  CC=11     ←0
   │ !! backend                    150L  4C    6m  CC=16     ←0
+  │ parser                     141L  2C   11m  CC=11     ←0
   │ frontend                   128L  2C    8m  CC=10     ←0
   │ reconcile                  111L  4C    7m  CC=7      ←0
-  │ cli                        105L  0C    8m  CC=3      ←0
   │ core                       105L  1C    8m  CC=3      ←0
   │ graph                      100L  3C    7m  CC=4      ←0
   │ db                          53L  2C    3m  CC=5      ←0
+  │ __init__                    51L  0C    0m  CC=0.0    ←0
   │ graph                       49L  6C    0m  CC=0.0    ←0
   │ yaml                        48L  1C    2m  CC=5      ←0
   │ sync                        47L  1C    3m  CC=7      ←0
   │ __init__                    43L  0C    0m  CC=0.0    ←0
   │ frontend                    40L  1C    2m  CC=4      ←0
-  │ __init__                    38L  0C    0m  CC=0.0    ←0
   │ docker                      32L  1C    2m  CC=3      ←0
   │ backend                     32L  1C    4m  CC=3      ←0
+  │ __init__                    27L  0C    0m  CC=0.0    ←0
   │ versioning                  25L  1C    1m  CC=1      ←0
   │ utils                       23L  0C    3m  CC=1      ←0
   │ __init__                    12L  0C    0m  CC=0.0    ←0
   │ __init__                    11L  0C    0m  CC=0.0    ←0
   │ __init__                     7L  0C    0m  CC=0.0    ←0
   │
+  examples/                       CC̄=0.0    ←in:30  →out:0
+  │ manifest.md                387L  2C    3m  CC=0.0    ←4
+  │
+  project/                        CC̄=0.0    ←in:0  →out:0
+  │ !! context.md                 540L  0C    0m  CC=0.0    ←0
+  │ calls.yaml                 477L  0C    0m  CC=0.0    ←0
+  │ README.md                  339L  0C    0m  CC=0.0    ←0
+  │ map.toon.yaml              243L  0C   74m  CC=0.0    ←3
+  │ analysis.toon.yaml          94L  0C    0m  CC=0.0    ←0
+  │ calls.toon.yaml             90L  0C    0m  CC=0.0    ←0
+  │ evolution.toon.yaml         65L  0C    0m  CC=0.0    ←0
+  │ project.toon.yaml           51L  0C    0m  CC=0.0    ←0
+  │ prompt.txt                  47L  0C    0m  CC=0.0    ←0
+  │ duplication.toon.yaml       33L  0C    0m  CC=0.0    ←0
+  │
   ./                              CC̄=0.0    ←in:0  →out:0
+  │ !! SUMR.md                    533L  0C    0m  CC=0.0    ←0
+  │ !! SUMD.md                    521L  0C   74m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
-  │ SUMR.md                    344L  0C    0m  CC=0.0    ←0
-  │ SUMD.md                    324L  0C   21m  CC=0.0    ←0
+  │ CHANGELOG.md               134L  0C    0m  CC=0.0    ←0
   │ sumd.json                  102L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml              72L  0C    0m  CC=0.0    ←0
-  │ CHANGELOG.md                65L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              76L  0C    0m  CC=0.0    ←0
   │ README.md                   60L  0C    0m  CC=0.0    ←0
   │ project.sh                  36L  0C    0m  CC=0.0    ←0
   │ tree.sh                      1L  0C    0m  CC=0.0    ←0
   │
-  project/                        CC̄=0.0    ←in:0  →out:0
-  │ context.md                 396L  0C    0m  CC=0.0    ←0
-  │ README.md                  339L  0C    0m  CC=0.0    ←0
-  │ calls.yaml                 131L  0C    0m  CC=0.0    ←0
-  │ map.toon.yaml               96L  0C   21m  CC=0.0    ←0
-  │ analysis.toon.yaml          50L  0C    0m  CC=0.0    ←0
-  │ prompt.txt                  49L  0C    0m  CC=0.0    ←0
-  │ calls.toon.yaml             40L  0C    0m  CC=0.0    ←0
-  │ evolution.toon.yaml         39L  0C    0m  CC=0.0    ←0
-  │ project.toon.yaml           28L  0C    0m  CC=0.0    ←0
-  │ duplication.toon.yaml        9L  0C    0m  CC=0.0    ←0
-  │
 
-COUPLING: no cross-package imports detected
+COUPLING:
+                          swop       examples    project.map  swop.refactor  swop.markpact
+           swop             ──             30              1                                !! fan-out
+       examples            ←30             ──                                               hub
+    project.map             ←1                            ──             ←4             ←2  hub
+  swop.refactor                                            4             ──               
+  swop.markpact                                            2                            ──
+  CYCLES: none
+  HUB: examples/ (fan-in=30)
+  HUB: project.map/ (fan-in=7)
+  SMELL: swop/ fan-out=31 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -303,35 +428,81 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 0 groups | 22f 1506L | 2026-04-22
+# redup/duplication | 1 groups | 29f 3555L | 2026-04-22
 
 SUMMARY:
-  files_scanned: 22
-  total_lines:   1506
-  dup_groups:    0
-  dup_fragments: 0
-  saved_lines:   0
-  scan_ms:       4088
+  files_scanned: 29
+  total_lines:   3555
+  dup_groups:    1
+  dup_fragments: 2
+  saved_lines:   27
+  scan_ms:       4169
+
+HOTSPOTS[1] (files with most duplication):
+  swop/markpact/graph_builder.py  dup=54L  groups=1  frags=2  (1.5%)
+
+DUPLICATES[1] (ranked by impact):
+  [efccf54f46437221]   STRU  _build_environments  L=27 N=2 saved=27 sim=1.00
+      swop/markpact/graph_builder.py:261-287  (_build_environments)
+      swop/markpact/graph_builder.py:290-316  (_build_infrastructures)
+
+REFACTOR[1] (ranked by priority):
+  [1] ○ extract_function   → swop/markpact/utils/_build_environments.py
+      WHY: 2 occurrences of 27-line block across 1 files — saves 27 lines
+      FILES: swop/markpact/graph_builder.py
+
+QUICK_WINS[1] (low risk, high savings — do first):
+  [1] extract_function   saved=27L  → swop/markpact/utils/_build_environments.py
+      FILES: graph_builder.py
+
+EFFORT_ESTIMATE (total ≈ 0.9h):
+  medium _build_environments                 saved=27L  ~54min
+
+METRICS-TARGET:
+  dup_groups:  1 → 0
+  saved_lines: 27 lines recoverable
 ```
 
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 114 func | 17f | 2026-04-22
+# code2llm/evolution | 260 func | 21f | 2026-04-22
 
-NEXT[1] (ranked by impact):
-  [1] !  SPLIT-FUNC      BackendScanner._extract_models  CC=16  fan=10
+NEXT[6] (ranked by impact):
+  [1] !! SPLIT           swop/markpact/doql_bridge.py
+      WHY: 624L, 22 classes, max CC=36
+      EFFORT: ~4h  IMPACT: 22464
+
+  [2] !! SPLIT-FUNC      DoqlBridge._build_minimal_spec  CC=36  fan=54
+      WHY: CC=36 exceeds 15
+      EFFORT: ~1h  IMPACT: 1944
+
+  [3] !  SPLIT-FUNC      _cmd_generate  CC=22  fan=21
+      WHY: CC=22 exceeds 15
+      EFFORT: ~1h  IMPACT: 462
+
+  [4] !  SPLIT-FUNC      RefactorPipeline._cluster_to_spec  CC=23  fan=8
+      WHY: CC=23 exceeds 15
+      EFFORT: ~1h  IMPACT: 184
+
+  [5] !  SPLIT-FUNC      BackendScanner._extract_models  CC=16  fan=10
       WHY: CC=16 exceeds 15
       EFFORT: ~1h  IMPACT: 160
 
+  [6] !! SPLIT           swop/markpact/graph_builder.py
+      WHY: 531L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
 
-RISKS[0]: none
+
+RISKS[2]:
+  ⚠ Splitting swop/markpact/doql_bridge.py may break 11 import paths
+  ⚠ Splitting swop/markpact/graph_builder.py may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          2.0 → ≤1.4
-  max-CC:      16 → ≤8
-  god-modules: 0 → 0
-  high-CC(≥15): 1 → ≤0
+  CC̄:          1.8 → ≤1.3
+  max-CC:      36 → ≤18
+  god-modules: 2 → 0
+  high-CC(≥15): 4 → ≤2
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -359,7 +530,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=2.2 → now CC̄=2.0
+  prev CC̄=1.8 → now CC̄=1.8
 ```
 
 ## Intent

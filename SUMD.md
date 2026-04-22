@@ -20,7 +20,7 @@ Bi-directional runtime reconciler and drift-aware state graph for full-stack sys
 ## Metadata
 
 - **name**: `swop`
-- **version**: `0.1.4`
+- **version**: `0.2.2`
 - **python_requires**: `>=3.8`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -41,7 +41,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: swop;
-  version: 0.1.4;
+  version: 0.2.2;
 }
 
 interface[type="cli"] {
@@ -110,7 +110,7 @@ environment[name="local"] {
 ```yaml
 project:
   name: swop
-  version: 0.1.4
+  version: 0.2.2
   env: local
 ```
 
@@ -161,17 +161,17 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# inspect | 28f 1739L | python:25,shell:2,less:1 | 2026-04-22
-# stats: 21 func | 34 cls | 28 mod | CC̄=2.1 | critical:0 | cycles:0
-# alerts[5]: CC test_add_model_commits_version=4; CC test_auto_heal_removes_invalid_bindings=4; CC _cmd_sync=3; CC _cmd_inspect=3; CC test_cli_state_command=3
-# hotspots[5]: _build_parser fan=5; test_strict_mode_raises_on_invalid_binding fan=5; test_state_yaml_is_serializable fan=5; _build_runtime fan=4; _cmd_state fan=4
+# inspect | 37f 4647L | python:34,shell:2,less:1 | 2026-04-22
+# stats: 89 func | 63 cls | 37 mod | CC̄=4.3 | critical:5 | cycles:0
+# alerts[5]: CC _cmd_generate=22; CC _build_services=13; CC test_refactor_pipeline_seeded_writes_modules=12; CC _build_ui_bindings=11; CC _build_data_sources=10
+# hotspots[5]: _cmd_generate fan=20; build_project_graph fan=19; _build_ui_bindings fan=8; _cmd_refactor fan=7; _build_services fan=7
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[28]:
+M[37]:
   app.doql.less,60
   project.sh,36
-  swop/__init__.py,39
-  swop/cli.py,106
+  swop/__init__.py,52
+  swop/cli.py,263
   swop/core.py,106
   swop/export/__init__.py,12
   swop/export/docker.py,33
@@ -180,11 +180,18 @@ M[28]:
   swop/introspect/__init__.py,13
   swop/introspect/backend.py,33
   swop/introspect/frontend.py,41
+  swop/markpact/__init__.py,28
+  swop/markpact/doql_bridge.py,625
+  swop/markpact/graph_builder.py,532
+  swop/markpact/parser.py,142
+  swop/markpact/sync_engine.py,156
   swop/reconcile.py,112
   swop/refactor/__init__.py,44
   swop/refactor/clustering.py,159
+  swop/refactor/compose_builder.py,118
   swop/refactor/graph.py,101
   swop/refactor/module_builder.py,190
+  swop/refactor/pipeline.py,285
   swop/refactor/scanner/__init__.py,8
   swop/refactor/scanner/backend.py,151
   swop/refactor/scanner/db.py,54
@@ -195,17 +202,21 @@ M[28]:
   tests/__init__.py,4
   tests/test_cli.py,27
   tests/test_core.py,82
+  tests/test_markpact.py,661
+  tests/test_refactor.py,191
   tree.sh,2
 D:
   swop/__init__.py:
   swop/cli.py:
-    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_build_parser,main
+    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_cmd_refactor,_cmd_generate,_build_parser,main
     _build_runtime(mode)
     _cmd_sync(args)
     _cmd_inspect(args)
     _cmd_diff(args)
     _cmd_state(args)
     _cmd_export(args)
+    _cmd_refactor(args)
+    _cmd_generate(args)
     _build_parser()
     main(argv)
   swop/core.py:
@@ -233,6 +244,61 @@ D:
   swop/introspect/frontend.py:
     e: FrontendIntrospector
     FrontendIntrospector: introspect(1),from_html(1)  # Introspect frontend artifacts to produce a runtime state dic
+  swop/markpact/__init__.py:
+  swop/markpact/doql_bridge.py:
+    e: _MinimalEntityField,_MinimalEntity,_MinimalInterface,_MinimalDatabase,_MinimalDeploy,_MinimalWorkflowStep,_MinimalWorkflow,_MinimalRole,_MinimalIntegration,_MinimalWebhook,_MinimalApiClient,_MinimalEnvironment,_MinimalInfrastructure,_MinimalIngress,_MinimalCiConfig,_MinimalDataSource,_MinimalTemplate,_MinimalDocument,_MinimalReport,_MinimalDoqlSpec,MarkpactValidationError,DoqlBridge
+    _MinimalEntityField:
+    _MinimalEntity:
+    _MinimalInterface:
+    _MinimalDatabase:
+    _MinimalDeploy:
+    _MinimalWorkflowStep:
+    _MinimalWorkflow:
+    _MinimalRole:
+    _MinimalIntegration:
+    _MinimalWebhook:
+    _MinimalApiClient:
+    _MinimalEnvironment:
+    _MinimalInfrastructure:
+    _MinimalIngress:
+    _MinimalCiConfig:
+    _MinimalDataSource:
+    _MinimalTemplate:
+    _MinimalDocument:
+    _MinimalReport:
+    _MinimalDoqlSpec:
+    MarkpactValidationError: __init__(2)  # Raised when a manifest block cannot be parsed into a DOQL sp
+    DoqlBridge: __init__(0),_try_import_doql(0),from_blocks(1),_parse_block(1),_merge_fragment(2),_build_spec(1),_build_minimal_spec(1),from_file(1),from_files(1),from_text(1)  # Convert a collection of ``ManifestBlock`` objects into a Doq
+  swop/markpact/graph_builder.py:
+    e: build_project_graph,_build_models,_build_services,_build_ui_bindings,_build_databases,_build_workflows,_build_roles,_build_integrations,_build_webhooks,_build_api_clients,_build_environments,_build_infrastructures,_build_ingresses,_build_ci_configs,_build_data_sources,_build_templates,_build_documents,_build_reports,_build_deploy
+    build_project_graph(spec)
+    _build_models(graph;spec)
+    _build_services(graph;spec)
+    _build_ui_bindings(graph;spec)
+    _build_databases(graph;spec)
+    _build_workflows(graph;spec)
+    _build_roles(graph;spec)
+    _build_integrations(graph;spec)
+    _build_webhooks(graph;spec)
+    _build_api_clients(graph;spec)
+    _build_environments(graph;spec)
+    _build_infrastructures(graph;spec)
+    _build_ingresses(graph;spec)
+    _build_ci_configs(graph;spec)
+    _build_data_sources(graph;spec)
+    _build_templates(graph;spec)
+    _build_documents(graph;spec)
+    _build_reports(graph;spec)
+    _build_deploy(graph;spec)
+  swop/markpact/parser.py:
+    e: ManifestBlock,ManifestParser
+    ManifestBlock: get_meta_value(1),as_yaml(0),as_json(0)
+    ManifestParser: __init__(1),parse_file(1),parse(1),parse_by_kind(2),parse_doql_blocks(1),parse_graph_blocks(1),parse_file_blocks(1),parse_config_blocks(1)  # Parse markpact blocks from markdown manifests.
+  swop/markpact/sync_engine.py:
+    e: _hash,SyncStatus,ManifestSyncEngine
+    SyncStatus:
+    ManifestSyncEngine: __init__(1),check(1),diff(1),sync_to_disk(1),sync_from_disk(1)  # Check and sync ``markpact:file`` blocks against the filesyst
+    _hash(text)
   swop/reconcile.py:
     e: DriftError,Drift,DriftDetector,ResyncEngine
     DriftError:  # Raised when drift is detected while running in STRICT mode.
@@ -245,6 +311,9 @@ D:
     Cluster:
     LouvainLike: __init__(2),run(0),_step(0),_gain_for(3),_collect(0)  # Dependency-free modularity-gain clusterer.
     SeededClusterer: __init__(2),run(1),_bfs(1)  # Grow one cluster per seed node via weighted BFS.
+  swop/refactor/compose_builder.py:
+    e: ComposeBuilder
+    ComposeBuilder: __init__(2),write(1),_write_module_compose(3),_service_name(1),_write_dockerfile(1)  # Render docker-compose manifests for a set of modules.
   swop/refactor/graph.py:
     e: Node,Edge,RefactorGraph
     Node:
@@ -255,6 +324,11 @@ D:
     ModuleSpec:
     ModuleWriteResult:
     ModuleBuilder: __init__(1),write(1),_write_ui(3),_write_api(3),_write_models(3),_write_db(3),_write_manifest(3)  # Write a :class:`ModuleSpec` to disk.
+  swop/refactor/pipeline.py:
+    e: _tokenize,RefactorResult,RefactorPipeline
+    RefactorResult: summary(0)
+    RefactorPipeline: __init__(7),run(0),_build_graph(3),_link_models_to_ui(1),_link_models_to_tables(2),_seed_nodes(2),_seed_cluster_name(1),_cluster_to_spec(6)  # High-level orchestrator for graph-based module extraction.
+    _tokenize(text)
   swop/refactor/scanner/__init__.py:
   swop/refactor/scanner/backend.py:
     e: ModelSignals,RouteSignals,BackendSignals,BackendScanner
@@ -296,66 +370,166 @@ D:
     test_strict_mode_raises_on_invalid_binding()
     test_state_yaml_is_serializable()
     test_docker_export_contains_services()
+  tests/test_markpact.py:
+    e: tmp_manifest,test_parser_finds_all_blocks,test_parser_counts_blocks,test_parser_extracts_meta,test_parser_doql_block_body,test_parser_filter_by_kind,test_parser_includes,test_bridge_from_text,test_bridge_missing_any_supported_blocks_raises,test_bridge_strict_mode,test_bridge_merge_multiple_doql,test_graph_from_doql_spec,test_graph_services_from_interfaces,test_graph_ui_bindings_from_pages,test_graph_databases_as_services,test_sync_check_identical,test_sync_check_modified,test_sync_check_missing,test_sync_to_disk,test_sync_to_disk_dry_run,test_sync_from_disk,test_diff_report,test_graph_workflows_as_services,test_graph_roles_as_services,test_graph_api_clients_as_services,test_graph_webhooks_as_services,test_graph_integrations_as_services,test_graph_environments_as_services,test_graph_infrastructures_as_services,test_graph_ingresses_as_services,test_graph_ci_configs_as_services,test_graph_data_sources_as_services,test_graph_templates_as_services,test_graph_documents_as_services,test_graph_reports_as_services,test_graph_deploy_as_service,test_bridge_from_files_merge,test_cli_generate_from_markpact
+    tmp_manifest(tmp_path)
+    test_parser_finds_all_blocks(tmp_manifest)
+    test_parser_counts_blocks(tmp_manifest)
+    test_parser_extracts_meta()
+    test_parser_doql_block_body()
+    test_parser_filter_by_kind(tmp_manifest)
+    test_parser_includes(tmp_path)
+    test_bridge_from_text()
+    test_bridge_missing_any_supported_blocks_raises()
+    test_bridge_strict_mode()
+    test_bridge_merge_multiple_doql()
+    test_graph_from_doql_spec()
+    test_graph_services_from_interfaces()
+    test_graph_ui_bindings_from_pages()
+    test_graph_databases_as_services()
+    test_sync_check_identical(tmp_path)
+    test_sync_check_modified(tmp_path)
+    test_sync_check_missing(tmp_path)
+    test_sync_to_disk(tmp_path)
+    test_sync_to_disk_dry_run(tmp_path)
+    test_sync_from_disk(tmp_path)
+    test_diff_report(tmp_path)
+    test_graph_workflows_as_services()
+    test_graph_roles_as_services()
+    test_graph_api_clients_as_services()
+    test_graph_webhooks_as_services()
+    test_graph_integrations_as_services()
+    test_graph_environments_as_services()
+    test_graph_infrastructures_as_services()
+    test_graph_ingresses_as_services()
+    test_graph_ci_configs_as_services()
+    test_graph_data_sources_as_services()
+    test_graph_templates_as_services()
+    test_graph_documents_as_services()
+    test_graph_reports_as_services()
+    test_graph_deploy_as_service()
+    test_bridge_from_files_merge(tmp_path)
+    test_cli_generate_from_markpact(tmp_path)
+  tests/test_refactor.py:
+    e: synthetic_project,test_frontend_scanner_extracts_ids_and_api_calls,test_backend_scanner_extracts_models,test_frontend_find_pages_for_route,test_refactor_pipeline_seeded_writes_modules,test_louvain_like_groups_connected_nodes,test_seeded_clusterer_assigns_by_best_score
+    synthetic_project(tmp_path)
+    test_frontend_scanner_extracts_ids_and_api_calls(synthetic_project)
+    test_backend_scanner_extracts_models(synthetic_project)
+    test_frontend_find_pages_for_route(synthetic_project)
+    test_refactor_pipeline_seeded_writes_modules(synthetic_project;tmp_path)
+    test_louvain_like_groups_connected_nodes()
+    test_seeded_clusterer_assigns_by_best_score()
 ```
 
 ## Call Graph
 
-*8 nodes · 6 edges · 1 modules · CC̄=2.0*
+*19 nodes · 17 edges · 8 modules · CC̄=1.8*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `_build_parser` *(in swop.cli)* | 1 | 1 | 15 | **16** |
+| `_cmd_generate` *(in swop.cli)* | 22 ⚠ | 0 | 42 | **42** |
+| `_build_parser` *(in swop.cli)* | 1 | 1 | 32 | **33** |
+| `print` *(in examples.manifest)* | 0 | 30 | 0 | **30** |
+| `_cmd_refactor` *(in swop.cli)* | 7 | 0 | 16 | **16** |
+| `check` *(in swop.markpact.sync_engine.ManifestSyncEngine)* | 7 | 0 | 11 | **11** |
 | `_build_runtime` *(in swop.cli)* | 1 | 5 | 4 | **9** |
-| `_cmd_inspect` *(in swop.cli)* | 3 | 0 | 6 | **6** |
-| `_cmd_export` *(in swop.cli)* | 2 | 0 | 4 | **4** |
-| `_cmd_state` *(in swop.cli)* | 1 | 0 | 4 | **4** |
-| `_cmd_diff` *(in swop.cli)* | 2 | 0 | 3 | **3** |
-| `main` *(in swop.cli)* | 1 | 0 | 3 | **3** |
-| `_cmd_sync` *(in swop.cli)* | 3 | 0 | 3 | **3** |
+| `run_sync` *(in swop.core.SwopRuntime)* | 1 | 0 | 8 | **8** |
+| `_link_models_to_ui` *(in swop.refactor.pipeline.RefactorPipeline)* | 8 | 0 | 7 | **7** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/inspect
-# nodes: 8 | edges: 6 | modules: 1
-# CC̄=2.0
+# nodes: 19 | edges: 17 | modules: 8
+# CC̄=1.8
 
 HUBS[20]:
+  swop.cli._cmd_generate
+    CC=22  in:0  out:42  total:42
   swop.cli._build_parser
-    CC=1  in:1  out:15  total:16
+    CC=1  in:1  out:32  total:33
+  examples.manifest.print
+    CC=0  in:30  out:0  total:30
+  swop.cli._cmd_refactor
+    CC=7  in:0  out:16  total:16
+  swop.markpact.sync_engine.ManifestSyncEngine.check
+    CC=7  in:0  out:11  total:11
   swop.cli._build_runtime
     CC=1  in:5  out:4  total:9
+  swop.core.SwopRuntime.run_sync
+    CC=1  in:0  out:8  total:8
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui
+    CC=8  in:0  out:7  total:7
+  swop.reconcile.ResyncEngine._log_drift
+    CC=1  in:0  out:6  total:6
   swop.cli._cmd_inspect
     CC=3  in:0  out:6  total:6
-  swop.cli._cmd_export
-    CC=2  in:0  out:4  total:4
   swop.cli._cmd_state
     CC=1  in:0  out:4  total:4
+  swop.versioning.Versioning.commit
+    CC=1  in:0  out:4  total:4
+  project.map.toon._tokenize
+    CC=0  in:4  out:0  total:4
+  swop.cli._cmd_export
+    CC=2  in:0  out:4  total:4
   swop.cli._cmd_diff
     CC=2  in:0  out:3  total:3
-  swop.cli.main
-    CC=1  in:0  out:3  total:3
   swop.cli._cmd_sync
     CC=3  in:0  out:3  total:3
+  swop.cli.main
+    CC=1  in:0  out:3  total:3
+  project.map.toon._hash
+    CC=0  in:2  out:0  total:2
+  swop.reconcile.ResyncEngine._auto_heal
+    CC=4  in:0  out:2  total:2
 
 MODULES:
-  swop.cli  [8 funcs]
-    _build_parser  CC=1  out:15
+  examples.manifest  [1 funcs]
+    print  CC=0  out:0
+  project.map.toon  [2 funcs]
+    _hash  CC=0  out:0
+    _tokenize  CC=0  out:0
+  swop.cli  [10 funcs]
+    _build_parser  CC=1  out:32
     _build_runtime  CC=1  out:4
     _cmd_diff  CC=2  out:3
     _cmd_export  CC=2  out:4
+    _cmd_generate  CC=22  out:42
     _cmd_inspect  CC=3  out:6
+    _cmd_refactor  CC=7  out:16
     _cmd_state  CC=1  out:4
     _cmd_sync  CC=3  out:3
     main  CC=1  out:3
+  swop.core  [1 funcs]
+    run_sync  CC=1  out:8
+  swop.markpact.sync_engine  [1 funcs]
+    check  CC=7  out:11
+  swop.reconcile  [2 funcs]
+    _auto_heal  CC=4  out:2
+    _log_drift  CC=1  out:6
+  swop.refactor.pipeline  [1 funcs]
+    _link_models_to_ui  CC=8  out:7
+  swop.versioning  [1 funcs]
+    commit  CC=1  out:4
 
 EDGES:
+  swop.reconcile.ResyncEngine._auto_heal → examples.manifest.print
+  swop.reconcile.ResyncEngine._log_drift → examples.manifest.print
   swop.cli._cmd_sync → swop.cli._build_runtime
   swop.cli._cmd_inspect → swop.cli._build_runtime
+  swop.cli._cmd_inspect → examples.manifest.print
   swop.cli._cmd_diff → swop.cli._build_runtime
   swop.cli._cmd_state → swop.cli._build_runtime
+  swop.cli._cmd_state → examples.manifest.print
   swop.cli._cmd_export → swop.cli._build_runtime
+  swop.cli._cmd_export → examples.manifest.print
+  swop.cli._cmd_refactor → examples.manifest.print
+  swop.cli._cmd_generate → examples.manifest.print
   swop.cli.main → swop.cli._build_parser
+  swop.versioning.Versioning.commit → examples.manifest.print
+  swop.core.SwopRuntime.run_sync → examples.manifest.print
+  swop.markpact.sync_engine.ManifestSyncEngine.check → project.map.toon._hash
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui → project.map.toon._tokenize
 ```
 
 ## Intent

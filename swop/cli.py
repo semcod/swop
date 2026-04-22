@@ -18,7 +18,7 @@ from typing import List, Optional
 
 from swop.core import SwopRuntime
 from swop.graph import DataModel, ModelField
-from swop.markpact import DoqlBridge, ManifestParser, build_project_graph
+from swop.markpact import DoqlBridge, ManifestParser, ManifestSyncEngine, build_project_graph
 from swop.refactor import RefactorPipeline
 
 
@@ -137,15 +137,25 @@ def _cmd_generate(args: argparse.Namespace) -> int:
 
     print(f"[GENERATE] ProjectGraph: {len(graph.models)} models, {len(graph.services)} services, {len(graph.ui_bindings)} ui_bindings")
 
+    # Materialise markpact:file blocks to disk
+    if args.sync_files or args.sync_files_dry_run:
+        engine = ManifestSyncEngine(base_dir=manifest_path.parent)
+        written = engine.sync_to_disk(manifest_path, dry_run=args.sync_files_dry_run)
+        mode_str = "(dry-run)" if args.sync_files_dry_run else ""
+        print(f"[GENERATE] Sync files {mode_str}: {len(written)} file(s)")
+        for w in written:
+            print(f"  -> {w}")
+
     runtime = SwopRuntime(mode=args.mode)
     runtime.graph = graph
 
+    exit_code = 0
     if args.sync:
         drift = runtime.run_sync()
         if drift.exists():
             print(f"[GENERATE] Drift detected (mode={args.mode})")
-            return 1 if args.mode == "STRICT" else 0
-        print("[GENERATE] Sync completed — no drift.")
+            if args.mode == "STRICT":
+                exit_code = 1
 
     if args.output_yaml:
         out_path = Path(args.output_yaml)
@@ -157,10 +167,10 @@ def _cmd_generate(args: argparse.Namespace) -> int:
         out_path.write_text(runtime.docker_compose(), encoding="utf-8")
         print(f"[GENERATE] docker-compose written to {out_path}")
 
-    if args.sync and not args.output_yaml and not args.output_docker:
+    if not args.output_yaml and not args.output_docker:
         print(runtime.state_yaml())
 
-    return 0
+    return exit_code
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -235,6 +245,16 @@ def _build_parser() -> argparse.ArgumentParser:
         "--sync",
         action="store_true",
         help="Run sync engine after building the graph",
+    )
+    p_generate.add_argument(
+        "--sync-files",
+        action="store_true",
+        help="Materialise markpact:file blocks to their declared paths",
+    )
+    p_generate.add_argument(
+        "--sync-files-dry-run",
+        action="store_true",
+        help="Report which files would be written without writing them",
     )
     p_generate.add_argument(
         "--output-yaml",
