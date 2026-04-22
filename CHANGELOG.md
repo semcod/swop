@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-04-22
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_cli.py
+- Update tests/test_core.py
+
+### Other
+- Update .idea/.name
+- Update .idea/inspectionProfiles/Project_Default.xml
+- Update .idea/inspectionProfiles/profiles_settings.xml
+- Update .idea/misc.xml
+- Update .idea/modules.xml
+- Update .idea/swop.iml
+- Update .idea/vcs.xml
+- Update swop/__init__.py
+- Update swop/cli.py
+- Update swop/core.py
+- ... and 11 more files
+
 ## [0.1.3] - 2026-04-22
 
 ### Docs

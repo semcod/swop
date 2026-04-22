@@ -1,15 +1,38 @@
 """
-Inspect package
+swop - bi-directional runtime reconciler for full-stack state graphs.
 """
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
-from swop.core import inspect_object, get_signature
-from swop.utils import is_callable, get_docstring
+from swop.core import SwopRuntime, SynqerRuntime
+from swop.graph import (
+    DataModel,
+    GraphVersion,
+    ModelField,
+    ProjectGraph,
+    Service,
+    UIBinding,
+)
+from swop.introspect import BackendIntrospector, FrontendIntrospector
+from swop.reconcile import Drift, DriftDetector, DriftError, ResyncEngine
+from swop.sync import SyncEngine
+from swop.versioning import Versioning
 
 __all__ = [
-    "inspect_object",
-    "get_signature",
-    "is_callable",
-    "get_docstring",
+    "SwopRuntime",
+    "SynqerRuntime",
+    "ProjectGraph",
+    "DataModel",
+    "ModelField",
+    "UIBinding",
+    "Service",
+    "GraphVersion",
+    "BackendIntrospector",
+    "FrontendIntrospector",
+    "Drift",
+    "DriftDetector",
+    "DriftError",
+    "ResyncEngine",
+    "SyncEngine",
+    "Versioning",
 ]

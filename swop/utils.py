@@ -1,29 +1,23 @@
 """
-Utility functions
+Miscellaneous helpers used across the swop package.
 """
 
+import hashlib
+import json
+from typing import Any
 
-def is_callable(obj):
-    """
-    Check if an object is callable.
 
-    Args:
-        obj: Any Python object
+def stable_hash(payload: Any) -> str:
+    """Return a deterministic SHA-1 hash of a JSON-serializable payload."""
+    serialized = json.dumps(payload, sort_keys=True, default=str)
+    return hashlib.sha1(serialized.encode("utf-8")).hexdigest()
 
-    Returns:
-        bool: True if object is callable, False otherwise
-    """
+
+def is_callable(obj: Any) -> bool:
+    """Return ``True`` if ``obj`` is callable."""
     return callable(obj)
 
 
-def get_docstring(obj):
-    """
-    Get the docstring of an object.
-
-    Args:
-        obj: Any Python object
-
-    Returns:
-        str or None: Docstring if available, None otherwise
-    """
-    return obj.__doc__
+def get_docstring(obj: Any):
+    """Return the ``__doc__`` attribute of ``obj`` or ``None``."""
+    return getattr(obj, "__doc__", None)
