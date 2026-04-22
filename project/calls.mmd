@@ -1,0 +1,17 @@
+flowchart LR
+    subgraph swop__cli
+        swop__cli___build_runtime["_build_runtime"]
+        swop__cli___cmd_diff["_cmd_diff"]
+        swop__cli__main["main"]
+        swop__cli___build_parser["_build_parser"]
+        swop__cli___cmd_export["_cmd_export"]
+        swop__cli___cmd_sync["_cmd_sync"]
+        swop__cli___cmd_inspect["_cmd_inspect"]
+        swop__cli___cmd_state["_cmd_state"]
+    end
+    swop__cli___cmd_sync --> swop__cli___build_runtime
+    swop__cli___cmd_inspect --> swop__cli___build_runtime
+    swop__cli___cmd_diff --> swop__cli___build_runtime
+    swop__cli___cmd_state --> swop__cli___build_runtime
+    swop__cli___cmd_export --> swop__cli___build_runtime
+    swop__cli__main --> swop__cli___build_parser

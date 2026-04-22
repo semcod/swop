@@ -1,0 +1,135 @@
+# inspect | 28f 1739L | python:25,shell:2,less:1 | 2026-04-22
+# stats: 21 func | 34 cls | 28 mod | CC̄=2.1 | critical:0 | cycles:0
+# alerts[5]: CC test_add_model_commits_version=4; CC test_auto_heal_removes_invalid_bindings=4; CC _cmd_sync=3; CC _cmd_inspect=3; CC test_cli_state_command=3
+# hotspots[5]: _build_parser fan=5; test_strict_mode_raises_on_invalid_binding fan=5; test_state_yaml_is_serializable fan=5; _build_runtime fan=4; _cmd_state fan=4
+# evolution: baseline
+# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
+M[28]:
+  app.doql.less,60
+  project.sh,36
+  swop/__init__.py,39
+  swop/cli.py,106
+  swop/core.py,106
+  swop/export/__init__.py,12
+  swop/export/docker.py,33
+  swop/export/yaml.py,49
+  swop/graph.py,50
+  swop/introspect/__init__.py,13
+  swop/introspect/backend.py,33
+  swop/introspect/frontend.py,41
+  swop/reconcile.py,112
+  swop/refactor/__init__.py,44
+  swop/refactor/clustering.py,159
+  swop/refactor/graph.py,101
+  swop/refactor/module_builder.py,190
+  swop/refactor/scanner/__init__.py,8
+  swop/refactor/scanner/backend.py,151
+  swop/refactor/scanner/db.py,54
+  swop/refactor/scanner/frontend.py,129
+  swop/sync.py,48
+  swop/utils.py,24
+  swop/versioning.py,26
+  tests/__init__.py,4
+  tests/test_cli.py,27
+  tests/test_core.py,82
+  tree.sh,2
+D:
+  swop/__init__.py:
+  swop/cli.py:
+    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_build_parser,main
+    _build_runtime(mode)
+    _cmd_sync(args)
+    _cmd_inspect(args)
+    _cmd_diff(args)
+    _cmd_state(args)
+    _cmd_export(args)
+    _build_parser()
+    main(argv)
+  swop/core.py:
+    e: SwopRuntime
+    SwopRuntime: __init__(3),add_model(3),add_service(2),add_ui_binding(2),introspect(0),run_sync(0),state_yaml(0),docker_compose(0)  # Main orchestrator for the swop reconciliation system.
+  swop/export/__init__.py:
+  swop/export/docker.py:
+    e: DockerExporter
+    DockerExporter: to_dict(1),export_yaml(1)  # Render a ``ProjectGraph`` into a docker-compose specificatio
+  swop/export/yaml.py:
+    e: StateExporter
+    StateExporter: to_dict(2),export_yaml(2)  # Serialize a ``ProjectGraph`` plus a ``Drift`` to YAML.
+  swop/graph.py:
+    e: ModelField,DataModel,UIBinding,Service,GraphVersion,ProjectGraph
+    ModelField:
+    DataModel:
+    UIBinding:
+    Service:
+    GraphVersion:
+    ProjectGraph:
+  swop/introspect/__init__.py:
+  swop/introspect/backend.py:
+    e: BackendIntrospector
+    BackendIntrospector: __init__(2),introspect(0),register_model(2),register_route(1)  # Introspect backend services to produce a runtime state dict.
+  swop/introspect/frontend.py:
+    e: FrontendIntrospector
+    FrontendIntrospector: introspect(1),from_html(1)  # Introspect frontend artifacts to produce a runtime state dic
+  swop/reconcile.py:
+    e: DriftError,Drift,DriftDetector,ResyncEngine
+    DriftError:  # Raised when drift is detected while running in STRICT mode.
+    Drift: exists(0)
+    DriftDetector: compute(2)  # Compare a declared graph with the actual runtime state.
+    ResyncEngine: __init__(1),reconcile(2),_has_critical(1),_auto_heal(2),_log_drift(1)  # Continuously reconcile the declared graph against actual sta
+  swop/refactor/__init__.py:
+  swop/refactor/clustering.py:
+    e: Cluster,LouvainLike,SeededClusterer
+    Cluster:
+    LouvainLike: __init__(2),run(0),_step(0),_gain_for(3),_collect(0)  # Dependency-free modularity-gain clusterer.
+    SeededClusterer: __init__(2),run(1),_bfs(1)  # Grow one cluster per seed node via weighted BFS.
+  swop/refactor/graph.py:
+    e: Node,Edge,RefactorGraph
+    Node:
+    Edge:
+    RefactorGraph: __init__(0),add_node(2),add_edge(4),edges(0),neighbors(1),nodes_of_type(1),as_dict(0),from_iterables(3)  # Undirected weighted graph tailored for system decomposition.
+  swop/refactor/module_builder.py:
+    e: ModuleSpec,ModuleWriteResult,ModuleBuilder
+    ModuleSpec:
+    ModuleWriteResult:
+    ModuleBuilder: __init__(1),write(1),_write_ui(3),_write_api(3),_write_models(3),_write_db(3),_write_manifest(3)  # Write a :class:`ModuleSpec` to disk.
+  swop/refactor/scanner/__init__.py:
+  swop/refactor/scanner/backend.py:
+    e: ModelSignals,RouteSignals,BackendSignals,BackendScanner
+    ModelSignals:
+    RouteSignals:
+    BackendSignals:
+    BackendScanner: __init__(4),_iter_py(1),scan(0),_extract_models(1),_looks_like_model(1),_extract_routes(1)  # Scan a Python backend root for models and routes.
+  swop/refactor/scanner/db.py:
+    e: DbSignals,DbScanner
+    DbSignals:
+    DbScanner: __init__(2),scan(0),_scan_file(1)  # Scan a directory for SQLite databases and enumerate their ta
+  swop/refactor/scanner/frontend.py:
+    e: PageSignals,FrontendScanner
+    PageSignals:
+    FrontendScanner: __init__(3),_pages_root(0),iter_pages(0),scan(0),scan_file(1),find_pages_for_route(1),_route_token(1),_slug_for(1)  # Scan a frontend project root and emit ``PageSignals`` per pa
+  swop/sync.py:
+    e: SyncEngine
+    SyncEngine: frontend_to_graph(1),merge_frontend(2),merge_backend(2)  # Move state between a ``ProjectGraph`` and introspected snaps
+  swop/utils.py:
+    e: stable_hash,is_callable,get_docstring
+    stable_hash(payload)
+    is_callable(obj)
+    get_docstring(obj)
+  swop/versioning.py:
+    e: Versioning
+    Versioning: commit(2)  # Append a new ``GraphVersion`` entry whenever the graph mutat
+  tests/__init__.py:
+  tests/test_cli.py:
+    e: test_cli_state_command,test_cli_export_docker,test_cli_inspect_backend
+    test_cli_state_command(capsys)
+    test_cli_export_docker(capsys)
+    test_cli_inspect_backend(capsys)
+  tests/test_core.py:
+    e: _runtime,test_add_model_commits_version,test_run_sync_detects_invalid_bindings,test_auto_heal_removes_invalid_bindings,test_strict_mode_raises_on_invalid_binding,test_state_yaml_is_serializable,test_docker_export_contains_services
+    _runtime(mode)
+    test_add_model_commits_version()
+    test_run_sync_detects_invalid_bindings()
+    test_auto_heal_removes_invalid_bindings()
+    test_strict_mode_raises_on_invalid_binding()
+    test_state_yaml_is_serializable()
+    test_docker_export_contains_services()

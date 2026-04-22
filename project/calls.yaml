@@ -1,0 +1,205 @@
+project: /home/tom/github/semcod/inspect
+generated_from: code2llm call graph analysis
+stats:
+  total_nodes: 8
+  total_edges: 6
+  modules_count: 1
+nodes:
+  swop.cli._build_runtime:
+    name: _build_runtime
+    module: swop.cli
+    line: 20
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 5
+  swop.cli._cmd_diff:
+    name: _cmd_diff
+    module: swop.cli
+    line: 47
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  swop.cli.main:
+    name: main
+    module: swop.cli
+    line: 98
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  swop.cli._build_parser:
+    name: _build_parser
+    module: swop.cli
+    line: 70
+    cyclomatic_complexity: 1
+    calls_out: 15
+    calls_in: 1
+  swop.cli._cmd_export:
+    name: _cmd_export
+    module: swop.cli
+    line: 60
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  swop.cli._cmd_sync:
+    name: _cmd_sync
+    module: swop.cli
+    line: 29
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  swop.cli._cmd_inspect:
+    name: _cmd_inspect
+    module: swop.cli
+    line: 35
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  swop.cli._cmd_state:
+    name: _cmd_state
+    module: swop.cli
+    line: 53
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+edges:
+- caller: swop.cli._cmd_sync
+  callee: swop.cli._build_runtime
+  call_type: resolved
+- caller: swop.cli._cmd_inspect
+  callee: swop.cli._build_runtime
+  call_type: resolved
+- caller: swop.cli._cmd_diff
+  callee: swop.cli._build_runtime
+  call_type: resolved
+- caller: swop.cli._cmd_state
+  callee: swop.cli._build_runtime
+  call_type: resolved
+- caller: swop.cli._cmd_export
+  callee: swop.cli._build_runtime
+  call_type: resolved
+- caller: swop.cli.main
+  callee: swop.cli._build_parser
+  call_type: resolved
+modules:
+  swop.cli:
+  - swop.cli._build_parser
+  - swop.cli._build_runtime
+  - swop.cli._cmd_diff
+  - swop.cli._cmd_export
+  - swop.cli._cmd_inspect
+  - swop.cli._cmd_state
+  - swop.cli._cmd_sync
+  - swop.cli.main
+entry_points:
+- SUMD._build_parser
+- SUMD._build_runtime
+- SUMD._cmd_diff
+- SUMD._cmd_export
+- SUMD._cmd_inspect
+- SUMD._cmd_state
+- SUMD._cmd_sync
+- SUMD._runtime
+- SUMD.get_docstring
+- SUMD.is_callable
+- SUMD.main
+- SUMD.stable_hash
+- SUMD.test_add_model_commits_version
+- SUMD.test_auto_heal_removes_invalid_bindings
+- SUMD.test_cli_export_docker
+- SUMD.test_cli_inspect_backend
+- SUMD.test_cli_state_command
+- SUMD.test_docker_export_contains_services
+- SUMD.test_run_sync_detects_invalid_bindings
+- SUMD.test_state_yaml_is_serializable
+- SUMD.test_strict_mode_raises_on_invalid_binding
+- project.map.toon._build_parser
+- project.map.toon._build_runtime
+- project.map.toon._cmd_diff
+- project.map.toon._cmd_export
+- project.map.toon._cmd_inspect
+- project.map.toon._cmd_state
+- project.map.toon._cmd_sync
+- project.map.toon._runtime
+- project.map.toon.get_docstring
+- project.map.toon.is_callable
+- project.map.toon.main
+- project.map.toon.stable_hash
+- project.map.toon.test_add_model_commits_version
+- project.map.toon.test_auto_heal_removes_invalid_bindings
+- project.map.toon.test_cli_export_docker
+- project.map.toon.test_cli_inspect_backend
+- project.map.toon.test_cli_state_command
+- project.map.toon.test_docker_export_contains_services
+- project.map.toon.test_run_sync_detects_invalid_bindings
+- project.map.toon.test_state_yaml_is_serializable
+- project.map.toon.test_strict_mode_raises_on_invalid_binding
+- swop.cli._cmd_diff
+- swop.cli._cmd_export
+- swop.cli._cmd_inspect
+- swop.cli._cmd_state
+- swop.cli._cmd_sync
+- swop.cli.main
+- swop.core.SwopRuntime.__init__
+- swop.core.SwopRuntime.add_model
+- swop.core.SwopRuntime.add_service
+- swop.core.SwopRuntime.add_ui_binding
+- swop.core.SwopRuntime.docker_compose
+- swop.core.SwopRuntime.introspect
+- swop.core.SwopRuntime.run_sync
+- swop.core.SwopRuntime.state_yaml
+- swop.export.docker.DockerExporter.export_yaml
+- swop.export.docker.DockerExporter.to_dict
+- swop.export.yaml.StateExporter.export_yaml
+- swop.export.yaml.StateExporter.to_dict
+- swop.introspect.backend.BackendIntrospector.__init__
+- swop.introspect.backend.BackendIntrospector.introspect
+- swop.introspect.backend.BackendIntrospector.register_model
+- swop.introspect.backend.BackendIntrospector.register_route
+- swop.introspect.frontend.FrontendIntrospector.from_html
+- swop.introspect.frontend.FrontendIntrospector.introspect
+- swop.reconcile.Drift.exists
+- swop.reconcile.DriftDetector.compute
+- swop.reconcile.ResyncEngine.__init__
+- swop.reconcile.ResyncEngine._auto_heal
+- swop.reconcile.ResyncEngine._has_critical
+- swop.reconcile.ResyncEngine._log_drift
+- swop.reconcile.ResyncEngine.reconcile
+- swop.refactor.clustering.LouvainLike.__init__
+- swop.refactor.clustering.LouvainLike._collect
+- swop.refactor.clustering.LouvainLike._gain_for
+- swop.refactor.clustering.LouvainLike._step
+- swop.refactor.clustering.LouvainLike.run
+- swop.refactor.clustering.SeededClusterer.__init__
+- swop.refactor.clustering.SeededClusterer._bfs
+- swop.refactor.clustering.SeededClusterer.run
+- swop.refactor.graph.RefactorGraph.__init__
+- swop.refactor.graph.RefactorGraph.add_edge
+- swop.refactor.graph.RefactorGraph.add_node
+- swop.refactor.graph.RefactorGraph.as_dict
+- swop.refactor.graph.RefactorGraph.from_iterables
+- swop.refactor.graph.RefactorGraph.neighbors
+- swop.refactor.graph.RefactorGraph.nodes_of_type
+- swop.refactor.scanner.backend.BackendScanner.__init__
+- swop.refactor.scanner.backend.BackendScanner._extract_models
+- swop.refactor.scanner.backend.BackendScanner._extract_routes
+- swop.refactor.scanner.backend.BackendScanner._iter_py
+- swop.refactor.scanner.backend.BackendScanner._looks_like_model
+- swop.refactor.scanner.backend.BackendScanner.scan
+- swop.refactor.scanner.db.DbScanner.__init__
+- swop.refactor.scanner.db.DbScanner._scan_file
+- swop.refactor.scanner.db.DbScanner.scan
+- swop.refactor.scanner.frontend.FrontendScanner.__init__
+- swop.refactor.scanner.frontend.FrontendScanner._pages_root
+- swop.refactor.scanner.frontend.FrontendScanner._route_token
+- swop.refactor.scanner.frontend.FrontendScanner._slug_for
+- swop.refactor.scanner.frontend.FrontendScanner.find_pages_for_route
+- swop.refactor.scanner.frontend.FrontendScanner.iter_pages
+- swop.refactor.scanner.frontend.FrontendScanner.scan
+- swop.refactor.scanner.frontend.FrontendScanner.scan_file
+- swop.sync.SyncEngine.frontend_to_graph
+- swop.sync.SyncEngine.merge_backend
+- swop.sync.SyncEngine.merge_frontend
+- swop.utils.get_docstring
+- swop.utils.is_callable
+- swop.utils.stable_hash
+- swop.versioning.Versioning.commit

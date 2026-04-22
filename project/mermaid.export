@@ -1,0 +1,148 @@
+flowchart TD
+    subgraph SUMD
+        SUMD___build_runtime["_build_runtime"]
+        SUMD___cmd_sync["_cmd_sync"]
+        SUMD___cmd_inspect["_cmd_inspect"]
+        SUMD___cmd_diff["_cmd_diff"]
+        SUMD___cmd_state["_cmd_state"]
+        SUMD___cmd_export["_cmd_export"]
+        SUMD___build_parser["_build_parser"]
+        SUMD__main["main"]
+        SUMD__stable_hash["stable_hash"]
+        SUMD__is_callable["is_callable"]
+        SUMD__get_docstring["get_docstring"]
+        SUMD__test_cli_state_command["test_cli_state_command"]
+        SUMD__test_cli_export_docker["test_cli_export_docker"]
+        SUMD__test_cli_inspect_backend["test_cli_inspect_backend"]
+        SUMD___runtime["_runtime"]
+        SUMD__test_add_model_commits_version["test_add_model_commits_version"]
+        SUMD__test_run_sync_detects_invalid_bindings["test_run_sync_detects_invalid_bindi"]
+        SUMD__test_auto_heal_removes_invalid_bindings["test_auto_heal_removes_invalid_bind"]
+        SUMD__test_strict_mode_raises_on_invalid_binding["test_strict_mode_raises_on_invalid_"]
+        SUMD__test_state_yaml_is_serializable["test_state_yaml_is_serializable"]
+        SUMD__test_docker_export_contains_services["test_docker_export_contains_service"]
+    end
+    subgraph project__map
+        project__map__toon___build_runtime["_build_runtime"]
+        project__map__toon___cmd_sync["_cmd_sync"]
+        project__map__toon___cmd_inspect["_cmd_inspect"]
+        project__map__toon___cmd_diff["_cmd_diff"]
+        project__map__toon___cmd_state["_cmd_state"]
+        project__map__toon___cmd_export["_cmd_export"]
+        project__map__toon___build_parser["_build_parser"]
+        project__map__toon__main["main"]
+        project__map__toon__stable_hash["stable_hash"]
+        project__map__toon__is_callable["is_callable"]
+        project__map__toon__get_docstring["get_docstring"]
+        project__map__toon__test_cli_state_command["test_cli_state_command"]
+        project__map__toon__test_cli_export_docker["test_cli_export_docker"]
+        project__map__toon__test_cli_inspect_backend["test_cli_inspect_backend"]
+        project__map__toon___runtime["_runtime"]
+        project__map__toon__test_add_model_commits_version["test_add_model_commits_version"]
+        project__map__toon__test_run_sync_detects_invalid_bindings["test_run_sync_detects_invalid_bindi"]
+        project__map__toon__test_auto_heal_removes_invalid_bindings["test_auto_heal_removes_invalid_bind"]
+        project__map__toon__test_strict_mode_raises_on_invalid_binding["test_strict_mode_raises_on_invalid_"]
+        project__map__toon__test_state_yaml_is_serializable["test_state_yaml_is_serializable"]
+        project__map__toon__test_docker_export_contains_services["test_docker_export_contains_service"]
+    end
+    subgraph swop__cli
+        swop__cli___build_runtime["_build_runtime"]
+        swop__cli___cmd_sync["_cmd_sync"]
+        swop__cli___cmd_inspect["_cmd_inspect"]
+        swop__cli___cmd_diff["_cmd_diff"]
+        swop__cli___cmd_state["_cmd_state"]
+        swop__cli___cmd_export["_cmd_export"]
+        swop__cli___build_parser["_build_parser"]
+        swop__cli__main["main"]
+    end
+    subgraph swop__core
+        swop__core__SwopRuntime____init__["__init__"]
+        swop__core__SwopRuntime__add_model["add_model"]
+        swop__core__SwopRuntime__add_service["add_service"]
+        swop__core__SwopRuntime__add_ui_binding["add_ui_binding"]
+        swop__core__SwopRuntime__introspect["introspect"]
+        swop__core__SwopRuntime__run_sync["run_sync"]
+        swop__core__SwopRuntime__state_yaml["state_yaml"]
+        swop__core__SwopRuntime__docker_compose["docker_compose"]
+    end
+    subgraph swop__export
+        swop__export__docker__DockerExporter__to_dict["to_dict"]
+        swop__export__docker__DockerExporter__export_yaml["export_yaml"]
+        swop__export__yaml__StateExporter__to_dict["to_dict"]
+        swop__export__yaml__StateExporter__export_yaml["export_yaml"]
+    end
+    subgraph swop__introspect
+        swop__introspect__frontend__FrontendIntrospector__introspect["introspect"]
+        swop__introspect__frontend__FrontendIntrospector__from_html["from_html"]
+        swop__introspect__backend__BackendIntrospector____init__["__init__"]
+        swop__introspect__backend__BackendIntrospector__introspect["introspect"]
+        swop__introspect__backend__BackendIntrospector__register_model["register_model"]
+        swop__introspect__backend__BackendIntrospector__register_route["register_route"]
+    end
+    subgraph swop__reconcile
+        swop__reconcile__Drift__exists["exists"]
+        swop__reconcile__DriftDetector__compute["compute"]
+        swop__reconcile__ResyncEngine____init__["__init__"]
+        swop__reconcile__ResyncEngine__reconcile["reconcile"]
+        swop__reconcile__ResyncEngine___has_critical["_has_critical"]
+        swop__reconcile__ResyncEngine___auto_heal["_auto_heal"]
+        swop__reconcile__ResyncEngine___log_drift["_log_drift"]
+    end
+    subgraph swop__refactor
+        swop__refactor__scanner__db__DbScanner____init__["__init__"]
+        swop__refactor__scanner__db__DbScanner__scan["scan"]
+        swop__refactor__scanner__db__DbScanner___scan_file["_scan_file"]
+        swop__refactor__graph__RefactorGraph____init__["__init__"]
+        swop__refactor__graph__RefactorGraph__add_node["add_node"]
+        swop__refactor__graph__RefactorGraph__add_edge["add_edge"]
+        swop__refactor__graph__RefactorGraph__neighbors["neighbors"]
+        swop__refactor__graph__RefactorGraph__nodes_of_type["nodes_of_type"]
+        swop__refactor__graph__RefactorGraph__as_dict["as_dict"]
+        swop__refactor__graph__RefactorGraph__from_iterables["from_iterables"]
+        swop__refactor__clustering__LouvainLike____init__["__init__"]
+        swop__refactor__clustering__LouvainLike__run["run"]
+        swop__refactor__clustering__LouvainLike___step("_step CC=8")
+        swop__refactor__clustering__LouvainLike___gain_for["_gain_for"]
+        swop__refactor__clustering__LouvainLike___collect["_collect"]
+        swop__refactor__clustering__SeededClusterer____init__["__init__"]
+        swop__refactor__clustering__SeededClusterer__run("run CC=12")
+        swop__refactor__clustering__SeededClusterer___bfs["_bfs"]
+        swop__refactor__scanner__frontend__FrontendScanner____init__["__init__"]
+        swop__refactor__scanner__frontend__FrontendScanner___pages_root["_pages_root"]
+        swop__refactor__scanner__frontend__FrontendScanner__iter_pages["iter_pages"]
+        swop__refactor__scanner__frontend__FrontendScanner__scan["scan"]
+        swop__refactor__scanner__frontend__FrontendScanner__scan_file["scan_file"]
+        swop__refactor__scanner__frontend__FrontendScanner__find_pages_for_route("find_pages_for_route CC=10")
+        swop__refactor__scanner__frontend__FrontendScanner___route_token["_route_token"]
+        swop__refactor__scanner__frontend__FrontendScanner___slug_for["_slug_for"]
+        swop__refactor__scanner__backend__BackendScanner____init__["__init__"]
+        swop__refactor__scanner__backend__BackendScanner___iter_py("_iter_py CC=8")
+        swop__refactor__scanner__backend__BackendScanner__scan["scan"]
+        swop__refactor__scanner__backend__BackendScanner___extract_models{{_extract_models CC=16}}
+        swop__refactor__scanner__backend__BackendScanner___looks_like_model["_looks_like_model"]
+        swop__refactor__scanner__backend__BackendScanner___extract_routes["_extract_routes"]
+    end
+    subgraph swop__sync
+        swop__sync__SyncEngine__frontend_to_graph["frontend_to_graph"]
+        swop__sync__SyncEngine__merge_frontend["merge_frontend"]
+        swop__sync__SyncEngine__merge_backend["merge_backend"]
+    end
+    subgraph swop__utils
+        swop__utils__stable_hash["stable_hash"]
+        swop__utils__is_callable["is_callable"]
+        swop__utils__get_docstring["get_docstring"]
+    end
+    subgraph swop__versioning
+        swop__versioning__Versioning__commit["commit"]
+    end
+    swop__cli___cmd_sync --> swop__cli___build_runtime
+    swop__cli___cmd_inspect --> swop__cli___build_runtime
+    swop__cli___cmd_diff --> swop__cli___build_runtime
+    swop__cli___cmd_state --> swop__cli___build_runtime
+    swop__cli___cmd_export --> swop__cli___build_runtime
+    swop__cli__main --> swop__cli___build_parser
+
+    classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
+    class swop__refactor__scanner__backend__BackendScanner___extract_models highCC
+    class swop__refactor__clustering__LouvainLike___step,swop__refactor__clustering__SeededClusterer__run,swop__refactor__scanner__frontend__FrontendScanner__find_pages_for_route,swop__refactor__scanner__backend__BackendScanner___iter_py medCC

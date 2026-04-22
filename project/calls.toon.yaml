@@ -1,0 +1,40 @@
+# code2llm call graph | /home/tom/github/semcod/inspect
+# nodes: 8 | edges: 6 | modules: 1
+# CC̄=2.0
+
+HUBS[20]:
+  swop.cli._build_parser
+    CC=1  in:1  out:15  total:16
+  swop.cli._build_runtime
+    CC=1  in:5  out:4  total:9
+  swop.cli._cmd_inspect
+    CC=3  in:0  out:6  total:6
+  swop.cli._cmd_export
+    CC=2  in:0  out:4  total:4
+  swop.cli._cmd_state
+    CC=1  in:0  out:4  total:4
+  swop.cli._cmd_diff
+    CC=2  in:0  out:3  total:3
+  swop.cli.main
+    CC=1  in:0  out:3  total:3
+  swop.cli._cmd_sync
+    CC=3  in:0  out:3  total:3
+
+MODULES:
+  swop.cli  [8 funcs]
+    _build_parser  CC=1  out:15
+    _build_runtime  CC=1  out:4
+    _cmd_diff  CC=2  out:3
+    _cmd_export  CC=2  out:4
+    _cmd_inspect  CC=3  out:6
+    _cmd_state  CC=1  out:4
+    _cmd_sync  CC=3  out:3
+    main  CC=1  out:3
+
+EDGES:
+  swop.cli._cmd_sync → swop.cli._build_runtime
+  swop.cli._cmd_inspect → swop.cli._build_runtime
+  swop.cli._cmd_diff → swop.cli._build_runtime
+  swop.cli._cmd_state → swop.cli._build_runtime
+  swop.cli._cmd_export → swop.cli._build_runtime
+  swop.cli.main → swop.cli._build_parser

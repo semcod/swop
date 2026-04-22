@@ -1,0 +1,42 @@
+# inspect | 114 func | 17f | 4474L | python | 2026-04-22
+
+HEALTH:
+  CC̄=2.0  critical=3 (limit:10)  dup=0  cycles=0
+
+ALERTS[5]:
+  !   cc_exceeded      BackendScanner._extract_models = 16 (limit:15)
+  !   high_fan_out     FrontendScanner.scan_file = 14 (limit:10)
+  !   high_fan_out     SeededClusterer.run = 11 (limit:10)
+  !   high_fan_out     FrontendScanner.find_pages_for_route = 10 (limit:10)
+  !   high_fan_out     BackendScanner._extract_models = 10 (limit:10)
+
+MODULES[40] (top by size):
+  M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
+  M[project/context.md] 396L C:0 F:0 CC↑0 D:0 (md)
+  M[SUMR.md] 344L C:0 F:0 CC↑0 D:0 (md)
+  M[project/README.md] 339L C:0 F:0 CC↑0 D:0 (md)
+  M[SUMD.md] 324L C:0 F:21 CC↑0 D:0 (md)
+  M[swop/refactor/clustering.py] 158L C:3 F:8 CC↑12 D:0 (python)
+  M[swop/refactor/scanner/backend.py] 150L C:4 F:6 CC↑16 D:0 (python)
+  M[project/calls.yaml] 131L C:0 F:0 CC↑0 D:0 (yaml)
+  M[swop/refactor/scanner/frontend.py] 128L C:2 F:8 CC↑10 D:0 (python)
+  M[swop/reconcile.py] 111L C:4 F:7 CC↑7 D:0 (python)
+  M[swop/cli.py] 105L C:0 F:8 CC↑3 D:0 (python)
+  M[swop/core.py] 105L C:1 F:8 CC↑3 D:0 (python)
+  M[sumd.json] 102L C:0 F:0 CC↑0 D:0 (json)
+  M[swop/refactor/graph.py] 100L C:3 F:7 CC↑4 D:0 (python)
+  M[project/map.toon.yaml] 96L C:0 F:21 CC↑0 D:0 (yaml)
+  LANGS: python:21/yaml:8/md:6/shell:2/txt:1/toml:1/json:1
+
+HOTSPOTS[4]:
+  ★ FrontendScanner.scan_file fan=14  // Orchestrates 14 calls
+  ★ SeededClusterer.run fan=11  // Orchestrates 11 calls
+  ★ FrontendScanner.find_pages_for_route fan=10  // Best-effort match between a URL route and page files on disk.
+  ★ BackendScanner._extract_models fan=10  // Orchestrates 10 calls
+
+REFACTOR[2]:
+  [1] H/H Split god module goal.yaml (512L, 0 classes)
+  [2] M/L Split BackendScanner._extract_models (CC=16)
+
+EVOLUTION:
+  2026-04-22 CC̄=2.0 crit=3 4474L // Automated analysis
