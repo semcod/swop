@@ -20,7 +20,7 @@ Bi-directional runtime reconciler and drift-aware state graph for full-stack sys
 ## Metadata
 
 - **name**: `swop`
-- **version**: `0.2.2`
+- **version**: `0.2.4`
 - **python_requires**: `>=3.8`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -41,7 +41,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: swop;
-  version: 0.2.2;
+  version: 0.2.4;
 }
 
 interface[type="cli"] {
@@ -110,7 +110,7 @@ environment[name="local"] {
 ```yaml
 project:
   name: swop
-  version: 0.2.2
+  version: 0.2.4
   env: local
 ```
 
@@ -161,18 +161,24 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# inspect | 37f 4647L | python:34,shell:2,less:1 | 2026-04-22
-# stats: 89 func | 63 cls | 37 mod | CC̄=4.3 | critical:5 | cycles:0
-# alerts[5]: CC _cmd_generate=22; CC _build_services=13; CC test_refactor_pipeline_seeded_writes_modules=12; CC _build_ui_bindings=11; CC _build_data_sources=10
-# hotspots[5]: _cmd_generate fan=20; build_project_graph fan=19; _build_ui_bindings fan=8; _cmd_refactor fan=7; _build_services fan=7
+# inspect | 71f 12176L | python:68,shell:2,less:1 | 2026-04-22
+# stats: 316 func | 94 cls | 71 mod | CC̄=4.8 | critical:33 | cycles:0
+# alerts[5]: CC _cmd_generate=38; CC scan_project=22; CC _diff_entry=21; CC test_render_proto_for_context_builds_expected_shape=20; CC _classify=18
+# hotspots[5]: scan_project fan=26; _cmd_generate fan=24; build_project_graph fan=19; generate_services fan=19; _write_context_package fan=18
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[37]:
+M[71]:
   app.doql.less,60
+  examples/src/api.py,12
+  examples/src/models.py,16
   project.sh,36
-  swop/__init__.py,52
-  swop/cli.py,263
+  swop/__init__.py,150
+  swop/cli.py,880
+  swop/config.py,210
   swop/core.py,106
+  swop/cqrs/__init__.py,29
+  swop/cqrs/decorators.py,159
+  swop/cqrs/registry.py,106
   swop/export/__init__.py,12
   swop/export/docker.py,33
   swop/export/yaml.py,49
@@ -180,11 +186,16 @@ M[37]:
   swop/introspect/__init__.py,13
   swop/introspect/backend.py,33
   swop/introspect/frontend.py,41
+  swop/manifests/__init__.py,24
+  swop/manifests/generator.py,245
   swop/markpact/__init__.py,28
   swop/markpact/doql_bridge.py,625
   swop/markpact/graph_builder.py,532
   swop/markpact/parser.py,142
-  swop/markpact/sync_engine.py,156
+  swop/markpact/sync_engine.py,202
+  swop/proto/__init__.py,31
+  swop/proto/compiler.py,208
+  swop/proto/generator.py,414
   swop/reconcile.py,112
   swop/refactor/__init__.py,44
   swop/refactor/clustering.py,159
@@ -196,32 +207,100 @@ M[37]:
   swop/refactor/scanner/backend.py,151
   swop/refactor/scanner/db.py,54
   swop/refactor/scanner/frontend.py,129
+  swop/resolve/__init__.py,35
+  swop/resolve/resolver.py,436
+  swop/scan/__init__.py,33
+  swop/scan/cache.py,112
+  swop/scan/render.py,142
+  swop/scan/report.py,210
+  swop/scan/scanner.py,548
+  swop/services/__init__.py,31
+  swop/services/generator.py,687
   swop/sync.py,48
+  swop/tools/__init__.py,13
+  swop/tools/doctor.py,194
+  swop/tools/init.py,161
   swop/utils.py,24
   swop/versioning.py,26
+  swop/watch/__init__.py,18
+  swop/watch/engine.py,212
   tests/__init__.py,4
   tests/test_cli.py,27
+  tests/test_config.py,128
   tests/test_core.py,82
-  tests/test_markpact.py,661
+  tests/test_cqrs.py,145
+  tests/test_manifests.py,336
+  tests/test_markpact.py,803
+  tests/test_proto.py,354
   tests/test_refactor.py,191
+  tests/test_resolve.py,423
+  tests/test_scan.py,351
+  tests/test_services.py,351
+  tests/test_tools.py,78
+  tests/test_watch.py,174
   tree.sh,2
 D:
+  examples/src/api.py:
+    e: list_devices,create_reading
+    list_devices()
+    create_reading(reading)
+  examples/src/models.py:
+    e: Device,Reading
+    Device:
+    Reading:
   swop/__init__.py:
   swop/cli.py:
-    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_cmd_refactor,_cmd_generate,_build_parser,main
+    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_cmd_doctor,_cmd_init,_cmd_scan,_cmd_gen_manifests,_cmd_gen_proto,_cmd_gen_grpc_python,_cmd_gen_grpc_ts,_cmd_gen_services,_cmd_watch,_cmd_resolve,_cmd_refactor,_cmd_generate,_build_parser,main
     _build_runtime(mode)
     _cmd_sync(args)
     _cmd_inspect(args)
     _cmd_diff(args)
     _cmd_state(args)
     _cmd_export(args)
+    _cmd_doctor(args)
+    _cmd_init(args)
+    _cmd_scan(args)
+    _cmd_gen_manifests(args)
+    _cmd_gen_proto(args)
+    _cmd_gen_grpc_python(args)
+    _cmd_gen_grpc_ts(args)
+    _cmd_gen_services(args)
+    _cmd_watch(args)
+    _cmd_resolve(args)
     _cmd_refactor(args)
     _cmd_generate(args)
     _build_parser()
     main(argv)
+  swop/config.py:
+    e: _expand_env,_pop_known,_parse_context,_parse_bus,_parse_read_models,load_config,_from_dict,SwopConfigError,BoundedContextConfig,BusConfig,ReadModelConfig,SwopConfig
+    SwopConfigError:  # Raised when ``swop.yaml`` is malformed.
+    BoundedContextConfig:
+    BusConfig:
+    ReadModelConfig:
+    SwopConfig: project_root(0),state_path(0),context(1),iter_source_roots(0)
+    _expand_env(value)
+    _pop_known(data;keys)
+    _parse_context(raw)
+    _parse_bus(raw)
+    _parse_read_models(raw)
+    load_config(path)
+    _from_dict(data;cfg_path)
   swop/core.py:
     e: SwopRuntime
     SwopRuntime: __init__(3),add_model(3),add_service(2),add_ui_binding(2),introspect(0),run_sync(0),state_yaml(0),docker_compose(0)  # Main orchestrator for the swop reconciliation system.
+  swop/cqrs/__init__.py:
+  swop/cqrs/decorators.py:
+    e: _collect_source,_normalize_emits,_make_decorator,handler
+    _collect_source(cls)
+    _normalize_emits(emits)
+    _make_decorator(kind)
+    handler(target)
+  swop/cqrs/registry.py:
+    e: get_registry,reset_registry,CqrsRecord,CqrsRegistry
+    CqrsRecord:  # One registered CQRS artifact.
+    CqrsRegistry: __init__(0),register(1),clear(0),all(0),of_kind(1),by_context(1),contexts(0),summary(0),__len__(0),__iter__(0)  # Thread-safe map of decorator-registered CQRS artifacts.
+    get_registry()
+    reset_registry()
   swop/export/__init__.py:
   swop/export/docker.py:
     e: DockerExporter
@@ -244,6 +323,21 @@ D:
   swop/introspect/frontend.py:
     e: FrontendIntrospector
     FrontendIntrospector: introspect(1),from_html(1)  # Introspect frontend artifacts to produce a runtime state dic
+  swop/manifests/__init__.py:
+  swop/manifests/generator.py:
+    e: generate_manifests,_handler_index,_render_manifest,_render_entry,_render_source,_render_field,_render_handler,_render_bus,_camel_to_dot,_safe_dirname,ManifestFile,ManifestGenerationResult
+    ManifestFile:
+    ManifestGenerationResult: total_entries(0),by_context(0),format(0)
+    generate_manifests(report;config)
+    _handler_index(detections)
+    _render_manifest(context;kind;detections;handler_index;config)
+    _render_entry(detection;kind;handler_index;config)
+    _render_source(detection)
+    _render_field(field_def)
+    _render_handler(handler)
+    _render_bus(detection;config)
+    _camel_to_dot(name)
+    _safe_dirname(name)
   swop/markpact/__init__.py:
   swop/markpact/doql_bridge.py:
     e: _MinimalEntityField,_MinimalEntity,_MinimalInterface,_MinimalDatabase,_MinimalDeploy,_MinimalWorkflowStep,_MinimalWorkflow,_MinimalRole,_MinimalIntegration,_MinimalWebhook,_MinimalApiClient,_MinimalEnvironment,_MinimalInfrastructure,_MinimalIngress,_MinimalCiConfig,_MinimalDataSource,_MinimalTemplate,_MinimalDocument,_MinimalReport,_MinimalDoqlSpec,MarkpactValidationError,DoqlBridge
@@ -297,8 +391,32 @@ D:
   swop/markpact/sync_engine.py:
     e: _hash,SyncStatus,ManifestSyncEngine
     SyncStatus:
-    ManifestSyncEngine: __init__(1),check(1),diff(1),sync_to_disk(1),sync_from_disk(1)  # Check and sync ``markpact:file`` blocks against the filesyst
+    ManifestSyncEngine: __init__(1),check(1),diff(1),sync_to_disk(1),sync_from_disk(1),update_manifest(1)  # Check and sync ``markpact:file`` blocks against the filesyst
     _hash(text)
+  swop/proto/__init__.py:
+  swop/proto/compiler.py:
+    e: _iter_proto_files,_proto_roots,_run,compile_proto_python,compile_proto_typescript,CompilationResult
+    CompilationResult: format(0)
+    _iter_proto_files(proto_dir)
+    _proto_roots(proto_files;proto_dir)
+    _run(cmd;cwd)
+    compile_proto_python(proto_dir;out_dir)
+    compile_proto_typescript(proto_dir;out_dir)
+  swop/proto/generator.py:
+    e: _map_python_type,_load_manifest,_iter_contexts,generate_proto_from_manifests,render_proto_for_context,_render_message,_render_command_response,_render_query_response,_service_name,_safe_ident,ProtoFile,ProtoGenerationResult,_ProtoType
+    ProtoFile: total_rpcs(0)
+    ProtoGenerationResult: format(0)
+    _ProtoType:
+    _map_python_type(annotation)
+    _load_manifest(path)
+    _iter_contexts(manifests_dir)
+    generate_proto_from_manifests(manifests_dir;out_dir)
+    render_proto_for_context(context;commands;queries;events)
+    _render_message(name;fields;imports;context)
+    _render_command_response(name;emits)
+    _render_query_response(name)
+    _service_name(context;suffix)
+    _safe_ident(name)
   swop/reconcile.py:
     e: DriftError,Drift,DriftDetector,ResyncEngine
     DriftError:  # Raised when drift is detected while running in STRICT mode.
@@ -344,9 +462,103 @@ D:
     e: PageSignals,FrontendScanner
     PageSignals:
     FrontendScanner: __init__(3),_pages_root(0),iter_pages(0),scan(0),scan_file(1),find_pages_for_route(1),_route_token(1),_slug_for(1)  # Scan a frontend project root and emit ``PageSignals`` per pa
+  swop/resolve/__init__.py:
+  swop/resolve/resolver.py:
+    e: resolve_schema_drift,apply_resolution,_index_from_detections,_handler_shape,_index_from_manifests,_diff_context_kind,_diff_entry,_field_signature,_handler_sig,ChangeKind,Change,ResolutionReport
+    ChangeKind:
+    Change: format(0)
+    ResolutionReport: breaking(0),non_breaking(0),counts(0),to_json(0),format(0)
+    resolve_schema_drift(report;config)
+    apply_resolution(report;config;resolution)
+    _index_from_detections(detections)
+    _handler_shape(det)
+    _index_from_manifests(manifests_root)
+    _diff_context_kind(context;kind;current;stored;resolution)
+    _diff_entry(context;kind;name;old;new;resolution)
+    _field_signature(entry)
+    _handler_sig(handler)
+  swop/scan/__init__.py:
+  swop/scan/cache.py:
+    e: CacheEntry,FingerprintCache
+    CacheEntry:
+    FingerprintCache: __init__(1),load(0),save(0),fingerprint(1),get(2),put(3),drop(1),prune(1),__len__(0),__contains__(1)  # Persistent sha256-based cache of scanner detections.
+  swop/scan/render.py:
+    e: render_json,render_html,write_report
+    render_json(report;pretty)
+    render_html(report)
+    write_report(report;json_path;html_path)
+  swop/scan/report.py:
+    e: FieldDef,Detection,ContextSummary,ScanReport
+    FieldDef: to_dict(0)  # One attribute declaration extracted from a CQRS class body.
+    Detection: to_dict(0),from_dict(1)
+    ContextSummary: add(1),total(0)
+    ScanReport: add(1),kinds(0),via(0),of_kind(1),of_context(1),to_dict(0),format_text(0)
+  swop/scan/scanner.py:
+    e: scan_project,_new_ctx_summary,_resolve_contexts,_iter_python_files,_matches_any,_context_for_path,_extract_detections,_module_name_from_path,_decorator_name,_base_name,_extract_decorator_emits,_extract_decorator_context,_extract_handler_target,_classify,_kind_by_suffix,_kind_by_base,_handler_target_from_method,_handler_method_name,_extract_fields,_unparse,_render_default,_annotation_is_optional
+    scan_project(config)
+    _new_ctx_summary(name)
+    _resolve_contexts(config)
+    _iter_python_files(root;source_roots;excludes)
+    _matches_any(path;patterns)
+    _context_for_path(rel_path;contexts;project_root)
+    _extract_detections(tree;path;rel_path;context;fingerprint)
+    _module_name_from_path(rel_path)
+    _decorator_name(node)
+    _base_name(node)
+    _extract_decorator_emits(call)
+    _extract_decorator_context(call)
+    _extract_handler_target(call)
+    _classify(node;path;rel_path;module;context)
+    _kind_by_suffix(name)
+    _kind_by_base(bases)
+    _handler_target_from_method(node)
+    _handler_method_name(node)
+    _extract_fields(node)
+    _unparse(node)
+    _render_default(node)
+    _annotation_is_optional(node)
+  swop/services/__init__.py:
+  swop/services/generator.py:
+    e: generate_services,_write_context_package,_classify_file,_render_init,_render_worker,_render_server,_render_publisher,_render_requirements,_render_dockerfile,_render_env,_render_compose,_default_bus_url,_render_readme,_load_yaml,_safe_ident,_camel,ServiceFile,ServiceGenerationResult
+    ServiceFile:
+    ServiceGenerationResult: format(0)
+    generate_services(manifests_dir;out_dir)
+    _write_context_package()
+    _classify_file(name)
+    _render_init(context)
+    _render_worker()
+    _render_server()
+    _render_publisher(bus)
+    _render_requirements(bus)
+    _render_dockerfile(base_image)
+    _render_env()
+    _render_compose(contexts;bus)
+    _default_bus_url(bus)
+    _render_readme(contexts;bus)
+    _load_yaml(path)
+    _safe_ident(name)
+    _camel(name)
   swop/sync.py:
     e: SyncEngine
     SyncEngine: frontend_to_graph(1),merge_frontend(2),merge_backend(2)  # Move state between a ``ProjectGraph`` and introspected snaps
+  swop/tools/__init__.py:
+  swop/tools/doctor.py:
+    e: _check_python,_check_swop,_check_pyyaml,_run_version,_first_version,_check_binary,_check_git_repo,run_doctor,DoctorCheck,DoctorReport
+    DoctorCheck: ok(0),format(0)
+    DoctorReport: failed(0),warnings(0),ok(0),format(0)
+    _check_python()
+    _check_swop()
+    _check_pyyaml()
+    _run_version(cmd)
+    _first_version(text)
+    _check_binary(binary;version_args)
+    _check_git_repo(root)
+    run_doctor(root)
+  swop/tools/init.py:
+    e: init_project,_merge_gitignore,InitResult
+    InitResult: format(0)
+    init_project(root)
+    _merge_gitignore(path;entries)
   swop/utils.py:
     e: stable_hash,is_callable,get_docstring
     stable_hash(payload)
@@ -355,12 +567,28 @@ D:
   swop/versioning.py:
     e: Versioning
     Versioning: commit(2)  # Append a new ``GraphVersion`` entry whenever the graph mutat
+  swop/watch/__init__.py:
+  swop/watch/engine.py:
+    e: rebuild_once,_diff_snapshots,WatchRebuild,WatchEngine
+    WatchRebuild: format(0)  # The result of a single rebuild pass.
+    WatchEngine: snapshot(0),_maybe_add(2),poll_once(0),run(0)  # mtime-polling watcher for Python source files.
+    rebuild_once(config)
+    _diff_snapshots(before;after)
   tests/__init__.py:
   tests/test_cli.py:
     e: test_cli_state_command,test_cli_export_docker,test_cli_inspect_backend
     test_cli_state_command(capsys)
     test_cli_export_docker(capsys)
     test_cli_inspect_backend(capsys)
+  tests/test_config.py:
+    e: _write,test_load_minimal_config,test_load_full_config,test_env_vars_keep_literal_when_missing,test_missing_config_raises,test_bounded_context_without_required_fields,test_unknown_keys_stored_in_extra
+    _write(path;body)
+    test_load_minimal_config(tmp_path)
+    test_load_full_config(tmp_path;monkeypatch)
+    test_env_vars_keep_literal_when_missing(tmp_path)
+    test_missing_config_raises(tmp_path)
+    test_bounded_context_without_required_fields(tmp_path)
+    test_unknown_keys_stored_in_extra(tmp_path)
   tests/test_core.py:
     e: _runtime,test_add_model_commits_version,test_run_sync_detects_invalid_bindings,test_auto_heal_removes_invalid_bindings,test_strict_mode_raises_on_invalid_binding,test_state_yaml_is_serializable,test_docker_export_contains_services
     _runtime(mode)
@@ -370,8 +598,34 @@ D:
     test_strict_mode_raises_on_invalid_binding()
     test_state_yaml_is_serializable()
     test_docker_export_contains_services()
+  tests/test_cqrs.py:
+    e: _reset,test_command_decorator_registers_class,test_query_and_event_decorators_kept_separate,test_handler_decorator_links_to_target_class,test_handler_decorator_accepts_string_target,test_decorators_reject_non_class_targets,test_registry_summary_groups_by_kind,test_emits_accepts_classes_and_strings,test_reset_registry_clears_state,test_local_registry_is_independent
+    _reset()
+    test_command_decorator_registers_class()
+    test_query_and_event_decorators_kept_separate()
+    test_handler_decorator_links_to_target_class()
+    test_handler_decorator_accepts_string_target()
+    test_decorators_reject_non_class_targets()
+    test_registry_summary_groups_by_kind()
+    test_emits_accepts_classes_and_strings()
+    test_reset_registry_clears_state()
+    test_local_registry_is_independent()
+  tests/test_manifests.py:
+    e: _write,customer_project,test_scan_extracts_fields_from_dataclass,test_scan_handler_records_method_name,test_generate_manifests_writes_per_context_files,test_manifest_yaml_shape_for_command,test_manifest_event_has_fields_but_no_bus,test_manifest_heuristic_detection_carries_confidence,test_generate_manifests_redis_bus,test_generate_manifests_no_bus_when_unconfigured,test_cli_gen_manifests,test_cli_gen_manifests_skip_heuristics
+    _write(path;body)
+    customer_project(tmp_path)
+    test_scan_extracts_fields_from_dataclass(customer_project)
+    test_scan_handler_records_method_name(customer_project)
+    test_generate_manifests_writes_per_context_files(customer_project)
+    test_manifest_yaml_shape_for_command(customer_project)
+    test_manifest_event_has_fields_but_no_bus(customer_project)
+    test_manifest_heuristic_detection_carries_confidence(customer_project)
+    test_generate_manifests_redis_bus(tmp_path)
+    test_generate_manifests_no_bus_when_unconfigured(tmp_path)
+    test_cli_gen_manifests(customer_project;capsys)
+    test_cli_gen_manifests_skip_heuristics(customer_project;capsys)
   tests/test_markpact.py:
-    e: tmp_manifest,test_parser_finds_all_blocks,test_parser_counts_blocks,test_parser_extracts_meta,test_parser_doql_block_body,test_parser_filter_by_kind,test_parser_includes,test_bridge_from_text,test_bridge_missing_any_supported_blocks_raises,test_bridge_strict_mode,test_bridge_merge_multiple_doql,test_graph_from_doql_spec,test_graph_services_from_interfaces,test_graph_ui_bindings_from_pages,test_graph_databases_as_services,test_sync_check_identical,test_sync_check_modified,test_sync_check_missing,test_sync_to_disk,test_sync_to_disk_dry_run,test_sync_from_disk,test_diff_report,test_graph_workflows_as_services,test_graph_roles_as_services,test_graph_api_clients_as_services,test_graph_webhooks_as_services,test_graph_integrations_as_services,test_graph_environments_as_services,test_graph_infrastructures_as_services,test_graph_ingresses_as_services,test_graph_ci_configs_as_services,test_graph_data_sources_as_services,test_graph_templates_as_services,test_graph_documents_as_services,test_graph_reports_as_services,test_graph_deploy_as_service,test_bridge_from_files_merge,test_cli_generate_from_markpact
+    e: tmp_manifest,test_parser_finds_all_blocks,test_parser_counts_blocks,test_parser_extracts_meta,test_parser_doql_block_body,test_parser_filter_by_kind,test_parser_includes,test_bridge_from_text,test_bridge_missing_any_supported_blocks_raises,test_bridge_strict_mode,test_bridge_merge_multiple_doql,test_graph_from_doql_spec,test_graph_services_from_interfaces,test_graph_ui_bindings_from_pages,test_graph_databases_as_services,test_sync_check_identical,test_sync_check_modified,test_sync_check_missing,test_sync_to_disk,test_sync_to_disk_dry_run,test_sync_from_disk,test_diff_report,test_graph_workflows_as_services,test_graph_roles_as_services,test_graph_api_clients_as_services,test_graph_webhooks_as_services,test_graph_integrations_as_services,test_graph_environments_as_services,test_graph_infrastructures_as_services,test_graph_ingresses_as_services,test_graph_ci_configs_as_services,test_graph_data_sources_as_services,test_graph_templates_as_services,test_graph_documents_as_services,test_graph_reports_as_services,test_graph_deploy_as_service,test_bridge_from_files_merge,test_cli_generate_from_markpact,test_cli_generate_sync_files,test_cli_generate_sync_files_dry_run,test_update_manifest_reverse_sync,test_update_manifest_dry_run,test_update_manifest_preserves_untracked_blocks,test_cli_generate_check_files_ok,test_cli_generate_check_files_strict_fails_on_drift,test_cli_generate_from_disk,test_cli_generate_from_disk_dry_run
     tmp_manifest(tmp_path)
     test_parser_finds_all_blocks(tmp_manifest)
     test_parser_counts_blocks(tmp_manifest)
@@ -410,6 +664,34 @@ D:
     test_graph_deploy_as_service()
     test_bridge_from_files_merge(tmp_path)
     test_cli_generate_from_markpact(tmp_path)
+    test_cli_generate_sync_files(tmp_path)
+    test_cli_generate_sync_files_dry_run(tmp_path)
+    test_update_manifest_reverse_sync(tmp_path)
+    test_update_manifest_dry_run(tmp_path)
+    test_update_manifest_preserves_untracked_blocks(tmp_path)
+    test_cli_generate_check_files_ok(tmp_path)
+    test_cli_generate_check_files_strict_fails_on_drift(tmp_path)
+    test_cli_generate_from_disk(tmp_path)
+    test_cli_generate_from_disk_dry_run(tmp_path)
+  tests/test_proto.py:
+    e: _write,test_map_python_type_basic,test_map_python_type_dict_becomes_map,test_map_python_type_unknown_name_is_stub,test_map_python_type_empty_is_string_stub,test_render_proto_for_context_builds_expected_shape,test_render_proto_adds_timestamp_import,test_render_proto_warns_on_unknown_user_type,project_with_manifests,test_generate_proto_from_manifests_writes_file,test_generate_proto_skips_empty_context_dirs,test_compile_proto_python_produces_pb2,test_compile_proto_python_without_grpc_tools_returns_helpful_error,test_compile_proto_typescript_missing_protoc_is_reported,test_cli_gen_proto_requires_manifests,test_cli_gen_proto_end_to_end,test_cli_gen_grpc_python_reports_ok_or_missing
+    _write(path;body)
+    test_map_python_type_basic(annotation;expected_proto;expected_repeated)
+    test_map_python_type_dict_becomes_map()
+    test_map_python_type_unknown_name_is_stub()
+    test_map_python_type_empty_is_string_stub()
+    test_render_proto_for_context_builds_expected_shape()
+    test_render_proto_adds_timestamp_import()
+    test_render_proto_warns_on_unknown_user_type()
+    project_with_manifests(tmp_path)
+    test_generate_proto_from_manifests_writes_file(project_with_manifests)
+    test_generate_proto_skips_empty_context_dirs(tmp_path)
+    test_compile_proto_python_produces_pb2(project_with_manifests)
+    test_compile_proto_python_without_grpc_tools_returns_helpful_error(tmp_path;monkeypatch)
+    test_compile_proto_typescript_missing_protoc_is_reported(tmp_path;monkeypatch)
+    test_cli_gen_proto_requires_manifests(tmp_path;capsys)
+    test_cli_gen_proto_end_to_end(project_with_manifests;capsys)
+    test_cli_gen_grpc_python_reports_ok_or_missing(project_with_manifests;capsys)
   tests/test_refactor.py:
     e: synthetic_project,test_frontend_scanner_extracts_ids_and_api_calls,test_backend_scanner_extracts_models,test_frontend_find_pages_for_route,test_refactor_pipeline_seeded_writes_modules,test_louvain_like_groups_connected_nodes,test_seeded_clusterer_assigns_by_best_score
     synthetic_project(tmp_path)
@@ -419,100 +701,259 @@ D:
     test_refactor_pipeline_seeded_writes_modules(synthetic_project;tmp_path)
     test_louvain_like_groups_connected_nodes()
     test_seeded_clusterer_assigns_by_best_score()
+  tests/test_resolve.py:
+    e: _write,_scan,project,test_no_changes_when_manifests_match,test_added_optional_field_is_non_breaking,test_added_required_field_is_breaking,test_removed_field_and_type_change_are_breaking,test_rename_detection,test_emits_change_is_metadata_only,test_apply_resolution_rewrites_manifests,test_resolution_json,test_cli_resolve_strict_exits_nonzero_on_breaking,test_cli_resolve_apply_fast_forwards,test_cli_resolve_json_flag
+    _write(path;body)
+    _scan(cfg_path)
+    project(tmp_path)
+    test_no_changes_when_manifests_match(project)
+    test_added_optional_field_is_non_breaking(project)
+    test_added_required_field_is_breaking(project)
+    test_removed_field_and_type_change_are_breaking(project)
+    test_rename_detection(project)
+    test_emits_change_is_metadata_only(project)
+    test_apply_resolution_rewrites_manifests(project)
+    test_resolution_json(project)
+    test_cli_resolve_strict_exits_nonzero_on_breaking(project;capsys)
+    test_cli_resolve_apply_fast_forwards(project;capsys)
+    test_cli_resolve_json_flag(project;capsys)
+  tests/test_scan.py:
+    e: _write,customer_project,test_scan_detects_decorator_based,test_scan_detects_heuristics_in_device_context,test_scan_skips_excluded_paths,test_scan_assigns_contexts_by_longest_match,test_scan_reports_syntax_error,test_incremental_scan_reuses_cache,test_incremental_scan_invalidates_on_change,test_cache_prunes_deleted_files,test_render_json_roundtrip,test_render_html_contains_summary,test_cli_scan_text_output,test_cli_scan_json_roundtrip,test_cli_scan_strict_heuristics_fails
+    _write(path;body)
+    customer_project(tmp_path)
+    test_scan_detects_decorator_based(customer_project)
+    test_scan_detects_heuristics_in_device_context(customer_project)
+    test_scan_skips_excluded_paths(customer_project)
+    test_scan_assigns_contexts_by_longest_match(tmp_path)
+    test_scan_reports_syntax_error(tmp_path)
+    test_incremental_scan_reuses_cache(customer_project)
+    test_incremental_scan_invalidates_on_change(customer_project)
+    test_cache_prunes_deleted_files(customer_project)
+    test_render_json_roundtrip(customer_project)
+    test_render_html_contains_summary(customer_project)
+    test_cli_scan_text_output(customer_project;capsys)
+    test_cli_scan_json_roundtrip(customer_project;capsys;tmp_path)
+    test_cli_scan_strict_heuristics_fails(customer_project)
+  tests/test_services.py:
+    e: _write,project_with_manifests,test_generate_services_writes_package_per_context,test_generate_services_rejects_unknown_bus,test_generated_python_files_are_syntactically_valid,test_generated_server_has_servicers_and_methods,test_generated_worker_respects_grpc_port,test_requirements_match_bus,test_publisher_module_is_importable_in_memory_mode,test_compose_has_bus_and_services,test_compose_redis_bus,test_compose_memory_bus_has_no_broker,test_generate_services_copies_pb2_when_available,test_cli_gen_services_defaults_bus_from_config,test_cli_gen_services_requires_manifests,test_cli_gen_services_bus_override
+    _write(path;body)
+    project_with_manifests(tmp_path)
+    test_generate_services_writes_package_per_context(project_with_manifests)
+    test_generate_services_rejects_unknown_bus(project_with_manifests)
+    test_generated_python_files_are_syntactically_valid(project_with_manifests)
+    test_generated_server_has_servicers_and_methods(project_with_manifests)
+    test_generated_worker_respects_grpc_port(project_with_manifests)
+    test_requirements_match_bus(project_with_manifests)
+    test_publisher_module_is_importable_in_memory_mode(project_with_manifests;monkeypatch)
+    test_compose_has_bus_and_services(project_with_manifests)
+    test_compose_redis_bus(project_with_manifests)
+    test_compose_memory_bus_has_no_broker(project_with_manifests)
+    test_generate_services_copies_pb2_when_available(project_with_manifests)
+    test_cli_gen_services_defaults_bus_from_config(project_with_manifests;capsys)
+    test_cli_gen_services_requires_manifests(tmp_path;capsys)
+    test_cli_gen_services_bus_override(project_with_manifests;capsys)
+  tests/test_tools.py:
+    e: test_run_doctor_basic,test_init_project_writes_scaffold,test_init_project_respects_no_gitignore,test_init_project_appends_to_existing_gitignore,test_cli_doctor,test_cli_init
+    test_run_doctor_basic()
+    test_init_project_writes_scaffold(tmp_path)
+    test_init_project_respects_no_gitignore(tmp_path)
+    test_init_project_appends_to_existing_gitignore(tmp_path)
+    test_cli_doctor(capsys)
+    test_cli_init(tmp_path;capsys)
+  tests/test_watch.py:
+    e: _write,project,test_rebuild_once_runs_scan_and_manifests,test_engine_first_poll_returns_none,test_engine_detects_modifications,test_engine_detects_new_and_deleted_files,test_engine_ignores_state_dir_writes,test_engine_run_stops_after_first_rebuild,test_cli_watch_once
+    _write(path;body)
+    project(tmp_path)
+    test_rebuild_once_runs_scan_and_manifests(project)
+    test_engine_first_poll_returns_none(project)
+    test_engine_detects_modifications(project)
+    test_engine_detects_new_and_deleted_files(project)
+    test_engine_ignores_state_dir_writes(project)
+    test_engine_run_stops_after_first_rebuild(project)
+    test_cli_watch_once(project;capsys)
 ```
 
 ## Call Graph
 
-*19 nodes · 17 edges · 8 modules · CC̄=1.8*
+*107 nodes · 114 edges · 19 modules · CC̄=1.4*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `_cmd_generate` *(in swop.cli)* | 22 ⚠ | 0 | 42 | **42** |
-| `_build_parser` *(in swop.cli)* | 1 | 1 | 32 | **33** |
-| `print` *(in examples.manifest)* | 0 | 30 | 0 | **30** |
-| `_cmd_refactor` *(in swop.cli)* | 7 | 0 | 16 | **16** |
-| `check` *(in swop.markpact.sync_engine.ManifestSyncEngine)* | 7 | 0 | 11 | **11** |
-| `_build_runtime` *(in swop.cli)* | 1 | 5 | 4 | **9** |
-| `run_sync` *(in swop.core.SwopRuntime)* | 1 | 0 | 8 | **8** |
-| `_link_models_to_ui` *(in swop.refactor.pipeline.RefactorPipeline)* | 8 | 0 | 7 | **7** |
+| `_build_parser` *(in swop.cli)* | 1 | 1 | 115 | **116** |
+| `print` *(in examples.manifest)* | 0 | 67 | 0 | **67** |
+| `_diff_entry` *(in swop.resolve.resolver)* | 21 ⚠ | 1 | 61 | **62** |
+| `_cmd_generate` *(in swop.cli)* | 38 ⚠ | 0 | 58 | **58** |
+| `render_proto_for_context` *(in swop.proto.generator)* | 12 ⚠ | 1 | 43 | **44** |
+| `scan_project` *(in swop.scan.scanner)* | 22 ⚠ | 4 | 31 | **35** |
+| `_map_python_type` *(in swop.proto.generator)* | 15 ⚠ | 3 | 25 | **28** |
+| `init_project` *(in swop.tools.init)* | 14 ⚠ | 1 | 25 | **26** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/inspect
-# nodes: 19 | edges: 17 | modules: 8
-# CC̄=1.8
+# nodes: 107 | edges: 114 | modules: 19
+# CC̄=1.4
 
 HUBS[20]:
-  swop.cli._cmd_generate
-    CC=22  in:0  out:42  total:42
   swop.cli._build_parser
-    CC=1  in:1  out:32  total:33
+    CC=1  in:1  out:115  total:116
   examples.manifest.print
-    CC=0  in:30  out:0  total:30
-  swop.cli._cmd_refactor
-    CC=7  in:0  out:16  total:16
-  swop.markpact.sync_engine.ManifestSyncEngine.check
-    CC=7  in:0  out:11  total:11
-  swop.cli._build_runtime
-    CC=1  in:5  out:4  total:9
-  swop.core.SwopRuntime.run_sync
-    CC=1  in:0  out:8  total:8
-  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui
-    CC=8  in:0  out:7  total:7
-  swop.reconcile.ResyncEngine._log_drift
-    CC=1  in:0  out:6  total:6
-  swop.cli._cmd_inspect
-    CC=3  in:0  out:6  total:6
-  swop.cli._cmd_state
-    CC=1  in:0  out:4  total:4
-  swop.versioning.Versioning.commit
-    CC=1  in:0  out:4  total:4
-  project.map.toon._tokenize
-    CC=0  in:4  out:0  total:4
-  swop.cli._cmd_export
-    CC=2  in:0  out:4  total:4
-  swop.cli._cmd_diff
-    CC=2  in:0  out:3  total:3
-  swop.cli._cmd_sync
-    CC=3  in:0  out:3  total:3
-  swop.cli.main
-    CC=1  in:0  out:3  total:3
-  project.map.toon._hash
-    CC=0  in:2  out:0  total:2
-  swop.reconcile.ResyncEngine._auto_heal
-    CC=4  in:0  out:2  total:2
+    CC=0  in:67  out:0  total:67
+  swop.resolve.resolver._diff_entry
+    CC=21  in:1  out:61  total:62
+  swop.cli._cmd_generate
+    CC=38  in:0  out:58  total:58
+  swop.proto.generator.render_proto_for_context
+    CC=12  in:1  out:43  total:44
+  swop.scan.scanner.scan_project
+    CC=22  in:4  out:31  total:35
+  swop.proto.generator._map_python_type
+    CC=15  in:3  out:25  total:28
+  swop.tools.init.init_project
+    CC=14  in:1  out:25  total:26
+  swop.config._from_dict
+    CC=8  in:1  out:25  total:26
+  swop.scan.render.render_html
+    CC=8  in:1  out:25  total:26
+  swop.proto.compiler.compile_proto_typescript
+    CC=10  in:1  out:23  total:24
+  swop.resolve.resolver._index_from_manifests
+    CC=15  in:1  out:21  total:22
+  swop.proto.compiler.compile_proto_python
+    CC=8  in:1  out:21  total:22
+  swop.proto.generator.generate_proto_from_manifests
+    CC=8  in:1  out:20  total:21
+  swop.services.generator._write_context_package
+    CC=7  in:1  out:20  total:21
+  swop.config.load_config
+    CC=6  in:9  out:12  total:21
+  swop.cli._cmd_scan
+    CC=14  in:0  out:20  total:20
+  swop.scan.scanner._extract_fields
+    CC=15  in:1  out:18  total:19
+  swop.cli._cmd_watch
+    CC=6  in:0  out:19  total:19
+  swop.tools.doctor.run_doctor
+    CC=2  in:1  out:17  total:18
 
 MODULES:
   examples.manifest  [1 funcs]
     print  CC=0  out:0
-  project.map.toon  [2 funcs]
-    _hash  CC=0  out:0
-    _tokenize  CC=0  out:0
-  swop.cli  [10 funcs]
-    _build_parser  CC=1  out:32
+  swop.cli  [20 funcs]
+    _build_parser  CC=1  out:115
     _build_runtime  CC=1  out:4
     _cmd_diff  CC=2  out:3
+    _cmd_doctor  CC=3  out:6
     _cmd_export  CC=2  out:4
-    _cmd_generate  CC=22  out:42
-    _cmd_inspect  CC=3  out:6
-    _cmd_refactor  CC=7  out:16
-    _cmd_state  CC=1  out:4
-    _cmd_sync  CC=3  out:3
-    main  CC=1  out:3
+    _cmd_gen_grpc_python  CC=7  out:11
+    _cmd_gen_grpc_ts  CC=7  out:11
+    _cmd_gen_manifests  CC=9  out:11
+    _cmd_gen_proto  CC=7  out:13
+    _cmd_gen_services  CC=12  out:16
+  swop.config  [7 funcs]
+    _expand_env  CC=6  out:10
+    _from_dict  CC=8  out:25
+    _parse_bus  CC=3  out:9
+    _parse_context  CC=3  out:8
+    _parse_read_models  CC=3  out:9
+    _pop_known  CC=3  out:1
+    load_config  CC=6  out:12
   swop.core  [1 funcs]
     run_sync  CC=1  out:8
-  swop.markpact.sync_engine  [1 funcs]
+  swop.cqrs.decorators  [4 funcs]
+    _collect_source  CC=3  out:2
+    _make_decorator  CC=1  out:11
+    _normalize_emits  CC=4  out:5
+    handler  CC=7  out:12
+  swop.manifests.generator  [10 funcs]
+    _camel_to_dot  CC=5  out:9
+    _handler_index  CC=4  out:1
+    _render_bus  CC=6  out:3
+    _render_entry  CC=10  out:7
+    _render_field  CC=3  out:0
+    _render_handler  CC=2  out:0
+    _render_manifest  CC=2  out:3
+    _render_source  CC=2  out:0
+    _safe_dirname  CC=2  out:3
+    generate_manifests  CC=10  out:11
+  swop.markpact.sync_engine  [2 funcs]
     check  CC=7  out:11
+    _hash  CC=1  out:3
+  swop.proto.compiler  [4 funcs]
+    _iter_proto_files  CC=1  out:3
+    _run  CC=2  out:3
+    compile_proto_python  CC=8  out:21
+    compile_proto_typescript  CC=10  out:23
+  swop.proto.generator  [7 funcs]
+    _iter_contexts  CC=6  out:7
+    _load_manifest  CC=4  out:4
+    _map_python_type  CC=15  out:25
+    _render_message  CC=8  out:10
+    _safe_ident  CC=3  out:3
+    generate_proto_from_manifests  CC=8  out:20
+    render_proto_for_context  CC=12  out:43
   swop.reconcile  [2 funcs]
     _auto_heal  CC=4  out:2
     _log_drift  CC=1  out:6
-  swop.refactor.pipeline  [1 funcs]
+  swop.refactor.pipeline  [2 funcs]
     _link_models_to_ui  CC=8  out:7
+    _tokenize  CC=4  out:4
+  swop.resolve.resolver  [7 funcs]
+    _diff_entry  CC=21  out:61
+    _handler_shape  CC=3  out:0
+    _handler_sig  CC=8  out:4
+    _index_from_detections  CC=10  out:6
+    _index_from_manifests  CC=15  out:21
+    apply_resolution  CC=3  out:2
+    resolve_schema_drift  CC=4  out:14
+  swop.scan.render  [3 funcs]
+    render_html  CC=8  out:25
+    render_json  CC=2  out:2
+    write_report  CC=3  out:8
+  swop.scan.scanner  [16 funcs]
+    _base_name  CC=3  out:2
+    _classify  CC=18  out:15
+    _decorator_name  CC=4  out:4
+    _extract_detections  CC=7  out:7
+    _extract_fields  CC=15  out:18
+    _handler_method_name  CC=4  out:1
+    _handler_target_from_method  CC=11  out:5
+    _iter_python_files  CC=10  out:11
+    _kind_by_base  CC=3  out:0
+    _kind_by_suffix  CC=4  out:1
+  swop.services.generator  [11 funcs]
+    _camel  CC=4  out:3
+    _default_bus_url  CC=1  out:1
+    _render_compose  CC=6  out:8
+    _render_dockerfile  CC=1  out:0
+    _render_init  CC=1  out:0
+    _render_publisher  CC=1  out:0
+    _render_requirements  CC=4  out:4
+    _render_server  CC=7  out:9
+    _render_worker  CC=2  out:0
+    _safe_ident  CC=3  out:3
+  swop.tools.doctor  [4 funcs]
+    _check_binary  CC=4  out:5
+    _first_version  CC=3  out:2
+    _run_version  CC=5  out:3
+    run_doctor  CC=2  out:17
+  swop.tools.init  [1 funcs]
+    init_project  CC=14  out:25
   swop.versioning  [1 funcs]
     commit  CC=1  out:4
+  swop.watch.engine  [4 funcs]
+    poll_once  CC=5  out:7
+    run  CC=9  out:5
+    _diff_snapshots  CC=5  out:6
+    rebuild_once  CC=2  out:6
 
 EDGES:
+  swop.config._parse_context → swop.config._pop_known
+  swop.config._parse_bus → swop.config._pop_known
+  swop.config._parse_read_models → swop.config._pop_known
+  swop.config.load_config → swop.config._from_dict
+  swop.config.load_config → swop.config._expand_env
   swop.reconcile.ResyncEngine._auto_heal → examples.manifest.print
   swop.reconcile.ResyncEngine._log_drift → examples.manifest.print
   swop.cli._cmd_sync → swop.cli._build_runtime
@@ -523,13 +964,41 @@ EDGES:
   swop.cli._cmd_state → examples.manifest.print
   swop.cli._cmd_export → swop.cli._build_runtime
   swop.cli._cmd_export → examples.manifest.print
+  swop.cli._cmd_doctor → swop.tools.doctor.run_doctor
+  swop.cli._cmd_doctor → examples.manifest.print
+  swop.cli._cmd_init → swop.tools.init.init_project
+  swop.cli._cmd_init → examples.manifest.print
+  swop.cli._cmd_scan → swop.scan.scanner.scan_project
+  swop.cli._cmd_scan → swop.config.load_config
+  swop.cli._cmd_scan → swop.scan.render.write_report
+  swop.cli._cmd_scan → examples.manifest.print
+  swop.cli._cmd_gen_manifests → swop.scan.scanner.scan_project
+  swop.cli._cmd_gen_manifests → swop.manifests.generator.generate_manifests
+  swop.cli._cmd_gen_manifests → examples.manifest.print
+  swop.cli._cmd_gen_manifests → swop.config.load_config
+  swop.cli._cmd_gen_proto → swop.proto.generator.generate_proto_from_manifests
+  swop.cli._cmd_gen_proto → examples.manifest.print
+  swop.cli._cmd_gen_proto → swop.config.load_config
+  swop.cli._cmd_gen_grpc_python → swop.proto.compiler.compile_proto_python
+  swop.cli._cmd_gen_grpc_python → examples.manifest.print
+  swop.cli._cmd_gen_grpc_python → swop.config.load_config
+  swop.cli._cmd_gen_grpc_ts → swop.proto.compiler.compile_proto_typescript
+  swop.cli._cmd_gen_grpc_ts → examples.manifest.print
+  swop.cli._cmd_gen_grpc_ts → swop.config.load_config
+  swop.cli._cmd_gen_services → examples.manifest.print
+  swop.cli._cmd_gen_services → swop.config.load_config
+  swop.cli._cmd_watch → examples.manifest.print
+  swop.cli._cmd_watch → swop.watch.engine.rebuild_once
+  swop.cli._cmd_watch → swop.config.load_config
+  swop.cli._cmd_resolve → swop.scan.scanner.scan_project
+  swop.cli._cmd_resolve → swop.resolve.resolver.resolve_schema_drift
+  swop.cli._cmd_resolve → swop.config.load_config
+  swop.cli._cmd_resolve → examples.manifest.print
+  swop.cli._cmd_resolve → swop.resolve.resolver.apply_resolution
   swop.cli._cmd_refactor → examples.manifest.print
   swop.cli._cmd_generate → examples.manifest.print
   swop.cli.main → swop.cli._build_parser
   swop.versioning.Versioning.commit → examples.manifest.print
-  swop.core.SwopRuntime.run_sync → examples.manifest.print
-  swop.markpact.sync_engine.ManifestSyncEngine.check → project.map.toon._hash
-  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui → project.map.toon._tokenize
 ```
 
 ## Intent

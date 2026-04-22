@@ -1,80 +1,129 @@
 project: /home/tom/github/semcod/inspect
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 19
-  total_edges: 17
-  modules_count: 8
+  total_nodes: 107
+  total_edges: 114
+  modules_count: 19
 nodes:
-  project.map.toon._hash:
-    name: _hash
-    module: project.map.toon
-    line: 138
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 2
-  examples.manifest.print:
-    name: print
-    module: examples.manifest
-    line: 364
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 30
-  swop.cli._build_runtime:
-    name: _build_runtime
+  swop.cli._cmd_gen_services:
+    name: _cmd_gen_services
     module: swop.cli
-    line: 25
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 5
-  swop.cli._cmd_state:
-    name: _cmd_state
-    module: swop.cli
-    line: 58
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  swop.cli._cmd_diff:
-    name: _cmd_diff
-    module: swop.cli
-    line: 52
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  swop.versioning.Versioning.commit:
-    name: commit
-    module: swop.versioning
-    line: 16
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  swop.cli._cmd_refactor:
-    name: _cmd_refactor
-    module: swop.cli
-    line: 75
-    cyclomatic_complexity: 7
+    line: 222
+    cyclomatic_complexity: 12
     calls_out: 16
     calls_in: 0
+  swop.proto.generator.render_proto_for_context:
+    name: render_proto_for_context
+    module: swop.proto.generator
+    line: 240
+    cyclomatic_complexity: 12
+    calls_out: 43
+    calls_in: 1
+  swop.manifests.generator._handler_index:
+    name: _handler_index
+    module: swop.manifests.generator
+    line: 112
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  swop.cli._cmd_export:
+    name: _cmd_export
+    module: swop.cli
+    line: 78
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  swop.cqrs.decorators.handler:
+    name: handler
+    module: swop.cqrs.decorators
+    line: 110
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 0
+  swop.config._parse_context:
+    name: _parse_context
+    module: swop.config
+    line: 121
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 1
+  swop.config._pop_known:
+    name: _pop_known
+    module: swop.config
+    line: 111
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 3
   swop.cli._build_parser:
     name: _build_parser
     module: swop.cli
-    line: 167
+    line: 447
     cyclomatic_complexity: 1
-    calls_out: 32
+    calls_out: 115
     calls_in: 1
-  swop.reconcile.ResyncEngine._auto_heal:
-    name: _auto_heal
-    module: swop.reconcile
-    line: 95
-    cyclomatic_complexity: 4
+  swop.resolve.resolver._index_from_manifests:
+    name: _index_from_manifests
+    module: swop.resolve.resolver
+    line: 208
+    cyclomatic_complexity: 15
+    calls_out: 21
+    calls_in: 1
+  swop.scan.scanner._resolve_contexts:
+    name: _resolve_contexts
+    module: swop.scan.scanner
+    line: 181
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  swop.scan.scanner._handler_target_from_method:
+    name: _handler_target_from_method
+    module: swop.scan.scanner
+    line: 447
+    cyclomatic_complexity: 11
+    calls_out: 5
+    calls_in: 1
+  swop.cqrs.decorators._make_decorator:
+    name: _make_decorator
+    module: swop.cqrs.decorators
+    line: 65
+    cyclomatic_complexity: 1
+    calls_out: 11
+    calls_in: 0
+  swop.cqrs.decorators._collect_source:
+    name: _collect_source
+    module: swop.cqrs.decorators
+    line: 41
+    cyclomatic_complexity: 3
     calls_out: 2
-    calls_in: 0
-  swop.cli._cmd_generate:
-    name: _cmd_generate
-    module: swop.cli
-    line: 102
-    cyclomatic_complexity: 22
-    calls_out: 42
-    calls_in: 0
+    calls_in: 2
+  swop.config._parse_read_models:
+    name: _parse_read_models
+    module: swop.config
+    line: 148
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 1
+  swop.resolve.resolver._index_from_detections:
+    name: _index_from_detections
+    module: swop.resolve.resolver
+    line: 169
+    cyclomatic_complexity: 10
+    calls_out: 6
+    calls_in: 1
+  swop.services.generator._render_requirements:
+    name: _render_requirements
+    module: swop.services.generator
+    line: 490
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  swop.scan.scanner._unparse:
+    name: _unparse
+    module: swop.scan.scanner
+    line: 511
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
   swop.reconcile.ResyncEngine._log_drift:
     name: _log_drift
     module: swop.reconcile
@@ -82,54 +131,89 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 6
     calls_in: 0
-  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui:
-    name: _link_models_to_ui
-    module: swop.refactor.pipeline
-    line: 176
-    cyclomatic_complexity: 8
-    calls_out: 7
-    calls_in: 0
-  swop.cli._cmd_inspect:
-    name: _cmd_inspect
-    module: swop.cli
-    line: 40
+  swop.manifests.generator._camel_to_dot:
+    name: _camel_to_dot
+    module: swop.manifests.generator
+    line: 226
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 1
+  swop.scan.render.write_report:
+    name: write_report
+    module: swop.scan.render
+    line: 127
     cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 0
-  swop.cli._cmd_sync:
-    name: _cmd_sync
+    calls_out: 8
+    calls_in: 1
+  swop.cli._build_runtime:
+    name: _build_runtime
     module: swop.cli
-    line: 34
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 0
-  project.map.toon._tokenize:
-    name: _tokenize
-    module: project.map.toon
-    line: 168
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 4
+    line: 38
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 5
+  swop.scan.scanner._extract_fields:
+    name: _extract_fields
+    module: swop.scan.scanner
+    line: 479
+    cyclomatic_complexity: 15
+    calls_out: 18
+    calls_in: 1
   swop.cli.main:
     name: main
     module: swop.cli
-    line: 255
+    line: 872
     cyclomatic_complexity: 1
     calls_out: 3
     calls_in: 0
-  swop.cli._cmd_export:
-    name: _cmd_export
-    module: swop.cli
-    line: 65
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  swop.core.SwopRuntime.run_sync:
-    name: run_sync
-    module: swop.core
-    line: 77
-    cyclomatic_complexity: 1
+  swop.services.generator._render_compose:
+    name: _render_compose
+    module: swop.services.generator
+    line: 542
+    cyclomatic_complexity: 6
     calls_out: 8
+    calls_in: 1
+  swop.services.generator._camel:
+    name: _camel
+    module: swop.services.generator
+    line: 684
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  swop.scan.scanner._base_name:
+    name: _base_name
+    module: swop.scan.scanner
+    line: 297
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 2
+  swop.services.generator._render_init:
+    name: _render_init
+    module: swop.services.generator
+    line: 232
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  swop.manifests.generator._safe_dirname:
+    name: _safe_dirname
+    module: swop.manifests.generator
+    line: 241
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 2
+  swop.scan.scanner._decorator_name:
+    name: _decorator_name
+    module: swop.scan.scanner
+    line: 287
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 3
+  swop.versioning.Versioning.commit:
+    name: commit
+    module: swop.versioning
+    line: 16
+    cyclomatic_complexity: 1
+    calls_out: 4
     calls_in: 0
   swop.markpact.sync_engine.ManifestSyncEngine.check:
     name: check
@@ -138,7 +222,554 @@ nodes:
     cyclomatic_complexity: 7
     calls_out: 11
     calls_in: 0
+  swop.watch.engine.WatchEngine.run:
+    name: run
+    module: swop.watch.engine
+    line: 174
+    cyclomatic_complexity: 9
+    calls_out: 5
+    calls_in: 0
+  swop.watch.engine.WatchEngine.poll_once:
+    name: poll_once
+    module: swop.watch.engine
+    line: 142
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 0
+  swop.manifests.generator._render_handler:
+    name: _render_handler
+    module: swop.manifests.generator
+    line: 198
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  swop.services.generator._render_worker:
+    name: _render_worker
+    module: swop.services.generator
+    line: 238
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  swop.proto.compiler._run:
+    name: _run
+    module: swop.proto.compiler
+    line: 63
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  swop.scan.scanner._classify:
+    name: _classify
+    module: swop.scan.scanner
+    line: 346
+    cyclomatic_complexity: 18
+    calls_out: 15
+    calls_in: 1
+  swop.tools.doctor._check_binary:
+    name: _check_binary
+    module: swop.tools.doctor
+    line: 129
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 3
+  swop.scan.render.render_json:
+    name: render_json
+    module: swop.scan.render
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  swop.config._parse_bus:
+    name: _parse_bus
+    module: swop.config
+    line: 135
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 1
+  swop.proto.compiler.compile_proto_python:
+    name: compile_proto_python
+    module: swop.proto.compiler
+    line: 78
+    cyclomatic_complexity: 8
+    calls_out: 21
+    calls_in: 1
+  swop.cli._cmd_gen_grpc_python:
+    name: _cmd_gen_grpc_python
+    module: swop.cli
+    line: 190
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 0
+  swop.proto.generator.generate_proto_from_manifests:
+    name: generate_proto_from_manifests
+    module: swop.proto.generator
+    line: 195
+    cyclomatic_complexity: 8
+    calls_out: 20
+    calls_in: 1
+  swop.tools.doctor._run_version:
+    name: _run_version
+    module: swop.tools.doctor
+    line: 107
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  swop.proto.generator._iter_contexts:
+    name: _iter_contexts
+    module: swop.proto.generator
+    line: 180
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 1
+  swop.scan.scanner._handler_method_name:
+    name: _handler_method_name
+    module: swop.scan.scanner
+    line: 469
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  swop.cli._cmd_init:
+    name: _cmd_init
+    module: swop.cli
+    line: 95
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 0
+  swop.cli._cmd_generate:
+    name: _cmd_generate
+    module: swop.cli
+    line: 354
+    cyclomatic_complexity: 38
+    calls_out: 58
+    calls_in: 0
+  swop.markpact.sync_engine._hash:
+    name: _hash
+    module: swop.markpact.sync_engine
+    line: 200
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  swop.services.generator._write_context_package:
+    name: _write_context_package
+    module: swop.services.generator
+    line: 151
+    cyclomatic_complexity: 7
+    calls_out: 20
+    calls_in: 1
+  swop.scan.scanner._iter_python_files:
+    name: _iter_python_files
+    module: swop.scan.scanner
+    line: 190
+    cyclomatic_complexity: 10
+    calls_out: 11
+    calls_in: 1
+  swop.cli._cmd_sync:
+    name: _cmd_sync
+    module: swop.cli
+    line: 47
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  swop.scan.scanner._render_default:
+    name: _render_default
+    module: swop.scan.scanner
+    line: 518
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 2
+  swop.proto.compiler._iter_proto_files:
+    name: _iter_proto_files
+    module: swop.proto.compiler
+    line: 54
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  swop.cli._cmd_watch:
+    name: _cmd_watch
+    module: swop.cli
+    line: 267
+    cyclomatic_complexity: 6
+    calls_out: 19
+    calls_in: 0
+  swop.services.generator._render_server:
+    name: _render_server
+    module: swop.services.generator
+    line: 306
+    cyclomatic_complexity: 7
+    calls_out: 9
+    calls_in: 1
+  swop.proto.generator._render_message:
+    name: _render_message
+    module: swop.proto.generator
+    line: 341
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 3
+  swop.cli._cmd_gen_proto:
+    name: _cmd_gen_proto
+    module: swop.cli
+    line: 166
+    cyclomatic_complexity: 7
+    calls_out: 13
+    calls_in: 0
+  swop.cli._cmd_diff:
+    name: _cmd_diff
+    module: swop.cli
+    line: 65
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  swop.cli._cmd_doctor:
+    name: _cmd_doctor
+    module: swop.cli
+    line: 88
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  swop.config.load_config:
+    name: load_config
+    module: swop.config
+    line: 163
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 9
+  swop.proto.generator._load_manifest:
+    name: _load_manifest
+    module: swop.proto.generator
+    line: 168
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 3
+  swop.manifests.generator._render_entry:
+    name: _render_entry
+    module: swop.manifests.generator
+    line: 144
+    cyclomatic_complexity: 10
+    calls_out: 7
+    calls_in: 1
+  swop.services.generator._safe_ident:
+    name: _safe_ident
+    module: swop.services.generator
+    line: 675
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  swop.resolve.resolver._handler_sig:
+    name: _handler_sig
+    module: swop.resolve.resolver
+    line: 427
+    cyclomatic_complexity: 8
+    calls_out: 4
+    calls_in: 2
+  swop.manifests.generator._render_manifest:
+    name: _render_manifest
+    module: swop.manifests.generator
+    line: 124
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  swop.cli._cmd_refactor:
+    name: _cmd_refactor
+    module: swop.cli
+    line: 327
+    cyclomatic_complexity: 7
+    calls_out: 16
+    calls_in: 0
+  swop.cli._cmd_gen_manifests:
+    name: _cmd_gen_manifests
+    module: swop.cli
+    line: 145
+    cyclomatic_complexity: 9
+    calls_out: 11
+    calls_in: 0
+  swop.cli._cmd_gen_grpc_ts:
+    name: _cmd_gen_grpc_ts
+    module: swop.cli
+    line: 206
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 0
+  swop.manifests.generator.generate_manifests:
+    name: generate_manifests
+    module: swop.manifests.generator
+    line: 76
+    cyclomatic_complexity: 10
+    calls_out: 11
+    calls_in: 3
+  swop.manifests.generator._render_bus:
+    name: _render_bus
+    module: swop.manifests.generator
+    line: 208
+    cyclomatic_complexity: 6
+    calls_out: 3
+    calls_in: 1
+  swop.scan.scanner.scan_project:
+    name: scan_project
+    module: swop.scan.scanner
+    line: 81
+    cyclomatic_complexity: 22
+    calls_out: 31
+    calls_in: 4
+  swop.proto.compiler.compile_proto_typescript:
+    name: compile_proto_typescript
+    module: swop.proto.compiler
+    line: 142
+    cyclomatic_complexity: 10
+    calls_out: 23
+    calls_in: 1
+  swop.tools.init.init_project:
+    name: init_project
+    module: swop.tools.init
+    line: 86
+    cyclomatic_complexity: 14
+    calls_out: 25
+    calls_in: 1
+  swop.watch.engine.rebuild_once:
+    name: rebuild_once
+    module: swop.watch.engine
+    line: 56
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 3
+  swop.manifests.generator._render_source:
+    name: _render_source
+    module: swop.manifests.generator
+    line: 177
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 1
+  swop.config._expand_env:
+    name: _expand_env
+    module: swop.config
+    line: 101
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 3
+  swop.proto.generator._safe_ident:
+    name: _safe_ident
+    module: swop.proto.generator
+    line: 407
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 3
+  swop.scan.scanner._module_name_from_path:
+    name: _module_name_from_path
+    module: swop.scan.scanner
+    line: 278
+    cyclomatic_complexity: 7
+    calls_out: 4
+    calls_in: 1
+  swop.services.generator._default_bus_url:
+    name: _default_bus_url
+    module: swop.services.generator
+    line: 607
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  swop.proto.generator._map_python_type:
+    name: _map_python_type
+    module: swop.proto.generator
+    line: 111
+    cyclomatic_complexity: 15
+    calls_out: 25
+    calls_in: 3
+  swop.core.SwopRuntime.run_sync:
+    name: run_sync
+    module: swop.core
+    line: 77
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 0
+  swop.tools.doctor._first_version:
+    name: _first_version
+    module: swop.tools.doctor
+    line: 122
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  swop.resolve.resolver.resolve_schema_drift:
+    name: resolve_schema_drift
+    module: swop.resolve.resolver
+    line: 121
+    cyclomatic_complexity: 4
+    calls_out: 14
+    calls_in: 1
+  swop.refactor.pipeline.RefactorPipeline._link_models_to_ui:
+    name: _link_models_to_ui
+    module: swop.refactor.pipeline
+    line: 176
+    cyclomatic_complexity: 8
+    calls_out: 7
+    calls_in: 0
+  swop.services.generator._render_publisher:
+    name: _render_publisher
+    module: swop.services.generator
+    line: 392
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  swop.reconcile.ResyncEngine._auto_heal:
+    name: _auto_heal
+    module: swop.reconcile
+    line: 95
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 0
+  swop.cli._cmd_resolve:
+    name: _cmd_resolve
+    module: swop.cli
+    line: 298
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 0
+  swop.config._from_dict:
+    name: _from_dict
+    module: swop.config
+    line: 179
+    cyclomatic_complexity: 8
+    calls_out: 25
+    calls_in: 1
+  swop.cqrs.decorators._normalize_emits:
+    name: _normalize_emits
+    module: swop.cqrs.decorators
+    line: 53
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 1
+  swop.scan.scanner._kind_by_suffix:
+    name: _kind_by_suffix
+    module: swop.scan.scanner
+    line: 433
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  swop.scan.scanner._matches_any:
+    name: _matches_any
+    module: swop.scan.scanner
+    line: 217
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 1
+  examples.manifest.print:
+    name: print
+    module: examples.manifest
+    line: 364
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 67
+  swop.scan.scanner._kind_by_base:
+    name: _kind_by_base
+    module: swop.scan.scanner
+    line: 440
+    cyclomatic_complexity: 3
+    calls_out: 0
+    calls_in: 1
+  swop.resolve.resolver.apply_resolution:
+    name: apply_resolution
+    module: swop.resolve.resolver
+    line: 145
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  swop.manifests.generator._render_field:
+    name: _render_field
+    module: swop.manifests.generator
+    line: 188
+    cyclomatic_complexity: 3
+    calls_out: 0
+    calls_in: 1
+  swop.watch.engine._diff_snapshots:
+    name: _diff_snapshots
+    module: swop.watch.engine
+    line: 201
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  swop.cli._cmd_scan:
+    name: _cmd_scan
+    module: swop.cli
+    line: 108
+    cyclomatic_complexity: 14
+    calls_out: 20
+    calls_in: 0
+  swop.resolve.resolver._handler_shape:
+    name: _handler_shape
+    module: swop.resolve.resolver
+    line: 198
+    cyclomatic_complexity: 3
+    calls_out: 0
+    calls_in: 1
+  swop.cli._cmd_state:
+    name: _cmd_state
+    module: swop.cli
+    line: 71
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  swop.refactor.pipeline._tokenize:
+    name: _tokenize
+    module: swop.refactor.pipeline
+    line: 280
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 4
+  swop.tools.doctor.run_doctor:
+    name: run_doctor
+    module: swop.tools.doctor
+    line: 182
+    cyclomatic_complexity: 2
+    calls_out: 17
+    calls_in: 1
+  swop.scan.scanner._extract_detections:
+    name: _extract_detections
+    module: swop.scan.scanner
+    line: 254
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 1
+  swop.resolve.resolver._diff_entry:
+    name: _diff_entry
+    module: swop.resolve.resolver
+    line: 319
+    cyclomatic_complexity: 21
+    calls_out: 61
+    calls_in: 1
+  swop.scan.render.render_html:
+    name: render_html
+    module: swop.scan.render
+    line: 24
+    cyclomatic_complexity: 8
+    calls_out: 25
+    calls_in: 1
+  swop.cli._cmd_inspect:
+    name: _cmd_inspect
+    module: swop.cli
+    line: 53
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  swop.services.generator._render_dockerfile:
+    name: _render_dockerfile
+    module: swop.services.generator
+    line: 505
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
 edges:
+- caller: swop.config._parse_context
+  callee: swop.config._pop_known
+  call_type: resolved
+- caller: swop.config._parse_bus
+  callee: swop.config._pop_known
+  call_type: resolved
+- caller: swop.config._parse_read_models
+  callee: swop.config._pop_known
+  call_type: resolved
+- caller: swop.config.load_config
+  callee: swop.config._from_dict
+  call_type: resolved
+- caller: swop.config.load_config
+  callee: swop.config._expand_env
+  call_type: resolved
 - caller: swop.reconcile.ResyncEngine._auto_heal
   callee: examples.manifest.print
   call_type: resolved
@@ -169,6 +800,99 @@ edges:
 - caller: swop.cli._cmd_export
   callee: examples.manifest.print
   call_type: resolved
+- caller: swop.cli._cmd_doctor
+  callee: swop.tools.doctor.run_doctor
+  call_type: resolved
+- caller: swop.cli._cmd_doctor
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_init
+  callee: swop.tools.init.init_project
+  call_type: resolved
+- caller: swop.cli._cmd_init
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_scan
+  callee: swop.scan.scanner.scan_project
+  call_type: resolved
+- caller: swop.cli._cmd_scan
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.cli._cmd_scan
+  callee: swop.scan.render.write_report
+  call_type: resolved
+- caller: swop.cli._cmd_scan
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_gen_manifests
+  callee: swop.scan.scanner.scan_project
+  call_type: resolved
+- caller: swop.cli._cmd_gen_manifests
+  callee: swop.manifests.generator.generate_manifests
+  call_type: resolved
+- caller: swop.cli._cmd_gen_manifests
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_gen_manifests
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.cli._cmd_gen_proto
+  callee: swop.proto.generator.generate_proto_from_manifests
+  call_type: resolved
+- caller: swop.cli._cmd_gen_proto
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_gen_proto
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.cli._cmd_gen_grpc_python
+  callee: swop.proto.compiler.compile_proto_python
+  call_type: resolved
+- caller: swop.cli._cmd_gen_grpc_python
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_gen_grpc_python
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.cli._cmd_gen_grpc_ts
+  callee: swop.proto.compiler.compile_proto_typescript
+  call_type: resolved
+- caller: swop.cli._cmd_gen_grpc_ts
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_gen_grpc_ts
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.cli._cmd_gen_services
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_gen_services
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.cli._cmd_watch
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_watch
+  callee: swop.watch.engine.rebuild_once
+  call_type: resolved
+- caller: swop.cli._cmd_watch
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.cli._cmd_resolve
+  callee: swop.scan.scanner.scan_project
+  call_type: resolved
+- caller: swop.cli._cmd_resolve
+  callee: swop.resolve.resolver.resolve_schema_drift
+  call_type: resolved
+- caller: swop.cli._cmd_resolve
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.cli._cmd_resolve
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.cli._cmd_resolve
+  callee: swop.resolve.resolver.apply_resolution
+  call_type: resolved
 - caller: swop.cli._cmd_refactor
   callee: examples.manifest.print
   call_type: resolved
@@ -184,41 +908,325 @@ edges:
 - caller: swop.core.SwopRuntime.run_sync
   callee: examples.manifest.print
   call_type: resolved
+- caller: swop.scan.render.write_report
+  callee: swop.scan.render.render_json
+  call_type: resolved
+- caller: swop.scan.render.write_report
+  callee: swop.scan.render.render_html
+  call_type: resolved
+- caller: swop.scan.scanner.scan_project
+  callee: swop.scan.scanner._resolve_contexts
+  call_type: resolved
+- caller: swop.scan.scanner.scan_project
+  callee: swop.scan.scanner._iter_python_files
+  call_type: resolved
+- caller: swop.scan.scanner.scan_project
+  callee: swop.config.load_config
+  call_type: resolved
+- caller: swop.scan.scanner._iter_python_files
+  callee: swop.scan.scanner._matches_any
+  call_type: resolved
+- caller: swop.scan.scanner._extract_detections
+  callee: swop.scan.scanner._module_name_from_path
+  call_type: resolved
+- caller: swop.scan.scanner._extract_detections
+  callee: swop.scan.scanner._classify
+  call_type: resolved
+- caller: swop.scan.scanner._extract_detections
+  callee: swop.scan.scanner._extract_fields
+  call_type: resolved
+- caller: swop.scan.scanner._extract_detections
+  callee: swop.scan.scanner._handler_method_name
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._kind_by_suffix
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._kind_by_base
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._decorator_name
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._base_name
+  call_type: resolved
+- caller: swop.scan.scanner._classify
+  callee: swop.scan.scanner._handler_target_from_method
+  call_type: resolved
+- caller: swop.scan.scanner._extract_fields
+  callee: swop.scan.scanner._unparse
+  call_type: resolved
+- caller: swop.scan.scanner._extract_fields
+  callee: swop.scan.scanner._render_default
+  call_type: resolved
+- caller: swop.scan.scanner._render_default
+  callee: swop.scan.scanner._unparse
+  call_type: resolved
+- caller: swop.services.generator._write_context_package
+  callee: swop.services.generator._safe_ident
+  call_type: resolved
+- caller: swop.services.generator._write_context_package
+  callee: swop.services.generator._camel
+  call_type: resolved
+- caller: swop.services.generator._write_context_package
+  callee: swop.services.generator._render_init
+  call_type: resolved
+- caller: swop.services.generator._write_context_package
+  callee: swop.services.generator._render_worker
+  call_type: resolved
+- caller: swop.services.generator._write_context_package
+  callee: swop.services.generator._render_server
+  call_type: resolved
+- caller: swop.services.generator._write_context_package
+  callee: swop.services.generator._render_publisher
+  call_type: resolved
+- caller: swop.services.generator._write_context_package
+  callee: swop.services.generator._render_requirements
+  call_type: resolved
+- caller: swop.services.generator._write_context_package
+  callee: swop.services.generator._render_dockerfile
+  call_type: resolved
+- caller: swop.services.generator._render_compose
+  callee: swop.services.generator._default_bus_url
+  call_type: resolved
+- caller: swop.tools.doctor._check_binary
+  callee: swop.tools.doctor._run_version
+  call_type: resolved
+- caller: swop.tools.doctor._check_binary
+  callee: swop.tools.doctor._first_version
+  call_type: resolved
 - caller: swop.markpact.sync_engine.ManifestSyncEngine.check
-  callee: project.map.toon._hash
+  callee: swop.markpact.sync_engine._hash
+  call_type: resolved
+- caller: swop.proto.generator.generate_proto_from_manifests
+  callee: swop.proto.generator._iter_contexts
+  call_type: resolved
+- caller: swop.proto.generator.generate_proto_from_manifests
+  callee: swop.proto.generator._load_manifest
+  call_type: resolved
+- caller: swop.proto.generator.generate_proto_from_manifests
+  callee: swop.proto.generator.render_proto_for_context
+  call_type: resolved
+- caller: swop.proto.generator.render_proto_for_context
+  callee: swop.proto.generator._render_message
+  call_type: resolved
+- caller: swop.proto.generator._render_message
+  callee: swop.proto.generator._safe_ident
+  call_type: resolved
+- caller: swop.proto.generator._render_message
+  callee: swop.proto.generator._map_python_type
+  call_type: resolved
+- caller: swop.proto.compiler.compile_proto_python
+  callee: swop.proto.compiler._iter_proto_files
+  call_type: resolved
+- caller: swop.proto.compiler.compile_proto_typescript
+  callee: swop.proto.compiler._iter_proto_files
+  call_type: resolved
+- caller: swop.proto.compiler.compile_proto_typescript
+  callee: swop.proto.compiler._run
+  call_type: resolved
+- caller: swop.manifests.generator.generate_manifests
+  callee: swop.manifests.generator._handler_index
+  call_type: resolved
+- caller: swop.manifests.generator.generate_manifests
+  callee: swop.manifests.generator._safe_dirname
+  call_type: resolved
+- caller: swop.manifests.generator.generate_manifests
+  callee: swop.manifests.generator._render_manifest
+  call_type: resolved
+- caller: swop.manifests.generator._render_manifest
+  callee: swop.manifests.generator._render_entry
+  call_type: resolved
+- caller: swop.manifests.generator._render_entry
+  callee: swop.manifests.generator._render_source
+  call_type: resolved
+- caller: swop.manifests.generator._render_entry
+  callee: swop.manifests.generator._render_bus
+  call_type: resolved
+- caller: swop.manifests.generator._render_entry
+  callee: swop.manifests.generator._render_field
+  call_type: resolved
+- caller: swop.manifests.generator._render_entry
+  callee: swop.manifests.generator._render_handler
+  call_type: resolved
+- caller: swop.manifests.generator._render_bus
+  callee: swop.manifests.generator._safe_dirname
+  call_type: resolved
+- caller: swop.manifests.generator._render_bus
+  callee: swop.manifests.generator._camel_to_dot
+  call_type: resolved
+- caller: swop.cqrs.decorators._make_decorator
+  callee: swop.cqrs.decorators._normalize_emits
+  call_type: resolved
+- caller: swop.cqrs.decorators._make_decorator
+  callee: swop.cqrs.decorators._collect_source
+  call_type: resolved
+- caller: swop.cqrs.decorators.handler
+  callee: swop.cqrs.decorators._collect_source
   call_type: resolved
 - caller: swop.refactor.pipeline.RefactorPipeline._link_models_to_ui
-  callee: project.map.toon._tokenize
+  callee: swop.refactor.pipeline._tokenize
+  call_type: resolved
+- caller: swop.watch.engine.rebuild_once
+  callee: swop.scan.scanner.scan_project
+  call_type: resolved
+- caller: swop.watch.engine.rebuild_once
+  callee: swop.manifests.generator.generate_manifests
+  call_type: resolved
+- caller: swop.watch.engine.WatchEngine.poll_once
+  callee: swop.watch.engine._diff_snapshots
+  call_type: resolved
+- caller: swop.watch.engine.WatchEngine.poll_once
+  callee: swop.watch.engine.rebuild_once
+  call_type: resolved
+- caller: swop.watch.engine.WatchEngine.run
+  callee: examples.manifest.print
+  call_type: resolved
+- caller: swop.resolve.resolver.resolve_schema_drift
+  callee: swop.resolve.resolver._index_from_detections
+  call_type: resolved
+- caller: swop.resolve.resolver.resolve_schema_drift
+  callee: swop.resolve.resolver._index_from_manifests
+  call_type: resolved
+- caller: swop.resolve.resolver.apply_resolution
+  callee: swop.manifests.generator.generate_manifests
+  call_type: resolved
+- caller: swop.resolve.resolver._index_from_detections
+  callee: swop.resolve.resolver._handler_shape
+  call_type: resolved
+- caller: swop.resolve.resolver._diff_entry
+  callee: swop.resolve.resolver._handler_sig
   call_type: resolved
 modules:
   examples.manifest:
   - examples.manifest.print
-  project.map.toon:
-  - project.map.toon._hash
-  - project.map.toon._tokenize
   swop.cli:
   - swop.cli._build_parser
   - swop.cli._build_runtime
   - swop.cli._cmd_diff
+  - swop.cli._cmd_doctor
   - swop.cli._cmd_export
+  - swop.cli._cmd_gen_grpc_python
+  - swop.cli._cmd_gen_grpc_ts
+  - swop.cli._cmd_gen_manifests
+  - swop.cli._cmd_gen_proto
+  - swop.cli._cmd_gen_services
   - swop.cli._cmd_generate
+  - swop.cli._cmd_init
   - swop.cli._cmd_inspect
   - swop.cli._cmd_refactor
+  - swop.cli._cmd_resolve
+  - swop.cli._cmd_scan
   - swop.cli._cmd_state
   - swop.cli._cmd_sync
+  - swop.cli._cmd_watch
   - swop.cli.main
+  swop.config:
+  - swop.config._expand_env
+  - swop.config._from_dict
+  - swop.config._parse_bus
+  - swop.config._parse_context
+  - swop.config._parse_read_models
+  - swop.config._pop_known
+  - swop.config.load_config
   swop.core:
   - swop.core.SwopRuntime.run_sync
+  swop.cqrs.decorators:
+  - swop.cqrs.decorators._collect_source
+  - swop.cqrs.decorators._make_decorator
+  - swop.cqrs.decorators._normalize_emits
+  - swop.cqrs.decorators.handler
+  swop.manifests.generator:
+  - swop.manifests.generator._camel_to_dot
+  - swop.manifests.generator._handler_index
+  - swop.manifests.generator._render_bus
+  - swop.manifests.generator._render_entry
+  - swop.manifests.generator._render_field
+  - swop.manifests.generator._render_handler
+  - swop.manifests.generator._render_manifest
+  - swop.manifests.generator._render_source
+  - swop.manifests.generator._safe_dirname
+  - swop.manifests.generator.generate_manifests
   swop.markpact.sync_engine:
   - swop.markpact.sync_engine.ManifestSyncEngine.check
+  - swop.markpact.sync_engine._hash
+  swop.proto.compiler:
+  - swop.proto.compiler._iter_proto_files
+  - swop.proto.compiler._run
+  - swop.proto.compiler.compile_proto_python
+  - swop.proto.compiler.compile_proto_typescript
+  swop.proto.generator:
+  - swop.proto.generator._iter_contexts
+  - swop.proto.generator._load_manifest
+  - swop.proto.generator._map_python_type
+  - swop.proto.generator._render_message
+  - swop.proto.generator._safe_ident
+  - swop.proto.generator.generate_proto_from_manifests
+  - swop.proto.generator.render_proto_for_context
   swop.reconcile:
   - swop.reconcile.ResyncEngine._auto_heal
   - swop.reconcile.ResyncEngine._log_drift
   swop.refactor.pipeline:
   - swop.refactor.pipeline.RefactorPipeline._link_models_to_ui
+  - swop.refactor.pipeline._tokenize
+  swop.resolve.resolver:
+  - swop.resolve.resolver._diff_entry
+  - swop.resolve.resolver._handler_shape
+  - swop.resolve.resolver._handler_sig
+  - swop.resolve.resolver._index_from_detections
+  - swop.resolve.resolver._index_from_manifests
+  - swop.resolve.resolver.apply_resolution
+  - swop.resolve.resolver.resolve_schema_drift
+  swop.scan.render:
+  - swop.scan.render.render_html
+  - swop.scan.render.render_json
+  - swop.scan.render.write_report
+  swop.scan.scanner:
+  - swop.scan.scanner._base_name
+  - swop.scan.scanner._classify
+  - swop.scan.scanner._decorator_name
+  - swop.scan.scanner._extract_detections
+  - swop.scan.scanner._extract_fields
+  - swop.scan.scanner._handler_method_name
+  - swop.scan.scanner._handler_target_from_method
+  - swop.scan.scanner._iter_python_files
+  - swop.scan.scanner._kind_by_base
+  - swop.scan.scanner._kind_by_suffix
+  - swop.scan.scanner._matches_any
+  - swop.scan.scanner._module_name_from_path
+  - swop.scan.scanner._render_default
+  - swop.scan.scanner._resolve_contexts
+  - swop.scan.scanner._unparse
+  - swop.scan.scanner.scan_project
+  swop.services.generator:
+  - swop.services.generator._camel
+  - swop.services.generator._default_bus_url
+  - swop.services.generator._render_compose
+  - swop.services.generator._render_dockerfile
+  - swop.services.generator._render_init
+  - swop.services.generator._render_publisher
+  - swop.services.generator._render_requirements
+  - swop.services.generator._render_server
+  - swop.services.generator._render_worker
+  - swop.services.generator._safe_ident
+  - swop.services.generator._write_context_package
+  swop.tools.doctor:
+  - swop.tools.doctor._check_binary
+  - swop.tools.doctor._first_version
+  - swop.tools.doctor._run_version
+  - swop.tools.doctor.run_doctor
+  swop.tools.init:
+  - swop.tools.init.init_project
   swop.versioning:
   - swop.versioning.Versioning.commit
+  swop.watch.engine:
+  - swop.watch.engine.WatchEngine.poll_once
+  - swop.watch.engine.WatchEngine.run
+  - swop.watch.engine._diff_snapshots
+  - swop.watch.engine.rebuild_once
 entry_points:
+- SUMD._annotation_is_optional
+- SUMD._base_name
 - SUMD._build_api_clients
 - SUMD._build_ci_configs
 - SUMD._build_data_sources
@@ -239,50 +1247,274 @@ entry_points:
 - SUMD._build_ui_bindings
 - SUMD._build_webhooks
 - SUMD._build_workflows
+- SUMD._camel
+- SUMD._camel_to_dot
+- SUMD._check_binary
+- SUMD._check_git_repo
+- SUMD._check_python
+- SUMD._check_pyyaml
+- SUMD._check_swop
+- SUMD._classify
+- SUMD._classify_file
 - SUMD._cmd_diff
+- SUMD._cmd_doctor
 - SUMD._cmd_export
+- SUMD._cmd_gen_grpc_python
+- SUMD._cmd_gen_grpc_ts
+- SUMD._cmd_gen_manifests
+- SUMD._cmd_gen_proto
+- SUMD._cmd_gen_services
 - SUMD._cmd_generate
+- SUMD._cmd_init
 - SUMD._cmd_inspect
 - SUMD._cmd_refactor
+- SUMD._cmd_resolve
+- SUMD._cmd_scan
 - SUMD._cmd_state
 - SUMD._cmd_sync
+- SUMD._cmd_watch
+- SUMD._collect_source
+- SUMD._context_for_path
+- SUMD._decorator_name
+- SUMD._default_bus_url
+- SUMD._diff_context_kind
+- SUMD._diff_entry
+- SUMD._diff_snapshots
+- SUMD._expand_env
+- SUMD._extract_decorator_context
+- SUMD._extract_decorator_emits
+- SUMD._extract_detections
+- SUMD._extract_fields
+- SUMD._extract_handler_target
+- SUMD._field_signature
+- SUMD._first_version
+- SUMD._from_dict
+- SUMD._handler_index
+- SUMD._handler_method_name
+- SUMD._handler_shape
+- SUMD._handler_sig
+- SUMD._handler_target_from_method
 - SUMD._hash
+- SUMD._index_from_detections
+- SUMD._index_from_manifests
+- SUMD._iter_contexts
+- SUMD._iter_proto_files
+- SUMD._iter_python_files
+- SUMD._kind_by_base
+- SUMD._kind_by_suffix
+- SUMD._load_manifest
+- SUMD._load_yaml
+- SUMD._make_decorator
+- SUMD._map_python_type
+- SUMD._matches_any
+- SUMD._merge_gitignore
+- SUMD._module_name_from_path
+- SUMD._new_ctx_summary
+- SUMD._normalize_emits
+- SUMD._parse_bus
+- SUMD._parse_context
+- SUMD._parse_read_models
+- SUMD._pop_known
+- SUMD._proto_roots
+- SUMD._render_bus
+- SUMD._render_command_response
+- SUMD._render_compose
+- SUMD._render_default
+- SUMD._render_dockerfile
+- SUMD._render_entry
+- SUMD._render_env
+- SUMD._render_field
+- SUMD._render_handler
+- SUMD._render_init
+- SUMD._render_manifest
+- SUMD._render_message
+- SUMD._render_publisher
+- SUMD._render_query_response
+- SUMD._render_readme
+- SUMD._render_requirements
+- SUMD._render_server
+- SUMD._render_source
+- SUMD._render_worker
+- SUMD._reset
+- SUMD._resolve_contexts
+- SUMD._run
+- SUMD._run_version
 - SUMD._runtime
+- SUMD._safe_dirname
+- SUMD._safe_ident
+- SUMD._scan
+- SUMD._service_name
 - SUMD._tokenize
-- SUMD.build_project_graph
+- SUMD._unparse
+- SUMD._write
+- SUMD._write_context_package
+- SUMD.apply_resolution
+- SUMD.compile_proto_python
+- SUMD.compile_proto_typescript
+- SUMD.create_reading
+- SUMD.customer_project
+- SUMD.generate_manifests
+- SUMD.generate_proto_from_manifests
+- SUMD.generate_services
 - SUMD.get_docstring
+- SUMD.get_registry
+- SUMD.handler
+- SUMD.init_project
 - SUMD.is_callable
+- SUMD.list_devices
+- SUMD.load_config
 - SUMD.main
+- SUMD.project
+- SUMD.project_with_manifests
+- SUMD.rebuild_once
+- SUMD.render_html
+- SUMD.render_json
+- SUMD.render_proto_for_context
+- SUMD.reset_registry
+- SUMD.resolve_schema_drift
+- SUMD.run_doctor
+- SUMD.scan_project
 - SUMD.stable_hash
 - SUMD.synthetic_project
 - SUMD.test_add_model_commits_version
+- SUMD.test_added_optional_field_is_non_breaking
+- SUMD.test_added_required_field_is_breaking
+- SUMD.test_apply_resolution_rewrites_manifests
 - SUMD.test_auto_heal_removes_invalid_bindings
 - SUMD.test_backend_scanner_extracts_models
+- SUMD.test_bounded_context_without_required_fields
+- SUMD.test_bridge_from_files_merge
 - SUMD.test_bridge_from_text
 - SUMD.test_bridge_merge_multiple_doql
-- SUMD.test_bridge_missing_doql_raises
+- SUMD.test_bridge_missing_any_supported_blocks_raises
 - SUMD.test_bridge_strict_mode
+- SUMD.test_cache_prunes_deleted_files
+- SUMD.test_cli_doctor
 - SUMD.test_cli_export_docker
+- SUMD.test_cli_gen_grpc_python_reports_ok_or_missing
+- SUMD.test_cli_gen_manifests
+- SUMD.test_cli_gen_manifests_skip_heuristics
+- SUMD.test_cli_gen_proto_end_to_end
+- SUMD.test_cli_gen_proto_requires_manifests
+- SUMD.test_cli_gen_services_bus_override
+- SUMD.test_cli_gen_services_defaults_bus_from_config
+- SUMD.test_cli_gen_services_requires_manifests
+- SUMD.test_cli_generate_check_files_ok
+- SUMD.test_cli_generate_check_files_strict_fails_on_drift
+- SUMD.test_cli_generate_from_disk
+- SUMD.test_cli_generate_from_disk_dry_run
 - SUMD.test_cli_generate_from_markpact
+- SUMD.test_cli_generate_sync_files
+- SUMD.test_cli_generate_sync_files_dry_run
+- SUMD.test_cli_init
 - SUMD.test_cli_inspect_backend
+- SUMD.test_cli_resolve_apply_fast_forwards
+- SUMD.test_cli_resolve_json_flag
+- SUMD.test_cli_resolve_strict_exits_nonzero_on_breaking
+- SUMD.test_cli_scan_json_roundtrip
+- SUMD.test_cli_scan_strict_heuristics_fails
+- SUMD.test_cli_scan_text_output
 - SUMD.test_cli_state_command
+- SUMD.test_cli_watch_once
+- SUMD.test_command_decorator_registers_class
+- SUMD.test_compile_proto_python_produces_pb2
+- SUMD.test_compile_proto_python_without_grpc_tools_returns_helpful_error
+- SUMD.test_compile_proto_typescript_missing_protoc_is_reported
+- SUMD.test_compose_has_bus_and_services
+- SUMD.test_compose_memory_bus_has_no_broker
+- SUMD.test_compose_redis_bus
+- SUMD.test_decorators_reject_non_class_targets
 - SUMD.test_diff_report
 - SUMD.test_docker_export_contains_services
+- SUMD.test_emits_accepts_classes_and_strings
+- SUMD.test_emits_change_is_metadata_only
+- SUMD.test_engine_detects_modifications
+- SUMD.test_engine_detects_new_and_deleted_files
+- SUMD.test_engine_first_poll_returns_none
+- SUMD.test_engine_ignores_state_dir_writes
+- SUMD.test_engine_run_stops_after_first_rebuild
+- SUMD.test_env_vars_keep_literal_when_missing
 - SUMD.test_frontend_find_pages_for_route
 - SUMD.test_frontend_scanner_extracts_ids_and_api_calls
+- SUMD.test_generate_manifests_no_bus_when_unconfigured
+- SUMD.test_generate_manifests_redis_bus
+- SUMD.test_generate_manifests_writes_per_context_files
+- SUMD.test_generate_proto_from_manifests_writes_file
+- SUMD.test_generate_proto_skips_empty_context_dirs
+- SUMD.test_generate_services_copies_pb2_when_available
+- SUMD.test_generate_services_rejects_unknown_bus
+- SUMD.test_generate_services_writes_package_per_context
+- SUMD.test_generated_python_files_are_syntactically_valid
+- SUMD.test_generated_server_has_servicers_and_methods
+- SUMD.test_generated_worker_respects_grpc_port
+- SUMD.test_graph_api_clients_as_services
+- SUMD.test_graph_ci_configs_as_services
+- SUMD.test_graph_data_sources_as_services
 - SUMD.test_graph_databases_as_services
+- SUMD.test_graph_deploy_as_service
+- SUMD.test_graph_documents_as_services
+- SUMD.test_graph_environments_as_services
 - SUMD.test_graph_from_doql_spec
+- SUMD.test_graph_infrastructures_as_services
+- SUMD.test_graph_ingresses_as_services
+- SUMD.test_graph_integrations_as_services
+- SUMD.test_graph_reports_as_services
+- SUMD.test_graph_roles_as_services
 - SUMD.test_graph_services_from_interfaces
+- SUMD.test_graph_templates_as_services
 - SUMD.test_graph_ui_bindings_from_pages
+- SUMD.test_graph_webhooks_as_services
+- SUMD.test_graph_workflows_as_services
+- SUMD.test_handler_decorator_accepts_string_target
+- SUMD.test_handler_decorator_links_to_target_class
+- SUMD.test_incremental_scan_invalidates_on_change
+- SUMD.test_incremental_scan_reuses_cache
+- SUMD.test_init_project_appends_to_existing_gitignore
+- SUMD.test_init_project_respects_no_gitignore
+- SUMD.test_init_project_writes_scaffold
+- SUMD.test_load_full_config
+- SUMD.test_load_minimal_config
+- SUMD.test_local_registry_is_independent
 - SUMD.test_louvain_like_groups_connected_nodes
+- SUMD.test_manifest_event_has_fields_but_no_bus
+- SUMD.test_manifest_heuristic_detection_carries_confidence
+- SUMD.test_manifest_yaml_shape_for_command
+- SUMD.test_map_python_type_basic
+- SUMD.test_map_python_type_dict_becomes_map
+- SUMD.test_map_python_type_empty_is_string_stub
+- SUMD.test_map_python_type_unknown_name_is_stub
+- SUMD.test_missing_config_raises
+- SUMD.test_no_changes_when_manifests_match
 - SUMD.test_parser_counts_blocks
 - SUMD.test_parser_doql_block_body
 - SUMD.test_parser_extracts_meta
 - SUMD.test_parser_filter_by_kind
 - SUMD.test_parser_finds_all_blocks
 - SUMD.test_parser_includes
+- SUMD.test_publisher_module_is_importable_in_memory_mode
+- SUMD.test_query_and_event_decorators_kept_separate
+- SUMD.test_rebuild_once_runs_scan_and_manifests
 - SUMD.test_refactor_pipeline_seeded_writes_modules
+- SUMD.test_registry_summary_groups_by_kind
+- SUMD.test_removed_field_and_type_change_are_breaking
+- SUMD.test_rename_detection
+- SUMD.test_render_html_contains_summary
+- SUMD.test_render_json_roundtrip
+- SUMD.test_render_proto_adds_timestamp_import
+- SUMD.test_render_proto_for_context_builds_expected_shape
+- SUMD.test_render_proto_warns_on_unknown_user_type
+- SUMD.test_requirements_match_bus
+- SUMD.test_reset_registry_clears_state
+- SUMD.test_resolution_json
+- SUMD.test_run_doctor_basic
 - SUMD.test_run_sync_detects_invalid_bindings
+- SUMD.test_scan_assigns_contexts_by_longest_match
+- SUMD.test_scan_detects_decorator_based
+- SUMD.test_scan_detects_heuristics_in_device_context
+- SUMD.test_scan_extracts_fields_from_dataclass
+- SUMD.test_scan_handler_records_method_name
+- SUMD.test_scan_reports_syntax_error
+- SUMD.test_scan_skips_excluded_paths
 - SUMD.test_seeded_clusterer_assigns_by_best_score
 - SUMD.test_state_yaml_is_serializable
 - SUMD.test_strict_mode_raises_on_invalid_binding
@@ -292,9 +1524,18 @@ entry_points:
 - SUMD.test_sync_from_disk
 - SUMD.test_sync_to_disk
 - SUMD.test_sync_to_disk_dry_run
+- SUMD.test_unknown_keys_stored_in_extra
+- SUMD.test_update_manifest_dry_run
+- SUMD.test_update_manifest_preserves_untracked_blocks
+- SUMD.test_update_manifest_reverse_sync
 - SUMD.tmp_manifest
+- SUMD.write_report
 - examples.manifest.create_reading
 - examples.manifest.list_devices
+- examples.src.api.create_reading
+- examples.src.api.list_devices
+- project.map.toon._annotation_is_optional
+- project.map.toon._base_name
 - project.map.toon._build_api_clients
 - project.map.toon._build_ci_configs
 - project.map.toon._build_data_sources
@@ -315,47 +1556,275 @@ entry_points:
 - project.map.toon._build_ui_bindings
 - project.map.toon._build_webhooks
 - project.map.toon._build_workflows
+- project.map.toon._camel
+- project.map.toon._camel_to_dot
+- project.map.toon._check_binary
+- project.map.toon._check_git_repo
+- project.map.toon._check_python
+- project.map.toon._check_pyyaml
+- project.map.toon._check_swop
+- project.map.toon._classify
+- project.map.toon._classify_file
 - project.map.toon._cmd_diff
+- project.map.toon._cmd_doctor
 - project.map.toon._cmd_export
+- project.map.toon._cmd_gen_grpc_python
+- project.map.toon._cmd_gen_grpc_ts
+- project.map.toon._cmd_gen_manifests
+- project.map.toon._cmd_gen_proto
+- project.map.toon._cmd_gen_services
 - project.map.toon._cmd_generate
+- project.map.toon._cmd_init
 - project.map.toon._cmd_inspect
 - project.map.toon._cmd_refactor
+- project.map.toon._cmd_resolve
+- project.map.toon._cmd_scan
 - project.map.toon._cmd_state
 - project.map.toon._cmd_sync
+- project.map.toon._cmd_watch
+- project.map.toon._collect_source
+- project.map.toon._context_for_path
+- project.map.toon._decorator_name
+- project.map.toon._default_bus_url
+- project.map.toon._diff_context_kind
+- project.map.toon._diff_entry
+- project.map.toon._diff_snapshots
+- project.map.toon._expand_env
+- project.map.toon._extract_decorator_context
+- project.map.toon._extract_decorator_emits
+- project.map.toon._extract_detections
+- project.map.toon._extract_fields
+- project.map.toon._extract_handler_target
+- project.map.toon._field_signature
+- project.map.toon._first_version
+- project.map.toon._from_dict
+- project.map.toon._handler_index
+- project.map.toon._handler_method_name
+- project.map.toon._handler_shape
+- project.map.toon._handler_sig
+- project.map.toon._handler_target_from_method
+- project.map.toon._hash
+- project.map.toon._index_from_detections
+- project.map.toon._index_from_manifests
+- project.map.toon._iter_contexts
+- project.map.toon._iter_proto_files
+- project.map.toon._iter_python_files
+- project.map.toon._kind_by_base
+- project.map.toon._kind_by_suffix
+- project.map.toon._load_manifest
+- project.map.toon._load_yaml
+- project.map.toon._make_decorator
+- project.map.toon._map_python_type
+- project.map.toon._matches_any
+- project.map.toon._merge_gitignore
+- project.map.toon._module_name_from_path
+- project.map.toon._new_ctx_summary
+- project.map.toon._normalize_emits
+- project.map.toon._parse_bus
+- project.map.toon._parse_context
+- project.map.toon._parse_read_models
+- project.map.toon._pop_known
+- project.map.toon._proto_roots
+- project.map.toon._render_bus
+- project.map.toon._render_command_response
+- project.map.toon._render_compose
+- project.map.toon._render_default
+- project.map.toon._render_dockerfile
+- project.map.toon._render_entry
+- project.map.toon._render_env
+- project.map.toon._render_field
+- project.map.toon._render_handler
+- project.map.toon._render_init
+- project.map.toon._render_manifest
+- project.map.toon._render_message
+- project.map.toon._render_publisher
+- project.map.toon._render_query_response
+- project.map.toon._render_readme
+- project.map.toon._render_requirements
+- project.map.toon._render_server
+- project.map.toon._render_source
+- project.map.toon._render_worker
+- project.map.toon._reset
+- project.map.toon._resolve_contexts
+- project.map.toon._run
+- project.map.toon._run_version
 - project.map.toon._runtime
+- project.map.toon._safe_dirname
+- project.map.toon._safe_ident
+- project.map.toon._scan
+- project.map.toon._service_name
+- project.map.toon._tokenize
+- project.map.toon._unparse
+- project.map.toon._write
+- project.map.toon._write_context_package
+- project.map.toon.apply_resolution
+- project.map.toon.build_project_graph
+- project.map.toon.compile_proto_python
+- project.map.toon.compile_proto_typescript
+- project.map.toon.create_reading
+- project.map.toon.customer_project
+- project.map.toon.generate_manifests
+- project.map.toon.generate_proto_from_manifests
+- project.map.toon.generate_services
 - project.map.toon.get_docstring
+- project.map.toon.get_registry
+- project.map.toon.handler
+- project.map.toon.init_project
 - project.map.toon.is_callable
+- project.map.toon.list_devices
+- project.map.toon.load_config
 - project.map.toon.main
+- project.map.toon.project
+- project.map.toon.project_with_manifests
+- project.map.toon.rebuild_once
+- project.map.toon.render_html
+- project.map.toon.render_json
+- project.map.toon.render_proto_for_context
+- project.map.toon.reset_registry
+- project.map.toon.resolve_schema_drift
+- project.map.toon.run_doctor
+- project.map.toon.scan_project
 - project.map.toon.stable_hash
 - project.map.toon.synthetic_project
 - project.map.toon.test_add_model_commits_version
+- project.map.toon.test_added_optional_field_is_non_breaking
+- project.map.toon.test_added_required_field_is_breaking
+- project.map.toon.test_apply_resolution_rewrites_manifests
 - project.map.toon.test_auto_heal_removes_invalid_bindings
 - project.map.toon.test_backend_scanner_extracts_models
+- project.map.toon.test_bounded_context_without_required_fields
+- project.map.toon.test_bridge_from_files_merge
 - project.map.toon.test_bridge_from_text
 - project.map.toon.test_bridge_merge_multiple_doql
-- project.map.toon.test_bridge_missing_doql_raises
+- project.map.toon.test_bridge_missing_any_supported_blocks_raises
 - project.map.toon.test_bridge_strict_mode
+- project.map.toon.test_cache_prunes_deleted_files
+- project.map.toon.test_cli_doctor
 - project.map.toon.test_cli_export_docker
+- project.map.toon.test_cli_gen_grpc_python_reports_ok_or_missing
+- project.map.toon.test_cli_gen_manifests
+- project.map.toon.test_cli_gen_manifests_skip_heuristics
+- project.map.toon.test_cli_gen_proto_end_to_end
+- project.map.toon.test_cli_gen_proto_requires_manifests
+- project.map.toon.test_cli_gen_services_bus_override
+- project.map.toon.test_cli_gen_services_defaults_bus_from_config
+- project.map.toon.test_cli_gen_services_requires_manifests
+- project.map.toon.test_cli_generate_check_files_ok
+- project.map.toon.test_cli_generate_check_files_strict_fails_on_drift
+- project.map.toon.test_cli_generate_from_disk
+- project.map.toon.test_cli_generate_from_disk_dry_run
 - project.map.toon.test_cli_generate_from_markpact
+- project.map.toon.test_cli_generate_sync_files
+- project.map.toon.test_cli_generate_sync_files_dry_run
+- project.map.toon.test_cli_init
 - project.map.toon.test_cli_inspect_backend
+- project.map.toon.test_cli_resolve_apply_fast_forwards
+- project.map.toon.test_cli_resolve_json_flag
+- project.map.toon.test_cli_resolve_strict_exits_nonzero_on_breaking
+- project.map.toon.test_cli_scan_json_roundtrip
+- project.map.toon.test_cli_scan_strict_heuristics_fails
+- project.map.toon.test_cli_scan_text_output
 - project.map.toon.test_cli_state_command
+- project.map.toon.test_cli_watch_once
+- project.map.toon.test_command_decorator_registers_class
+- project.map.toon.test_compile_proto_python_produces_pb2
+- project.map.toon.test_compile_proto_python_without_grpc_tools_returns_helpful_error
+- project.map.toon.test_compile_proto_typescript_missing_protoc_is_reported
+- project.map.toon.test_compose_has_bus_and_services
+- project.map.toon.test_compose_memory_bus_has_no_broker
+- project.map.toon.test_compose_redis_bus
+- project.map.toon.test_decorators_reject_non_class_targets
 - project.map.toon.test_diff_report
 - project.map.toon.test_docker_export_contains_services
+- project.map.toon.test_emits_accepts_classes_and_strings
+- project.map.toon.test_emits_change_is_metadata_only
+- project.map.toon.test_engine_detects_modifications
+- project.map.toon.test_engine_detects_new_and_deleted_files
+- project.map.toon.test_engine_first_poll_returns_none
+- project.map.toon.test_engine_ignores_state_dir_writes
+- project.map.toon.test_engine_run_stops_after_first_rebuild
+- project.map.toon.test_env_vars_keep_literal_when_missing
 - project.map.toon.test_frontend_find_pages_for_route
 - project.map.toon.test_frontend_scanner_extracts_ids_and_api_calls
+- project.map.toon.test_generate_manifests_no_bus_when_unconfigured
+- project.map.toon.test_generate_manifests_redis_bus
+- project.map.toon.test_generate_manifests_writes_per_context_files
+- project.map.toon.test_generate_proto_from_manifests_writes_file
+- project.map.toon.test_generate_proto_skips_empty_context_dirs
+- project.map.toon.test_generate_services_copies_pb2_when_available
+- project.map.toon.test_generate_services_rejects_unknown_bus
+- project.map.toon.test_generate_services_writes_package_per_context
+- project.map.toon.test_generated_python_files_are_syntactically_valid
+- project.map.toon.test_generated_server_has_servicers_and_methods
+- project.map.toon.test_generated_worker_respects_grpc_port
+- project.map.toon.test_graph_api_clients_as_services
+- project.map.toon.test_graph_ci_configs_as_services
+- project.map.toon.test_graph_data_sources_as_services
 - project.map.toon.test_graph_databases_as_services
+- project.map.toon.test_graph_deploy_as_service
+- project.map.toon.test_graph_documents_as_services
+- project.map.toon.test_graph_environments_as_services
 - project.map.toon.test_graph_from_doql_spec
+- project.map.toon.test_graph_infrastructures_as_services
+- project.map.toon.test_graph_ingresses_as_services
+- project.map.toon.test_graph_integrations_as_services
+- project.map.toon.test_graph_reports_as_services
+- project.map.toon.test_graph_roles_as_services
 - project.map.toon.test_graph_services_from_interfaces
+- project.map.toon.test_graph_templates_as_services
 - project.map.toon.test_graph_ui_bindings_from_pages
+- project.map.toon.test_graph_webhooks_as_services
+- project.map.toon.test_graph_workflows_as_services
+- project.map.toon.test_handler_decorator_accepts_string_target
+- project.map.toon.test_handler_decorator_links_to_target_class
+- project.map.toon.test_incremental_scan_invalidates_on_change
+- project.map.toon.test_incremental_scan_reuses_cache
+- project.map.toon.test_init_project_appends_to_existing_gitignore
+- project.map.toon.test_init_project_respects_no_gitignore
+- project.map.toon.test_init_project_writes_scaffold
+- project.map.toon.test_load_full_config
+- project.map.toon.test_load_minimal_config
+- project.map.toon.test_local_registry_is_independent
 - project.map.toon.test_louvain_like_groups_connected_nodes
+- project.map.toon.test_manifest_event_has_fields_but_no_bus
+- project.map.toon.test_manifest_heuristic_detection_carries_confidence
+- project.map.toon.test_manifest_yaml_shape_for_command
+- project.map.toon.test_map_python_type_basic
+- project.map.toon.test_map_python_type_dict_becomes_map
+- project.map.toon.test_map_python_type_empty_is_string_stub
+- project.map.toon.test_map_python_type_unknown_name_is_stub
+- project.map.toon.test_missing_config_raises
+- project.map.toon.test_no_changes_when_manifests_match
 - project.map.toon.test_parser_counts_blocks
 - project.map.toon.test_parser_doql_block_body
 - project.map.toon.test_parser_extracts_meta
 - project.map.toon.test_parser_filter_by_kind
 - project.map.toon.test_parser_finds_all_blocks
 - project.map.toon.test_parser_includes
+- project.map.toon.test_publisher_module_is_importable_in_memory_mode
+- project.map.toon.test_query_and_event_decorators_kept_separate
+- project.map.toon.test_rebuild_once_runs_scan_and_manifests
 - project.map.toon.test_refactor_pipeline_seeded_writes_modules
+- project.map.toon.test_registry_summary_groups_by_kind
+- project.map.toon.test_removed_field_and_type_change_are_breaking
+- project.map.toon.test_rename_detection
+- project.map.toon.test_render_html_contains_summary
+- project.map.toon.test_render_json_roundtrip
+- project.map.toon.test_render_proto_adds_timestamp_import
+- project.map.toon.test_render_proto_for_context_builds_expected_shape
+- project.map.toon.test_render_proto_warns_on_unknown_user_type
+- project.map.toon.test_requirements_match_bus
+- project.map.toon.test_reset_registry_clears_state
+- project.map.toon.test_resolution_json
+- project.map.toon.test_run_doctor_basic
 - project.map.toon.test_run_sync_detects_invalid_bindings
+- project.map.toon.test_scan_assigns_contexts_by_longest_match
+- project.map.toon.test_scan_detects_decorator_based
+- project.map.toon.test_scan_detects_heuristics_in_device_context
+- project.map.toon.test_scan_extracts_fields_from_dataclass
+- project.map.toon.test_scan_handler_records_method_name
+- project.map.toon.test_scan_reports_syntax_error
+- project.map.toon.test_scan_skips_excluded_paths
 - project.map.toon.test_seeded_clusterer_assigns_by_best_score
 - project.map.toon.test_state_yaml_is_serializable
 - project.map.toon.test_strict_mode_raises_on_invalid_binding
@@ -365,15 +1834,32 @@ entry_points:
 - project.map.toon.test_sync_from_disk
 - project.map.toon.test_sync_to_disk
 - project.map.toon.test_sync_to_disk_dry_run
+- project.map.toon.test_unknown_keys_stored_in_extra
+- project.map.toon.test_update_manifest_dry_run
+- project.map.toon.test_update_manifest_preserves_untracked_blocks
+- project.map.toon.test_update_manifest_reverse_sync
 - project.map.toon.tmp_manifest
+- project.map.toon.write_report
 - swop.cli._cmd_diff
+- swop.cli._cmd_doctor
 - swop.cli._cmd_export
+- swop.cli._cmd_gen_grpc_python
+- swop.cli._cmd_gen_grpc_ts
+- swop.cli._cmd_gen_manifests
+- swop.cli._cmd_gen_proto
+- swop.cli._cmd_gen_services
 - swop.cli._cmd_generate
+- swop.cli._cmd_init
 - swop.cli._cmd_inspect
 - swop.cli._cmd_refactor
+- swop.cli._cmd_resolve
+- swop.cli._cmd_scan
 - swop.cli._cmd_state
 - swop.cli._cmd_sync
+- swop.cli._cmd_watch
 - swop.cli.main
+- swop.config.SwopConfig.context
+- swop.config.SwopConfig.iter_source_roots
 - swop.core.SwopRuntime.__init__
 - swop.core.SwopRuntime.add_model
 - swop.core.SwopRuntime.add_service
@@ -382,6 +1868,19 @@ entry_points:
 - swop.core.SwopRuntime.introspect
 - swop.core.SwopRuntime.run_sync
 - swop.core.SwopRuntime.state_yaml
+- swop.cqrs.decorators._make_decorator
+- swop.cqrs.decorators.handler
+- swop.cqrs.registry.CqrsRegistry.__init__
+- swop.cqrs.registry.CqrsRegistry.__iter__
+- swop.cqrs.registry.CqrsRegistry.__len__
+- swop.cqrs.registry.CqrsRegistry.all
+- swop.cqrs.registry.CqrsRegistry.by_context
+- swop.cqrs.registry.CqrsRegistry.clear
+- swop.cqrs.registry.CqrsRegistry.contexts
+- swop.cqrs.registry.CqrsRegistry.of_kind
+- swop.cqrs.registry.CqrsRegistry.register
+- swop.cqrs.registry.CqrsRegistry.summary
+- swop.cqrs.registry.reset_registry
 - swop.export.docker.DockerExporter.export_yaml
 - swop.export.docker.DockerExporter.to_dict
 - swop.export.yaml.StateExporter.export_yaml
@@ -392,6 +1891,8 @@ entry_points:
 - swop.introspect.backend.BackendIntrospector.register_route
 - swop.introspect.frontend.FrontendIntrospector.from_html
 - swop.introspect.frontend.FrontendIntrospector.introspect
+- swop.manifests.generator.ManifestGenerationResult.by_context
+- swop.manifests.generator.ManifestGenerationResult.format
 - swop.markpact.doql_bridge.DoqlBridge.__init__
 - swop.markpact.doql_bridge.DoqlBridge._build_minimal_spec
 - swop.markpact.doql_bridge.DoqlBridge._build_spec
@@ -419,7 +1920,9 @@ entry_points:
 - swop.markpact.sync_engine.ManifestSyncEngine.diff
 - swop.markpact.sync_engine.ManifestSyncEngine.sync_from_disk
 - swop.markpact.sync_engine.ManifestSyncEngine.sync_to_disk
-- swop.markpact.sync_engine._hash
+- swop.markpact.sync_engine.ManifestSyncEngine.update_manifest
+- swop.proto.compiler.CompilationResult.format
+- swop.proto.generator.ProtoGenerationResult.format
 - swop.reconcile.Drift.exists
 - swop.reconcile.DriftDetector.compute
 - swop.reconcile.ResyncEngine.__init__
@@ -451,7 +1954,6 @@ entry_points:
 - swop.refactor.pipeline.RefactorPipeline._seed_nodes
 - swop.refactor.pipeline.RefactorPipeline.run
 - swop.refactor.pipeline.RefactorResult.summary
-- swop.refactor.pipeline._tokenize
 - swop.refactor.scanner.backend.BackendScanner.__init__
 - swop.refactor.scanner.backend.BackendScanner._extract_models
 - swop.refactor.scanner.backend.BackendScanner._extract_routes
@@ -469,10 +1971,45 @@ entry_points:
 - swop.refactor.scanner.frontend.FrontendScanner.iter_pages
 - swop.refactor.scanner.frontend.FrontendScanner.scan
 - swop.refactor.scanner.frontend.FrontendScanner.scan_file
+- swop.resolve.resolver.Change.format
+- swop.resolve.resolver.ResolutionReport.counts
+- swop.resolve.resolver.ResolutionReport.format
+- swop.resolve.resolver.ResolutionReport.to_json
+- swop.scan.cache.FingerprintCache.__contains__
+- swop.scan.cache.FingerprintCache.__init__
+- swop.scan.cache.FingerprintCache.__len__
+- swop.scan.cache.FingerprintCache.drop
+- swop.scan.cache.FingerprintCache.fingerprint
+- swop.scan.cache.FingerprintCache.get
+- swop.scan.cache.FingerprintCache.load
+- swop.scan.cache.FingerprintCache.prune
+- swop.scan.cache.FingerprintCache.put
+- swop.scan.cache.FingerprintCache.save
+- swop.scan.report.ContextSummary.add
+- swop.scan.report.Detection.from_dict
+- swop.scan.report.Detection.to_dict
+- swop.scan.report.FieldDef.to_dict
+- swop.scan.report.ScanReport.add
+- swop.scan.report.ScanReport.format_text
+- swop.scan.report.ScanReport.kinds
+- swop.scan.report.ScanReport.of_context
+- swop.scan.report.ScanReport.of_kind
+- swop.scan.report.ScanReport.to_dict
+- swop.scan.report.ScanReport.via
+- swop.services.generator.ServiceGenerationResult.format
 - swop.sync.SyncEngine.frontend_to_graph
 - swop.sync.SyncEngine.merge_backend
 - swop.sync.SyncEngine.merge_frontend
+- swop.tools.doctor.DoctorCheck.format
+- swop.tools.doctor.DoctorReport.format
+- swop.tools.doctor._check_swop
+- swop.tools.init.InitResult.format
 - swop.utils.get_docstring
 - swop.utils.is_callable
 - swop.utils.stable_hash
 - swop.versioning.Versioning.commit
+- swop.watch.engine.WatchEngine._maybe_add
+- swop.watch.engine.WatchEngine.poll_once
+- swop.watch.engine.WatchEngine.run
+- swop.watch.engine.WatchEngine.snapshot
+- swop.watch.engine.WatchRebuild.format

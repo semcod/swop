@@ -1,51 +1,51 @@
-# inspect | 263 func | 22f | 9227L | python | 2026-04-22
+# inspect | 890 func | 38f | 19877L | python | 2026-04-22
 
 HEALTH:
-  CC̄=1.8  critical=10 (limit:10)  dup=0  cycles=0
+  CC̄=1.4  critical=29 (limit:10)  dup=2  cycles=0
 
-ALERTS[14]:
+ALERTS[20]:
   !!! high_fan_out     DoqlBridge._build_minimal_spec = 54 (limit:10)
+  !!! cc_exceeded      _cmd_generate = 38 (limit:15)
   !!! cc_exceeded      DoqlBridge._build_minimal_spec = 36 (limit:15)
-  !!! high_fan_out     _cmd_generate = 21 (limit:10)
+  !!! high_fan_out     _build_parser = 36 (limit:10)
+  !!! high_fan_out     scan_project = 28 (limit:10)
+  !!! high_fan_out     _cmd_generate = 25 (limit:10)
+  !!! high_fan_out     generate_services = 24 (limit:10)
+  !!! high_fan_out     render_proto_for_context = 21 (limit:10)
   !!! high_fan_out     RefactorPipeline.run = 20 (limit:10)
   !!  cc_exceeded      RefactorPipeline._cluster_to_spec = 23 (limit:15)
-  !!  cc_exceeded      _cmd_generate = 22 (limit:15)
-  !!  high_fan_out     ManifestParser.parse = 16 (limit:10)
-  !   cc_exceeded      BackendScanner._extract_models = 16 (limit:15)
-  !   high_fan_out     FrontendScanner.scan_file = 14 (limit:10)
-  !   high_fan_out     _build_parser = 13 (limit:10)
 
-MODULES[46] (top by size):
+MODULES[71] (top by size):
+  M[project/calls.yaml] 1889L C:0 F:0 CC↑0 D:0 (yaml)
+  M[SUMD.md] 1006L C:0 F:306 CC↑0 D:1 (md)
+  M[swop/cli.py] 879L C:0 F:20 CC↑38 D:0 (python)
+  M[SUMR.md] 855L C:0 F:0 CC↑0 D:0 (md)
+  M[swop/services/generator.py] 686L C:2 F:17 CC↑11 D:1 (python)
   M[swop/markpact/doql_bridge.py] 624L C:22 F:11 CC↑36 D:0 (python)
-  M[project/context.md] 540L C:0 F:0 CC↑0 D:0 (md)
-  M[SUMR.md] 533L C:0 F:0 CC↑0 D:0 (md)
-  M[SUMD.md] 521L C:0 F:74 CC↑0 D:0 (md)
+  M[project/map.toon.yaml] 610L C:0 F:306 CC↑0 D:0 (yaml)
+  M[project/context.md] 582L C:0 F:0 CC↑0 D:0 (md)
+  M[swop/scan/scanner.py] 547L C:0 F:22 CC↑22 D:2 (python)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
-  M[project/calls.yaml] 477L C:0 F:0 CC↑0 D:0 (yaml)
-  M[examples/manifest.md] 387L C:2 F:3 CC↑0 D:4 (md)
+  M[swop/resolve/resolver.py] 435L C:3 F:13 CC↑21 D:1 (python)
+  M[swop/proto/generator.py] 413L C:3 F:11 CC↑15 D:1 (python)
+  M[examples/manifest.md] 387L C:2 F:3 CC↑0 D:5 (md)
   M[project/README.md] 339L C:0 F:0 CC↑0 D:0 (md)
   M[swop/refactor/pipeline.py] 284L C:2 F:10 CC↑23 D:0 (python)
-  M[swop/cli.py] 262L C:0 F:10 CC↑22 D:0 (python)
-  M[project/map.toon.yaml] 243L C:0 F:74 CC↑0 D:3 (yaml)
-  M[swop/refactor/clustering.py] 158L C:3 F:8 CC↑12 D:0 (python)
-  M[swop/markpact/sync_engine.py] 155L C:2 F:6 CC↑11 D:0 (python)
-  M[swop/refactor/scanner/backend.py] 150L C:4 F:6 CC↑16 D:0 (python)
-  M[swop/markpact/parser.py] 141L C:2 F:11 CC↑11 D:0 (python)
-  LANGS: python:26/yaml:8/md:7/shell:2/txt:1/toml:1/json:1
+  LANGS: python:51/yaml:8/md:7/shell:2/txt:1/toml:1/json:1
 
 HOTSPOTS[10]:
   ★ DoqlBridge._build_minimal_spec fan=54  // Orchestrates 54 calls
-  ★ _cmd_generate fan=21  // Orchestrates 21 calls
-  ★ RefactorPipeline.run fan=20  // Orchestrates 20 calls
-  ★ ManifestParser.parse fan=16  // Orchestrates 16 calls
-  ★ FrontendScanner.scan_file fan=14  // Orchestrates 14 calls
+  ★ _build_parser fan=36  // Orchestrates 36 calls
+  ★ scan_project fan=28  // Scan the project described by ``config`` and return a report.
+  ★ _cmd_generate fan=25  // Orchestrates 25 calls
+  ★ generate_services fan=24  // Generate one service package per context + a docker-compose file.
 
-REFACTOR[12]:
-  [1] H/L Split DoqlBridge._build_minimal_spec (CC=36)
-  [2] H/H Split god module swop/markpact/doql_bridge.py (624L, 22 classes)
-  [3] H/H Split god module SUMD.md (521L, 0 classes)
-  [4] H/H Split god module SUMR.md (533L, 0 classes)
-  [5] H/H Split god module goal.yaml (512L, 0 classes)
+REFACTOR[15]:
+  [1] H/L Split _cmd_generate (CC=38)
+  [2] H/L Split DoqlBridge._build_minimal_spec (CC=36)
+  [3] H/H Split god module swop/cli.py (879L, 0 classes)
+  [4] H/H Split god module swop/markpact/doql_bridge.py (624L, 22 classes)
+  [5] H/H Split god module swop/scan/scanner.py (547L, 0 classes)
 
 EVOLUTION:
-  2026-04-22 CC̄=1.8 crit=10 9227L // Automated analysis
+  2026-04-22 CC̄=1.4 crit=29 19877L // Automated analysis

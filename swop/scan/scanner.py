@@ -78,6 +78,70 @@ _PY_SUFFIX = ".py"
 # ----------------------------------------------------------------------
 
 
+def _scan_file(
+    py_path: Path,
+    project_root: Path,
+    config: SwopConfig,
+    contexts: Dict[str, BoundedContextConfig],
+    cache: Optional[FingerprintCache],
+    incremental: bool,
+    report: ScanReport,
+) -> None:
+    rel = py_path.relative_to(project_root)
+    rel_str = rel.as_posix()
+
+    context = _context_for_path(rel_str, contexts, project_root)
+    if context is None:
+        report.ignored.append(rel_str)
+        return
+
+    ctx_cfg = config.context(context)
+    if ctx_cfg is not None and ctx_cfg.external:
+        report.ignored.append(rel_str)
+        return
+
+    try:
+        text = py_path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        report.errors.append(f"{rel_str}: read failed ({exc})")
+        report.files_skipped += 1
+        return
+
+    fingerprint = FingerprintCache.fingerprint(text)
+
+    cached: Optional[List[Detection]] = None
+    if cache is not None and incremental:
+        cached = cache.get(rel_str, fingerprint)
+
+    summary = report.contexts.setdefault(context, _new_ctx_summary(context))
+
+    if cached is not None:
+        report.files_cached += 1
+        summary.files_cached += 1
+        for det in cached:
+            report.add(det)
+        return
+
+    try:
+        tree = ast.parse(text, filename=str(py_path))
+    except SyntaxError as exc:
+        report.errors.append(f"{rel_str}: parse failed ({exc.msg} line {exc.lineno})")
+        report.files_skipped += 1
+        if cache is not None:
+            cache.drop(rel_str)
+        return
+
+    detections = _extract_detections(tree, py_path, rel_str, context, fingerprint)
+
+    report.files_scanned += 1
+    summary.files_scanned += 1
+    for det in detections:
+        report.add(det)
+
+    if cache is not None:
+        cache.put(rel_str, fingerprint, detections)
+
+
 def scan_project(
     config: Optional[SwopConfig] = None,
     *,
@@ -104,61 +168,9 @@ def scan_project(
     discovered_keys: List[str] = []
 
     for py_path in _iter_python_files(project_root, config.source_roots, excludes):
-        rel = py_path.relative_to(project_root)
-        rel_str = rel.as_posix()
+        rel_str = py_path.relative_to(project_root).as_posix()
         discovered_keys.append(rel_str)
-
-        context = _context_for_path(rel_str, contexts, project_root)
-        if context is None:
-            report.ignored.append(rel_str)
-            continue
-
-        # Skip external contexts (we only scan contract shapes, never their source).
-        ctx_cfg = config.context(context)
-        if ctx_cfg is not None and ctx_cfg.external:
-            report.ignored.append(rel_str)
-            continue
-
-        try:
-            text = py_path.read_text(encoding="utf-8", errors="replace")
-        except OSError as exc:
-            report.errors.append(f"{rel_str}: read failed ({exc})")
-            report.files_skipped += 1
-            continue
-
-        fingerprint = FingerprintCache.fingerprint(text)
-
-        cached: Optional[List[Detection]] = None
-        if cache is not None and incremental:
-            cached = cache.get(rel_str, fingerprint)
-
-        summary = report.contexts.setdefault(context, _new_ctx_summary(context))
-
-        if cached is not None:
-            report.files_cached += 1
-            summary.files_cached += 1
-            for det in cached:
-                report.add(det)
-            continue
-
-        try:
-            tree = ast.parse(text, filename=str(py_path))
-        except SyntaxError as exc:
-            report.errors.append(f"{rel_str}: parse failed ({exc.msg} line {exc.lineno})")
-            report.files_skipped += 1
-            if cache is not None:
-                cache.drop(rel_str)
-            continue
-
-        detections = _extract_detections(tree, py_path, rel_str, context, fingerprint)
-
-        report.files_scanned += 1
-        summary.files_scanned += 1
-        for det in detections:
-            report.add(det)
-
-        if cache is not None:
-            cache.put(rel_str, fingerprint, detections)
+        _scan_file(py_path, project_root, config, contexts, cache, incremental, report)
 
     if cache is not None and incremental:
         cache.prune(discovered_keys)

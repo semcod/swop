@@ -96,6 +96,26 @@ class BackendScanner:
 
     # ---------------- extractors -------------------------------------
 
+    @staticmethod
+    def _extract_model_fields(node: ast.ClassDef) -> Tuple[List[str], Optional[str]]:
+        fields: List[str] = []
+        tablename: Optional[str] = None
+        for stmt in node.body:
+            if isinstance(stmt, ast.Assign):
+                for target in stmt.targets:
+                    if isinstance(target, ast.Name):
+                        fields.append(target.id)
+                if (
+                    len(stmt.targets) == 1
+                    and isinstance(stmt.targets[0], ast.Name)
+                    and stmt.targets[0].id == "__tablename__"
+                    and isinstance(stmt.value, ast.Constant)
+                ):
+                    tablename = str(stmt.value.value)
+            elif isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
+                fields.append(stmt.target.id)
+        return fields, tablename
+
     def _extract_models(self, path: Path) -> List[ModelSignals]:
         try:
             tree = ast.parse(path.read_text(encoding="utf-8", errors="replace"))
@@ -109,21 +129,7 @@ class BackendScanner:
             if not self._looks_like_model(node):
                 continue
             model = ModelSignals(path=path, name=node.name)
-            for stmt in node.body:
-                if isinstance(stmt, ast.Assign):
-                    for target in stmt.targets:
-                        if isinstance(target, ast.Name):
-                            model.fields.append(target.id)
-                elif isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
-                    model.fields.append(stmt.target.id)
-                if (
-                    isinstance(stmt, ast.Assign)
-                    and len(stmt.targets) == 1
-                    and isinstance(stmt.targets[0], ast.Name)
-                    and stmt.targets[0].id == "__tablename__"
-                    and isinstance(stmt.value, ast.Constant)
-                ):
-                    model.tablename = str(stmt.value.value)
+            model.fields, model.tablename = self._extract_model_fields(node)
             out.append(model)
         return out
 

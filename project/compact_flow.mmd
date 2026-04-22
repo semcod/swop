@@ -1,16 +1,33 @@
 flowchart TD
+    SUMD["SUMD<br/>306 funcs"]
     examples__manifest["examples.manifest<br/>3 funcs"]
-    project__map["project.map<br/>74 funcs"]
-    swop__cli["swop.cli<br/>10 funcs"]
+    swop__cli["swop.cli<br/>20 funcs"]
+    swop__config["swop.config<br/>9 funcs"]
     swop__core["swop.core<br/>8 funcs"]
-    swop__markpact["swop.markpact<br/>28 funcs"]
+    swop__manifests["swop.manifests<br/>12 funcs"]
+    swop__proto["swop.proto<br/>17 funcs"]
     swop__reconcile["swop.reconcile<br/>7 funcs"]
-    swop__refactor["swop.refactor<br/>42 funcs"]
+    swop__resolve["swop.resolve<br/>13 funcs"]
+    swop__scan["swop.scan<br/>46 funcs"]
+    swop__services["swop.services<br/>17 funcs"]
+    swop__tools["swop.tools<br/>13 funcs"]
     swop__versioning["swop.versioning<br/>1 funcs"]
-    swop__cli ==>|20| examples__manifest
+    swop__watch["swop.watch<br/>7 funcs"]
+    swop__cli ==>|56| examples__manifest
+    swop__cli ==>|8| swop__config
     swop__reconcile ==>|7| examples__manifest
-    swop__refactor ==>|4| project__map
+    swop__cli ==>|5| swop__scan
+    swop__cli -->|3| swop__proto
+    swop__cli -->|2| swop__tools
+    swop__cli -->|2| swop__watch
+    swop__cli -->|2| swop__resolve
     swop__core -->|2| examples__manifest
-    swop__markpact -->|2| project__map
-    swop__cli -->|1| project__map
+    swop__cli -->|1| swop__manifests
+    swop__cli -->|1| swop__services
+    swop__cli -->|1| SUMD
     swop__versioning -->|1| examples__manifest
+    swop__scan -->|1| swop__config
+    swop__watch -->|1| swop__scan
+    swop__watch -->|1| swop__manifests
+    swop__watch -->|1| examples__manifest
+    swop__resolve -->|1| swop__manifests

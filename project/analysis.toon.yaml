@@ -1,96 +1,132 @@
-# code2llm | 46f 7059L | python:26,yaml:8,md:7,shell:2,toml:1,txt:1,json:1 | 2026-04-22
-# CC̄=1.8 | critical:4/263 | dups:0 | cycles:0
+# code2llm | 71f 14968L | python:51,yaml:8,md:7,shell:2,toml:1,json:1,txt:1 | 2026-04-22
+# CC̄=1.4 | critical:10/890 | dups:0 | cycles:0
 
-HEALTH[5]:
+HEALTH[11]:
   🔴 GOD   swop/markpact/doql_bridge.py = 624L, 22 classes, 11m, max CC=36
-  🟡 CC    _cmd_generate CC=22 (limit:15)
+  🟡 CC    _cmd_generate CC=38 (limit:15)
+  🟡 CC    scan_project CC=22 (limit:15)
+  🟡 CC    _classify CC=18 (limit:15)
+  🟡 CC    _extract_fields CC=15 (limit:15)
+  🟡 CC    _build_minimal_spec CC=36 (limit:15)
+  🟡 CC    _map_python_type CC=15 (limit:15)
   🟡 CC    _cluster_to_spec CC=23 (limit:15)
   🟡 CC    _extract_models CC=16 (limit:15)
-  🟡 CC    _build_minimal_spec CC=36 (limit:15)
+  🟡 CC    _index_from_manifests CC=15 (limit:15)
+  🟡 CC    _diff_entry CC=21 (limit:15)
 
 REFACTOR[2]:
   1. split swop/markpact/doql_bridge.py  (god module)
-  2. split 4 high-CC methods  (CC>15)
+  2. split 10 high-CC methods  (CC>15)
 
-PIPELINES[106]:
-  [1] Src [exists]: exists
+PIPELINES[164]:
+  [1] Src [list_devices]: list_devices
       PURITY: 100% pure
-  [2] Src [compute]: compute
+  [2] Src [create_reading]: create_reading
       PURITY: 100% pure
-  [3] Src [__init__]: __init__
+  [3] Src [iter_source_roots]: iter_source_roots
       PURITY: 100% pure
-  [4] Src [reconcile]: reconcile
+  [4] Src [exists]: exists
       PURITY: 100% pure
-  [5] Src [_has_critical]: _has_critical
+  [5] Src [compute]: compute
       PURITY: 100% pure
 
 LAYERS:
-  swop/                           CC̄=4.1    ←in:0  →out:31  !! split
+  swop/                           CC̄=4.7    ←in:1  →out:83  !! split
+  │ !! cli                        879L  0C   20m  CC=38     ←0
+  │ !! generator                  686L  2C   17m  CC=11     ←1
   │ !! doql_bridge                624L  22C   11m  CC=36     ←0
+  │ !! scanner                    547L  0C   22m  CC=22     ←2
+  │ !! resolver                   435L  3C   13m  CC=21     ←1
+  │ !! generator                  413L  3C   11m  CC=15     ←1
   │ !! pipeline                   284L  2C   10m  CC=23     ←0
-  │ !! cli                        262L  0C   10m  CC=22     ←0
+  │ generator                  244L  2C   12m  CC=10     ←3
+  │ engine                     211L  2C    7m  CC=9      ←1
+  │ config                     209L  5C    9m  CC=8      ←2
+  │ report                     209L  4C   11m  CC=7      ←1
+  │ compiler                   207L  1C    6m  CC=10     ←1
+  │ sync_engine                201L  2C    7m  CC=11     ←0
+  │ doctor                     193L  2C   10m  CC=7      ←1
+  │ init                       160L  1C    3m  CC=14     ←1
+  │ decorators                 158L  0C    4m  CC=7      ←0
   │ clustering                 158L  3C    8m  CC=12     ←0
-  │ sync_engine                155L  2C    6m  CC=11     ←0
   │ !! backend                    150L  4C    6m  CC=16     ←0
+  │ __init__                   149L  0C    0m  CC=0.0    ←0
+  │ render                     141L  0C    3m  CC=8      ←1
   │ parser                     141L  2C   11m  CC=11     ←0
   │ frontend                   128L  2C    8m  CC=10     ←0
   │ reconcile                  111L  4C    7m  CC=7      ←0
+  │ cache                      111L  2C   10m  CC=7      ←1
   │ core                       105L  1C    8m  CC=3      ←0
+  │ registry                   105L  2C   12m  CC=3      ←1
   │ graph                      100L  3C    7m  CC=4      ←0
   │ db                          53L  2C    3m  CC=5      ←0
-  │ __init__                    51L  0C    0m  CC=0.0    ←0
   │ graph                       49L  6C    0m  CC=0.0    ←0
   │ yaml                        48L  1C    2m  CC=5      ←0
   │ sync                        47L  1C    3m  CC=7      ←0
   │ __init__                    43L  0C    0m  CC=0.0    ←0
   │ frontend                    40L  1C    2m  CC=4      ←0
+  │ __init__                    34L  0C    0m  CC=0.0    ←0
   │ docker                      32L  1C    2m  CC=3      ←0
   │ backend                     32L  1C    4m  CC=3      ←0
+  │ __init__                    32L  0C    0m  CC=0.0    ←0
+  │ __init__                    30L  0C    0m  CC=0.0    ←0
+  │ __init__                    30L  0C    0m  CC=0.0    ←0
+  │ __init__                    28L  0C    0m  CC=0.0    ←0
   │ __init__                    27L  0C    0m  CC=0.0    ←0
   │ versioning                  25L  1C    1m  CC=1      ←0
   │ utils                       23L  0C    3m  CC=1      ←0
+  │ __init__                    23L  0C    0m  CC=0.0    ←0
+  │ __init__                    17L  0C    0m  CC=0.0    ←0
+  │ __init__                    12L  0C    0m  CC=0.0    ←0
   │ __init__                    12L  0C    0m  CC=0.0    ←0
   │ __init__                    11L  0C    0m  CC=0.0    ←0
   │ __init__                     7L  0C    0m  CC=0.0    ←0
   │
-  examples/                       CC̄=0.0    ←in:30  →out:0
-  │ manifest.md                387L  2C    3m  CC=0.0    ←4
-  │
-  project/                        CC̄=0.0    ←in:0  →out:0
-  │ !! context.md                 540L  0C    0m  CC=0.0    ←0
-  │ calls.yaml                 477L  0C    0m  CC=0.0    ←0
-  │ README.md                  339L  0C    0m  CC=0.0    ←0
-  │ map.toon.yaml              243L  0C   74m  CC=0.0    ←3
-  │ analysis.toon.yaml          94L  0C    0m  CC=0.0    ←0
-  │ calls.toon.yaml             90L  0C    0m  CC=0.0    ←0
-  │ evolution.toon.yaml         65L  0C    0m  CC=0.0    ←0
-  │ project.toon.yaml           51L  0C    0m  CC=0.0    ←0
-  │ prompt.txt                  47L  0C    0m  CC=0.0    ←0
-  │ duplication.toon.yaml       33L  0C    0m  CC=0.0    ←0
+  examples/                       CC̄=0.4    ←in:67  →out:0
+  │ manifest.md                387L  2C    3m  CC=0.0    ←5
+  │ models                      16L  2C    0m  CC=0.0    ←0
+  │ api                         12L  0C    2m  CC=1      ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ !! SUMR.md                    533L  0C    0m  CC=0.0    ←0
-  │ !! SUMD.md                    521L  0C   74m  CC=0.0    ←0
+  │ !! SUMD.md                   1006L  0C  306m  CC=0.0    ←1
+  │ !! SUMR.md                    855L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
-  │ CHANGELOG.md               134L  0C    0m  CC=0.0    ←0
+  │ CHANGELOG.md               187L  0C    0m  CC=0.0    ←0
   │ sumd.json                  102L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              76L  0C    0m  CC=0.0    ←0
   │ README.md                   60L  0C    0m  CC=0.0    ←0
   │ project.sh                  36L  0C    0m  CC=0.0    ←0
   │ tree.sh                      1L  0C    0m  CC=0.0    ←0
   │
+  project/                        CC̄=0.0    ←in:0  →out:0
+  │ !! calls.yaml                1889L  0C    0m  CC=0.0    ←0
+  │ !! map.toon.yaml              610L  0C  306m  CC=0.0    ←0
+  │ !! context.md                 582L  0C    0m  CC=0.0    ←0
+  │ README.md                  339L  0C    0m  CC=0.0    ←0
+  │ calls.toon.yaml            208L  0C    0m  CC=0.0    ←0
+  │ analysis.toon.yaml         133L  0C    0m  CC=0.0    ←0
+  │ evolution.toon.yaml         82L  0C    0m  CC=0.0    ←0
+  │ duplication.toon.yaml       63L  0C    0m  CC=0.0    ←0
+  │ project.toon.yaml           51L  0C    0m  CC=0.0    ←0
+  │ prompt.txt                  47L  0C    0m  CC=0.0    ←0
+  │
 
 COUPLING:
-                          swop       examples    project.map  swop.refactor  swop.markpact
-           swop             ──             30              1                                !! fan-out
-       examples            ←30             ──                                               hub
-    project.map             ←1                            ──             ←4             ←2  hub
-  swop.refactor                                            4             ──               
-  swop.markpact                                            2                            ──
+                            swop        examples       swop.scan      swop.watch  swop.manifests      swop.proto    swop.resolve      swop.tools            SUMD   swop.services
+            swop              ──              66               5               2               1               3               2               2               1               1  !! fan-out
+        examples             ←66              ──                              ←1                                                                                                  hub
+       swop.scan               1                              ──              ←1                                                                                                  hub
+      swop.watch              ←2               1               1              ──               1                                                                                
+  swop.manifests              ←1                                              ←1              ──                              ←1                                                
+      swop.proto              ←3                                                                              ──                                                                
+    swop.resolve              ←2                                                               1                              ──                                                
+      swop.tools              ←2                                                                                                              ──                                
+            SUMD              ←1                                                                                                                              ──                
+   swop.services              ←1                                                                                                                                              ──
   CYCLES: none
-  HUB: examples/ (fan-in=30)
-  HUB: project.map/ (fan-in=7)
-  SMELL: swop/ fan-out=31 → split needed
+  HUB: examples/ (fan-in=67)
+  HUB: swop.scan/ (fan-in=6)
+  SMELL: swop/ fan-out=83 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

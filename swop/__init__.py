@@ -2,7 +2,7 @@
 swop - bi-directional runtime reconciler for full-stack state graphs.
 """
 
-__version__ = "0.2.4"
+__version__ = "0.2.5"
 
 from swop.config import (
     BoundedContextConfig,
@@ -47,6 +47,19 @@ from swop.proto import (
     generate_proto_from_manifests,
 )
 from swop.refactor import RefactorPipeline, RefactorResult
+from swop.resolve import (
+    Change,
+    ChangeKind,
+    ResolutionReport,
+    apply_resolution,
+    resolve_schema_drift,
+)
+from swop.services import (
+    ServiceFile,
+    ServiceGenerationResult,
+    generate_services,
+)
+from swop.watch import WatchEngine, WatchRebuild, rebuild_once
 from swop.scan import (
     ContextSummary,
     Detection,
@@ -119,4 +132,18 @@ __all__ = [
     "ProtoFile",
     "ProtoGenerationResult",
     "CompilationResult",
+    # Services
+    "generate_services",
+    "ServiceFile",
+    "ServiceGenerationResult",
+    # Watch
+    "WatchEngine",
+    "WatchRebuild",
+    "rebuild_once",
+    # Resolve / schema evolution
+    "resolve_schema_drift",
+    "apply_resolution",
+    "Change",
+    "ChangeKind",
+    "ResolutionReport",
 ]
