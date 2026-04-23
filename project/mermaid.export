@@ -23,6 +23,7 @@ flowchart TD
         SUMD___cmd_gen_grpc_python["_cmd_gen_grpc_python"]
         SUMD___cmd_gen_grpc_ts["_cmd_gen_grpc_ts"]
         SUMD___cmd_gen_services["_cmd_gen_services"]
+        SUMD___cmd_gen_registry["_cmd_gen_registry"]
         SUMD___cmd_watch["_cmd_watch"]
         SUMD___cmd_resolve["_cmd_resolve"]
         SUMD___cmd_refactor["_cmd_refactor"]
@@ -40,6 +41,16 @@ flowchart TD
         SUMD___parse_read_models["_parse_read_models"]
         SUMD__load_config["load_config"]
         SUMD___from_dict["_from_dict"]
+        SUMD___contract_kind["_contract_kind"]
+        SUMD___contract_name["_contract_name"]
+        SUMD___contract_context["_contract_context"]
+        SUMD___contract_fields["_contract_fields"]
+        SUMD__contract_to_detection["contract_to_detection"]
+        SUMD__contracts_to_detections["contracts_to_detections"]
+        SUMD__load_contracts["load_contracts"]
+        SUMD___check_layer_paths["_check_layer_paths"]
+        SUMD__validate_contract["validate_contract"]
+        SUMD__validate_all["validate_all"]
         SUMD___collect_source["_collect_source"]
         SUMD___normalize_emits["_normalize_emits"]
         SUMD___make_decorator["_make_decorator"]
@@ -53,17 +64,6 @@ flowchart TD
         SUMD___render_source["_render_source"]
         SUMD___render_field["_render_field"]
         SUMD___render_handler["_render_handler"]
-        SUMD___render_bus["_render_bus"]
-        SUMD___camel_to_dot["_camel_to_dot"]
-        SUMD___safe_dirname["_safe_dirname"]
-        SUMD__build_project_graph["build_project_graph"]
-        SUMD___build_models["_build_models"]
-        SUMD___build_services["_build_services"]
-        SUMD___build_ui_bindings["_build_ui_bindings"]
-        SUMD___build_databases["_build_databases"]
-        SUMD___build_workflows["_build_workflows"]
-        SUMD___build_roles["_build_roles"]
-        SUMD___build_integrations["_build_integrations"]
     end
     subgraph examples__manifest
         examples__manifest__list_devices["list_devices"]
@@ -94,6 +94,7 @@ flowchart TD
         project__map__toon___cmd_gen_grpc_python["_cmd_gen_grpc_python"]
         project__map__toon___cmd_gen_grpc_ts["_cmd_gen_grpc_ts"]
         project__map__toon___cmd_gen_services["_cmd_gen_services"]
+        project__map__toon___cmd_gen_registry["_cmd_gen_registry"]
         project__map__toon___cmd_watch["_cmd_watch"]
         project__map__toon___cmd_resolve["_cmd_resolve"]
         project__map__toon___cmd_refactor["_cmd_refactor"]
@@ -111,6 +112,16 @@ flowchart TD
         project__map__toon___parse_read_models["_parse_read_models"]
         project__map__toon__load_config["load_config"]
         project__map__toon___from_dict["_from_dict"]
+        project__map__toon___contract_kind["_contract_kind"]
+        project__map__toon___contract_name["_contract_name"]
+        project__map__toon___contract_context["_contract_context"]
+        project__map__toon___contract_fields["_contract_fields"]
+        project__map__toon__contract_to_detection["contract_to_detection"]
+        project__map__toon__contracts_to_detections["contracts_to_detections"]
+        project__map__toon__load_contracts["load_contracts"]
+        project__map__toon___check_layer_paths["_check_layer_paths"]
+        project__map__toon__validate_contract["validate_contract"]
+        project__map__toon__validate_all["validate_all"]
         project__map__toon___collect_source["_collect_source"]
         project__map__toon___normalize_emits["_normalize_emits"]
         project__map__toon___make_decorator["_make_decorator"]
@@ -124,17 +135,6 @@ flowchart TD
         project__map__toon___render_source["_render_source"]
         project__map__toon___render_field["_render_field"]
         project__map__toon___render_handler["_render_handler"]
-        project__map__toon___render_bus["_render_bus"]
-        project__map__toon___camel_to_dot["_camel_to_dot"]
-        project__map__toon___safe_dirname["_safe_dirname"]
-        project__map__toon__build_project_graph["build_project_graph"]
-        project__map__toon___build_models["_build_models"]
-        project__map__toon___build_services["_build_services"]
-        project__map__toon___build_ui_bindings["_build_ui_bindings"]
-        project__map__toon___build_databases["_build_databases"]
-        project__map__toon___build_workflows["_build_workflows"]
-        project__map__toon___build_roles["_build_roles"]
-        project__map__toon___build_integrations["_build_integrations"]
     end
     subgraph swop__cli
         swop__cli___build_parser["_build_parser"]
@@ -303,7 +303,7 @@ flowchart TD
     end
     subgraph swop__proto
         swop__proto__generator__ProtoGenerationResult__format["format"]
-        swop__proto__generator___map_python_type{{_map_python_type CC=15}}
+        swop__proto__generator___map_python_type{{_map_python_type CC=17}}
         swop__proto__generator___load_manifest["_load_manifest"]
         swop__proto__generator___iter_contexts["_iter_contexts"]
         swop__proto__generator__generate_proto_from_manifests("generate_proto_from_manifests CC=8")
@@ -375,20 +375,20 @@ flowchart TD
         swop__refactor__scanner__backend__BackendScanner___extract_routes["_extract_routes"]
     end
     subgraph swop__registry
-        swop__registry__bridge___fields["_fields"]
-        swop__registry__bridge__bridge_contracts_to_detections("bridge_contracts_to_detections CC=9")
-        swop__registry__generator__RegistryGenerationResult__format["format"]
-        swop__registry__generator___ep["_ep"]
-        swop__registry__generator___ch["_ch"]
-        swop__registry__generator__generate_registry_json["generate_registry_json"]
-        swop__registry__generator__generate_registry_md{{generate_registry_md CC=32}}
-        swop__registry__generator__write_registry["write_registry"]
         swop__registry__validator__ValidationResult__format["format"]
         swop__registry__validator__validate_contract["validate_contract"]
         swop__registry__validator___check_keys["_check_keys"]
         swop__registry__validator___check_kind["_check_kind"]
         swop__registry__validator___check_layer_paths["_check_layer_paths"]
         swop__registry__loader__load_contracts("load_contracts CC=8")
+        swop__registry__generator__RegistryGenerationResult__format["format"]
+        swop__registry__generator___ep["_ep"]
+        swop__registry__generator___ch["_ch"]
+        swop__registry__generator__generate_registry_json["generate_registry_json"]
+        swop__registry__generator__generate_registry_md{{generate_registry_md CC=32}}
+        swop__registry__generator__write_registry["write_registry"]
+        swop__registry__bridge___fields["_fields"]
+        swop__registry__bridge__bridge_contracts_to_detections("bridge_contracts_to_detections CC=9")
     end
     subgraph swop__resolve
         swop__resolve__resolver__Change__format["format"]
@@ -539,10 +539,77 @@ flowchart TD
     swop__config___parse_read_models --> swop__config___pop_known
     swop__config__load_config --> swop__config___from_dict
     swop__config__load_config --> swop__config___expand_env
-    swop__reconcile__ResyncEngine___auto_heal --> README__print
-    swop__reconcile__ResyncEngine___log_drift --> README__print
-    swop__versioning__Versioning__commit --> README__print
-    swop__core__SwopRuntime__run_sync --> README__print
+    swop__reconcile__ResyncEngine___auto_heal --> examples__manifest__print
+    swop__reconcile__ResyncEngine___log_drift --> examples__manifest__print
+    swop__cli__main --> swop__cli___build_parser
+    swop__versioning__Versioning__commit --> examples__manifest__print
+    swop__commands___cmd_sync --> swop__commands___build_runtime
+    swop__commands___cmd_inspect --> swop__commands___build_runtime
+    swop__commands___cmd_inspect --> examples__manifest__print
+    swop__commands___cmd_diff --> swop__commands___build_runtime
+    swop__commands___cmd_state --> swop__commands___build_runtime
+    swop__commands___cmd_state --> examples__manifest__print
+    swop__commands___cmd_export --> swop__commands___build_runtime
+    swop__commands___cmd_export --> examples__manifest__print
+    swop__commands___cmd_doctor --> swop__tools__doctor__run_doctor
+    swop__commands___cmd_doctor --> examples__manifest__print
+    swop__commands___cmd_doctor --> swop__tools__doctor_deep__run_deep_doctor
+    swop__commands___cmd_doctor --> swop__config__load_config
+    swop__commands___cmd_hook --> examples__manifest__print
+    swop__commands___cmd_hook --> swop__tools__hook__install_hook
+    swop__commands___cmd_hook --> swop__tools__hook__uninstall_hook
+    swop__commands___cmd_hook --> swop__tools__hook__hook_status
+    swop__commands___cmd_init --> swop__tools__init__init_project
+    swop__commands___cmd_init --> examples__manifest__print
+    swop__commands___cmd_scan --> swop__scan__scanner__scan_project
+    swop__commands___cmd_scan --> swop__config__load_config
+    swop__commands___cmd_scan --> swop__scan__render__write_report
+    swop__commands___cmd_scan --> examples__manifest__print
+    swop__commands___cmd_scan --> swop__scan__render__render_json
+    swop__commands___cmd_gen_manifests --> swop__scan__scanner__scan_project
+    swop__commands___cmd_gen_manifests --> swop__manifests__generator__generate_manifests
+    swop__commands___cmd_gen_manifests --> examples__manifest__print
+    swop__commands___cmd_gen_manifests --> swop__config__load_config
+    swop__commands___cmd_gen_proto --> swop__proto__generator__generate_proto_from_manifests
+    swop__commands___cmd_gen_proto --> examples__manifest__print
+    swop__commands___cmd_gen_proto --> swop__config__load_config
+    swop__commands___cmd_gen_grpc_python --> swop__proto__compiler__compile_proto_python
+    swop__commands___cmd_gen_grpc_python --> examples__manifest__print
+    swop__commands___cmd_gen_grpc_python --> swop__config__load_config
+    swop__commands___cmd_gen_grpc_ts --> swop__proto__compiler__compile_proto_typescript
+    swop__commands___cmd_gen_grpc_ts --> examples__manifest__print
+    swop__commands___cmd_gen_grpc_ts --> swop__config__load_config
+    swop__commands___cmd_gen_services --> examples__manifest__print
+    swop__commands___cmd_gen_services --> swop__config__load_config
+    swop__commands___cmd_gen_services --> swop__services__generator__generate_services
+    swop__commands___cmd_gen_registry --> swop__registry__loader__load_contracts
+    swop__commands___cmd_gen_registry --> swop__registry__generator__write_registry
+    swop__commands___cmd_gen_registry --> examples__manifest__print
+    swop__commands___cmd_gen_registry --> swop__registry__validator__validate_contract
+    swop__commands___cmd_watch --> examples__manifest__print
+    swop__commands___cmd_watch --> swop__watch__engine__rebuild_once
+    swop__commands___cmd_watch --> swop__config__load_config
+    swop__commands___cmd_resolve --> swop__scan__scanner__scan_project
+    swop__commands___cmd_resolve --> swop__resolve__resolver__resolve_schema_drift
+    swop__commands___cmd_resolve --> swop__config__load_config
+    swop__commands___cmd_resolve --> examples__manifest__print
+    swop__commands___cmd_resolve --> swop__resolve__resolver__apply_resolution
+    swop__commands___cmd_refactor --> examples__manifest__print
+    swop__commands___generate_parse_manifest --> examples__manifest__print
+    swop__commands___generate_build_graph --> examples__manifest__print
+    swop__commands___generate_build_graph --> SUMD__build_project_graph
+    swop__commands___generate_check_files --> examples__manifest__print
+    swop__commands___generate_update_from_disk --> examples__manifest__print
+    swop__commands___generate_sync_files --> examples__manifest__print
+    swop__commands___generate_outputs --> examples__manifest__print
+    swop__commands___cmd_generate --> swop__commands___generate_parse_manifest
+    swop__commands___cmd_generate --> swop__commands___generate_build_graph
+    swop__commands___cmd_generate --> swop__commands___generate_check_files
+    swop__commands___cmd_generate --> swop__commands___generate_update_from_disk
+    swop__commands___cmd_generate --> swop__commands___generate_sync_files
+    swop__commands___cmd_generate --> swop__commands___generate_outputs
+    swop__commands___cmd_generate --> examples__manifest__print
+    swop__core__SwopRuntime__run_sync --> examples__manifest__print
     swop__scan__render__write_report --> swop__scan__render__render_json
     swop__scan__render__write_report --> swop__scan__render__render_html
     swop__scan__scanner___scan_file --> swop__scan__scanner___context_for_path
@@ -550,7 +617,7 @@ flowchart TD
     swop__scan__scanner___scan_file --> swop__scan__scanner___new_ctx_summary
     swop__scan__scanner__scan_project --> swop__scan__scanner___resolve_contexts
     swop__scan__scanner__scan_project --> swop__scan__scanner___iter_python_files
-    swop__scan__scanner__scan_project --> project__map__toon__load_config
+    swop__scan__scanner__scan_project --> swop__config__load_config
     swop__scan__scanner__scan_project --> swop__scan__scanner___scan_file
     swop__scan__scanner___iter_python_files --> swop__scan__scanner___matches_any
     swop__scan__scanner___extract_detections --> swop__scan__scanner___module_name_from_path
@@ -599,14 +666,22 @@ flowchart TD
     swop__tools__hook__uninstall_hook --> swop__tools__hook___is_swop_hook
     swop__tools__hook__hook_status --> swop__tools__hook___hook_path
     swop__tools__hook__hook_status --> swop__tools__hook___is_swop_hook
-    swop__tools__doctor_deep___check_scan_vs_manifests --> project__map__toon__scan_project
-    swop__tools__doctor_deep___check_scan_vs_manifests --> project__map__toon__resolve_schema_drift
+    swop__tools__doctor_deep___check_scan_vs_manifests --> swop__scan__scanner__scan_project
+    swop__tools__doctor_deep___check_scan_vs_manifests --> swop__resolve__resolver__resolve_schema_drift
     swop__tools__doctor_deep___check_manifests_vs_proto --> swop__tools__doctor_deep___latest_mtime
     swop__tools__doctor_deep__run_deep_doctor --> swop__tools__doctor_deep___check_scan_vs_manifests
     swop__tools__doctor_deep__run_deep_doctor --> swop__tools__doctor_deep___check_manifests_vs_proto
     swop__tools__doctor_deep__run_deep_doctor --> swop__tools__doctor_deep___check_proto_vs_python
     swop__tools__doctor_deep__run_deep_doctor --> swop__tools__doctor_deep___check_manifests_vs_services
-    swop__markpact__sync_engine__ManifestSyncEngine__check --> project__map__toon___hash
+    swop__markpact__sync_engine__ManifestSyncEngine__check --> swop__markpact__sync_engine___hash
+    swop__registry__validator__validate_contract --> swop__registry__validator___check_keys
+    swop__registry__validator__validate_contract --> swop__registry__validator___check_kind
+    swop__registry__validator__validate_contract --> swop__registry__validator___check_layer_paths
+    swop__registry__generator__generate_registry_json --> swop__registry__generator___ep
+    swop__registry__generator__generate_registry_json --> swop__registry__generator___ch
+    swop__registry__generator__write_registry --> swop__registry__generator__generate_registry_json
+    swop__registry__generator__write_registry --> swop__registry__generator__generate_registry_md
+    swop__registry__bridge__bridge_contracts_to_detections --> swop__registry__bridge___fields
     swop__proto__generator__generate_proto_from_manifests --> swop__proto__generator___iter_contexts
     swop__proto__generator__generate_proto_from_manifests --> swop__proto__generator___load_manifest
     swop__proto__generator__generate_proto_from_manifests --> swop__proto__generator__render_proto_for_context
@@ -626,28 +701,6 @@ flowchart TD
     swop__manifests__generator___render_entry --> swop__manifests__generator___render_handler
     swop__manifests__generator___render_bus --> swop__manifests__generator___safe_dirname
     swop__manifests__generator___render_bus --> swop__manifests__generator___camel_to_dot
-    swop__cqrs__decorators___make_decorator --> swop__cqrs__decorators___normalize_emits
-    swop__cqrs__decorators___make_decorator --> swop__cqrs__decorators___collect_source
-    swop__cqrs__decorators___make_decorator --> project__map__toon__get_registry
-    swop__cqrs__decorators__handler --> swop__cqrs__decorators___collect_source
-    swop__cqrs__decorators__handler --> project__map__toon__get_registry
-    swop__refactor__pipeline__RefactorPipeline___link_models_to_ui --> project__map__toon___tokenize
-    swop__refactor__pipeline__RefactorPipeline___cluster_to_spec --> project__map__toon___tokenize
-    swop__watch__engine__rebuild_once --> project__map__toon__scan_project
-    swop__watch__engine__rebuild_once --> project__map__toon__generate_manifests
-    swop__watch__engine__WatchEngine__poll_once --> project__map__toon___diff_snapshots
-    swop__watch__engine__WatchEngine__poll_once --> project__map__toon__rebuild_once
-    swop__watch__engine__WatchEngine__run --> README__print
-    swop__resolve__resolver__resolve_schema_drift --> swop__resolve__resolver___index_from_detections
-    swop__resolve__resolver__resolve_schema_drift --> swop__resolve__resolver___index_from_manifests
-    swop__resolve__resolver__resolve_schema_drift --> swop__resolve__resolver___diff_context_kind
-    swop__resolve__resolver__apply_resolution --> project__map__toon__generate_manifests
-    swop__resolve__resolver___index_from_detections --> swop__resolve__resolver___handler_shape
-    swop__resolve__resolver___diff_context_kind --> swop__resolve__resolver___diff_entry
-    swop__resolve__resolver___diff_context_kind --> swop__resolve__resolver___field_signature
-    swop__resolve__resolver___diff_metadata --> swop__resolve__resolver___handler_sig
-    swop__resolve__resolver___diff_entry --> swop__resolve__resolver___diff_fields
-    swop__resolve__resolver___diff_entry --> swop__resolve__resolver___diff_metadata
     swop__contracts__adapter___contract_fields --> swop__contracts__adapter___contract_kind
     swop__contracts__adapter__contract_to_detection --> swop__contracts__adapter___contract_kind
     swop__contracts__adapter__contract_to_detection --> swop__contracts__adapter___contract_name
@@ -655,86 +708,33 @@ flowchart TD
     swop__contracts__adapter__contract_to_detection --> swop__contracts__adapter___contract_fields
     swop__contracts__adapter__contracts_to_detections --> swop__contracts__adapter__contract_to_detection
     swop__contracts__adapter__ContractDetectionAdapter____init__ --> swop__contracts__adapter__contracts_to_detections
-    swop__contracts__adapter__ContractDetectionAdapter__from_directory --> swop__contracts__reader__load_contracts
-    swop__registry__bridge__bridge_contracts_to_detections --> swop__registry__bridge___fields
-    swop__cli__main --> swop__cli___build_parser
+    swop__contracts__adapter__ContractDetectionAdapter__from_directory --> swop__registry__loader__load_contracts
     swop__contracts__reader__validate_contract --> swop__contracts__reader___check_layer_paths
     swop__contracts__reader__validate_all --> swop__contracts__reader__validate_contract
-    swop__commands___cmd_sync --> swop__commands___build_runtime
-    swop__commands___cmd_inspect --> swop__commands___build_runtime
-    swop__commands___cmd_inspect --> README__print
-    swop__commands___cmd_diff --> swop__commands___build_runtime
-    swop__commands___cmd_state --> swop__commands___build_runtime
-    swop__commands___cmd_state --> README__print
-    swop__commands___cmd_export --> swop__commands___build_runtime
-    swop__commands___cmd_export --> README__print
-    swop__commands___cmd_doctor --> project__map__toon__run_doctor
-    swop__commands___cmd_doctor --> README__print
-    swop__commands___cmd_doctor --> project__map__toon__run_deep_doctor
-    swop__commands___cmd_doctor --> project__map__toon__load_config
-    swop__commands___cmd_hook --> README__print
-    swop__commands___cmd_hook --> project__map__toon__install_hook
-    swop__commands___cmd_hook --> project__map__toon__uninstall_hook
-    swop__commands___cmd_hook --> project__map__toon__hook_status
-    swop__commands___cmd_init --> project__map__toon__init_project
-    swop__commands___cmd_init --> README__print
-    swop__commands___cmd_scan --> project__map__toon__scan_project
-    swop__commands___cmd_scan --> project__map__toon__load_config
-    swop__commands___cmd_scan --> project__map__toon__write_report
-    swop__commands___cmd_scan --> README__print
-    swop__commands___cmd_scan --> project__map__toon__render_json
-    swop__commands___cmd_gen_manifests --> project__map__toon__scan_project
-    swop__commands___cmd_gen_manifests --> project__map__toon__generate_manifests
-    swop__commands___cmd_gen_manifests --> README__print
-    swop__commands___cmd_gen_manifests --> project__map__toon__load_config
-    swop__commands___cmd_gen_proto --> project__map__toon__generate_proto_from_manifests
-    swop__commands___cmd_gen_proto --> README__print
-    swop__commands___cmd_gen_proto --> project__map__toon__load_config
-    swop__commands___cmd_gen_grpc_python --> project__map__toon__compile_proto_python
-    swop__commands___cmd_gen_grpc_python --> README__print
-    swop__commands___cmd_gen_grpc_python --> project__map__toon__load_config
-    swop__commands___cmd_gen_grpc_ts --> project__map__toon__compile_proto_typescript
-    swop__commands___cmd_gen_grpc_ts --> README__print
-    swop__commands___cmd_gen_grpc_ts --> project__map__toon__load_config
-    swop__commands___cmd_gen_services --> README__print
-    swop__commands___cmd_gen_services --> project__map__toon__load_config
-    swop__commands___cmd_gen_services --> project__map__toon__generate_services
-    swop__commands___cmd_gen_registry --> swop__contracts__reader__load_contracts
-    swop__commands___cmd_gen_registry --> swop__registry__generator__write_registry
-    swop__commands___cmd_gen_registry --> README__print
-    swop__commands___cmd_gen_registry --> swop__contracts__reader__validate_contract
-    swop__commands___cmd_watch --> README__print
-    swop__commands___cmd_watch --> project__map__toon__rebuild_once
-    swop__commands___cmd_watch --> project__map__toon__load_config
-    swop__commands___cmd_resolve --> project__map__toon__scan_project
-    swop__commands___cmd_resolve --> project__map__toon__resolve_schema_drift
-    swop__commands___cmd_resolve --> project__map__toon__load_config
-    swop__commands___cmd_resolve --> README__print
-    swop__commands___cmd_resolve --> project__map__toon__apply_resolution
-    swop__commands___cmd_refactor --> README__print
-    swop__commands___generate_parse_manifest --> README__print
-    swop__commands___generate_build_graph --> README__print
-    swop__commands___generate_build_graph --> project__map__toon__build_project_graph
-    swop__commands___generate_check_files --> README__print
-    swop__commands___generate_update_from_disk --> README__print
-    swop__commands___generate_sync_files --> README__print
-    swop__commands___generate_outputs --> README__print
-    swop__commands___cmd_generate --> swop__commands___generate_parse_manifest
-    swop__commands___cmd_generate --> swop__commands___generate_build_graph
-    swop__commands___cmd_generate --> swop__commands___generate_check_files
-    swop__commands___cmd_generate --> swop__commands___generate_update_from_disk
-    swop__commands___cmd_generate --> swop__commands___generate_sync_files
-    swop__commands___cmd_generate --> swop__commands___generate_outputs
-    swop__commands___cmd_generate --> README__print
-    swop__registry__generator__generate_registry_json --> swop__registry__generator___ep
-    swop__registry__generator__generate_registry_json --> swop__registry__generator___ch
-    swop__registry__generator__write_registry --> swop__registry__generator__generate_registry_json
-    swop__registry__generator__write_registry --> swop__registry__generator__generate_registry_md
-    swop__registry__validator__validate_contract --> swop__registry__validator___check_keys
-    swop__registry__validator__validate_contract --> swop__registry__validator___check_kind
-    swop__registry__validator__validate_contract --> swop__registry__validator___check_layer_paths
+    swop__cqrs__decorators___make_decorator --> swop__cqrs__decorators___normalize_emits
+    swop__cqrs__decorators___make_decorator --> swop__cqrs__decorators___collect_source
+    swop__cqrs__decorators___make_decorator --> swop__cqrs__registry__get_registry
+    swop__cqrs__decorators__handler --> swop__cqrs__decorators___collect_source
+    swop__cqrs__decorators__handler --> swop__cqrs__registry__get_registry
+    swop__refactor__pipeline__RefactorPipeline___link_models_to_ui --> swop__refactor__pipeline___tokenize
+    swop__refactor__pipeline__RefactorPipeline___cluster_to_spec --> swop__refactor__pipeline___tokenize
+    swop__watch__engine__rebuild_once --> swop__scan__scanner__scan_project
+    swop__watch__engine__rebuild_once --> swop__manifests__generator__generate_manifests
+    swop__watch__engine__WatchEngine__poll_once --> swop__watch__engine___diff_snapshots
+    swop__watch__engine__WatchEngine__poll_once --> swop__watch__engine__rebuild_once
+    swop__watch__engine__WatchEngine__run --> examples__manifest__print
+    swop__resolve__resolver__resolve_schema_drift --> swop__resolve__resolver___index_from_detections
+    swop__resolve__resolver__resolve_schema_drift --> swop__resolve__resolver___index_from_manifests
+    swop__resolve__resolver__resolve_schema_drift --> swop__resolve__resolver___diff_context_kind
+    swop__resolve__resolver__apply_resolution --> swop__manifests__generator__generate_manifests
+    swop__resolve__resolver___index_from_detections --> swop__resolve__resolver___handler_shape
+    swop__resolve__resolver___diff_context_kind --> swop__resolve__resolver___diff_entry
+    swop__resolve__resolver___diff_context_kind --> swop__resolve__resolver___field_signature
+    swop__resolve__resolver___diff_metadata --> swop__resolve__resolver___handler_sig
+    swop__resolve__resolver___diff_entry --> swop__resolve__resolver___diff_fields
+    swop__resolve__resolver___diff_entry --> swop__resolve__resolver___diff_metadata
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
-    class swop__tools__doctor_deep___check_manifests_vs_proto,swop__tools__doctor_deep___check_proto_vs_python,swop__tools__doctor_deep___check_manifests_vs_services,swop__proto__generator___map_python_type,swop__refactor__pipeline__RefactorPipeline___cluster_to_spec,swop__resolve__resolver___index_from_manifests,swop__contracts__reader__validate_contract,swop__registry__generator__generate_registry_md highCC
-    class swop__config___from_dict,swop__scan__render__render_html,swop__scan__scanner___scan_file,swop__scan__scanner__scan_project,swop__scan__scanner___iter_python_files,swop__scan__scanner___context_for_path,swop__scan__scanner___extract_decorator_emits,swop__scan__scanner___extract_decorator_context,swop__scan__scanner___classify,swop__scan__scanner___handler_target_from_method,swop__scan__scanner___annotation_is_optional,swop__services__generator__ServiceGenerationResult__format,swop__services__generator__generate_services,swop__tools__init__init_project,swop__tools__init___merge_gitignore,swop__tools__hook___git_dir,swop__tools__doctor_deep___check_scan_vs_manifests,swop__markpact__parser__ManifestParser__parse,swop__markpact__doql_bridge__DoqlBridge__from_blocks,swop__markpact__doql_bridge__DoqlBridge___merge_fragment,swop__markpact__sync_engine__ManifestSyncEngine__diff,swop__proto__generator__generate_proto_from_manifests,swop__proto__generator__render_proto_for_context,swop__proto__generator___render_message,swop__proto__compiler__compile_proto_python,swop__proto__compiler__compile_proto_typescript,swop__manifests__generator__generate_manifests,swop__manifests__generator___render_entry,swop__refactor__pipeline__RefactorPipeline__run,swop__refactor__pipeline__RefactorPipeline___build_graph medCC
+    class swop__tools__doctor_deep___check_manifests_vs_proto,swop__tools__doctor_deep___check_proto_vs_python,swop__tools__doctor_deep___check_manifests_vs_services,swop__registry__generator__generate_registry_md,swop__proto__generator___map_python_type,swop__contracts__reader__validate_contract,swop__refactor__pipeline__RefactorPipeline___cluster_to_spec,swop__resolve__resolver___index_from_manifests highCC
+    class swop__config___from_dict,swop__commands___cmd_scan,swop__commands___cmd_gen_manifests,swop__commands___cmd_gen_services,swop__commands___cmd_gen_registry,swop__commands___cmd_resolve,swop__commands___generate_build_graph,swop__commands___generate_check_files,swop__scan__render__render_html,swop__scan__scanner___scan_file,swop__scan__scanner__scan_project,swop__scan__scanner___iter_python_files,swop__scan__scanner___context_for_path,swop__scan__scanner___extract_decorator_emits,swop__scan__scanner___extract_decorator_context,swop__scan__scanner___classify,swop__scan__scanner___handler_target_from_method,swop__scan__scanner___annotation_is_optional,swop__services__generator__ServiceGenerationResult__format,swop__services__generator__generate_services,swop__tools__init__init_project,swop__tools__init___merge_gitignore,swop__tools__hook___git_dir,swop__tools__doctor_deep___check_scan_vs_manifests,swop__markpact__parser__ManifestParser__parse,swop__markpact__doql_bridge__DoqlBridge__from_blocks,swop__markpact__doql_bridge__DoqlBridge___merge_fragment,swop__markpact__sync_engine__ManifestSyncEngine__diff,swop__registry__loader__load_contracts,swop__registry__bridge__bridge_contracts_to_detections medCC

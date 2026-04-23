@@ -100,7 +100,7 @@ class ComposeBuilder:
 WORKDIR /app
 
 # Install basic dependencies
-RUN pip install --no-cache-dir fastapi uvicorn
+RUN pip install --no-cache-dir fastapi uvicorn pyyaml
 
 # Copy module structure
 COPY module.yaml ./module.yaml
@@ -111,7 +111,7 @@ COPY model/ ./model/
 # Expose the module port
 EXPOSE 8000
 
-# Default command - this should be customized based on actual module needs
-CMD ["sh", "-c", "echo 'Module ${MODULE_NAME:-unknown} ready on port ${MODULE_PORT:-8000}' && sleep infinity"]
+# Run the auto-generated FastAPI server
+CMD ["sh", "-c", "uvicorn api.main:app --host 0.0.0.0 --port ${MODULE_PORT:-8000}"]
 """
         dockerfile_path.write_text(dockerfile_content, encoding="utf-8")

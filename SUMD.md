@@ -19,7 +19,7 @@ Bi-directional runtime reconciler and drift-aware state graph for full-stack sys
 ## Metadata
 
 - **name**: `swop`
-- **version**: `0.2.6`
+- **version**: `0.2.8`
 - **python_requires**: `>=3.8`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -39,7 +39,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: swop;
-  version: 0.2.6;
+  version: 0.2.8;
 }
 
 dependencies {
@@ -81,7 +81,7 @@ environment[name="local"] {
 ```yaml
 project:
   name: swop
-  version: 0.2.6
+  version: 0.2.8
   env: local
 ```
 
@@ -132,9 +132,9 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# inspect | 85f 14274L | python:82,shell:2,less:1 | 2026-04-23
+# inspect | 85f 14391L | python:82,shell:2,less:1 | 2026-04-23
 # stats: 393 func | 103 cls | 85 mod | CC̄=4.8 | critical:38 | cycles:0
-# alerts[5]: CC generate_registry_md=32; CC validate_contract=21; CC test_render_proto_for_context_builds_expected_shape=20; CC test_manifest_yaml_shape_for_command=18; CC _map_python_type=15
+# alerts[5]: CC generate_registry_md=32; CC validate_contract=21; CC test_render_proto_for_context_builds_expected_shape=20; CC test_manifest_yaml_shape_for_command=18; CC _map_python_type=17
 # hotspots[5]: build_project_graph fan=19; generate_services fan=19; _write_context_package fan=18; _scan_file fan=16; compile_proto_python fan=14
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
@@ -171,13 +171,13 @@ M[85]:
   swop/markpact/sync_engine.py,202
   swop/proto/__init__.py,31
   swop/proto/compiler.py,208
-  swop/proto/generator.py,414
+  swop/proto/generator.py,423
   swop/reconcile.py,112
   swop/refactor/__init__.py,44
   swop/refactor/clustering.py,159
   swop/refactor/compose_builder.py,118
   swop/refactor/graph.py,101
-  swop/refactor/module_builder.py,190
+  swop/refactor/module_builder.py,298
   swop/refactor/pipeline.py,285
   swop/refactor/scanner/__init__.py,8
   swop/refactor/scanner/backend.py,157
@@ -455,7 +455,7 @@ D:
     e: ModuleSpec,ModuleWriteResult,ModuleBuilder
     ModuleSpec:
     ModuleWriteResult:
-    ModuleBuilder: __init__(1),write(1),_write_ui(3),_write_api(3),_write_models(3),_write_db(3),_write_manifest(3)  # Write a :class:`ModuleSpec` to disk.
+    ModuleBuilder: __init__(1),write(1),_write_ui(3),_write_api(3),_write_models(3),_write_db(3),_write_api_server(3),_write_manifest(3)  # Write a :class:`ModuleSpec` to disk.
   swop/refactor/pipeline.py:
     e: _tokenize,RefactorResult,RefactorPipeline
     RefactorResult: summary(0)
@@ -872,30 +872,30 @@ D:
 
 ## Call Graph
 
-*174 nodes · 180 edges · 26 modules · CC̄=1.5*
+*160 nodes · 180 edges · 28 modules · CC̄=1.4*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
 | `_build_parser` *(in swop.cli)* | 1 | 1 | 132 | **133** |
-| `print` *(in README)* | 0 | 78 | 0 | **78** |
+| `print` *(in examples.manifest)* | 0 | 78 | 0 | **78** |
 | `generate_registry_md` *(in swop.registry.generator)* | 32 ⚠ | 1 | 65 | **66** |
 | `render_proto_for_context` *(in swop.proto.generator)* | 12 ⚠ | 1 | 43 | **44** |
 | `_diff_fields` *(in swop.resolve.resolver)* | 11 ⚠ | 1 | 43 | **44** |
-| `_map_python_type` *(in swop.proto.generator)* | 15 ⚠ | 3 | 25 | **28** |
+| `_map_python_type` *(in swop.proto.generator)* | 17 ⚠ | 3 | 27 | **30** |
 | `_check_proto_vs_python` *(in swop.tools.doctor_deep)* | 15 ⚠ | 1 | 25 | **26** |
-| `_from_dict` *(in swop.config)* | 8 | 1 | 25 | **26** |
+| `init_project` *(in swop.tools.init)* | 14 ⚠ | 1 | 25 | **26** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/inspect
-# nodes: 174 | edges: 180 | modules: 26
-# CC̄=1.5
+# nodes: 160 | edges: 180 | modules: 28
+# CC̄=1.4
 
 HUBS[20]:
   swop.cli._build_parser
     CC=1  in:1  out:132  total:133
-  README.print
+  examples.manifest.print
     CC=0  in:78  out:0  total:78
   swop.registry.generator.generate_registry_md
     CC=32  in:1  out:65  total:66
@@ -904,21 +904,27 @@ HUBS[20]:
   swop.resolve.resolver._diff_fields
     CC=11  in:1  out:43  total:44
   swop.proto.generator._map_python_type
-    CC=15  in:3  out:25  total:28
+    CC=17  in:3  out:27  total:30
   swop.tools.doctor_deep._check_proto_vs_python
     CC=15  in:1  out:25  total:26
-  swop.config._from_dict
-    CC=8  in:1  out:25  total:26
+  swop.tools.init.init_project
+    CC=14  in:1  out:25  total:26
   swop.scan.render.render_html
+    CC=8  in:1  out:25  total:26
+  swop.config._from_dict
     CC=8  in:1  out:25  total:26
   swop.tools.doctor_deep._check_manifests_vs_proto
     CC=15  in:1  out:24  total:25
   swop.proto.compiler.compile_proto_typescript
-    CC=10  in:0  out:23  total:23
-  swop.commands._generate_build_graph
-    CC=14  in:1  out:22  total:23
+    CC=10  in:1  out:23  total:24
   swop.tools.doctor_deep._check_manifests_vs_services
     CC=15  in:1  out:22  total:23
+  swop.commands._generate_build_graph
+    CC=14  in:1  out:22  total:23
+  swop.proto.compiler.compile_proto_python
+    CC=8  in:1  out:21  total:22
+  swop.config.load_config
+    CC=6  in:10  out:12  total:22
   swop.resolve.resolver._index_from_manifests
     CC=15  in:1  out:21  total:22
   swop.services.generator._write_context_package
@@ -927,27 +933,12 @@ HUBS[20]:
     CC=13  in:1  out:20  total:21
   swop.tools.hook._git_dir
     CC=13  in:1  out:20  total:21
-  swop.proto.compiler.compile_proto_python
-    CC=8  in:0  out:21  total:21
-  swop.commands._cmd_scan
-    CC=14  in:0  out:20  total:20
-  swop.proto.generator.generate_proto_from_manifests
-    CC=8  in:0  out:20  total:20
 
 MODULES:
-  README  [1 funcs]
-    print  CC=0  out:0
-  project.map.toon  [20 funcs]
-    _diff_snapshots  CC=0  out:0
-    _hash  CC=0  out:0
-    _tokenize  CC=0  out:0
-    apply_resolution  CC=0  out:0
+  SUMD  [1 funcs]
     build_project_graph  CC=0  out:0
-    compile_proto_python  CC=0  out:0
-    compile_proto_typescript  CC=0  out:0
-    generate_manifests  CC=0  out:0
-    generate_proto_from_manifests  CC=0  out:0
-    hook_status  CC=0  out:0
+  examples.manifest  [1 funcs]
+    print  CC=0  out:0
   swop.cli  [2 funcs]
     _build_parser  CC=1  out:132
     main  CC=1  out:3
@@ -979,9 +970,8 @@ MODULES:
     _contract_name  CC=4  out:3
     contract_to_detection  CC=6  out:10
     contracts_to_detections  CC=4  out:6
-  swop.contracts.reader  [4 funcs]
+  swop.contracts.reader  [3 funcs]
     _check_layer_paths  CC=6  out:6
-    load_contracts  CC=5  out:8
     validate_all  CC=4  out:6
     validate_contract  CC=21  out:12
   swop.core  [1 funcs]
@@ -1002,8 +992,9 @@ MODULES:
     _render_source  CC=2  out:0
     _safe_dirname  CC=2  out:3
     generate_manifests  CC=10  out:11
-  swop.markpact.sync_engine  [1 funcs]
+  swop.markpact.sync_engine  [2 funcs]
     check  CC=7  out:11
+    _hash  CC=1  out:3
   swop.proto.compiler  [4 funcs]
     _iter_proto_files  CC=1  out:3
     _run  CC=2  out:3
@@ -1012,7 +1003,7 @@ MODULES:
   swop.proto.generator  [7 funcs]
     _iter_contexts  CC=6  out:7
     _load_manifest  CC=4  out:4
-    _map_python_type  CC=15  out:25
+    _map_python_type  CC=17  out:27
     _render_message  CC=8  out:10
     _safe_ident  CC=3  out:3
     generate_proto_from_manifests  CC=8  out:20
@@ -1020,12 +1011,15 @@ MODULES:
   swop.reconcile  [2 funcs]
     _auto_heal  CC=4  out:2
     _log_drift  CC=1  out:6
-  swop.refactor.pipeline  [1 funcs]
+  swop.refactor.pipeline  [2 funcs]
     _link_models_to_ui  CC=8  out:7
+    _tokenize  CC=4  out:4
   swop.registry.generator  [3 funcs]
     generate_registry_json  CC=7  out:17
     generate_registry_md  CC=32  out:65
     write_registry  CC=2  out:14
+  swop.registry.loader  [1 funcs]
+    load_contracts  CC=8  out:12
   swop.registry.validator  [4 funcs]
     _check_keys  CC=3  out:1
     _check_kind  CC=2  out:3
@@ -1067,10 +1061,11 @@ MODULES:
     _render_server  CC=7  out:9
     _render_worker  CC=2  out:0
     _safe_ident  CC=3  out:3
-  swop.tools.doctor  [3 funcs]
+  swop.tools.doctor  [4 funcs]
     _check_binary  CC=4  out:5
     _first_version  CC=3  out:2
     _run_version  CC=5  out:3
+    run_doctor  CC=2  out:17
   swop.tools.doctor_deep  [6 funcs]
     _check_manifests_vs_proto  CC=15  out:24
     _check_manifests_vs_services  CC=15  out:22
@@ -1086,11 +1081,14 @@ MODULES:
     hook_status  CC=4  out:7
     install_hook  CC=5  out:8
     uninstall_hook  CC=4  out:8
+  swop.tools.init  [1 funcs]
+    init_project  CC=14  out:25
   swop.versioning  [1 funcs]
     commit  CC=1  out:4
-  swop.watch.engine  [3 funcs]
+  swop.watch.engine  [4 funcs]
     poll_once  CC=5  out:7
     run  CC=9  out:5
+    _diff_snapshots  CC=5  out:6
     rebuild_once  CC=2  out:6
 
 EDGES:
@@ -1099,51 +1097,51 @@ EDGES:
   swop.config._parse_read_models → swop.config._pop_known
   swop.config.load_config → swop.config._from_dict
   swop.config.load_config → swop.config._expand_env
-  swop.reconcile.ResyncEngine._auto_heal → README.print
-  swop.reconcile.ResyncEngine._log_drift → README.print
-  swop.versioning.Versioning.commit → README.print
-  swop.core.SwopRuntime.run_sync → README.print
-  swop.scan.render.write_report → swop.scan.render.render_json
-  swop.scan.render.write_report → swop.scan.render.render_html
-  swop.scan.scanner._scan_file → swop.scan.scanner._context_for_path
-  swop.scan.scanner._scan_file → swop.scan.scanner._extract_detections
-  swop.scan.scanner.scan_project → swop.scan.scanner._resolve_contexts
-  swop.scan.scanner.scan_project → swop.scan.scanner._iter_python_files
-  swop.scan.scanner.scan_project → project.map.toon.load_config
-  swop.scan.scanner.scan_project → swop.scan.scanner._scan_file
-  swop.scan.scanner._iter_python_files → swop.scan.scanner._matches_any
-  swop.scan.scanner._extract_detections → swop.scan.scanner._module_name_from_path
-  swop.scan.scanner._extract_detections → swop.scan.scanner._classify
-  swop.scan.scanner._extract_detections → swop.scan.scanner._extract_fields
-  swop.scan.scanner._extract_detections → swop.scan.scanner._handler_method_name
-  swop.scan.scanner._classify_decorator → swop.scan.scanner._decorator_name
-  swop.scan.scanner._classify_decorator → swop.scan.scanner._extract_decorator_emits
-  swop.scan.scanner._classify_decorator → swop.scan.scanner._extract_handler_target
-  swop.scan.scanner._classify_decorator → swop.scan.scanner._extract_decorator_context
-  swop.scan.scanner._classify_heuristic → swop.scan.scanner._kind_by_suffix
-  swop.scan.scanner._classify_heuristic → swop.scan.scanner._kind_by_base
-  swop.scan.scanner._classify_heuristic → swop.scan.scanner._handler_target_from_method
-  swop.scan.scanner._classify → swop.scan.scanner._classify_heuristic
-  swop.scan.scanner._classify → swop.scan.scanner._decorator_name
-  swop.scan.scanner._classify → swop.scan.scanner._base_name
-  swop.scan.scanner._classify → swop.scan.scanner._classify_decorator
-  swop.scan.scanner._extract_ann_field → swop.scan.scanner._unparse
-  swop.scan.scanner._extract_ann_field → swop.scan.scanner._render_default
-  swop.scan.scanner._extract_ann_field → swop.scan.scanner._annotation_is_optional
-  swop.scan.scanner._extract_plain_field → swop.scan.scanner._render_default
-  swop.scan.scanner._extract_fields → swop.scan.scanner._extract_ann_field
-  swop.scan.scanner._extract_fields → swop.scan.scanner._extract_plain_field
-  swop.scan.scanner._render_default → swop.scan.scanner._unparse
-  swop.services.generator._write_context_package → swop.services.generator._safe_ident
-  swop.services.generator._write_context_package → swop.services.generator._camel
-  swop.services.generator._write_context_package → swop.services.generator._render_init
-  swop.services.generator._write_context_package → swop.services.generator._render_worker
-  swop.services.generator._write_context_package → swop.services.generator._render_server
-  swop.services.generator._write_context_package → swop.services.generator._render_publisher
-  swop.services.generator._write_context_package → swop.services.generator._render_requirements
-  swop.services.generator._write_context_package → swop.services.generator._render_dockerfile
-  swop.services.generator._render_compose → swop.services.generator._default_bus_url
-  swop.tools.doctor._check_binary → swop.tools.doctor._run_version
+  swop.reconcile.ResyncEngine._auto_heal → examples.manifest.print
+  swop.reconcile.ResyncEngine._log_drift → examples.manifest.print
+  swop.cli.main → swop.cli._build_parser
+  swop.versioning.Versioning.commit → examples.manifest.print
+  swop.commands._cmd_sync → swop.commands._build_runtime
+  swop.commands._cmd_inspect → swop.commands._build_runtime
+  swop.commands._cmd_inspect → examples.manifest.print
+  swop.commands._cmd_diff → swop.commands._build_runtime
+  swop.commands._cmd_state → swop.commands._build_runtime
+  swop.commands._cmd_state → examples.manifest.print
+  swop.commands._cmd_export → swop.commands._build_runtime
+  swop.commands._cmd_export → examples.manifest.print
+  swop.commands._cmd_doctor → swop.tools.doctor.run_doctor
+  swop.commands._cmd_doctor → examples.manifest.print
+  swop.commands._cmd_doctor → swop.tools.doctor_deep.run_deep_doctor
+  swop.commands._cmd_hook → examples.manifest.print
+  swop.commands._cmd_hook → swop.tools.hook.install_hook
+  swop.commands._cmd_hook → swop.tools.hook.uninstall_hook
+  swop.commands._cmd_hook → swop.tools.hook.hook_status
+  swop.commands._cmd_init → swop.tools.init.init_project
+  swop.commands._cmd_init → examples.manifest.print
+  swop.commands._cmd_scan → swop.scan.scanner.scan_project
+  swop.commands._cmd_scan → swop.config.load_config
+  swop.commands._cmd_scan → swop.scan.render.write_report
+  swop.commands._cmd_scan → examples.manifest.print
+  swop.commands._cmd_gen_manifests → swop.scan.scanner.scan_project
+  swop.commands._cmd_gen_manifests → swop.manifests.generator.generate_manifests
+  swop.commands._cmd_gen_manifests → examples.manifest.print
+  swop.commands._cmd_gen_manifests → swop.config.load_config
+  swop.commands._cmd_gen_proto → swop.proto.generator.generate_proto_from_manifests
+  swop.commands._cmd_gen_proto → examples.manifest.print
+  swop.commands._cmd_gen_proto → swop.config.load_config
+  swop.commands._cmd_gen_grpc_python → swop.proto.compiler.compile_proto_python
+  swop.commands._cmd_gen_grpc_python → examples.manifest.print
+  swop.commands._cmd_gen_grpc_python → swop.config.load_config
+  swop.commands._cmd_gen_grpc_ts → swop.proto.compiler.compile_proto_typescript
+  swop.commands._cmd_gen_grpc_ts → examples.manifest.print
+  swop.commands._cmd_gen_grpc_ts → swop.config.load_config
+  swop.commands._cmd_gen_services → examples.manifest.print
+  swop.commands._cmd_gen_services → swop.config.load_config
+  swop.commands._cmd_gen_registry → swop.registry.loader.load_contracts
+  swop.commands._cmd_gen_registry → swop.registry.generator.write_registry
+  swop.commands._cmd_gen_registry → examples.manifest.print
+  swop.commands._cmd_gen_registry → swop.registry.validator.validate_contract
+  swop.commands._cmd_watch → examples.manifest.print
 ```
 
 ## Intent

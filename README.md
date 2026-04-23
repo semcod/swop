@@ -2,18 +2,18 @@
 
 **Bi-directional runtime reconciler and drift-aware state graph for full-stack systems.**
 
-[![Version](https://img.shields.io/badge/version-0.2.8-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.9-blue)](VERSION)
 [![Python](https://img.shields.io/badge/python-3.8+-blue)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.8-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.10-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-5.6h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.9-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.25-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-6.1h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $2.1000 (14 commits)
-- 👤 **Human dev:** ~$558 (5.6h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $2.2500 (15 commits)
+- 👤 **Human dev:** ~$608 (6.1h @ $100/h, 30min dedup)
 
 Generated on 2026-04-23 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -38,6 +38,8 @@ detects schema drift; and exports the runtime state graph to multiple formats.
 - [Watch Mode](#watch-mode)
 - [Drift Detection & Resolution](#drift-detection--resolution)
 - [Refactoring](#refactoring)
+- [Registry Generation](#registry-generation)
+- [Markpact Generation](#markpact-generation)
 - [Development](#development)
 - [License](#license)
 
@@ -132,19 +134,21 @@ swop [--mode {STRICT,SOFT,OBSERVE,AUTO_HEAL}] <command>
 | Command | Description |
 |---|---|
 | `swop init` | Scaffold `swop.yaml` and `.swop/` state dir |
-| `swop scan [--format {text,json,html}]` | Walk source roots and classify CQRS artifacts |
+| `swop scan [--format {text,json,html}] [--json-out FILE] [--html-out FILE] [--strict-heuristics] [--strict-errors]` | Walk source roots and classify CQRS artifacts |
 | `swop gen manifests` | Generate per-context YAML manifests |
 | `swop gen proto [--out PATH]` | Generate `.proto` from manifests |
 | `swop gen grpc-python` | Compile Python gRPC bindings |
 | `swop gen grpc-ts` | Compile TypeScript gRPC bindings |
-| `swop gen services` | Generate service stubs from manifests |
+| `swop gen services [--bus TYPE] [--base-image IMG] [--grpc-port N]` | Generate service stubs + docker-compose.cqrs.yml from manifests |
 | `swop watch [--once]` | Watch source files and rebuild on change |
 | `swop sync` | Run one reconciliation pass |
 | `swop diff` | Compute drift and exit non-zero if drift exists |
 | `swop state` | Dump current runtime state as YAML |
 | `swop inspect backend\|frontend` | Introspect actual runtime state |
 | `swop resolve` | Diff current scan against stored manifests |
-| `swop refactor --out <dir>` | Extract modules into a new directory |
+| `swop gen registry [--contracts DIR] [--check]` | Generate `registry.json` + `REGISTRY.md` from `contracts/*.json` files |
+| `swop generate --from-markpact FILE.md [--sync] [--sync-files] [--check-files] [--output-yaml PATH] [--output-docker PATH]` | Build a ProjectGraph from a Markpact manifest |
+| `swop refactor --frontend PATH [--backend PATH] [--db PATH] [--route /path] [--strategy {seeded,louvain}] --out <dir>` | Extract modules into a new directory |
 | `swop doctor [--deep]` | Verify the local swop environment |
 | `swop hook install\|uninstall\|status` | Manage the git pre-commit hook |
 
@@ -306,7 +310,7 @@ Swop compares the *expected* state (from manifests) with the *actual* state
 
 ```bash
 swop diff
-swop resolve
+swop resolve [--json] [--apply] [--strict] [--no-incremental]
 ```
 
 Drift categories:
@@ -328,6 +332,47 @@ swop refactor --out ./refactored
 
 The refactor pipeline clusters related code, builds a composed module graph,
 and generates new file layouts while preserving behaviour.
+
+---
+
+## Registry Generation
+
+Generate a `registry.json` and `REGISTRY.md` from JSON contract files in a `contracts/` directory:
+
+```bash
+swop gen registry [--contracts DIR] [--check]
+```
+
+| Flag | Description |
+|---|---|
+| `--contracts DIR` | Contracts directory (default: `<root>/contracts`) |
+| `--check` | Validate only; do not write output files |
+
+---
+
+## Markpact Generation
+
+Build a `SwopRuntime` graph directly from a Markpact manifest (`.md` file with `markpact:*` blocks):
+
+```bash
+swop generate --from-markpact manifest.md \
+  [--strict] [--sync] [--sync-files] [--sync-files-dry-run] \
+  [--check-files] [--from-disk] [--from-disk-dry-run] \
+  [--output-yaml PATH] [--output-docker PATH]
+```
+
+| Flag | Description |
+|---|---|
+| `--from-markpact FILE` | Path to Markpact manifest (required) |
+| `--strict` | Fail fast on any DOQL parse error |
+| `--sync` | Run sync engine after building the graph |
+| `--sync-files` | Materialise `markpact:file` blocks to their declared paths |
+| `--sync-files-dry-run` | Report which files would be written without writing |
+| `--check-files` | Report drift between `markpact:file` blocks and filesystem |
+| `--from-disk` | Reverse sync: rewrite blocks with disk content |
+| `--from-disk-dry-run` | Report which blocks would be updated without writing |
+| `--output-yaml PATH` | Write runtime state YAML to this path |
+| `--output-docker PATH` | Write docker-compose YAML to this path |
 
 ---
 

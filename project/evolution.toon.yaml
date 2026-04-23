@@ -1,4 +1,4 @@
-# code2llm/evolution | 1074 func | 46f | 2026-04-23
+# code2llm/evolution | 1114 func | 46f | 2026-04-23
 
 NEXT[10] (ranked by impact):
   [1] !! SPLIT           swop/scan/scanner.py
@@ -33,13 +33,13 @@ NEXT[10] (ranked by impact):
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 225
 
-  [9] !  SPLIT-FUNC      RefactorPipeline._cluster_to_spec  CC=23  fan=8
+  [9] !  SPLIT-FUNC      _map_python_type  CC=17  fan=12
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 204
+
+  [10] !  SPLIT-FUNC      RefactorPipeline._cluster_to_spec  CC=23  fan=8
       WHY: CC=23 exceeds 15
       EFFORT: ~1h  IMPACT: 184
-
-  [10] !  SPLIT-FUNC      _map_python_type  CC=15  fan=12
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 180
 
 
 RISKS[3]:
@@ -48,7 +48,7 @@ RISKS[3]:
   ⚠ Splitting swop/commands.py may break 26 import paths
 
 METRICS-TARGET:
-  CC̄:          1.5 → ≤1.0
+  CC̄:          1.4 → ≤1.0
   max-CC:      32 → ≤16
   god-modules: 6 → 0
   high-CC(≥15): 8 → ≤4
@@ -79,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=1.4 → now CC̄=1.5
+  prev CC̄=1.4 → now CC̄=1.4

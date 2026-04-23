@@ -1,12 +1,12 @@
-# redup/duplication | 6 groups | 65f 10026L | 2026-04-23
+# redup/duplication | 6 groups | 65f 10143L | 2026-04-23
 
 SUMMARY:
   files_scanned: 65
-  total_lines:   10026
+  total_lines:   10143
   dup_groups:    6
   dup_fragments: 12
   saved_lines:   72
-  scan_ms:       4519
+  scan_ms:       5241
 
 HOTSPOTS[7] (files with most duplication):
   swop/markpact/graph_builder.py  dup=54L  groups=1  frags=2  (0.5%)
@@ -31,10 +31,10 @@ DUPLICATES[6] (ranked by impact):
       swop/commands.py:486-494  (_generate_update_from_disk)
       swop/commands.py:497-505  (_generate_sync_files)
   [24a81bc8467ea7c4]   STRU  _render_query_response  L=8 N=2 saved=8 sim=1.00
-      swop/proto/generator.py:388-395  (_render_query_response)
+      swop/proto/generator.py:397-404  (_render_query_response)
       swop/services/generator.py:232-235  (_render_init)
   [ad43bea74422d1bd]   STRU  _safe_ident  L=7 N=2 saved=7 sim=1.00
-      swop/proto/generator.py:407-413  (_safe_ident)
+      swop/proto/generator.py:416-422  (_safe_ident)
       swop/services/generator.py:675-681  (_safe_ident)
 
 REFACTOR[6] (ranked by priority):

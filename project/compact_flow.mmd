@@ -1,31 +1,39 @@
 flowchart TD
-    README["README<br/>2 funcs"]
-    project__map["project.map<br/>359 funcs"]
+    SUMD["SUMD<br/>379 funcs"]
+    examples__manifest["examples.manifest<br/>3 funcs"]
     swop__commands["swop.commands<br/>26 funcs"]
+    swop__config["swop.config<br/>9 funcs"]
     swop__contracts["swop.contracts<br/>16 funcs"]
     swop__core["swop.core<br/>8 funcs"]
-    swop__cqrs["swop.cqrs<br/>16 funcs"]
-    swop__markpact["swop.markpact<br/>46 funcs"]
+    swop__manifests["swop.manifests<br/>12 funcs"]
+    swop__proto["swop.proto<br/>17 funcs"]
     swop__reconcile["swop.reconcile<br/>7 funcs"]
-    swop__refactor["swop.refactor<br/>43 funcs"]
     swop__registry["swop.registry<br/>14 funcs"]
     swop__resolve["swop.resolve<br/>15 funcs"]
     swop__scan["swop.scan<br/>51 funcs"]
+    swop__services["swop.services<br/>17 funcs"]
     swop__tools["swop.tools<br/>31 funcs"]
     swop__versioning["swop.versioning<br/>1 funcs"]
     swop__watch["swop.watch<br/>7 funcs"]
-    swop__commands ==>|67| README
-    swop__commands ==>|30| project__map
-    swop__reconcile ==>|7| README
-    swop__refactor ==>|4| project__map
-    swop__watch ==>|4| project__map
-    swop__core -->|2| README
-    swop__tools -->|2| project__map
-    swop__markpact -->|2| project__map
-    swop__cqrs -->|2| project__map
-    swop__commands -->|2| swop__contracts
-    swop__versioning -->|1| README
-    swop__scan -->|1| project__map
-    swop__watch -->|1| README
-    swop__resolve -->|1| project__map
-    swop__commands -->|1| swop__registry
+    swop__commands ==>|67| examples__manifest
+    swop__commands ==>|9| swop__config
+    swop__reconcile ==>|7| examples__manifest
+    swop__commands ==>|6| swop__tools
+    swop__commands ==>|5| swop__scan
+    swop__commands -->|3| swop__proto
+    swop__commands -->|3| swop__registry
+    swop__commands -->|2| swop__watch
+    swop__commands -->|2| swop__resolve
+    swop__core -->|2| examples__manifest
+    swop__versioning -->|1| examples__manifest
+    swop__commands -->|1| swop__manifests
+    swop__commands -->|1| swop__services
+    swop__commands -->|1| SUMD
+    swop__scan -->|1| swop__config
+    swop__tools -->|1| swop__scan
+    swop__tools -->|1| swop__resolve
+    swop__contracts -->|1| swop__registry
+    swop__watch -->|1| swop__scan
+    swop__watch -->|1| swop__manifests
+    swop__watch -->|1| examples__manifest
+    swop__resolve -->|1| swop__manifests

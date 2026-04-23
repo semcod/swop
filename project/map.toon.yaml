@@ -1,6 +1,6 @@
-# inspect | 85f 14274L | python:82,shell:2,less:1 | 2026-04-23
+# inspect | 85f 14391L | python:82,shell:2,less:1 | 2026-04-23
 # stats: 393 func | 103 cls | 85 mod | CC̄=4.8 | critical:38 | cycles:0
-# alerts[5]: CC generate_registry_md=32; CC validate_contract=21; CC test_render_proto_for_context_builds_expected_shape=20; CC test_manifest_yaml_shape_for_command=18; CC _map_python_type=15
+# alerts[5]: CC generate_registry_md=32; CC validate_contract=21; CC test_render_proto_for_context_builds_expected_shape=20; CC test_manifest_yaml_shape_for_command=18; CC _map_python_type=17
 # hotspots[5]: build_project_graph fan=19; generate_services fan=19; _write_context_package fan=18; _scan_file fan=16; compile_proto_python fan=14
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
@@ -37,13 +37,13 @@ M[85]:
   swop/markpact/sync_engine.py,202
   swop/proto/__init__.py,31
   swop/proto/compiler.py,208
-  swop/proto/generator.py,414
+  swop/proto/generator.py,423
   swop/reconcile.py,112
   swop/refactor/__init__.py,44
   swop/refactor/clustering.py,159
   swop/refactor/compose_builder.py,118
   swop/refactor/graph.py,101
-  swop/refactor/module_builder.py,190
+  swop/refactor/module_builder.py,298
   swop/refactor/pipeline.py,285
   swop/refactor/scanner/__init__.py,8
   swop/refactor/scanner/backend.py,157
@@ -321,7 +321,7 @@ D:
     e: ModuleSpec,ModuleWriteResult,ModuleBuilder
     ModuleSpec:
     ModuleWriteResult:
-    ModuleBuilder: __init__(1),write(1),_write_ui(3),_write_api(3),_write_models(3),_write_db(3),_write_manifest(3)  # Write a :class:`ModuleSpec` to disk.
+    ModuleBuilder: __init__(1),write(1),_write_ui(3),_write_api(3),_write_models(3),_write_db(3),_write_api_server(3),_write_manifest(3)  # Write a :class:`ModuleSpec` to disk.
   swop/refactor/pipeline.py:
     e: _tokenize,RefactorResult,RefactorPipeline
     RefactorResult: summary(0)

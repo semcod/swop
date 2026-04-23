@@ -1,7 +1,7 @@
-# inspect | 1079 func | 48f | 23374L | python | 2026-04-23
+# inspect | 1119 func | 48f | 24136L | python | 2026-04-23
 
 HEALTH:
-  CC̄=1.5  critical=33 (limit:10)  dup=2  cycles=0
+  CC̄=1.4  critical=33 (limit:10)  dup=2  cycles=0
 
 ALERTS[20]:
   !!! high_fan_out     _build_parser = 45 (limit:10)
@@ -16,21 +16,21 @@ ALERTS[20]:
   !!  high_fan_out     _write_context_package = 18 (limit:10)
 
 MODULES[83] (top by size):
-  M[project/calls.yaml] 2556L C:0 F:0 CC↑0 D:0 (yaml)
-  M[SUMD.md] 1075L C:0 F:359 CC↑0 D:0 (md)
-  M[SUMR.md] 886L C:0 F:0 CC↑0 D:0 (md)
-  M[swop/services/generator.py] 686L C:2 F:17 CC↑11 D:0 (python)
-  M[project/map.toon.yaml] 686L C:0 F:359 CC↑0 D:8 (yaml)
-  M[swop/scan/scanner.py] 595L C:0 F:27 CC↑13 D:0 (python)
-  M[project/context.md] 589L C:0 F:0 CC↑0 D:0 (md)
+  M[project/calls.yaml] 2830L C:0 F:0 CC↑0 D:0 (yaml)
+  M[SUMD.md] 1149L C:0 F:379 CC↑0 D:1 (md)
+  M[SUMR.md] 950L C:0 F:0 CC↑0 D:0 (md)
+  M[project/map.toon.yaml] 736L C:0 F:379 CC↑0 D:0 (yaml)
+  M[swop/services/generator.py] 686L C:2 F:17 CC↑11 D:1 (python)
+  M[project/context.md] 601L C:0 F:0 CC↑0 D:0 (md)
+  M[swop/scan/scanner.py] 595L C:0 F:27 CC↑13 D:3 (python)
   M[swop/commands.py] 550L C:0 F:26 CC↑14 D:0 (python)
   M[swop/cli.py] 517L C:0 F:2 CC↑1 D:0 (python)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
   M[swop/markpact/doql_bridge.py] 506L C:2 F:28 CC↑13 D:0 (python)
-  M[swop/resolve/resolver.py] 456L C:3 F:15 CC↑15 D:0 (python)
-  M[swop/proto/generator.py] 413L C:3 F:11 CC↑15 D:0 (python)
-  M[examples/manifest.md] 387L C:2 F:3 CC↑0 D:0 (md)
-  M[swop/tools/doctor_deep.py] 369L C:3 F:10 CC↑15 D:0 (python)
+  M[swop/resolve/resolver.py] 456L C:3 F:15 CC↑15 D:2 (python)
+  M[swop/proto/generator.py] 422L C:3 F:11 CC↑17 D:1 (python)
+  M[README.md] 418L C:2 F:2 CC↑0 D:0 (md)
+  M[examples/manifest.md] 387L C:2 F:3 CC↑0 D:5 (md)
   LANGS: python:63/yaml:8/md:7/shell:2/txt:1/toml:1/json:1
 
 HOTSPOTS[10]:
@@ -48,4 +48,4 @@ REFACTOR[15]:
   [5] H/H Split god module swop/services/generator.py (686L, 2 classes)
 
 EVOLUTION:
-  2026-04-23 CC̄=1.5 crit=33 23374L // Automated analysis
+  2026-04-23 CC̄=1.4 crit=33 24136L // Automated analysis
