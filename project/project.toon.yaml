@@ -1,51 +1,51 @@
-# inspect | 917 func | 39f | 20291L | python | 2026-04-22
+# inspect | 1079 func | 48f | 23374L | python | 2026-04-23
 
 HEALTH:
-  CC̄=1.4  critical=29 (limit:10)  dup=2  cycles=0
+  CC̄=1.5  critical=33 (limit:10)  dup=2  cycles=0
 
 ALERTS[20]:
-  !!! high_fan_out     _build_parser = 36 (limit:10)
+  !!! high_fan_out     _build_parser = 45 (limit:10)
+  !!! cc_exceeded      generate_registry_md = 32 (limit:15)
   !!! high_fan_out     generate_services = 24 (limit:10)
   !!! high_fan_out     render_proto_for_context = 21 (limit:10)
   !!! high_fan_out     RefactorPipeline.run = 20 (limit:10)
   !!  cc_exceeded      RefactorPipeline._cluster_to_spec = 23 (limit:15)
+  !!  cc_exceeded      validate_contract = 21 (limit:15)
   !!  high_fan_out     DoqlBridge._build_minimal_spec = 19 (limit:10)
+  !!  high_fan_out     generate_registry_md = 19 (limit:10)
   !!  high_fan_out     _write_context_package = 18 (limit:10)
-  !!  high_fan_out     init_project = 18 (limit:10)
-  !!  high_fan_out     compile_proto_python = 17 (limit:10)
-  !!  high_fan_out     _scan_file = 17 (limit:10)
 
-MODULES[73] (top by size):
-  M[project/calls.yaml] 2015L C:0 F:0 CC↑0 D:0 (yaml)
-  M[SUMD.md] 1006L C:0 F:306 CC↑0 D:0 (md)
-  M[SUMR.md] 855L C:0 F:0 CC↑0 D:0 (md)
+MODULES[83] (top by size):
+  M[project/calls.yaml] 2556L C:0 F:0 CC↑0 D:0 (yaml)
+  M[SUMD.md] 1075L C:0 F:359 CC↑0 D:0 (md)
+  M[SUMR.md] 886L C:0 F:0 CC↑0 D:0 (md)
   M[swop/services/generator.py] 686L C:2 F:17 CC↑11 D:0 (python)
-  M[project/map.toon.yaml] 610L C:0 F:306 CC↑0 D:7 (yaml)
+  M[project/map.toon.yaml] 686L C:0 F:359 CC↑0 D:8 (yaml)
+  M[swop/scan/scanner.py] 595L C:0 F:27 CC↑13 D:0 (python)
   M[project/context.md] 589L C:0 F:0 CC↑0 D:0 (md)
-  M[swop/scan/scanner.py] 559L C:0 F:23 CC↑18 D:0 (python)
+  M[swop/commands.py] 550L C:0 F:26 CC↑14 D:0 (python)
+  M[swop/cli.py] 517L C:0 F:2 CC↑1 D:0 (python)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
   M[swop/markpact/doql_bridge.py] 506L C:2 F:28 CC↑13 D:0 (python)
-  M[swop/commands.py] 472L C:0 F:24 CC↑14 D:0 (python)
-  M[swop/cli.py] 459L C:0 F:2 CC↑1 D:0 (python)
   M[swop/resolve/resolver.py] 456L C:3 F:15 CC↑15 D:0 (python)
   M[swop/proto/generator.py] 413L C:3 F:11 CC↑15 D:0 (python)
-  M[examples/manifest.md] 387L C:2 F:3 CC↑0 D:5 (md)
-  M[project/README.md] 339L C:0 F:0 CC↑0 D:0 (md)
-  LANGS: python:53/yaml:8/md:7/shell:2/txt:1/toml:1/json:1
+  M[examples/manifest.md] 387L C:2 F:3 CC↑0 D:0 (md)
+  M[swop/tools/doctor_deep.py] 369L C:3 F:10 CC↑15 D:0 (python)
+  LANGS: python:63/yaml:8/md:7/shell:2/txt:1/toml:1/json:1
 
 HOTSPOTS[10]:
-  ★ _build_parser fan=36  // Orchestrates 36 calls
+  ★ _build_parser fan=45  // Orchestrates 45 calls
   ★ generate_services fan=24  // Generate one service package per context + a docker-compose file.
   ★ render_proto_for_context fan=21  // Render one ``.proto`` file body for a single context.
   ★ RefactorPipeline.run fan=20  // Orchestrates 20 calls
   ★ DoqlBridge._build_minimal_spec fan=19  // Orchestrates 19 calls
 
 REFACTOR[15]:
-  [1] H/H Split god module swop/scan/scanner.py (559L, 0 classes)
-  [2] H/H Split god module swop/markpact/doql_bridge.py (506L, 2 classes)
-  [3] H/H Split god module swop/services/generator.py (686L, 2 classes)
-  [4] H/H Split god module SUMD.md (1006L, 0 classes)
-  [5] H/H Split god module SUMR.md (855L, 0 classes)
+  [1] H/L Split generate_registry_md (CC=32)
+  [2] H/H Split god module swop/commands.py (550L, 0 classes)
+  [3] H/H Split god module swop/markpact/doql_bridge.py (506L, 2 classes)
+  [4] H/H Split god module swop/scan/scanner.py (595L, 0 classes)
+  [5] H/H Split god module swop/services/generator.py (686L, 2 classes)
 
 EVOLUTION:
-  2026-04-22 CC̄=1.4 crit=29 20291L // Automated analysis
+  2026-04-23 CC̄=1.5 crit=33 23374L // Automated analysis

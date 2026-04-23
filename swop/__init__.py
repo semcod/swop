@@ -2,7 +2,7 @@
 swop - bi-directional runtime reconciler for full-stack state graphs.
 """
 
-__version__ = "0.2.6"
+__version__ = "0.2.7"
 
 from swop.config import (
     BoundedContextConfig,
@@ -58,6 +58,16 @@ from swop.services import (
     ServiceFile,
     ServiceGenerationResult,
     generate_services,
+)
+from swop.tools import (
+    DeepCheck,
+    DeepIssue,
+    DeepReport,
+    HookResult,
+    hook_status,
+    install_hook,
+    run_deep_doctor,
+    uninstall_hook,
 )
 from swop.watch import WatchEngine, WatchRebuild, rebuild_once
 from swop.scan import (
@@ -146,4 +156,13 @@ __all__ = [
     "Change",
     "ChangeKind",
     "ResolutionReport",
+    # Deep doctor / hooks
+    "run_deep_doctor",
+    "DeepCheck",
+    "DeepIssue",
+    "DeepReport",
+    "install_hook",
+    "uninstall_hook",
+    "hook_status",
+    "HookResult",
 ]

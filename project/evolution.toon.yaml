@@ -1,49 +1,57 @@
-# code2llm/evolution | 912 func | 37f | 2026-04-22
+# code2llm/evolution | 1074 func | 46f | 2026-04-23
 
-NEXT[8] (ranked by impact):
+NEXT[10] (ranked by impact):
   [1] !! SPLIT           swop/scan/scanner.py
-      WHY: 559L, 0 classes, max CC=18
-      EFFORT: ~4h  IMPACT: 10062
+      WHY: 595L, 0 classes, max CC=13
+      EFFORT: ~4h  IMPACT: 7735
 
-  [2] !! SPLIT           swop/services/generator.py
+  [2] !! SPLIT           swop/commands.py
+      WHY: 550L, 0 classes, max CC=14
+      EFFORT: ~4h  IMPACT: 7700
+
+  [3] !! SPLIT           swop/services/generator.py
       WHY: 686L, 2 classes, max CC=11
       EFFORT: ~4h  IMPACT: 7546
 
-  [3] !  SPLIT-FUNC      _index_from_manifests  CC=15  fan=15
+  [4] !! SPLIT-FUNC      generate_registry_md  CC=32  fan=19
+      WHY: CC=32 exceeds 15
+      EFFORT: ~1h  IMPACT: 608
+
+  [5] !  SPLIT-FUNC      _check_manifests_vs_proto  CC=15  fan=18
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 270
+
+  [6] !  SPLIT-FUNC      _check_proto_vs_python  CC=15  fan=18
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 270
+
+  [7] !  SPLIT-FUNC      _check_manifests_vs_services  CC=15  fan=17
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 255
+
+  [8] !  SPLIT-FUNC      _index_from_manifests  CC=15  fan=15
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 225
 
-  [4] !  SPLIT-FUNC      _classify  CC=18  fan=11
-      WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 198
-
-  [5] !  SPLIT-FUNC      RefactorPipeline._cluster_to_spec  CC=23  fan=8
+  [9] !  SPLIT-FUNC      RefactorPipeline._cluster_to_spec  CC=23  fan=8
       WHY: CC=23 exceeds 15
       EFFORT: ~1h  IMPACT: 184
 
-  [6] !  SPLIT-FUNC      _map_python_type  CC=15  fan=12
+  [10] !  SPLIT-FUNC      _map_python_type  CC=15  fan=12
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 180
-
-  [7] !  SPLIT-FUNC      _extract_fields  CC=15  fan=10
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 150
-
-  [8] !! SPLIT           swop/markpact/graph_builder.py
-      WHY: 531L, 0 classes, max CC=0
-      EFFORT: ~4h  IMPACT: 0
 
 
 RISKS[3]:
   ⚠ Splitting swop/services/generator.py may break 17 import paths
-  ⚠ Splitting swop/scan/scanner.py may break 23 import paths
-  ⚠ Splitting swop/markpact/graph_builder.py may break 0 import paths
+  ⚠ Splitting swop/scan/scanner.py may break 27 import paths
+  ⚠ Splitting swop/commands.py may break 26 import paths
 
 METRICS-TARGET:
-  CC̄:          1.4 → ≤1.0
-  max-CC:      23 → ≤11
-  god-modules: 4 → 0
-  high-CC(≥15): 5 → ≤2
+  CC̄:          1.5 → ≤1.0
+  max-CC:      32 → ≤16
+  god-modules: 6 → 0
+  high-CC(≥15): 8 → ≤4
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -71,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=1.4 → now CC̄=1.4
+  prev CC̄=1.4 → now CC̄=1.5

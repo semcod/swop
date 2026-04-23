@@ -21,7 +21,19 @@ from swop.resolve import apply_resolution, resolve_schema_drift
 from swop.services import generate_services
 from swop.scan import scan_project
 from swop.scan.render import render_json, write_report
-from swop.tools import init_project, run_doctor
+from swop.tools import (
+    hook_status,
+    init_project,
+    install_hook,
+    run_deep_doctor,
+    run_doctor,
+    uninstall_hook,
+)
+from swop.registry import (
+    load_contracts,
+    validate_contract,
+    write_registry,
+)
 from swop.watch import WatchEngine, rebuild_once
 
 
@@ -78,7 +90,43 @@ def _cmd_doctor(args: argparse.Namespace) -> int:
     root = Path(args.root).resolve() if args.root else Path.cwd()
     report = run_doctor(root)
     print(report.format())
-    return 0 if report.ok else 1
+
+    deep_ok = True
+    if getattr(args, "deep", False):
+        config_path = Path(args.config) if getattr(args, "config", None) else root / "swop.yaml"
+        try:
+            config = load_config(config_path)
+        except SwopConfigError as exc:
+            print(f"\n[ERROR] --deep requires a loadable swop.yaml: {exc}", file=sys.stderr)
+            return 2
+        print()
+        deep_report = run_deep_doctor(config)
+        print(deep_report.format())
+        deep_ok = deep_report.ok
+
+    if not report.ok:
+        return 1
+    if not deep_ok:
+        return 1
+    return 0
+
+
+def _cmd_hook(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    action = getattr(args, "hook_action", None)
+    if action == "install":
+        result = install_hook(root, force=bool(getattr(args, "force", False)))
+    elif action == "uninstall":
+        result = uninstall_hook(root)
+    elif action == "status":
+        result = hook_status(root)
+    else:
+        print("usage: swop hook {install,uninstall,status}", file=sys.stderr)
+        return 2
+    print(result.format())
+    if result.status == "error":
+        return 2
+    return 0
 
 
 def _cmd_init(args: argparse.Namespace) -> int:
@@ -247,6 +295,36 @@ def _cmd_gen_services(args: argparse.Namespace) -> int:
         print(f"[ERROR] {exc}", file=sys.stderr)
         return 2
 
+    print(result.format())
+    return 0
+
+
+def _cmd_gen_registry(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    contracts_dir = Path(args.contracts) if getattr(args, "contracts", None) else root / "contracts"
+    contracts = load_contracts(contracts_dir)
+    if not contracts:
+        print(f"[REGISTRY] no contracts found in {contracts_dir}")
+        return 0
+
+    all_valid = True
+    for c in contracts:
+        result = validate_contract(c, root=root)
+        if not result.ok:
+            all_valid = False
+            print(f"  ❌ {c.path.name}: {result.format()}", file=sys.stderr)
+        else:
+            print(f"  ✅ {c.name}")
+
+    if not all_valid:
+        print("\n❌ Validation failed. Fix errors above before generating.", file=sys.stderr)
+        return 1
+
+    if getattr(args, "check", False):
+        print("\n✅ All contracts valid (--check mode, no files written)")
+        return 0
+
+    result = write_registry(contracts_dir, contracts)
     print(result.format())
     return 0
 

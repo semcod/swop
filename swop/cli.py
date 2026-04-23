@@ -12,7 +12,9 @@ from swop.commands import (
     _cmd_gen_grpc_ts,
     _cmd_gen_manifests,
     _cmd_gen_proto,
+    _cmd_gen_registry,
     _cmd_gen_services,
+    _cmd_hook,
     _cmd_init,
     _cmd_inspect,
     _cmd_refactor,
@@ -55,7 +57,43 @@ def _build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Project root to check (default: current working directory)",
     )
+    p_doctor.add_argument(
+        "--deep",
+        action="store_true",
+        help="Additionally cross-check scan ↔ manifests ↔ proto ↔ python ↔ services",
+    )
+    p_doctor.add_argument(
+        "--config",
+        default=None,
+        help="Path to swop.yaml (only used with --deep)",
+    )
     p_doctor.set_defaults(func=_cmd_doctor)
+
+    # ------------------------------------------------------------------
+    # swop hook
+    # ------------------------------------------------------------------
+    p_hook = sub.add_parser(
+        "hook",
+        help="Manage the git pre-commit hook that guards against schema drift",
+    )
+    p_hook.add_argument("--root", default=None, help="Project root (default: cwd)")
+    hook_sub = p_hook.add_subparsers(dest="hook_action", required=True)
+
+    p_hook_install = hook_sub.add_parser("install", help="Install the pre-commit hook")
+    p_hook_install.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite an existing non-swop pre-commit hook",
+    )
+    p_hook_install.set_defaults(func=_cmd_hook)
+
+    p_hook_uninstall = hook_sub.add_parser(
+        "uninstall", help="Remove the swop-managed pre-commit hook"
+    )
+    p_hook_uninstall.set_defaults(func=_cmd_hook)
+
+    p_hook_status = hook_sub.add_parser("status", help="Show whether the hook is installed")
+    p_hook_status.set_defaults(func=_cmd_hook)
 
     p_init = sub.add_parser(
         "init",
@@ -291,6 +329,26 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Starting gRPC port (incremented per context, default: 50051)",
     )
     p_gen_services.set_defaults(func=_cmd_gen_services)
+
+    # ------------------------------------------------------------------
+    # swop gen registry
+    # ------------------------------------------------------------------
+    p_gen_registry = gen_sub.add_parser(
+        "registry",
+        help="Generate registry.json + REGISTRY.md from contracts/*.json files",
+    )
+    p_gen_registry.add_argument("--root", default=None, help="Project root (default: cwd)")
+    p_gen_registry.add_argument(
+        "--contracts",
+        default=None,
+        help="Contracts directory (default: <root>/contracts)",
+    )
+    p_gen_registry.add_argument(
+        "--check",
+        action="store_true",
+        help="Validate only; do not write output files",
+    )
+    p_gen_registry.set_defaults(func=_cmd_gen_registry)
 
     # ------------------------------------------------------------------
     # swop watch

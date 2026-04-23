@@ -4,21 +4,21 @@
 
 - **Project**: /home/tom/github/semcod/inspect
 - **Primary Language**: python
-- **Languages**: python: 53, yaml: 8, md: 7, shell: 2, toml: 1
+- **Languages**: python: 63, yaml: 8, md: 7, shell: 2, json: 1
 - **Analysis Mode**: static
-- **Total Functions**: 917
-- **Total Classes**: 92
-- **Modules**: 73
-- **Entry Points**: 805
+- **Total Functions**: 1079
+- **Total Classes**: 103
+- **Modules**: 83
+- **Entry Points**: 932
 
 ## Architecture by Module
 
 ### project.map.toon
-- **Functions**: 316
+- **Functions**: 370
 - **File**: `map.toon.yaml`
 
 ### SUMD
-- **Functions**: 316
+- **Functions**: 370
 - **File**: `SUMD.md`
 
 ### swop.markpact.doql_bridge
@@ -26,13 +26,13 @@
 - **Classes**: 2
 - **File**: `doql_bridge.py`
 
-### swop.commands
-- **Functions**: 24
-- **File**: `commands.py`
-
 ### swop.scan.scanner
-- **Functions**: 23
+- **Functions**: 27
 - **File**: `scanner.py`
+
+### swop.commands
+- **Functions**: 26
+- **File**: `commands.py`
 
 ### swop.services.generator
 - **Functions**: 17
@@ -53,6 +53,11 @@
 - **Functions**: 12
 - **Classes**: 2
 - **File**: `registry.py`
+
+### swop.contracts.adapter
+- **Functions**: 12
+- **Classes**: 1
+- **File**: `adapter.py`
 
 ### swop.scan.report
 - **Functions**: 11
@@ -79,6 +84,11 @@
 - **Classes**: 2
 - **File**: `doctor.py`
 
+### swop.tools.doctor_deep
+- **Functions**: 10
+- **Classes**: 3
+- **File**: `doctor_deep.py`
+
 ### swop.refactor.pipeline
 - **Functions**: 10
 - **Classes**: 2
@@ -94,20 +104,10 @@
 - **Classes**: 1
 - **File**: `core.py`
 
-### swop.refactor.clustering
+### swop.tools.hook
 - **Functions**: 8
-- **Classes**: 3
-- **File**: `clustering.py`
-
-### swop.refactor.scanner.frontend
-- **Functions**: 8
-- **Classes**: 2
-- **File**: `frontend.py`
-
-### swop.reconcile
-- **Functions**: 7
-- **Classes**: 4
-- **File**: `reconcile.py`
+- **Classes**: 1
+- **File**: `hook.py`
 
 ## Key Entry Points
 
@@ -149,10 +149,10 @@ Requires ``protoc`` on ``PATH`` and either ``ts-proto``'s
 - **Calls**: path.read_text, PageSignals, sorted, sorted, sorted, sorted, sorted, sorted
 
 ### swop.commands._cmd_scan
-- **Calls**: project.map.toon.scan_project, None.resolve, Path.cwd, Path, project.map.toon.load_config, project.map.toon.write_report, written.items, examples.manifest.print
+- **Calls**: project.map.toon.scan_project, None.resolve, Path.cwd, Path, project.map.toon.load_config, project.map.toon.write_report, written.items, README.print
 
 ### swop.commands._cmd_watch
-- **Calls**: WatchEngine, examples.manifest.print, engine.poll_once, project.map.toon.rebuild_once, examples.manifest.print, engine.run, None.resolve, Path.cwd
+- **Calls**: WatchEngine, README.print, engine.poll_once, project.map.toon.rebuild_once, README.print, engine.run, None.resolve, Path.cwd
 
 ### swop.markpact.doql_bridge.DoqlBridge.from_blocks
 > Merge all known ``markpact:*`` blocks into a single DoqlSpec.
@@ -164,6 +164,9 @@ Supports ``doql``, ``workflows``, ``roles``, ``deploy``,
 ### swop.tools.doctor.run_doctor
 > Run the full doctor suite and return a report.
 - **Calls**: DoctorReport, report.checks.append, report.checks.append, report.checks.append, report.checks.append, report.checks.append, report.checks.append, report.checks.append
+
+### swop.commands._cmd_gen_registry
+- **Calls**: swop.contracts.reader.load_contracts, getattr, swop.registry.generator.write_registry, README.print, None.resolve, Path.cwd, getattr, Path
 
 ### swop.markpact.sync_engine.ManifestSyncEngine.diff
 > Return a list of (path, status, detail) for each tracked file.
@@ -181,11 +184,18 @@ Reverse sync: filesystem → manifest. Only the bodies of tracked file
 blocks
 - **Calls**: manifest_path.read_text, re.compile, pattern.sub, None.strip, re.search, path_match.group, None.rstrip, updated.append
 
+### swop.registry.bridge.bridge_contracts_to_detections
+> Convert JSON contracts into :class:`swop.scan.Detection` objects.
+
+The resulting list can be passed straight to
+:func:`swop.manifests.generate_manifes
+- **Calls**: None.get, Detection, detections.append, str, Path, c.raw.get, c.raw.get, c.raw.get
+
 ### swop.commands._cmd_gen_services
-- **Calls**: examples.manifest.print, None.resolve, Path.cwd, Path, project.map.toon.load_config, Path, manifests_dir.exists, examples.manifest.print
+- **Calls**: README.print, None.resolve, Path.cwd, Path, project.map.toon.load_config, Path, manifests_dir.exists, README.print
 
 ### swop.commands._cmd_refactor
-- **Calls**: RefactorPipeline, pipeline.run, result.summary, examples.manifest.print, examples.manifest.print, examples.manifest.print, Path, Path
+- **Calls**: RefactorPipeline, pipeline.run, result.summary, README.print, README.print, README.print, Path, Path
 
 ### swop.scan.report.Detection.from_dict
 - **Calls**: Detection, data.get, isinstance, parsed_fields.append, isinstance, data.items, parsed_fields.append, FieldDef
@@ -193,8 +203,11 @@ blocks
 ### swop.refactor.pipeline.RefactorPipeline._build_graph
 - **Calls**: RefactorGraph, self._link_models_to_ui, self._link_models_to_tables, graph.add_node, graph.add_node, graph.add_node, graph.add_node, graph.add_edge
 
+### swop.commands._cmd_doctor
+- **Calls**: project.map.toon.run_doctor, README.print, getattr, None.resolve, Path.cwd, report.format, README.print, project.map.toon.run_deep_doctor
+
 ### swop.commands._cmd_resolve
-- **Calls**: project.map.toon.scan_project, project.map.toon.resolve_schema_drift, None.resolve, Path.cwd, Path, project.map.toon.load_config, Path, examples.manifest.print
+- **Calls**: project.map.toon.scan_project, project.map.toon.resolve_schema_drift, None.resolve, Path.cwd, Path, project.map.toon.load_config, Path, README.print
 
 ### swop.scan.scanner.scan_project
 > Scan the project described by ``config`` and return a report.
@@ -216,19 +229,8 @@ blocks
 ### swop.scan.report.ScanReport.format_text
 - **Calls**: self.kinds, self.via, None.join, lines.append, sorted, lines.append, self.contexts.values, lines.append
 
-### swop.refactor.scanner.frontend.FrontendScanner.find_pages_for_route
-> Best-effort match between a URL route and page files on disk.
-- **Calls**: self._route_token, self.iter_pages, page.stem.lower, len, None.join, self.iter_pages, stem.startswith, matches.append
-
-### swop.commands._cmd_gen_proto
-- **Calls**: project.map.toon.generate_proto_from_manifests, examples.manifest.print, None.resolve, Path.cwd, Path, project.map.toon.load_config, Path, manifests_dir.exists
-
 ### swop.markpact.doql_bridge.DoqlBridge._load_workflows
 - **Calls**: data.get, spec.workflows.append, isinstance, _MinimalWorkflowStep, _MinimalWorkflow, w.get, s.get, s.get
-
-### swop.config.load_config
-> Load and validate ``swop.yaml`` from ``path`` (default: cwd).
-- **Calls**: swop.config._from_dict, Path, cfg_path.exists, SwopConfigError, isinstance, SwopConfigError, swop.config._expand_env, Path.cwd
 
 ## Process Flows
 
@@ -346,6 +348,12 @@ _cmd_scan [swop.commands]
 - **Methods**: 6
 - **Key Methods**: swop.markpact.sync_engine.ManifestSyncEngine.__init__, swop.markpact.sync_engine.ManifestSyncEngine.check, swop.markpact.sync_engine.ManifestSyncEngine.diff, swop.markpact.sync_engine.ManifestSyncEngine.sync_to_disk, swop.markpact.sync_engine.ManifestSyncEngine.sync_from_disk, swop.markpact.sync_engine.ManifestSyncEngine.update_manifest
 
+### swop.contracts.adapter.ContractDetectionAdapter
+> High-level adapter that loads contracts and produces a *declared*
+:class:`~swop.scan.ScanReport`-lik
+- **Methods**: 6
+- **Key Methods**: swop.contracts.adapter.ContractDetectionAdapter.__init__, swop.contracts.adapter.ContractDetectionAdapter.from_directory, swop.contracts.adapter.ContractDetectionAdapter.by_kind, swop.contracts.adapter.ContractDetectionAdapter.by_context, swop.contracts.adapter.ContractDetectionAdapter.contexts, swop.contracts.adapter.ContractDetectionAdapter.summary
+
 ### swop.reconcile.ResyncEngine
 > Continuously reconcile the declared graph against actual state.
 - **Methods**: 5
@@ -368,6 +376,10 @@ _cmd_scan [swop.commands]
 - **Methods**: 4
 - **Key Methods**: swop.tools.doctor.DoctorReport.failed, swop.tools.doctor.DoctorReport.warnings, swop.tools.doctor.DoctorReport.ok, swop.tools.doctor.DoctorReport.format
 
+### swop.tools.doctor_deep.DeepReport
+- **Methods**: 4
+- **Key Methods**: swop.tools.doctor_deep.DeepReport.failed, swop.tools.doctor_deep.DeepReport.warnings, swop.tools.doctor_deep.DeepReport.ok, swop.tools.doctor_deep.DeepReport.format
+
 ### swop.introspect.backend.BackendIntrospector
 > Introspect backend services to produce a runtime state dict.
 - **Methods**: 4
@@ -380,20 +392,13 @@ Call :meth:`poll_once` in a loop (or pass it to :met
 - **Methods**: 4
 - **Key Methods**: swop.watch.engine.WatchEngine.snapshot, swop.watch.engine.WatchEngine._maybe_add, swop.watch.engine.WatchEngine.poll_once, swop.watch.engine.WatchEngine.run
 
-### swop.sync.SyncEngine
-> Move state between a ``ProjectGraph`` and introspected snapshots.
-- **Methods**: 3
-- **Key Methods**: swop.sync.SyncEngine.frontend_to_graph, swop.sync.SyncEngine.merge_frontend, swop.sync.SyncEngine.merge_backend
-
-### swop.markpact.parser.ManifestBlock
-- **Methods**: 3
-- **Key Methods**: swop.markpact.parser.ManifestBlock.get_meta_value, swop.markpact.parser.ManifestBlock.as_yaml, swop.markpact.parser.ManifestBlock.as_json
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
 
 ### project.map.toon._build_parser
+
+### project.map.toon._generate_parse_manifest
 
 ### project.map.toon._parse_context
 
@@ -426,6 +431,9 @@ Key functions that process and transform data:
 ### swop.config._parse_read_models
 - **Output to**: swop.config._pop_known, ReadModelConfig, isinstance, SwopConfigError, dict
 
+### swop.scan.scanner._unparse
+- **Output to**: ast.unparse
+
 ### swop.scan.report.ScanReport.format_text
 - **Output to**: self.kinds, self.via, None.join, lines.append, sorted
 
@@ -441,20 +449,14 @@ Key functions that process and transform data:
 ### swop.tools.doctor.DoctorReport.format
 - **Output to**: lines.extend, None.join, lines.append, c.format, lines.append
 
-### swop.markpact.parser.ManifestParser.parse_file
-- **Output to**: path.read_text, self.parse, str
+### swop.tools.hook.HookResult.format
+- **Output to**: None.get, str
 
-### swop.markpact.parser.ManifestParser.parse
-- **Output to**: CODEBLOCK_RE.finditer, INCLUDE_RE.finditer, set, ManifestBlock, blocks.append
+### swop.tools.doctor_deep.DeepIssue.format
+- **Output to**: None.get
 
-### swop.markpact.parser.ManifestParser.parse_by_kind
-- **Output to**: self.parse
-
-### swop.markpact.parser.ManifestParser.parse_doql_blocks
-- **Output to**: self.parse_by_kind
-
-### swop.markpact.parser.ManifestParser.parse_graph_blocks
-- **Output to**: self.parse_by_kind
+### swop.tools.doctor_deep.DeepCheck.format
+- **Output to**: None.get, None.join, lines.append, len, lines.append
 
 ## Behavioral Patterns
 
@@ -463,15 +465,15 @@ Key functions that process and transform data:
 - **Confidence**: 0.90
 - **Functions**: swop.config._expand_env
 
-### recursion__map_python_type
-- **Type**: recursion
-- **Confidence**: 0.90
-- **Functions**: swop.proto.generator._map_python_type
-
 ### recursion__decorator_name
 - **Type**: recursion
 - **Confidence**: 0.90
 - **Functions**: swop.scan.scanner._decorator_name
+
+### recursion__map_python_type
+- **Type**: recursion
+- **Confidence**: 0.90
+- **Functions**: swop.proto.generator._map_python_type
 
 ### state_machine_StateExporter
 - **Type**: state_machine
@@ -482,6 +484,7 @@ Key functions that process and transform data:
 
 Functions exposed as public API (no underscore prefix):
 
+- `swop.registry.generator.generate_registry_md` - 65 calls
 - `swop.proto.generator.render_proto_for_context` - 43 calls
 - `swop.services.generator.generate_services` - 30 calls
 - `swop.scan.render.render_html` - 25 calls
@@ -494,34 +497,33 @@ Functions exposed as public API (no underscore prefix):
 - `swop.refactor.scanner.frontend.FrontendScanner.scan_file` - 20 calls
 - `swop.markpact.doql_bridge.DoqlBridge.from_blocks` - 18 calls
 - `swop.tools.doctor.run_doctor` - 17 calls
+- `swop.registry.generator.generate_registry_json` - 17 calls
 - `swop.markpact.sync_engine.ManifestSyncEngine.diff` - 16 calls
 - `swop.markpact.sync_engine.ManifestSyncEngine.update_manifest` - 16 calls
+- `swop.registry.bridge.bridge_contracts_to_detections` - 16 calls
 - `swop.scan.report.Detection.from_dict` - 15 calls
 - `swop.scan.scanner.scan_project` - 14 calls
 - `swop.resolve.resolver.resolve_schema_drift` - 14 calls
+- `swop.registry.generator.write_registry` - 14 calls
 - `swop.scan.report.ScanReport.format_text` - 13 calls
 - `swop.refactor.scanner.frontend.FrontendScanner.find_pages_for_route` - 13 calls
 - `swop.config.load_config` - 12 calls
 - `swop.cqrs.decorators.handler` - 12 calls
 - `swop.refactor.clustering.SeededClusterer.run` - 12 calls
+- `swop.contracts.reader.validate_contract` - 12 calls
+- `swop.registry.loader.load_contracts` - 12 calls
 - `swop.markpact.sync_engine.ManifestSyncEngine.check` - 11 calls
 - `swop.manifests.generator.generate_manifests` - 11 calls
+- `swop.registry.validator.validate_contract` - 11 calls
 - `swop.scan.cache.FingerprintCache.load` - 10 calls
 - `swop.services.generator.ServiceGenerationResult.format` - 10 calls
 - `swop.watch.engine.WatchEngine.snapshot` - 10 calls
+- `swop.contracts.adapter.contract_to_detection` - 10 calls
 - `swop.scan.report.ScanReport.to_dict` - 9 calls
+- `swop.tools.doctor_deep.DeepReport.format` - 9 calls
+- `swop.tools.doctor_deep.run_deep_doctor` - 9 calls
 - `swop.proto.generator.ProtoGenerationResult.format` - 9 calls
 - `swop.reconcile.DriftDetector.compute` - 8 calls
-- `swop.sync.SyncEngine.merge_backend` - 8 calls
-- `swop.core.SwopRuntime.run_sync` - 8 calls
-- `swop.export.yaml.StateExporter.to_dict` - 8 calls
-- `swop.scan.render.write_report` - 8 calls
-- `swop.tools.doctor.DoctorReport.format` - 8 calls
-- `swop.proto.compiler.CompilationResult.format` - 8 calls
-- `swop.introspect.frontend.FrontendIntrospector.from_html` - 7 calls
-- `swop.watch.engine.WatchEngine.poll_once` - 7 calls
-- `swop.refactor.scanner.backend.BackendScanner.scan` - 7 calls
-- `swop.core.SwopRuntime.introspect` - 6 calls
 
 ## System Interactions
 

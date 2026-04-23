@@ -1,18 +1,21 @@
-# inspect | 73f 12364L | python:70,shell:2,less:1 | 2026-04-22
-# stats: 325 func | 94 cls | 73 mod | CC̄=4.7 | critical:34 | cycles:0
-# alerts[5]: CC test_render_proto_for_context_builds_expected_shape=20; CC _classify=18; CC test_manifest_yaml_shape_for_command=18; CC _map_python_type=15; CC _index_from_manifests=15
+# inspect | 85f 14274L | python:82,shell:2,less:1 | 2026-04-23
+# stats: 393 func | 103 cls | 85 mod | CC̄=4.8 | critical:38 | cycles:0
+# alerts[5]: CC generate_registry_md=32; CC validate_contract=21; CC test_render_proto_for_context_builds_expected_shape=20; CC test_manifest_yaml_shape_for_command=18; CC _map_python_type=15
 # hotspots[5]: build_project_graph fan=19; generate_services fan=19; _write_context_package fan=18; _scan_file fan=16; compile_proto_python fan=14
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[73]:
-  app.doql.less,60
+M[85]:
+  app.doql.less,34
   examples/src/api.py,12
   examples/src/models.py,16
-  project.sh,36
-  swop/__init__.py,150
-  swop/cli.py,460
-  swop/commands.py,473
+  project.sh,43
+  swop/__init__.py,169
+  swop/cli.py,518
+  swop/commands.py,551
   swop/config.py,210
+  swop/contracts/__init__.py,38
+  swop/contracts/adapter.py,163
+  swop/contracts/reader.py,155
   swop/core.py,106
   swop/cqrs/__init__.py,29
   swop/cqrs/decorators.py,159
@@ -46,18 +49,25 @@ M[73]:
   swop/refactor/scanner/backend.py,157
   swop/refactor/scanner/db.py,54
   swop/refactor/scanner/frontend.py,129
+  swop/registry/__init__.py,37
+  swop/registry/bridge.py,51
+  swop/registry/generator.py,101
+  swop/registry/loader.py,40
+  swop/registry/validator.py,96
   swop/resolve/__init__.py,35
   swop/resolve/resolver.py,457
   swop/scan/__init__.py,33
   swop/scan/cache.py,112
   swop/scan/render.py,142
   swop/scan/report.py,210
-  swop/scan/scanner.py,560
+  swop/scan/scanner.py,596
   swop/services/__init__.py,31
   swop/services/generator.py,687
   swop/sync.py,48
-  swop/tools/__init__.py,13
+  swop/tools/__init__.py,33
   swop/tools/doctor.py,194
+  swop/tools/doctor_deep.py,370
+  swop/tools/hook.py,221
   swop/tools/init.py,161
   swop/utils.py,24
   swop/versioning.py,26
@@ -68,6 +78,8 @@ M[73]:
   tests/test_config.py,128
   tests/test_core.py,82
   tests/test_cqrs.py,145
+  tests/test_doctor_deep.py,276
+  tests/test_hook.py,170
   tests/test_manifests.py,336
   tests/test_markpact.py,803
   tests/test_proto.py,354
@@ -93,7 +105,7 @@ D:
     _build_parser()
     main(argv)
   swop/commands.py:
-    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_cmd_doctor,_cmd_init,_cmd_scan,_cmd_gen_manifests,_cmd_gen_proto,_cmd_gen_grpc_python,_cmd_gen_grpc_ts,_cmd_gen_services,_cmd_watch,_cmd_resolve,_cmd_refactor,_generate_parse_manifest,_generate_build_graph,_generate_check_files,_generate_update_from_disk,_generate_sync_files,_generate_outputs,_cmd_generate
+    e: _build_runtime,_cmd_sync,_cmd_inspect,_cmd_diff,_cmd_state,_cmd_export,_cmd_doctor,_cmd_hook,_cmd_init,_cmd_scan,_cmd_gen_manifests,_cmd_gen_proto,_cmd_gen_grpc_python,_cmd_gen_grpc_ts,_cmd_gen_services,_cmd_gen_registry,_cmd_watch,_cmd_resolve,_cmd_refactor,_generate_parse_manifest,_generate_build_graph,_generate_check_files,_generate_update_from_disk,_generate_sync_files,_generate_outputs,_cmd_generate
     _build_runtime(mode)
     _cmd_sync(args)
     _cmd_inspect(args)
@@ -101,6 +113,7 @@ D:
     _cmd_state(args)
     _cmd_export(args)
     _cmd_doctor(args)
+    _cmd_hook(args)
     _cmd_init(args)
     _cmd_scan(args)
     _cmd_gen_manifests(args)
@@ -108,6 +121,7 @@ D:
     _cmd_gen_grpc_python(args)
     _cmd_gen_grpc_ts(args)
     _cmd_gen_services(args)
+    _cmd_gen_registry(args)
     _cmd_watch(args)
     _cmd_resolve(args)
     _cmd_refactor(args)
@@ -132,6 +146,23 @@ D:
     _parse_read_models(raw)
     load_config(path)
     _from_dict(data;cfg_path)
+  swop/contracts/__init__.py:
+  swop/contracts/adapter.py:
+    e: _contract_kind,_contract_name,_contract_context,_contract_fields,contract_to_detection,contracts_to_detections,ContractDetectionAdapter
+    ContractDetectionAdapter: __init__(2),from_directory(3),by_kind(1),by_context(1),contexts(0),summary(0)  # High-level adapter that loads contracts and produces a *decl
+    _contract_kind(contract)
+    _contract_name(contract)
+    _contract_context(contract)
+    _contract_fields(contract)
+    contract_to_detection(contract)
+    contracts_to_detections(contracts)
+  swop/contracts/reader.py:
+    e: load_contracts,_check_layer_paths,validate_contract,validate_all,ContractValidationError
+    ContractValidationError:  # Raised when a contract file fails structural validation.
+    load_contracts(contracts_dir)
+    _check_layer_paths(contract;errors;root)
+    validate_contract(contract)
+    validate_all(contracts)
   swop/core.py:
     e: SwopRuntime
     SwopRuntime: __init__(3),add_model(3),add_service(2),add_ui_binding(2),introspect(0),run_sync(0),state_yaml(0),docker_compose(0)  # Main orchestrator for the swop reconciliation system.
@@ -311,6 +342,30 @@ D:
     e: PageSignals,FrontendScanner
     PageSignals:
     FrontendScanner: __init__(3),_pages_root(0),iter_pages(0),scan(0),scan_file(1),find_pages_for_route(1),_route_token(1),_slug_for(1)  # Scan a frontend project root and emit ``PageSignals`` per pa
+  swop/registry/__init__.py:
+  swop/registry/bridge.py:
+    e: _fields,bridge_contracts_to_detections
+    _fields(raw;key)
+    bridge_contracts_to_detections(contracts)
+  swop/registry/generator.py:
+    e: _ep,_ch,generate_registry_json,generate_registry_md,write_registry,RegistryGenerationResult
+    RegistryGenerationResult: format(0)
+    _ep(http)
+    _ch(ws)
+    generate_registry_json(contracts)
+    generate_registry_md(contracts)
+    write_registry(contracts_dir;contracts)
+  swop/registry/loader.py:
+    e: load_contracts,Contract
+    Contract:  # One JSON contract loaded from disk.
+    load_contracts(contracts_dir)
+  swop/registry/validator.py:
+    e: validate_contract,_check_keys,_check_kind,_check_layer_paths,ValidationResult
+    ValidationResult: format(0)
+    validate_contract(contract)
+    _check_keys(raw;required;errors)
+    _check_kind(raw;expected;errors)
+    _check_layer_paths(raw;root;errors)
   swop/resolve/__init__.py:
   swop/resolve/resolver.py:
     e: resolve_schema_drift,apply_resolution,_index_from_detections,_handler_shape,_index_from_manifests,_diff_context_kind,_diff_fields,_diff_metadata,_diff_entry,_field_signature,_handler_sig,ChangeKind,Change,ResolutionReport
@@ -345,7 +400,7 @@ D:
     ContextSummary: add(1),total(0)
     ScanReport: add(1),kinds(0),via(0),of_kind(1),of_context(1),to_dict(0),format_text(0)
   swop/scan/scanner.py:
-    e: _scan_file,scan_project,_new_ctx_summary,_resolve_contexts,_iter_python_files,_matches_any,_context_for_path,_extract_detections,_module_name_from_path,_decorator_name,_base_name,_extract_decorator_emits,_extract_decorator_context,_extract_handler_target,_classify,_kind_by_suffix,_kind_by_base,_handler_target_from_method,_handler_method_name,_extract_fields,_unparse,_render_default,_annotation_is_optional
+    e: _scan_file,scan_project,_new_ctx_summary,_resolve_contexts,_iter_python_files,_matches_any,_context_for_path,_extract_detections,_module_name_from_path,_decorator_name,_base_name,_extract_decorator_emits,_extract_decorator_context,_extract_handler_target,_classify_decorator,_classify_heuristic,_classify,_kind_by_suffix,_kind_by_base,_handler_target_from_method,_handler_method_name,_extract_ann_field,_extract_plain_field,_extract_fields,_unparse,_render_default,_annotation_is_optional
     _scan_file(py_path;project_root;config;contexts;cache;incremental;report)
     scan_project(config)
     _new_ctx_summary(name)
@@ -360,11 +415,15 @@ D:
     _extract_decorator_emits(call)
     _extract_decorator_context(call)
     _extract_handler_target(call)
+    _classify_decorator(node;decorator_node;decorator_names;bases;qualname;module;context;rel_path)
+    _classify_heuristic(node;decorator_names;bases;qualname;module;context;rel_path)
     _classify(node;path;rel_path;module;context)
     _kind_by_suffix(name)
     _kind_by_base(bases)
     _handler_target_from_method(node)
     _handler_method_name(node)
+    _extract_ann_field(stmt;seen)
+    _extract_plain_field(stmt;seen)
     _extract_fields(node)
     _unparse(node)
     _render_default(node)
@@ -406,6 +465,27 @@ D:
     _check_binary(binary;version_args)
     _check_git_repo(root)
     run_doctor(root)
+  swop/tools/doctor_deep.py:
+    e: _check_scan_vs_manifests,_check_manifests_vs_proto,_check_proto_vs_python,_check_manifests_vs_services,run_deep_doctor,_latest_mtime,DeepIssue,DeepCheck,DeepReport
+    DeepIssue: format(0)
+    DeepCheck: ok(0),mark(1),format(0)
+    DeepReport: failed(0),warnings(0),ok(0),format(0)
+    _check_scan_vs_manifests(config)
+    _check_manifests_vs_proto(config)
+    _check_proto_vs_python(config)
+    _check_manifests_vs_services(config)
+    run_deep_doctor(config)
+    _latest_mtime(directory)
+  swop/tools/hook.py:
+    e: _git_dir,_hook_path,_is_swop_hook,install_hook,uninstall_hook,hook_status,_make_executable,HookResult
+    HookResult: format(0)
+    _git_dir(root)
+    _hook_path(root)
+    _is_swop_hook(path)
+    install_hook(root)
+    uninstall_hook(root)
+    hook_status(root)
+    _make_executable(path)
   swop/tools/init.py:
     e: init_project,_merge_gitignore,InitResult
     InitResult: format(0)
@@ -462,6 +542,37 @@ D:
     test_emits_accepts_classes_and_strings()
     test_reset_registry_clears_state()
     test_local_registry_is_independent()
+  tests/test_doctor_deep.py:
+    e: _write,_bump_mtime,full_project,test_run_deep_doctor_reports_ok_when_everything_generated,test_scan_vs_manifests_flags_breaking_change,test_manifests_vs_proto_warns_when_proto_is_stale,test_manifests_vs_proto_fails_when_proto_missing,test_proto_vs_python_fails_when_stubs_missing,test_proto_vs_python_warns_without_python_dir,test_manifests_vs_services_fails_when_package_missing,test_manifests_vs_services_fails_when_incomplete,test_cli_doctor_deep_ok,test_cli_doctor_deep_nonzero_on_drift,test_cli_doctor_without_deep_does_not_require_config
+    _write(path;body)
+    _bump_mtime(path;delta)
+    full_project(tmp_path)
+    test_run_deep_doctor_reports_ok_when_everything_generated(full_project)
+    test_scan_vs_manifests_flags_breaking_change(full_project)
+    test_manifests_vs_proto_warns_when_proto_is_stale(full_project)
+    test_manifests_vs_proto_fails_when_proto_missing(full_project)
+    test_proto_vs_python_fails_when_stubs_missing(full_project)
+    test_proto_vs_python_warns_without_python_dir(tmp_path)
+    test_manifests_vs_services_fails_when_package_missing(full_project)
+    test_manifests_vs_services_fails_when_incomplete(full_project)
+    test_cli_doctor_deep_ok(full_project;capsys)
+    test_cli_doctor_deep_nonzero_on_drift(full_project;capsys)
+    test_cli_doctor_without_deep_does_not_require_config(tmp_path;capsys)
+  tests/test_hook.py:
+    e: _fake_git_repo,test_install_hook_creates_executable_file,test_install_hook_on_non_git_repo_returns_error,test_install_hook_refuses_to_overwrite_foreign_hook,test_install_hook_with_force_overwrites,test_install_is_idempotent,test_uninstall_removes_swop_hook,test_uninstall_preserves_foreign_hook,test_uninstall_skipped_when_absent,test_hook_status_reports_all_states,test_install_follows_git_file_worktree_pointer,test_cli_hook_install_and_uninstall,test_cli_hook_install_non_git_errors
+    _fake_git_repo(tmp_path)
+    test_install_hook_creates_executable_file(tmp_path)
+    test_install_hook_on_non_git_repo_returns_error(tmp_path)
+    test_install_hook_refuses_to_overwrite_foreign_hook(tmp_path)
+    test_install_hook_with_force_overwrites(tmp_path)
+    test_install_is_idempotent(tmp_path)
+    test_uninstall_removes_swop_hook(tmp_path)
+    test_uninstall_preserves_foreign_hook(tmp_path)
+    test_uninstall_skipped_when_absent(tmp_path)
+    test_hook_status_reports_all_states(tmp_path)
+    test_install_follows_git_file_worktree_pointer(tmp_path)
+    test_cli_hook_install_and_uninstall(tmp_path;capsys)
+    test_cli_hook_install_non_git_errors(tmp_path;capsys)
   tests/test_manifests.py:
     e: _write,customer_project,test_scan_extracts_fields_from_dataclass,test_scan_handler_records_method_name,test_generate_manifests_writes_per_context_files,test_manifest_yaml_shape_for_command,test_manifest_event_has_fields_but_no_bus,test_manifest_heuristic_detection_carries_confidence,test_generate_manifests_redis_bus,test_generate_manifests_no_bus_when_unconfigured,test_cli_gen_manifests,test_cli_gen_manifests_skip_heuristics
     _write(path;body)

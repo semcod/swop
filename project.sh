@@ -34,3 +34,10 @@ $VENV/bin/redup scan . --format toon --output ./project
 $PIP install sumd --upgrade --quiet
 $VENV/bin/sumd .
 $VENV/bin/sumr .
+
+
+$PIP install doql --upgrade --quiet
+$VENV/bin/doql adopt . --format less --output app.doql.less --force
+$PIP install sumd --upgrade --quiet
+$VENV/bin/sumd .
+$VENV/bin/sumr .

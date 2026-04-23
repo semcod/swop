@@ -9,22 +9,22 @@ flowchart TD
     end
 
     subgraph Core
+        README__handle["handle"]
         project__map__toon__list_devices["list_devices"]
         project__map__toon__create_reading["create_reading"]
+        project__map__toon___build_parser["_build_parser"]
+        project__map__toon__main["main"]
         project__map__toon___build_runtime["_build_runtime"]
         project__map__toon___cmd_sync["_cmd_sync"]
         project__map__toon___cmd_inspect["_cmd_inspect"]
         project__map__toon___cmd_diff["_cmd_diff"]
         project__map__toon___cmd_state["_cmd_state"]
         project__map__toon___cmd_doctor["_cmd_doctor"]
+        project__map__toon___cmd_hook["_cmd_hook"]
         project__map__toon___cmd_init["_cmd_init"]
         project__map__toon___cmd_scan["_cmd_scan"]
         project__map__toon___cmd_gen_manifests["_cmd_gen_manifests"]
-        project__map__toon___cmd_gen_proto["_cmd_gen_proto"]
-        project__map__toon___cmd_gen_grpc_python["_cmd_gen_grpc_python"]
-        project__map__toon___cmd_gen_grpc_ts["_cmd_gen_grpc_ts"]
-        project__map__toon___cmd_gen_services["_cmd_gen_services"]
-        ...["+766 more"]
+        ...["+896 more"]
     end
 
     subgraph Exporters
@@ -41,4 +41,4 @@ flowchart TD
         swop__commands___cmd_export["_cmd_export"]
     end
 
-    class project__map__toon__list_devices,project__map__toon__create_reading,project__map__toon___build_runtime,project__map__toon___cmd_sync,project__map__toon___cmd_inspect,project__map__toon___cmd_diff,project__map__toon___cmd_state,project__map__toon___cmd_export,project__map__toon___cmd_doctor,project__map__toon___cmd_init entry
+    class README__handle,project__map__toon__list_devices,project__map__toon__create_reading,project__map__toon___build_parser,project__map__toon__main,project__map__toon___build_runtime,project__map__toon___cmd_sync,project__map__toon___cmd_inspect,project__map__toon___cmd_diff,project__map__toon___cmd_state entry

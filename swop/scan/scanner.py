@@ -355,53 +355,57 @@ def _extract_handler_target(call: ast.Call) -> Optional[str]:
     return None
 
 
-def _classify(
+def _classify_decorator(
     node: ast.ClassDef,
-    path: Path,
-    rel_path: str,
+    decorator_node: ast.expr,
+    decorator_names: List[str],
+    bases: List[str],
+    qualname: str,
     module: str,
     context: str,
+    rel_path: str,
 ) -> Optional[Detection]:
-    decorator_names = [_decorator_name(d) for d in node.decorator_list]
-    decorator_names = [name for name in decorator_names if name]
+    name = _decorator_name(decorator_node)
+    if name not in _DECORATOR_KINDS:
+        return None
+    kind = _DECORATOR_KINDS[name]
+    emits: List[str] = []
+    handles: Optional[str] = None
+    deco_context: Optional[str] = None
+    if isinstance(decorator_node, ast.Call):
+        emits = _extract_decorator_emits(decorator_node)
+        if kind == "handler":
+            handles = _extract_handler_target(decorator_node)
+        else:
+            deco_context = _extract_decorator_context(decorator_node)
+    resolved_context = deco_context or context
+    return Detection(
+        kind=kind,
+        name=node.name,
+        qualname=qualname,
+        module=module,
+        context=resolved_context,
+        source_file=rel_path,
+        source_line=node.lineno,
+        via="decorator",
+        confidence=1.0,
+        bases=bases,
+        decorators=decorator_names,
+        handles=handles,
+        emits=emits,
+        reason=f"@{name}",
+    )
 
-    bases = [_base_name(b) for b in node.bases if _base_name(b)]
-    qualname = f"{module}.{node.name}" if module != "__root__" else node.name
 
-    # ---------------- decorator-based ------------------
-    for decorator_node in node.decorator_list:
-        name = _decorator_name(decorator_node)
-        if name not in _DECORATOR_KINDS:
-            continue
-        kind = _DECORATOR_KINDS[name]
-        emits: List[str] = []
-        handles: Optional[str] = None
-        deco_context: Optional[str] = None
-        if isinstance(decorator_node, ast.Call):
-            emits = _extract_decorator_emits(decorator_node)
-            if kind == "handler":
-                handles = _extract_handler_target(decorator_node)
-            else:
-                deco_context = _extract_decorator_context(decorator_node)
-        resolved_context = deco_context or context
-        return Detection(
-            kind=kind,
-            name=node.name,
-            qualname=qualname,
-            module=module,
-            context=resolved_context,
-            source_file=rel_path,
-            source_line=node.lineno,
-            via="decorator",
-            confidence=1.0,
-            bases=bases,
-            decorators=decorator_names,
-            handles=handles,
-            emits=emits,
-            reason=f"@{name}",
-        )
-
-    # ---------------- heuristic-based ------------------
+def _classify_heuristic(
+    node: ast.ClassDef,
+    decorator_names: List[str],
+    bases: List[str],
+    qualname: str,
+    module: str,
+    context: str,
+    rel_path: str,
+) -> Optional[Detection]:
     suffix_kind = _kind_by_suffix(node.name)
     base_kind = _kind_by_base(bases)
 
@@ -439,6 +443,31 @@ def _classify(
         handles=handles,
         emits=[],
         reason=reason,
+    )
+
+
+def _classify(
+    node: ast.ClassDef,
+    path: Path,
+    rel_path: str,
+    module: str,
+    context: str,
+) -> Optional[Detection]:
+    decorator_names = [_decorator_name(d) for d in node.decorator_list]
+    decorator_names = [name for name in decorator_names if name]
+
+    bases = [_base_name(b) for b in node.bases if _base_name(b)]
+    qualname = f"{module}.{node.name}" if module != "__root__" else node.name
+
+    for decorator_node in node.decorator_list:
+        det = _classify_decorator(
+            node, decorator_node, decorator_names, bases, qualname, module, context, rel_path
+        )
+        if det is not None:
+            return det
+
+    return _classify_heuristic(
+        node, decorator_names, bases, qualname, module, context, rel_path
     )
 
 
@@ -488,35 +517,42 @@ def _handler_method_name(node: ast.ClassDef) -> Optional[str]:
     return None
 
 
+def _extract_ann_field(stmt: ast.AnnAssign, seen: set[str]) -> Optional[FieldDef]:
+    if not isinstance(stmt.target, ast.Name):
+        return None
+    name = stmt.target.id
+    if name.startswith("_") or name in seen:
+        return None
+    type_str = _unparse(stmt.annotation) if stmt.annotation is not None else ""
+    default = _render_default(stmt.value) if stmt.value is not None else None
+    required = default is None and not _annotation_is_optional(stmt.annotation)
+    seen.add(name)
+    return FieldDef(name=name, type=type_str, required=required, default=default)
+
+
+def _extract_plain_field(stmt: ast.Assign, seen: set[str]) -> Iterator[FieldDef]:
+    for target in stmt.targets:
+        if not isinstance(target, ast.Name):
+            continue
+        name = target.id
+        if name.startswith("_") or name in seen or name.isupper():
+            continue
+        default = _render_default(stmt.value)
+        seen.add(name)
+        yield FieldDef(name=name, type="", required=False, default=default)
+
+
 def _extract_fields(node: ast.ClassDef) -> List[FieldDef]:
     """Extract attribute declarations from a dataclass / plain class body."""
     out: List[FieldDef] = []
     seen: set[str] = set()
     for stmt in node.body:
-        if isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
-            name = stmt.target.id
-            if name.startswith("_") or name in seen:
-                continue
-            type_str = _unparse(stmt.annotation) if stmt.annotation is not None else ""
-            default = _render_default(stmt.value) if stmt.value is not None else None
-            required = default is None and not _annotation_is_optional(stmt.annotation)
-            out.append(FieldDef(name=name, type=type_str, required=required, default=default))
-            seen.add(name)
+        if isinstance(stmt, ast.AnnAssign):
+            field = _extract_ann_field(stmt, seen)
+            if field:
+                out.append(field)
         elif isinstance(stmt, ast.Assign):
-            # Plain `x = 1` without annotation — we still capture it as a best-effort
-            # untyped field. Skip dunder / private names and class-level constants that
-            # look like config (all-uppercase, since those tend to be enums or flags).
-            for target in stmt.targets:
-                if not isinstance(target, ast.Name):
-                    continue
-                name = target.id
-                if name.startswith("_") or name in seen:
-                    continue
-                if name.isupper():
-                    continue
-                default = _render_default(stmt.value)
-                out.append(FieldDef(name=name, type="", required=False, default=default))
-                seen.add(name)
+            out.extend(_extract_plain_field(stmt, seen))
     return out
 
 
