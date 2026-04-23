@@ -83,8 +83,11 @@ _SIMPLE_PY_TO_PROTO: Dict[str, str] = {
     "string": "string",
     "bytes": "bytes",
     "bool": "bool",
+    "boolean": "bool",
     "int": "int64",
+    "integer": "int64",
     "float": "double",
+    "number": "double",
     "double": "double",
     "Decimal": "string",
     "datetime": "google.protobuf.Timestamp",
@@ -151,6 +154,12 @@ def _map_python_type(annotation: str) -> _ProtoType:
         elif proto.startswith("google.protobuf.Any"):
             imp = _ANY_IMPORT
         return _ProtoType(proto=proto, repeated=repeated, well_known_import=imp)
+
+    # JSON Schema fallback types (object, array) → safe proto stubs
+    if raw == "object":
+        return _ProtoType(proto="string", repeated=repeated, stub=True)
+    if raw == "array":
+        return _ProtoType(proto="string", repeated=True, stub=True)
 
     # Identifier → treat as a message name (user-defined type).
     if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", raw):
