@@ -116,33 +116,36 @@ def _map_python_type(annotation: str) -> _ProtoType:
     if not annotation:
         return _ProtoType(proto="string", stub=True)
     raw = annotation.strip()
+    def _strip_quotes(s: str) -> str:
+        return s.strip().strip("'\"")
+
     # Strip Optional[...]
     m = re.match(r"Optional\[(.+)\]$", raw)
     if m:
-        raw = m.group(1).strip()
+        raw = _strip_quotes(m.group(1))
     # Strip `X | None` unions — take the non-None branch.
     if "|" in raw:
         parts = [p.strip() for p in raw.split("|")]
         parts = [p for p in parts if p not in {"None", "NoneType"}]
         if parts:
-            raw = parts[0]
+            raw = _strip_quotes(parts[0])
 
     # Repeated: list[X], List[X], Sequence[X], Iterable[X], tuple[X, ...]
     repeated = False
     list_m = re.match(r"(?:list|List|Sequence|Iterable)\[(.+)\]$", raw)
     if list_m:
         repeated = True
-        raw = list_m.group(1).strip()
+        raw = _strip_quotes(list_m.group(1))
     tup_m = re.match(r"(?:tuple|Tuple)\[(.+?)\s*,\s*\.\.\.\]$", raw)
     if tup_m:
         repeated = True
-        raw = tup_m.group(1).strip()
+        raw = _strip_quotes(tup_m.group(1))
 
     # Dict[K, V] → map<K, V>
     dict_m = re.match(r"(?:dict|Dict|Mapping)\[(.+?),\s*(.+)\]$", raw)
     if dict_m:
-        key_type = _map_python_type(dict_m.group(1))
-        val_type = _map_python_type(dict_m.group(2))
+        key_type = _map_python_type(_strip_quotes(dict_m.group(1)))
+        val_type = _map_python_type(_strip_quotes(dict_m.group(2)))
         return _ProtoType(
             proto=f"map<{key_type.proto}, {val_type.proto}>",
             well_known_import=val_type.well_known_import or key_type.well_known_import,

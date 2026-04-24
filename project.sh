@@ -14,7 +14,7 @@ elif ! head -1 "$PIP" | grep -q "$(pwd)"; then
     python3 -m venv "$VENV"
 fi
 
-#$PIP install -e . --quiet
+$PIP install -e . --quiet
 #$PIP install regix --upgrade --quiet
 #$PIP install pyqual --upgrade --quiet
 #$PIP install prefact --upgrade --quiet
@@ -22,6 +22,7 @@ fi
 $PIP install redup --upgrade --quiet
 $PIP install glon --upgrade --quiet
 $PIP install goal --upgrade --quiet
+#python -m goal -a
 $PIP install code2logic --upgrade --quiet
 $PIP install code2llm --upgrade --quiet
 $VENV/bin/code2llm ./ -f all -o ./project --no-chunk

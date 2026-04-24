@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.12] - 2026-04-24
+
+### Docs
+- Update README.md
+
+### Other
+- Update project.sh
+- Update swop/proto/generator.py
+
 ## [0.2.11] - 2026-04-24
 
 ### Docs
