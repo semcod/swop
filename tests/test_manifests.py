@@ -75,11 +75,18 @@ def customer_project(tmp_path: Path) -> Path:
         """\
         from swop import handler
         from .commands import CreateCustomer
+        from .models import CustomerStatus, CustomerView
+        from .queries import GetCustomer
 
         @handler(CreateCustomer)
         class CreateCustomerHandler:
             def handle(self, cmd: CreateCustomer) -> int:
                 return 1
+
+        @handler(GetCustomer)
+        class GetCustomerHandler:
+            def handle(self, query: GetCustomer) -> CustomerView:
+                return CustomerView(customer_id=query.customer_id, status=CustomerStatus.ACTIVE)
         """,
     )
     _write(
@@ -92,6 +99,22 @@ def customer_project(tmp_path: Path) -> Path:
         @dataclass
         class GetCustomer:
             customer_id: int
+        """,
+    )
+    _write(
+        tmp_path / "src/customer/models.py",
+        """\
+        from dataclasses import dataclass
+        from enum import Enum
+
+        class CustomerStatus(str, Enum):
+            ACTIVE = "active"
+            INACTIVE = "inactive"
+
+        @dataclass
+        class CustomerView:
+            customer_id: int
+            status: CustomerStatus
         """,
     )
     _write(
@@ -222,6 +245,26 @@ def test_manifest_heuristic_detection_carries_confidence(customer_project):
     assert detected["via"] == "heuristic"
     assert "confidence" in detected
     assert detected["confidence"] < 1.0
+
+
+def test_manifest_query_includes_response_and_types(customer_project):
+    cfg = load_config(customer_project / "swop.yaml")
+    report = scan_project(cfg, incremental=False)
+    out = customer_project / "out"
+    generate_manifests(report, cfg, out_dir=out)
+
+    manifest = yaml.safe_load((out / "customer" / "queries.yml").read_text())
+    query = next(q for q in manifest["queries"] if q["name"] == "GetCustomer")
+
+    assert query["handler"]["class"] == "GetCustomerHandler"
+    assert query["response"]["type"] == "CustomerView"
+    response_fields = {f["name"]: f for f in query["response"]["fields"]}
+    assert response_fields["customer_id"]["type"] == "int"
+    assert response_fields["status"]["type"] == "CustomerStatus"
+
+    types = {(t["kind"], t["name"]): t for t in query["types"]}
+    status_enum = types[("enum", "CustomerStatus")]
+    assert [v["name"] for v in status_enum["values"]] == ["ACTIVE", "INACTIVE"]
 
 
 def test_generate_manifests_redis_bus(tmp_path):

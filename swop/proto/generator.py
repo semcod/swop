@@ -22,7 +22,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
 import yaml
 
@@ -141,9 +141,12 @@ def _map_python_type(annotation: str) -> _ProtoType:
     # Dict[K, V] → map<K, V>
     dict_m = re.match(r"(?:dict|Dict|Mapping)\[(.+?),\s*(.+)\]$", raw)
     if dict_m:
-        key = _map_python_type(dict_m.group(1)).proto
-        val = _map_python_type(dict_m.group(2)).proto
-        return _ProtoType(proto=f"map<{key}, {val}>")
+        key_type = _map_python_type(dict_m.group(1))
+        val_type = _map_python_type(dict_m.group(2))
+        return _ProtoType(
+            proto=f"map<{key_type.proto}, {val_type.proto}>",
+            well_known_import=val_type.well_known_import or key_type.well_known_import,
+        )
 
     # Simple scalar.
     if raw in _SIMPLE_PY_TO_PROTO:
@@ -262,6 +265,28 @@ def render_proto_for_context(
     warnings: List[str] = []
     imports: set[str] = set()
     messages: List[str] = []
+    rendered_type_names: Set[str] = set()
+    known_types = _collect_known_types(commands, queries, events)
+    known_type_names = set(known_types)
+
+    for qry in queries:
+        response = qry.get("response") or {}
+        response_type = response.get("type")
+        response_fields = response.get("fields") or []
+        if response_type and response_fields:
+            known_type_names.add(str(response_type))
+
+    for type_name, type_def in known_types.items():
+        rendered, type_warn = _render_type_definition(
+            type_def,
+            imports,
+            context,
+            known_type_names,
+        )
+        warnings.extend(type_warn)
+        if rendered:
+            messages.append(rendered)
+            rendered_type_names.add(type_name)
 
     # ---------------- commands ----------------
     cmd_rpcs: List[str] = []
@@ -272,7 +297,7 @@ def render_proto_for_context(
         req_name = f"{name}Request"
         res_name = f"{name}Response"
         req_body, req_warn = _render_message(
-            req_name, cmd.get("fields", []), imports, context
+            req_name, cmd.get("fields", []), imports, context, known_type_names
         )
         warnings.extend(req_warn)
         messages.append(req_body)
@@ -288,11 +313,25 @@ def render_proto_for_context(
         req_name = f"{name}Request"
         res_name = f"{name}Response"
         req_body, req_warn = _render_message(
-            req_name, qry.get("fields", []), imports, context
+            req_name, qry.get("fields", []), imports, context, known_type_names
         )
         warnings.extend(req_warn)
         messages.append(req_body)
-        messages.append(_render_query_response(res_name))
+        response = qry.get("response") or {}
+        response_type = str(response.get("type", "") or "")
+        response_fields = response.get("fields") or []
+        if response_type and response_fields and response_type not in rendered_type_names:
+            response_body, response_warn = _render_message(
+                response_type,
+                response_fields,
+                imports,
+                context,
+                known_type_names,
+            )
+            warnings.extend(response_warn)
+            messages.append(response_body)
+            rendered_type_names.add(response_type)
+        messages.append(_render_query_response(res_name, response_type or None))
         qry_rpcs.append(f"  rpc {name}({req_name}) returns ({res_name});")
 
     # ---------------- events ------------------
@@ -300,7 +339,13 @@ def render_proto_for_context(
         name = evt.get("name", "")
         if not name:
             continue
-        body, evt_warn = _render_message(name, evt.get("fields", []), imports, context)
+        body, evt_warn = _render_message(
+            name,
+            evt.get("fields", []),
+            imports,
+            context,
+            known_type_names,
+        )
         warnings.extend(evt_warn)
         messages.append(body)
 
@@ -352,9 +397,11 @@ def _render_message(
     fields: Iterable[Dict[str, Any]],
     imports: set,
     context: str,
+    known_type_names: Optional[Set[str]] = None,
 ) -> Tuple[str, List[str]]:
     """Render one message block; accumulate proto imports in ``imports``."""
     warnings: List[str] = []
+    known_type_names = known_type_names or set()
     lines = [f"message {name} {{"]
     index = 1
     for field_def in fields or []:
@@ -364,7 +411,7 @@ def _render_message(
         proto_ident = _safe_ident(fname)
         annotation = field_def.get("type", "")
         mapped = _map_python_type(annotation)
-        if mapped.stub:
+        if mapped.stub and mapped.proto not in known_type_names:
             warnings.append(
                 f"{context}.{name}.{proto_ident}: "
                 f"type {annotation!r} mapped to {mapped.proto!r} "
@@ -394,7 +441,13 @@ def _render_command_response(name: str, emits: List[str]) -> str:
     )
 
 
-def _render_query_response(name: str) -> str:
+def _render_query_response(name: str, result_type: Optional[str] = None) -> str:
+    if result_type:
+        return (
+            f"message {name} {{\n"
+            f"  {result_type} result = 1;\n"
+            f"}}"
+        )
     return (
         f"message {name} {{\n"
         f"  // The query result is serialised into `result_json` until a\n"
@@ -402,6 +455,54 @@ def _render_query_response(name: str) -> str:
         f"  string result_json = 1;\n"
         f"}}"
     )
+
+
+def _collect_known_types(
+    commands: Iterable[Dict[str, Any]],
+    queries: Iterable[Dict[str, Any]],
+    events: Iterable[Dict[str, Any]],
+) -> Dict[str, Dict[str, Any]]:
+    known: Dict[str, Dict[str, Any]] = {}
+    for entry in list(commands) + list(queries) + list(events):
+        for type_def in entry.get("types", []) or []:
+            name = str(type_def.get("name", "") or "")
+            if name:
+                known.setdefault(name, type_def)
+    return known
+
+
+def _render_type_definition(
+    type_def: Dict[str, Any],
+    imports: set,
+    context: str,
+    known_type_names: Set[str],
+) -> Tuple[str, List[str]]:
+    kind = str(type_def.get("kind", "") or "")
+    name = str(type_def.get("name", "") or "")
+    if not kind or not name:
+        return "", []
+    if kind == "enum":
+        return _render_enum(name, type_def.get("values", [])), []
+    if kind == "message":
+        return _render_message(name, type_def.get("fields", []), imports, context, known_type_names)
+    return "", []
+
+
+def _render_enum(name: str, values: Iterable[Dict[str, Any]]) -> str:
+    lines = [f"enum {name} {{"]
+    index = 0
+    seen: Set[str] = set()
+    for item in values or []:
+        member_name = _safe_ident(str(item.get("name", "") or "")).upper()
+        if not member_name or member_name in seen:
+            continue
+        seen.add(member_name)
+        lines.append(f"  {member_name} = {index};")
+        index += 1
+    if index == 0:
+        lines.append(f"  {_safe_ident(name).upper()}_UNSPECIFIED = 0;")
+    lines.append("}")
+    return "\n".join(lines)
 
 
 def _service_name(context: str, suffix: str) -> str:

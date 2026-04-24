@@ -163,6 +163,44 @@ def test_render_proto_warns_on_unknown_user_type():
     assert any("payload" in w for w in warnings)
 
 
+def test_render_proto_renders_query_response_model_and_enum_types():
+    queries = [
+        {
+            "name": "GetCustomer",
+            "fields": [{"name": "customer_id", "type": "int", "required": True}],
+            "response": {
+                "type": "CustomerView",
+                "fields": [
+                    {"name": "customer_id", "type": "int", "required": True},
+                    {"name": "status", "type": "CustomerStatus", "required": True},
+                ],
+            },
+            "types": [
+                {
+                    "kind": "enum",
+                    "name": "CustomerStatus",
+                    "values": [
+                        {"name": "ACTIVE", "value": "active"},
+                        {"name": "INACTIVE", "value": "inactive"},
+                    ],
+                }
+            ],
+        }
+    ]
+
+    text, warnings = render_proto_for_context("customer", [], queries, [])
+
+    assert "enum CustomerStatus {" in text
+    assert "ACTIVE = 0;" in text
+    assert "INACTIVE = 1;" in text
+    assert "message CustomerView {" in text
+    assert re.search(r"int64\s+customer_id\s+=\s+1;", text)
+    assert re.search(r"CustomerStatus\s+status\s+=\s+2;", text)
+    assert "message GetCustomerResponse {" in text
+    assert "CustomerView result = 1;" in text
+    assert warnings == []
+
+
 # ----------------------------------------------------------------------
 # End-to-end from manifests to .proto
 # ----------------------------------------------------------------------
