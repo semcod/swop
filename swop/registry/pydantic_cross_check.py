@@ -51,7 +51,7 @@ from __future__ import annotations
 import ast
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple  # noqa: F401
 
 from swop.registry.loader import Contract
 
@@ -195,14 +195,70 @@ def _iter_enum_fields(schema: Any, prefix: str = "") -> List[Tuple[str, List[str
     return results
 
 
-def _contract_schemas(raw: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Return the list of ``input``/``output``/``payload`` blocks present."""
-    blocks: List[Dict[str, Any]] = []
+def _contract_schemas(raw: Dict[str, Any]) -> List[Tuple[str, Dict[str, Any]]]:
+    """Return ``(block_kind, schema)`` pairs for every block present.
+
+    *block_kind* drives the directional subset check in
+    :func:`_classify_drift`.
+    """
+    blocks: List[Tuple[str, Dict[str, Any]]] = []
     for key in ("input", "output", "payload"):
         block = raw.get(key)
         if isinstance(block, dict):
-            blocks.append(block)
+            blocks.append((key, block))
     return blocks
+
+
+def _classify_drift(
+    block_kind: str,
+    contract_set: Set[str],
+    pydantic_set: Set[str],
+) -> Optional[Tuple[str, str]]:
+    """Return ``(severity, detail)`` for a drift, or ``None`` if compatible.
+
+    Directional rules (ADR-012 Wave 2 post-mortem):
+
+    * ``output`` / ``payload`` (server -> client):
+      - ``pydantic ⊆ contract``     -> compatible
+      - ``pydantic ⊈ contract``     -> ERROR (server may return undeclared value)
+      - ``contract ⊇ pydantic``     -> WARNING (dead code paths on client)
+
+    * ``input`` (client -> server):
+      - ``contract ⊆ pydantic``     -> compatible
+      - ``contract ⊈ pydantic``     -> ERROR (contract lies about accepted values)
+      - ``pydantic ⊇ contract``     -> compatible (intentional API restriction)
+    """
+    if contract_set == pydantic_set:
+        return None
+
+    extra_in_pydantic = pydantic_set - contract_set
+    extra_in_contract = contract_set - pydantic_set
+
+    if block_kind in ("output", "payload"):
+        if extra_in_pydantic:
+            return (
+                "error",
+                "Pydantic Literal has extra values the contract does not "
+                "advertise (server may return values the client cannot "
+                "decode): " + ", ".join(sorted(extra_in_pydantic)),
+            )
+        if extra_in_contract:
+            return (
+                "warning",
+                "Contract advertises values Pydantic will never return "
+                "(dead code paths on the client): "
+                + ", ".join(sorted(extra_in_contract)),
+            )
+        return None
+
+    if extra_in_contract:
+        return (
+            "error",
+            "Contract advertises values Pydantic will reject at runtime "
+            "(HTTP 422 for client): "
+            + ", ".join(sorted(extra_in_contract)),
+        )
+    return None
 
 
 def _parse_layer_path(raw_layer: Any) -> Tuple[Optional[str], Optional[str]]:
@@ -260,35 +316,30 @@ def cross_check_contract(
     if not literal_fields:
         return result
 
-    seen: Set[str] = set()
-    for block in _contract_schemas(contract.raw):
+    seen: Set[Tuple[str, str]] = set()
+    for block_kind, block in _contract_schemas(contract.raw):
         for field_name, enum_values in _iter_enum_fields(block):
-            if field_name in seen:
+            key = (block_kind, field_name)
+            if key in seen:
                 continue
-            seen.add(field_name)
+            seen.add(key)
             base_name = field_name.rsplit(".", 1)[-1]
             pydantic_values = literal_fields.get(base_name)
             if pydantic_values is None:
                 continue  # no matching Pydantic field — skip silently
             contract_set = set(enum_values)
-            if contract_set != pydantic_values:
-                missing_in_contract = sorted(pydantic_values - contract_set)
-                missing_in_pydantic = sorted(contract_set - pydantic_values)
-                parts: List[str] = []
-                if missing_in_contract:
-                    parts.append(
-                        "Pydantic Literal has extra values not in contract enum: "
-                        + ", ".join(missing_in_contract)
-                    )
-                if missing_in_pydantic:
-                    parts.append(
-                        "Contract enum has extra values not in Pydantic Literal: "
-                        + ", ".join(missing_in_pydantic)
-                    )
-                result.errors.append(
-                    f"field {field_name!r} enum drift in {contract.path.name}: "
-                    + " / ".join(parts)
-                )
+            verdict = _classify_drift(block_kind, contract_set, pydantic_values)
+            if verdict is None:
+                continue
+            severity, detail = verdict
+            message = (
+                f"{block_kind} field {field_name!r} enum drift in "
+                f"{contract.path.name}: {detail}"
+            )
+            if severity == "error":
+                result.errors.append(message)
+            else:
+                result.warnings.append(message)
 
     if result.errors:
         result.ok = False

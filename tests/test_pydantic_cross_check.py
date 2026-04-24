@@ -142,8 +142,15 @@ def test_contract_enum_narrower_than_literal_is_flagged(project_root: Path) -> N
     assert any("database" in err and "degraded" in err for err in result.errors)
 
 
-def test_literal_narrower_than_contract_is_flagged(project_root: Path) -> None:
-    """Inverse drift: contract added a value the Pydantic model does not accept."""
+def test_output_contract_wider_than_literal_is_warning_not_error(
+    project_root: Path,
+) -> None:
+    """Inverse output drift: contract advertises values Pydantic never returns.
+
+    Under directional rules this is a **warning**, not an error, because no
+    client can crash on a value that the server will never emit. The contract
+    is dishonest about dead code paths but the runtime is safe.
+    """
     _write_pydantic_module(
         project_root,
         """
@@ -180,8 +187,101 @@ def test_literal_narrower_than_contract_is_flagged(project_root: Path) -> None:
 
     result = cross_check_contract(contract, root=project_root)
 
-    assert result.ok is False
-    assert any("database" in err and "degraded" in err for err in result.errors)
+    assert result.ok is True, f"should be warning-only, got errors: {result.errors}"
+    assert any(
+        "database" in w and "degraded" in w and "dead code" in w.lower()
+        for w in result.warnings
+    ), f"expected warning about dead code paths, got: {result.warnings}"
+
+
+def test_input_contract_wider_than_literal_is_error(project_root: Path) -> None:
+    """Input drift: contract advertises a value Pydantic will reject with 422.
+
+    A client obeying the contract will send a value the server cannot accept.
+    Under directional rules this is an **error** regardless of which side is
+    wider (here contract ⊋ pydantic on ``input``).
+    """
+    _write_pydantic_module(
+        project_root,
+        """
+        from typing import Literal
+        from pydantic import BaseModel
+
+        class IdentifyCommandInput(BaseModel):
+            method: Literal["rfid", "manual"]
+        """,
+    )
+    contract = _write_contract(
+        project_root,
+        "Identify.command.json",
+        {
+            "command": "Identify",
+            "kind": "CQRS_COMMAND",
+            "version": "1.0.0",
+            "module": "connect-id",
+            "input": {
+                "method": {
+                    "type": "string",
+                    "enum": ["rfid", "qr", "manual"],
+                }
+            },
+            "output": {},
+            "layers": {"python": "backend/service_id.py"},
+        },
+    )
+
+    result = cross_check_contract(contract, root=project_root)
+
+    assert result.ok is False, (
+        "contract advertising values Pydantic will reject must fail"
+    )
+    assert any(
+        "input" in err and "method" in err and "qr" in err for err in result.errors
+    ), f"expected error citing qr on input, got: {result.errors}"
+
+
+def test_input_pydantic_wider_than_contract_is_ok(project_root: Path) -> None:
+    """Input drift: Pydantic tolerates more values than the contract advertises.
+
+    This is an **intentional API restriction**, not a drift. The server will
+    accept anything a client sends that matches the contract; the extra
+    Pydantic values are simply inaccessible via this public surface.
+    """
+    _write_pydantic_module(
+        project_root,
+        """
+        from typing import Literal
+        from pydantic import BaseModel
+
+        class IdentifyCommandInput(BaseModel):
+            method: Literal["rfid", "qr", "barcode", "manual"]
+        """,
+    )
+    contract = _write_contract(
+        project_root,
+        "Identify.command.json",
+        {
+            "command": "Identify",
+            "kind": "CQRS_COMMAND",
+            "version": "1.0.0",
+            "module": "connect-id",
+            "input": {
+                "method": {
+                    "type": "string",
+                    "enum": ["rfid", "manual"],
+                }
+            },
+            "output": {},
+            "layers": {"python": "backend/service_id.py"},
+        },
+    )
+
+    result = cross_check_contract(contract, root=project_root)
+
+    assert result.ok is True, f"intentional narrowing must be ok, got: {result.errors}"
+    assert not result.warnings, (
+        f"input narrowing should not even warn, got: {result.warnings}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -327,5 +427,10 @@ def test_cross_check_contracts_returns_pairs(project_root: Path) -> None:
 
     pairs = cross_check_contracts([good, bad], root=project_root)
     by_name = {c.name: r for c, r in pairs}
+    # GetA: equal sets -> clean
     assert by_name["GetA"].ok is True
-    assert by_name["GetB"].ok is False
+    assert not by_name["GetA"].warnings
+    # GetB: output contract ⊋ pydantic -> warning-only under directional rules
+    # (server never emits 'extra', so the client cannot crash on it).
+    assert by_name["GetB"].ok is True
+    assert any("extra" in w for w in by_name["GetB"].warnings)
