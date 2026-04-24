@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=82.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "swop"
-version = "0.2.12"
+version = "0.2.13"
 description = "Bi-directional runtime reconciler and drift-aware state graph for full-stack systems"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -36,7 +36,7 @@ Repository = "https://github.com/yourusername/inspect"
 swop = "swop.cli:main"
 
 [project.optional-dependencies]
-dev = ["pytest>=7.0", "pytest-cov>=4.0",
+dev = ["pytest>=9.0.0", "pytest-cov>=7.0.0",
     "goal>=2.1.0",
     "costs>=0.1.20",
     "pfix>=0.1.60",

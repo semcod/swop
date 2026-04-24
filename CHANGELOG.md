@@ -22,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - n/a — existing behaviour unchanged; new validator is opt-in.
 
+## [0.2.13] - 2026-04-24
+
+### Docs
+- Update README.md
+
 ## [0.2.12] - 2026-04-24
 
 ### Docs
