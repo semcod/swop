@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.11] - 2026-04-24
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_manifests.py
+- Update tests/test_proto.py
+
+### Other
+- Update swop/manifests/generator.py
+- Update swop/proto/generator.py
+- Update swop/resolve/resolver.py
+- Update swop/scan/report.py
+- Update swop/scan/scanner.py
+
 ## [0.2.10] - 2026-04-24
 
 ### Docs

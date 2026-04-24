@@ -254,6 +254,7 @@ def _render_field(field_def) -> Dict[str, object]:
     if field_def.type:
         out["type"] = field_def.type
     out["required"] = field_def.required
+    out["nullable"] = bool(getattr(field_def, "nullable", False))
     if field_def.default is not None:
         out["default"] = field_def.default
     return out
@@ -463,12 +464,12 @@ def _find_class_in_module(path: Path, class_name: str, cache: Dict[str, Any]) ->
     return _module_classes(path, cache).get(class_name)
 
 
-def _module_imports(path: Path, project_root: Path, cache: Dict[str, Any]) -> Dict[str, List[Path]]:
+def _module_imports(path: Path, project_root: Path, cache: Dict[str, Any]) -> Dict[str, List[Tuple[Path, str]]]:
     imports = cache["imports"]
     if path in imports:
         return imports[path]
     module = _module_ast(path, cache)
-    mapping: Dict[str, List[Path]] = {}
+    mapping: Dict[str, List[Tuple[Path, str]]] = {}
     if module is None:
         imports[path] = mapping
         return mapping
@@ -480,13 +481,17 @@ def _module_imports(path: Path, project_root: Path, cache: Dict[str, Any]) -> Di
             for alias in stmt.names:
                 if alias.name == "*":
                     continue
-                mapping.setdefault(alias.asname or alias.name, []).extend(targets)
+                exported_name = alias.name.split(".")[-1]
+                public_name = alias.asname or exported_name
+                for target in targets:
+                    mapping.setdefault(public_name, []).append((target, exported_name))
         elif isinstance(stmt, ast.Import):
             for alias in stmt.names:
                 name = alias.asname or alias.name.split(".")[-1]
-                mapping.setdefault(name, []).extend(
-                    _resolve_import_module_paths(path, project_root, alias.name, 0)
-                )
+                module_targets = _resolve_import_module_paths(path, project_root, alias.name, 0)
+                exported_name = alias.name.split(".")[-1]
+                for target in module_targets:
+                    mapping.setdefault(name, []).append((target, exported_name))
     imports[path] = mapping
     return mapping
 
@@ -528,14 +533,56 @@ def _resolve_class_definition(
     local = _find_class_in_module(source_path, class_name, cache)
     if local is not None:
         return source_path, local
-    for candidate in _module_imports(source_path, project_root, cache).get(class_name, []):
-        target = _find_class_in_module(candidate, class_name, cache)
+    for candidate, exported_name in _module_imports(source_path, project_root, cache).get(class_name, []):
+        target = _resolve_symbol_from_module(
+            candidate,
+            exported_name,
+            project_root,
+            cache,
+            seen={(source_path, class_name)},
+        )
         if target is not None:
-            return candidate, target
+            return target
     for candidate in _search_class_files(class_name, project_root, cache):
-        target = _find_class_in_module(candidate, class_name, cache)
+        target = _resolve_symbol_from_module(
+            candidate,
+            class_name,
+            project_root,
+            cache,
+            seen={(source_path, class_name)},
+        )
         if target is not None:
-            return candidate, target
+            return target
+    return None
+
+
+def _resolve_symbol_from_module(
+    module_path: Path,
+    symbol_name: str,
+    project_root: Path,
+    cache: Dict[str, Any],
+    seen: Set[Tuple[Path, str]],
+) -> Optional[Tuple[Path, ast.ClassDef]]:
+    key = (module_path, symbol_name)
+    if key in seen:
+        return None
+    seen = set(seen)
+    seen.add(key)
+
+    local = _find_class_in_module(module_path, symbol_name, cache)
+    if local is not None:
+        return module_path, local
+
+    for candidate, exported_name in _module_imports(module_path, project_root, cache).get(symbol_name, []):
+        resolved = _resolve_symbol_from_module(
+            candidate,
+            exported_name,
+            project_root,
+            cache,
+            seen,
+        )
+        if resolved is not None:
+            return resolved
     return None
 
 
@@ -597,6 +644,7 @@ def _extract_class_fields(node: ast.ClassDef) -> List[Dict[str, object]]:
                     "name": name,
                     "type": _unparse(stmt.annotation) if stmt.annotation is not None else "",
                     "required": required,
+                    "nullable": _annotation_is_optional(stmt.annotation),
                     **({"default": default} if default is not None else {}),
                 }
             )
@@ -612,6 +660,7 @@ def _extract_class_fields(node: ast.ClassDef) -> List[Dict[str, object]]:
                     {
                         "name": name,
                         "required": False,
+                        "nullable": False,
                         "default": _render_default(stmt.value),
                     }
                 )

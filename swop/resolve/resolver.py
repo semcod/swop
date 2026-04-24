@@ -186,6 +186,7 @@ def _index_from_detections(
                 f.name: {
                     "type": f.type or "",
                     "required": bool(f.required),
+                    "nullable": bool(getattr(f, "nullable", False)),
                 }
                 for f in (det.fields or [])
             },
@@ -235,6 +236,7 @@ def _index_from_manifests(
                         f.get("name"): {
                             "type": f.get("type", ""),
                             "required": bool(f.get("required", False)),
+                            "nullable": bool(f.get("nullable", False)),
                         }
                         for f in entry.get("fields", [])
                         if f.get("name")
@@ -379,6 +381,20 @@ def _diff_fields(
                     detail=f"required {old_f.get('required', False)} → {new_f.get('required', False)}",
                     breaking=bool(new_f.get("required", False))
                     and not bool(old_f.get("required", False)),
+                )
+            )
+        if bool(old_f.get("nullable", False)) != bool(new_f.get("nullable", False)):
+            resolution.changes.append(
+                Change(
+                    kind=ChangeKind.METADATA,
+                    context=context,
+                    target=kind,
+                    name=name,
+                    field=fname,
+                    old=str(old_f.get("nullable", False)),
+                    new=str(new_f.get("nullable", False)),
+                    detail=f"nullable {old_f.get('nullable', False)} → {new_f.get('nullable', False)}",
+                    breaking=not bool(new_f.get("nullable", False)) and bool(old_f.get("nullable", False)),
                 )
             )
 

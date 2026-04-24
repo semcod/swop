@@ -525,9 +525,16 @@ def _extract_ann_field(stmt: ast.AnnAssign, seen: set[str]) -> Optional[FieldDef
         return None
     type_str = _unparse(stmt.annotation) if stmt.annotation is not None else ""
     default = _render_default(stmt.value) if stmt.value is not None else None
-    required = default is None and not _annotation_is_optional(stmt.annotation)
+    nullable = _annotation_is_optional(stmt.annotation)
+    required = default is None and not nullable
     seen.add(name)
-    return FieldDef(name=name, type=type_str, required=required, default=default)
+    return FieldDef(
+        name=name,
+        type=type_str,
+        required=required,
+        nullable=nullable,
+        default=default,
+    )
 
 
 def _extract_plain_field(stmt: ast.Assign, seen: set[str]) -> Iterator[FieldDef]:
@@ -539,7 +546,7 @@ def _extract_plain_field(stmt: ast.Assign, seen: set[str]) -> Iterator[FieldDef]
             continue
         default = _render_default(stmt.value)
         seen.add(name)
-        yield FieldDef(name=name, type="", required=False, default=default)
+        yield FieldDef(name=name, type="", required=False, nullable=False, default=default)
 
 
 def _extract_fields(node: ast.ClassDef) -> List[FieldDef]:

@@ -75,7 +75,7 @@ def customer_project(tmp_path: Path) -> Path:
         """\
         from swop import handler
         from .commands import CreateCustomer
-        from .models import CustomerStatus, CustomerView
+        from .public_models import CustomerStatus, CustomerView
         from .queries import GetCustomer
 
         @handler(CreateCustomer)
@@ -105,11 +105,45 @@ def customer_project(tmp_path: Path) -> Path:
         tmp_path / "src/customer/models.py",
         """\
         from dataclasses import dataclass
+        from .enums import CustomerStatus
+
+        @dataclass
+        class CustomerView:
+            customer_id: int
+            status: CustomerStatus | None = None
+        """,
+    )
+    _write(
+        tmp_path / "src/customer/public_models.py",
+        """\
+        from .models import CustomerView
+        from .enums import CustomerStatus
+        """,
+    )
+    _write(
+        tmp_path / "src/customer/enums.py",
+        """\
+        from .shared_enums import CustomerStatus
+        """,
+    )
+    _write(
+        tmp_path / "src/customer/shared_enums.py",
+        """\
         from enum import Enum
 
         class CustomerStatus(str, Enum):
             ACTIVE = "active"
             INACTIVE = "inactive"
+        """,
+    )
+    _write(
+        tmp_path / "src/a_shadow/confuser.py",
+        """\
+        from dataclasses import dataclass
+        from enum import Enum
+
+        class CustomerStatus(str, Enum):
+            WRONG = "wrong"
 
         @dataclass
         class CustomerView:
@@ -146,6 +180,8 @@ def test_scan_extracts_fields_from_dataclass(customer_project):
     assert by_name["email"].type == "str"
     assert by_name["tax_id"].required is False       # Optional[str]
     assert by_name["age"].required is False          # int | None
+    assert by_name["tax_id"].nullable is True
+    assert by_name["age"].nullable is True
     assert create.file_fingerprint is not None
 
 
@@ -199,6 +235,7 @@ def test_manifest_yaml_shape_for_command(customer_project):
     assert field_map["name"]["required"] is True
     assert field_map["email"]["type"] == "str"
     assert field_map["tax_id"]["required"] is False
+    assert field_map["tax_id"]["nullable"] is True
 
     # handler linked
     assert create["handler"]["file"] == "src/customer/handlers.py"
@@ -260,7 +297,8 @@ def test_manifest_query_includes_response_and_types(customer_project):
     assert query["response"]["type"] == "CustomerView"
     response_fields = {f["name"]: f for f in query["response"]["fields"]}
     assert response_fields["customer_id"]["type"] == "int"
-    assert response_fields["status"]["type"] == "CustomerStatus"
+    assert response_fields["status"]["type"] == "CustomerStatus | None"
+    assert response_fields["status"]["nullable"] is True
 
     types = {(t["kind"], t["name"]): t for t in query["types"]}
     status_enum = types[("enum", "CustomerStatus")]

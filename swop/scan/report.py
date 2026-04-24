@@ -22,6 +22,7 @@ class FieldDef:
     name: str
     type: str = ""
     required: bool = True
+    nullable: bool = False
     default: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
@@ -29,6 +30,7 @@ class FieldDef:
             "name": self.name,
             "type": self.type,
             "required": self.required,
+            "nullable": self.nullable,
             "default": self.default,
         }
 
@@ -71,6 +73,7 @@ class Detection:
                         name=str(item.get("name", "")),
                         type=str(item.get("type", "")),
                         required=bool(item.get("required", True)),
+                        nullable=bool(item.get("nullable", False)),
                         default=item.get("default"),
                     )
                 )

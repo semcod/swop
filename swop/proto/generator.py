@@ -419,8 +419,11 @@ def _render_message(
             )
         if mapped.well_known_import:
             imports.add(mapped.well_known_import)
+        is_map = mapped.proto.startswith("map<")
+        is_nullable = bool(field_def.get("nullable", False))
+        optional_prefix = "optional " if is_nullable and not mapped.repeated and not is_map else ""
         prefix = "repeated " if mapped.repeated else ""
-        lines.append(f"  {prefix}{mapped.proto} {proto_ident} = {index};")
+        lines.append(f"  {optional_prefix}{prefix}{mapped.proto} {proto_ident} = {index};")
         index += 1
     if index == 1:
         lines.append("  // no fields detected from the manifest")

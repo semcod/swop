@@ -172,7 +172,7 @@ def test_render_proto_renders_query_response_model_and_enum_types():
                 "type": "CustomerView",
                 "fields": [
                     {"name": "customer_id", "type": "int", "required": True},
-                    {"name": "status", "type": "CustomerStatus", "required": True},
+                    {"name": "status", "type": "CustomerStatus", "required": False, "nullable": True},
                 ],
             },
             "types": [
@@ -195,9 +195,30 @@ def test_render_proto_renders_query_response_model_and_enum_types():
     assert "INACTIVE = 1;" in text
     assert "message CustomerView {" in text
     assert re.search(r"int64\s+customer_id\s+=\s+1;", text)
-    assert re.search(r"CustomerStatus\s+status\s+=\s+2;", text)
+    assert re.search(r"optional\s+CustomerStatus\s+status\s+=\s+2;", text)
     assert "message GetCustomerResponse {" in text
     assert "CustomerView result = 1;" in text
+    assert warnings == []
+
+
+def test_render_proto_emits_optional_only_for_nullable_singular_fields():
+    commands = [
+        {
+            "name": "PatchCustomer",
+            "fields": [
+                {"name": "nickname", "type": "str", "required": False, "nullable": True},
+                {"name": "tags", "type": "list[str]", "required": False, "nullable": True},
+                {"name": "meta", "type": "dict[str, Any]", "required": False, "nullable": True},
+            ],
+        }
+    ]
+
+    text, warnings = render_proto_for_context("customer", commands, [], [])
+
+    assert re.search(r"optional\s+string\s+nickname\s+=\s+1;", text)
+    assert re.search(r"repeated\s+string\s+tags\s+=\s+2;", text)
+    assert re.search(r"map<string, google.protobuf.Any>\s+meta\s+=\s+3;", text)
+    assert 'import "google/protobuf/any.proto";' in text
     assert warnings == []
 
 
