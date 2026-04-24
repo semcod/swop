@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Cross-check validator** (`swop.registry.pydantic_cross_check`): detect drift
+  between contract JSON `enum` values and Pydantic `Literal[...]` annotations
+  in the backing `layers.python` module. Opt-in via
+  `swop gen registry --cross-check-pydantic`. AST-based, so swop itself does
+  not gain a Pydantic runtime dependency.
+- Public API surface: `CrossCheckResult`, `cross_check_contract`,
+  `cross_check_contracts` (exported from `swop.registry`).
+- Regression tests (`tests/test_pydantic_cross_check.py`, 7 cases) cover the
+  c2004 ADR-012 Wave 2 bug, inverse drift, Optional/Union Literal unwrapping,
+  missing-field silent skip, and the batch API.
+
+### Fixed
+- n/a — existing behaviour unchanged; new validator is opt-in.
+
 ## [0.2.12] - 2026-04-24
 
 ### Docs

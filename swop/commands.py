@@ -30,6 +30,7 @@ from swop.tools import (
     uninstall_hook,
 )
 from swop.registry import (
+    cross_check_contracts,
     load_contracts,
     validate_contract,
     write_registry,
@@ -319,6 +320,19 @@ def _cmd_gen_registry(args: argparse.Namespace) -> int:
     if not all_valid:
         print("\n❌ Validation failed. Fix errors above before generating.", file=sys.stderr)
         return 1
+
+    # Optional cross-check against Pydantic Literal[...] annotations in layers.python.
+    if getattr(args, "cross_check_pydantic", False):
+        cross_results = cross_check_contracts(contracts, root=root)
+        cross_errors = [(c, r) for c, r in cross_results if not r.ok]
+        if cross_errors:
+            print("\n❌ Cross-check failed (contract enum vs Pydantic Literal):", file=sys.stderr)
+            for contract, result in cross_errors:
+                for err in result.errors:
+                    print(f"  ❌ {err}", file=sys.stderr)
+            return 1
+        else:
+            print("\n🔗 Cross-check passed (contract enums match Pydantic Literal[...] annotations)")
 
     if getattr(args, "check", False):
         print("\n✅ All contracts valid (--check mode, no files written)")

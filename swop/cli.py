@@ -348,6 +348,15 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Validate only; do not write output files",
     )
+    p_gen_registry.add_argument(
+        "--cross-check-pydantic",
+        action="store_true",
+        help=(
+            "Also cross-check every contract's enum values against "
+            "Literal[...] annotations found in layers.python. Catches "
+            "enum drift between contract JSON and Pydantic models."
+        ),
+    )
     p_gen_registry.set_defaults(func=_cmd_gen_registry)
 
     # ------------------------------------------------------------------

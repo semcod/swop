@@ -22,6 +22,11 @@ from swop.registry.generator import (
     write_registry,
 )
 from swop.registry.bridge import bridge_contracts_to_detections
+from swop.registry.pydantic_cross_check import (
+    CrossCheckResult,
+    cross_check_contract,
+    cross_check_contracts,
+)
 
 __all__ = [
     "Contract",
@@ -33,4 +38,7 @@ __all__ = [
     "generate_registry_md",
     "write_registry",
     "bridge_contracts_to_detections",
+    "CrossCheckResult",
+    "cross_check_contract",
+    "cross_check_contracts",
 ]
