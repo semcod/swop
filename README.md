@@ -2,20 +2,20 @@
 
 **Bi-directional runtime reconciler and drift-aware state graph for full-stack systems.**
 
-[![Version](https://img.shields.io/badge/version-0.2.15-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.16-blue)](VERSION)
 [![Python](https://img.shields.io/badge/python-3.8+-blue)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.15-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$3.30-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.7h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.16-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$3.45-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-8.8h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $3.3000 (22 commits)
-- 👤 **Human dev:** ~$873 (8.7h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $3.4500 (23 commits)
+- 👤 **Human dev:** ~$877 (8.8h @ $100/h, 30min dedup)
 
-Generated on 2026-04-24 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
+Generated on 2026-04-26 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
 
@@ -416,3 +416,17 @@ swop/
 ## License
 
 Licensed under Apache-2.0.
+## Status
+
+_Last updated by [taskill](https://github.com/oqlos/taskill) at 2026-04-25 13:39 UTC_
+
+| Metric | Value |
+|---|---|
+| HEAD | `f4f020e` |
+| Coverage | — |
+| Failing tests | — |
+| Commits in last cycle | 25 |
+
+> Added registry validation features (directional subset checks and enum/Literal cross-checks), plus many documentation updates (markdown output, changelog generation) and test/configuration improvements for the test harness and CLI.
+
+<!-- taskill:status:end -->

@@ -22,6 +22,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - n/a — existing behaviour unchanged; new validator is opt-in.
 
+- feat(registry): add directional subset check and warnings
+- feat(registry): cross-check contract enums vs Pydantic Literal annotations
+- feat(docs): code relationship mapping with two supporting modules
+- feat(tests): add configuration management system
+- fix(tests): CLI interface improvements
+- docs: add markdown output and changelog generation; update README
+
+## [0.2.16] - 2026-04-26
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+
+### Other
+- Update .taskill/state.json
+
 ## [0.2.15] - 2026-04-24
 
 ### Docs
