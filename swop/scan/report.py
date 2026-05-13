@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, List, Optional
 
 DetectionKind = str  # "command" | "query" | "event" | "handler"
 DetectionVia = str  # "decorator" | "heuristic"
@@ -57,7 +57,9 @@ class Detection:
 
     def to_dict(self) -> Dict[str, object]:
         out = asdict(self)
-        out["fields"] = [f.to_dict() if isinstance(f, FieldDef) else f for f in self.fields]
+        out["fields"] = [
+            f.to_dict() if isinstance(f, FieldDef) else f for f in self.fields
+        ]
         return out
 
     @staticmethod
@@ -124,7 +126,9 @@ class ScanReport:
 
     def add(self, detection: Detection) -> None:
         self.detections.append(detection)
-        ctx = self.contexts.setdefault(detection.context, ContextSummary(name=detection.context))
+        ctx = self.contexts.setdefault(
+            detection.context, ContextSummary(name=detection.context)
+        )
         ctx.add(detection)
 
     def kinds(self) -> Dict[str, int]:

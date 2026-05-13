@@ -6,7 +6,7 @@ Converts a ``DoqlSpec`` (or the minimal fallback) into a swop
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 from swop.graph import DataModel, ModelField, ProjectGraph, Service, UIBinding
 
@@ -80,9 +80,14 @@ def _build_services(graph: ProjectGraph, spec: Any) -> None:
                 page_name = page.get("name", "")
                 page_path = page.get("path", "")
                 if page_path:
-                    routes[page_path] = {"page": page_name, "public": page.get("public", False)}
+                    routes[page_path] = {
+                        "page": page_name,
+                        "public": page.get("public", False),
+                    }
                 elif page_name:
-                    routes[f"/{page_name.lower().replace(' ', '-')}"] = {"page": page_name}
+                    routes[f"/{page_name.lower().replace(' ', '-')}"] = {
+                        "page": page_name
+                    }
 
         for client in api_clients:
             if hasattr(client, "name") and hasattr(client, "base_url"):
@@ -169,7 +174,11 @@ def _build_workflows(graph: ProjectGraph, spec: Any) -> None:
             action = getattr(step, "action", "")
             target = getattr(step, "target", None)
             params = getattr(step, "params", {})
-            routes[f"/step/{idx}"] = {"action": action, "target": target, "params": params}
+            routes[f"/step/{idx}"] = {
+                "action": action,
+                "target": target,
+                "params": params,
+            }
 
         graph.services[service_name] = Service(name=service_name, routes=routes)
 

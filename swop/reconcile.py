@@ -46,9 +46,7 @@ class DriftDetector:
         drift = Drift()
 
         model_fields = {
-            f_name
-            for model in graph.models.values()
-            for f_name in model.fields
+            f_name for model in graph.models.values() for f_name in model.fields
         }
 
         for binding in graph.ui_bindings:
@@ -56,9 +54,7 @@ class DriftDetector:
                 drift.invalid_bindings.append(binding.selector)
 
         declared_routes = {
-            route
-            for service in graph.services.values()
-            for route in service.routes
+            route for service in graph.services.values() for route in service.routes
         }
         actual_routes = set(actual.get("routes", []))
 
@@ -97,9 +93,7 @@ class ResyncEngine:
             print(f"[AUTO-HEAL] removing invalid binding: {selector}")
 
         invalid = set(drift.invalid_bindings)
-        graph.ui_bindings = [
-            b for b in graph.ui_bindings if b.selector not in invalid
-        ]
+        graph.ui_bindings = [b for b in graph.ui_bindings if b.selector not in invalid]
 
     @staticmethod
     def _log_drift(drift: Drift) -> None:

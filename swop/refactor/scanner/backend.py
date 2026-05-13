@@ -10,7 +10,7 @@ import ast
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Set, Tuple
+from typing import Iterable, List, Optional, Set, Tuple
 
 
 _RX_ROUTE_DECORATOR = re.compile(
@@ -141,7 +141,14 @@ class BackendScanner:
                 base_names.append(base.id)
             elif isinstance(base, ast.Attribute):
                 base_names.append(base.attr)
-        hints = {"Base", "BaseModel", "BaseEntity", "Model", "SQLModel", "DeclarativeBase"}
+        hints = {
+            "Base",
+            "BaseModel",
+            "BaseEntity",
+            "Model",
+            "SQLModel",
+            "DeclarativeBase",
+        }
         return any(name in hints for name in base_names)
 
     def _extract_routes(self, path: Path) -> List[RouteSignals]:

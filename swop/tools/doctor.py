@@ -11,7 +11,6 @@ missing *required* tools are reported as errors (``status="fail"``).
 
 from __future__ import annotations
 
-import os
 import re
 import shutil
 import subprocess
@@ -67,7 +66,9 @@ class DoctorReport:
         if self.failed:
             lines.append(f"\n{len(self.failed)} check(s) failed.")
         elif self.warnings:
-            lines.append(f"\nAll required checks passed ({len(self.warnings)} warning(s)).")
+            lines.append(
+                f"\nAll required checks passed ({len(self.warnings)} warning(s))."
+            )
         else:
             lines.append("\nAll checks passed.")
         return "\n".join(lines)

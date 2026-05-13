@@ -10,7 +10,7 @@ The registry is process-global and reset-able for tests.
 
 from dataclasses import dataclass, field
 from threading import RLock
-from typing import Callable, Dict, Iterable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple
 
 CqrsKind = str  # "command" | "query" | "event" | "handler"
 

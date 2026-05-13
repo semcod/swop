@@ -41,7 +41,9 @@ class SwopRuntime:
     # DSL ingestion
     # ------------------------------------------------------------------
 
-    def add_model(self, name: str, fields: Iterable[str], field_type: str = "float") -> None:
+    def add_model(
+        self, name: str, fields: Iterable[str], field_type: str = "float"
+    ) -> None:
         self.graph.models[name] = DataModel(
             name=name,
             fields={f: ModelField(f, field_type) for f in fields},

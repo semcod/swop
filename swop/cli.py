@@ -37,15 +37,21 @@ def _build_parser() -> argparse.ArgumentParser:
 
     sub = parser.add_subparsers(dest="command", required=True)
 
-    sub.add_parser("sync", help="Run one reconciliation pass").set_defaults(func=_cmd_sync)
+    sub.add_parser("sync", help="Run one reconciliation pass").set_defaults(
+        func=_cmd_sync
+    )
 
     p_inspect = sub.add_parser("inspect", help="Introspect backend or frontend")
     p_inspect.add_argument("target", choices=["backend", "frontend"])
     p_inspect.set_defaults(func=_cmd_inspect)
 
-    sub.add_parser("diff", help="Compute drift and exit non-zero if drift exists").set_defaults(func=_cmd_diff)
+    sub.add_parser(
+        "diff", help="Compute drift and exit non-zero if drift exists"
+    ).set_defaults(func=_cmd_diff)
 
-    sub.add_parser("state", help="Dump current runtime state as YAML").set_defaults(func=_cmd_state)
+    sub.add_parser("state", help="Dump current runtime state as YAML").set_defaults(
+        func=_cmd_state
+    )
 
     p_export = sub.add_parser("export", help="Export graph to an external format")
     p_export.add_argument("target", choices=["docker"])
@@ -92,7 +98,9 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p_hook_uninstall.set_defaults(func=_cmd_hook)
 
-    p_hook_status = hook_sub.add_parser("status", help="Show whether the hook is installed")
+    p_hook_status = hook_sub.add_parser(
+        "status", help="Show whether the hook is installed"
+    )
     p_hook_status.set_defaults(func=_cmd_hook)
 
     p_init = sub.add_parser(
@@ -244,7 +252,9 @@ def _build_parser() -> argparse.ArgumentParser:
         "grpc-python",
         help="Compile .proto files into Python + gRPC stubs",
     )
-    p_gen_grpc_py.add_argument("--root", default=None, help="Project root (default: cwd)")
+    p_gen_grpc_py.add_argument(
+        "--root", default=None, help="Project root (default: cwd)"
+    )
     p_gen_grpc_py.add_argument("--config", default=None, help="Path to swop.yaml")
     p_gen_grpc_py.add_argument(
         "--proto",
@@ -267,7 +277,9 @@ def _build_parser() -> argparse.ArgumentParser:
         "grpc-ts",
         help="Compile .proto files into TypeScript bindings (requires protoc + ts-proto)",
     )
-    p_gen_grpc_ts.add_argument("--root", default=None, help="Project root (default: cwd)")
+    p_gen_grpc_ts.add_argument(
+        "--root", default=None, help="Project root (default: cwd)"
+    )
     p_gen_grpc_ts.add_argument("--config", default=None, help="Path to swop.yaml")
     p_gen_grpc_ts.add_argument(
         "--proto",
@@ -290,7 +302,9 @@ def _build_parser() -> argparse.ArgumentParser:
         "services",
         help="Render per-context service packages + docker-compose.cqrs.yml",
     )
-    p_gen_services.add_argument("--root", default=None, help="Project root (default: cwd)")
+    p_gen_services.add_argument(
+        "--root", default=None, help="Project root (default: cwd)"
+    )
     p_gen_services.add_argument("--config", default=None, help="Path to swop.yaml")
     p_gen_services.add_argument(
         "--manifests",
@@ -337,7 +351,9 @@ def _build_parser() -> argparse.ArgumentParser:
         "registry",
         help="Generate registry.json + REGISTRY.md from contracts/*.json files",
     )
-    p_gen_registry.add_argument("--root", default=None, help="Project root (default: cwd)")
+    p_gen_registry.add_argument(
+        "--root", default=None, help="Project root (default: cwd)"
+    )
     p_gen_registry.add_argument(
         "--contracts",
         default=None,
@@ -432,16 +448,24 @@ def _build_parser() -> argparse.ArgumentParser:
         "refactor",
         help="Extract modules from a full-stack project into an output directory",
     )
-    p_refactor.add_argument("--frontend", required=True, help="Path to the frontend project root")
-    p_refactor.add_argument("--backend", default=None, help="Path to the backend project root")
-    p_refactor.add_argument("--db", default=None, help="Path to the database project root")
+    p_refactor.add_argument(
+        "--frontend", required=True, help="Path to the frontend project root"
+    )
+    p_refactor.add_argument(
+        "--backend", default=None, help="Path to the backend project root"
+    )
+    p_refactor.add_argument(
+        "--db", default=None, help="Path to the database project root"
+    )
     p_refactor.add_argument(
         "--route",
         action="append",
         default=[],
         help="Route seed (repeatable), e.g. --route /connect-data",
     )
-    p_refactor.add_argument("--out", default="modules", help="Output directory for extracted modules")
+    p_refactor.add_argument(
+        "--out", default="modules", help="Output directory for extracted modules"
+    )
     p_refactor.add_argument(
         "--strategy",
         choices=["seeded", "louvain"],
@@ -453,7 +477,9 @@ def _build_parser() -> argparse.ArgumentParser:
         default="src/pages",
         help="Subdirectory of the frontend root containing page files",
     )
-    p_refactor.add_argument("--json", action="store_true", help="Emit a JSON summary instead of text")
+    p_refactor.add_argument(
+        "--json", action="store_true", help="Emit a JSON summary instead of text"
+    )
     p_refactor.set_defaults(func=_cmd_refactor)
 
     p_generate = sub.add_parser(

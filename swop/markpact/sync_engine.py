@@ -12,11 +12,11 @@ Provides two-way sync between a manifest and the actual source tree::
 from __future__ import annotations
 
 import hashlib
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from swop.markpact.parser import ManifestBlock, ManifestParser
+from swop.markpact.parser import ManifestParser
 
 
 @dataclass
@@ -52,7 +52,9 @@ class ManifestSyncEngine:
 
             full = self.base_dir / path
             manifest_hash = _hash(block.body)
-            disk_hash = _hash(full.read_text(encoding="utf-8")) if full.exists() else None
+            disk_hash = (
+                _hash(full.read_text(encoding="utf-8")) if full.exists() else None
+            )
 
             statuses.append(
                 SyncStatus(
@@ -84,10 +86,16 @@ class ManifestSyncEngine:
             if s.identical:
                 result.append((s.path, "ok", "identical"))
             elif not s.on_disk:
-                result.append((s.path, "missing", f"manifest hash={s.manifest_hash[:8]}"))
+                result.append(
+                    (s.path, "missing", f"manifest hash={s.manifest_hash[:8]}")
+                )
             else:
                 result.append(
-                    (s.path, "modified", f"manifest={s.manifest_hash[:8]} disk={s.disk_hash[:8]}")
+                    (
+                        s.path,
+                        "modified",
+                        f"manifest={s.manifest_hash[:8]} disk={s.disk_hash[:8]}",
+                    )
                 )
 
         # Untracked files
@@ -99,7 +107,7 @@ class ManifestSyncEngine:
         }
         for f in self.base_dir.rglob("*"):
             if f.is_file() and str(f.relative_to(self.base_dir)) not in tracked:
-                if f.name.endswith(('.md', '.pyc', '.pyo')):
+                if f.name.endswith((".md", ".pyc", ".pyo")):
                     continue
                 rel = str(f.relative_to(self.base_dir))
                 result.append((rel, "untracked", f"{f.stat().st_size} bytes"))
@@ -129,7 +137,9 @@ class ManifestSyncEngine:
 
         return written
 
-    def sync_from_disk(self, manifest_path: Path, *, dry_run: bool = False) -> Dict[str, str]:
+    def sync_from_disk(
+        self, manifest_path: Path, *, dry_run: bool = False
+    ) -> Dict[str, str]:
         """Read tracked files from disk and return {path: content}.
 
         The caller is responsible for writing the updated manifest.

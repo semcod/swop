@@ -25,12 +25,11 @@ The layout produced for each module::
 import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional
+from typing import Dict, List, Optional
 
 import yaml
 
-from swop.refactor.scanner.backend import BackendSignals, ModelSignals
-from swop.refactor.scanner.db import DbSignals
+from swop.refactor.scanner.backend import ModelSignals
 from swop.refactor.scanner.frontend import PageSignals
 
 
@@ -75,7 +74,9 @@ class ModuleBuilder:
 
     # ---------------- sections ---------------------------------------
 
-    def _write_ui(self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult) -> None:
+    def _write_ui(
+        self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult
+    ) -> None:
         if not spec.pages:
             return
         ui_dir = module_path / "ui"
@@ -105,7 +106,9 @@ class ModuleBuilder:
         selectors_path.write_text(yaml.dump(payload, sort_keys=False), encoding="utf-8")
         result.files_written.append(selectors_path)
 
-    def _write_api(self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult) -> None:
+    def _write_api(
+        self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult
+    ) -> None:
         if not (spec.endpoints or spec.api_calls):
             return
         api_dir = module_path / "api"
@@ -123,7 +126,9 @@ class ModuleBuilder:
         )
         result.files_written.append(path)
 
-    def _write_models(self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult) -> None:
+    def _write_models(
+        self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult
+    ) -> None:
         if not spec.models:
             return
         model_dir = module_path / "model"
@@ -162,7 +167,9 @@ class ModuleBuilder:
         )
         result.files_written.append(summary_path)
 
-    def _write_db(self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult) -> None:
+    def _write_db(
+        self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult
+    ) -> None:
         if not spec.tables:
             return
         db_dir = module_path / "db"
@@ -174,7 +181,9 @@ class ModuleBuilder:
         )
         result.files_written.append(path)
 
-    def _write_api_server(self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult) -> None:
+    def _write_api_server(
+        self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult
+    ) -> None:
         """Generate a generic FastAPI server that serves the module manifest, UI files, and models."""
         api_dir = module_path / "api"
         api_dir.mkdir(parents=True, exist_ok=True)
@@ -281,7 +290,9 @@ if ui_root.exists():
         path.write_text(body, encoding="utf-8")
         result.files_written.append(path)
 
-    def _write_manifest(self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult) -> None:
+    def _write_manifest(
+        self, spec: ModuleSpec, module_path: Path, result: ModuleWriteResult
+    ) -> None:
         manifest = {
             "name": spec.name,
             "route": spec.route,

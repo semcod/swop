@@ -31,7 +31,7 @@ Usage::
 """
 
 import inspect
-from typing import Callable, Iterable, Optional, Type, TypeVar, Union
+from typing import Callable, Iterable, Optional, TypeVar, Union
 
 from swop.cqrs.registry import CqrsRecord, get_registry
 

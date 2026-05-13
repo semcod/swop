@@ -22,8 +22,7 @@ class StateExporter:
         return {
             "graph_version": graph.version,
             "models": {
-                name: list(model.fields.keys())
-                for name, model in graph.models.items()
+                name: list(model.fields.keys()) for name, model in graph.models.items()
             },
             "services": {
                 name: sorted(service.routes.keys())

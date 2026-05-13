@@ -41,7 +41,7 @@ def render_html(report: ScanReport) -> str:
     )
     detection_rows = "\n".join(
         (
-            f"<tr class=\"via-{html.escape(d.via)}\">"
+            f'<tr class="via-{html.escape(d.via)}">'
             f"<td>{html.escape(d.kind)}</td>"
             f"<td>{html.escape(d.context)}</td>"
             f"<td>{html.escape(d.name)}</td>"
@@ -85,12 +85,12 @@ code {{ font-family: ui-monospace, monospace; background: #f3f3f3; padding: 0 0.
 
 <h2>Summary</h2>
 <div class="summary-grid">
-  <div><strong>{kinds['command']}</strong> commands</div>
-  <div><strong>{kinds['query']}</strong> queries</div>
-  <div><strong>{kinds['event']}</strong> events</div>
-  <div><strong>{kinds['handler']}</strong> handlers</div>
-  <div><strong>{via['decorator']}</strong> via decorator</div>
-  <div><strong>{via['heuristic']}</strong> via heuristic</div>
+  <div><strong>{kinds["command"]}</strong> commands</div>
+  <div><strong>{kinds["query"]}</strong> queries</div>
+  <div><strong>{kinds["event"]}</strong> events</div>
+  <div><strong>{kinds["handler"]}</strong> handlers</div>
+  <div><strong>{via["decorator"]}</strong> via decorator</div>
+  <div><strong>{via["heuristic"]}</strong> via heuristic</div>
   <div><strong>{report.files_scanned}</strong> files scanned</div>
   <div><strong>{report.files_cached}</strong> files cached</div>
 </div>
@@ -117,7 +117,7 @@ code {{ font-family: ui-monospace, monospace; background: #f3f3f3; padding: 0 0.
 </tbody>
 </table>
 
-{f'<h2>Errors ({len(report.errors)})</h2><ul>{error_items}</ul>' if report.errors else ''}
+{f"<h2>Errors ({len(report.errors)})</h2><ul>{error_items}</ul>" if report.errors else ""}
 
 </body>
 </html>

@@ -9,7 +9,6 @@ used by downstream code generators.
 from __future__ import annotations
 
 import json
-import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -82,7 +81,15 @@ def validate_contract(
     kind = contract.get("kind")
 
     if "command" in contract:
-        required = ["command", "kind", "version", "input", "output", "transport", "layers"]
+        required = [
+            "command",
+            "kind",
+            "version",
+            "input",
+            "output",
+            "transport",
+            "layers",
+        ]
         for key in required:
             if key not in contract:
                 errors.append(f"Missing required field: '{key}'")
@@ -94,7 +101,15 @@ def validate_contract(
             errors.append("Cannot validate layer paths without a project root")
 
     elif "query" in contract:
-        required = ["query", "kind", "version", "input", "output", "transport", "layers"]
+        required = [
+            "query",
+            "kind",
+            "version",
+            "input",
+            "output",
+            "transport",
+            "layers",
+        ]
         for key in required:
             if key not in contract:
                 errors.append(f"Missing required field: '{key}'")
@@ -144,7 +159,7 @@ def validate_all(
     for c in contracts:
         errors = validate_contract(c, root=root)
         if errors:
-            msg = f"{c.get('_file', '?' )}: {'; '.join(errors)}"
+            msg = f"{c.get('_file', '?')}: {'; '.join(errors)}"
             if fail_fast:
                 raise ContractValidationError(msg)
             all_errors.append(msg)

@@ -199,9 +199,7 @@ class WatchEngine:
 # ----------------------------------------------------------------------
 
 
-def _diff_snapshots(
-    before: Dict[Path, float], after: Dict[Path, float]
-) -> List[Path]:
+def _diff_snapshots(before: Dict[Path, float], after: Dict[Path, float]) -> List[Path]:
     changed: List[Path] = []
     for path, mtime in after.items():
         prev = before.get(path)

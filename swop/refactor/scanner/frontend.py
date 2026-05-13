@@ -17,7 +17,7 @@ frontends without a TypeScript toolchain.
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Set
+from typing import Iterable, List, Set
 
 
 _RX_ID = re.compile(r'id\s*=\s*"([^"]+)"')
@@ -26,7 +26,9 @@ _RX_SELECT_ID = re.compile(r"""querySelector(?:All)?\(\s*['"]\s*#([A-Za-z0-9_\-:
 _RX_DATA_ACTION = re.compile(r'data-action\s*=\s*"([^"]+)"')
 _RX_ADD_EVENT = re.compile(r"""addEventListener\(\s*['"]([A-Za-z0-9_]+)['"]""")
 _RX_IMPORT = re.compile(r"""from\s+['"]([^'"]+)['"]""")
-_RX_API_CALL = re.compile(r"""\b([A-Z][A-Za-z0-9_]*API|[A-Z][A-Za-z0-9_]*Service)\.([a-zA-Z_][A-Za-z0-9_]*)\s*\(""")
+_RX_API_CALL = re.compile(
+    r"""\b([A-Z][A-Za-z0-9_]*API|[A-Z][A-Za-z0-9_]*Service)\.([a-zA-Z_][A-Za-z0-9_]*)\s*\("""
+)
 _RX_FETCH = re.compile(r"""(?:fetch|axios\.[a-z]+)\(\s*['"`]([^'"`]+)['"`]""")
 
 
@@ -45,7 +47,13 @@ class PageSignals:
 class FrontendScanner:
     """Scan a frontend project root and emit ``PageSignals`` per page."""
 
-    DEFAULT_GLOBS = ("**/*.page.ts", "**/*.page.tsx", "**/*.page.js", "**/*.vue", "**/*.html")
+    DEFAULT_GLOBS = (
+        "**/*.page.ts",
+        "**/*.page.tsx",
+        "**/*.page.js",
+        "**/*.vue",
+        "**/*.html",
+    )
 
     def __init__(
         self,
@@ -89,7 +97,9 @@ class FrontendScanner:
             {*_RX_DATA_ACTION.findall(text), *_RX_ADD_EVENT.findall(text)}
         )
         signals.imports = sorted(set(_RX_IMPORT.findall(text)))
-        signals.api_calls = sorted({f"{cls}.{fn}" for cls, fn in _RX_API_CALL.findall(text)})
+        signals.api_calls = sorted(
+            {f"{cls}.{fn}" for cls, fn in _RX_API_CALL.findall(text)}
+        )
         signals.fetched_urls = sorted(set(_RX_FETCH.findall(text)))
 
         return signals

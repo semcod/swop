@@ -23,10 +23,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from swop.config import SwopConfig
-from swop.resolve import ChangeKind, resolve_schema_drift
+from swop.resolve import resolve_schema_drift
 from swop.scan import scan_project
 
 
@@ -99,7 +99,9 @@ class DeepReport:
         lines = [f"[DOCTOR --deep] {len(self.checks)} layer(s) checked"]
         lines.extend(c.format() for c in self.checks)
         if self.failed:
-            lines.append(f"\n{len(self.failed)} layer(s) failed — run the matching `swop gen …` command.")
+            lines.append(
+                f"\n{len(self.failed)} layer(s) failed — run the matching `swop gen …` command."
+            )
         elif self.warnings:
             lines.append(f"\nAll layers pass with {len(self.warnings)} warning(s).")
         else:
@@ -134,9 +136,8 @@ def _check_scan_vs_manifests(config: SwopConfig) -> DeepCheck:
         return check
 
     counts = resolution.counts()
-    check.summary = (
-        f"{counts['total']} change(s)"
-        + (f", {counts['breaking']} breaking" if counts["breaking"] else "")
+    check.summary = f"{counts['total']} change(s)" + (
+        f", {counts['breaking']} breaking" if counts["breaking"] else ""
     )
     for change in resolution.changes:
         severity: CheckStatus = "fail" if change.breaking else "warn"
@@ -166,9 +167,7 @@ def _check_manifests_vs_proto(config: SwopConfig) -> DeepCheck:
         check.summary = "proto not generated — run `swop gen proto`"
         return check
 
-    contexts = sorted(
-        p.name for p in manifests_dir.iterdir() if p.is_dir()
-    )
+    contexts = sorted(p.name for p in manifests_dir.iterdir() if p.is_dir())
     missing: List[str] = []
     stale: List[str] = []
 

@@ -36,20 +36,24 @@ from swop.markpact.spec_models import (
 )
 
 if TYPE_CHECKING:
-    from doql.parsers.models import DoqlSpec
+    pass
 
 
 # ─── Error types ───────────────────────────────────────────────────
 
+
 class MarkpactValidationError(Exception):
     """Raised when a manifest block cannot be parsed into a DOQL spec."""
 
-    def __init__(self, message: str, blocks: Optional[List[ManifestBlock]] = None) -> None:
+    def __init__(
+        self, message: str, blocks: Optional[List[ManifestBlock]] = None
+    ) -> None:
         super().__init__(message)
         self.blocks = blocks or []
 
 
 # ─── Bridge ────────────────────────────────────────────────────────
+
 
 class DoqlBridge:
     """Convert a collection of ``ManifestBlock`` objects into a DoqlSpec."""
@@ -65,6 +69,7 @@ class DoqlBridge:
         try:
             from doql.parsers.models import DoqlSpec  # type: ignore[import]
             from doql.importers.yaml_importer import import_yaml  # type: ignore[import]
+
             self._spec_cls = DoqlSpec
             self._import_yaml = import_yaml
             self._has_doql = True
@@ -72,12 +77,27 @@ class DoqlBridge:
             self._has_doql = False
 
     # Kinds that the bridge understands and maps to top-level spec keys
-    _STRUCTURAL_KINDS = frozenset({
-        "doql", "workflows", "roles", "integrations", "webhooks",
-        "api_clients", "environments", "infrastructures", "ingresses",
-        "ci_configs", "data_sources", "templates", "documents", "reports",
-        "scenarios", "tests", "deploy",
-    })
+    _STRUCTURAL_KINDS = frozenset(
+        {
+            "doql",
+            "workflows",
+            "roles",
+            "integrations",
+            "webhooks",
+            "api_clients",
+            "environments",
+            "infrastructures",
+            "ingresses",
+            "ci_configs",
+            "data_sources",
+            "templates",
+            "documents",
+            "reports",
+            "scenarios",
+            "tests",
+            "deploy",
+        }
+    )
 
     def from_blocks(self, blocks: List[ManifestBlock]) -> Any:
         """Merge all known ``markpact:*`` blocks into a single DoqlSpec.
@@ -139,16 +159,20 @@ class DoqlBridge:
         lang = block.lang.lower()
         if lang in ("yaml", "yml"):
             import yaml
+
             return yaml.safe_load(block.body) or {}
         if lang == "json":
             import json
+
             return json.loads(block.body)
         if lang in ("doql", "css", "less", "sass"):
             return {"_raw_doql": block.body}
         raise ValueError(f"Unsupported doql block language: {lang}")
 
     @staticmethod
-    def _merge_fragment(base: Dict[str, Any], fragment: Dict[str, Any]) -> Dict[str, Any]:
+    def _merge_fragment(
+        base: Dict[str, Any], fragment: Dict[str, Any]
+    ) -> Dict[str, Any]:
         result = dict(base)
 
         for key, value in fragment.items():
@@ -182,291 +206,292 @@ class DoqlBridge:
                     raise
         return self._build_minimal_spec(data)
 
-
     # --- per-type loaders (extracted to shrink cyclomatic complexity) ---
 
     @staticmethod
     def _load_entities(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for e in data.get('entities', []):
+        for e in data.get("entities", []):
             if not isinstance(e, dict):
                 continue
             fields = [
                 _MinimalEntityField(
-                    name=f.get('name', 'unknown'),
-                    type=f.get('type', 'string'),
-                    required=f.get('required', False),
+                    name=f.get("name", "unknown"),
+                    type=f.get("type", "string"),
+                    required=f.get("required", False),
                 )
-                for f in e.get('fields', [])
+                for f in e.get("fields", [])
             ]
-            spec.entities.append(_MinimalEntity(name=e.get('name', 'unknown'), fields=fields))
+            spec.entities.append(
+                _MinimalEntity(name=e.get("name", "unknown"), fields=fields)
+            )
 
     @staticmethod
     def _load_databases(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for d in data.get('databases', []):
+        for d in data.get("databases", []):
             if not isinstance(d, dict):
                 continue
             spec.databases.append(
                 _MinimalDatabase(
-                    name=d.get('name', 'default'),
-                    type=d.get('type', 'sqlite'),
-                    file=d.get('file'),
-                    url=d.get('url'),
+                    name=d.get("name", "default"),
+                    type=d.get("type", "sqlite"),
+                    file=d.get("file"),
+                    url=d.get("url"),
                 )
             )
 
     @staticmethod
     def _load_interfaces(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for i in data.get('interfaces', []):
+        for i in data.get("interfaces", []):
             if not isinstance(i, dict):
                 continue
             spec.interfaces.append(
                 _MinimalInterface(
-                    name=i.get('name', 'default'),
-                    type=i.get('type', 'spa'),
-                    pages=i.get('pages', []),
-                    framework=i.get('framework'),
-                    target=i.get('target'),
+                    name=i.get("name", "default"),
+                    type=i.get("type", "spa"),
+                    pages=i.get("pages", []),
+                    framework=i.get("framework"),
+                    target=i.get("target"),
                 )
             )
 
     @staticmethod
     def _load_workflows(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for w in data.get('workflows', []):
+        for w in data.get("workflows", []):
             if not isinstance(w, dict):
                 continue
             steps = [
                 _MinimalWorkflowStep(
-                    action=s.get('action', ''),
-                    target=s.get('target'),
-                    params=s.get('params', {}),
+                    action=s.get("action", ""),
+                    target=s.get("target"),
+                    params=s.get("params", {}),
                 )
-                for s in w.get('steps', [])
+                for s in w.get("steps", [])
             ]
             spec.workflows.append(
                 _MinimalWorkflow(
-                    name=w.get('name', ''),
-                    trigger=w.get('trigger'),
-                    schedule=w.get('schedule'),
-                    condition=w.get('condition'),
+                    name=w.get("name", ""),
+                    trigger=w.get("trigger"),
+                    schedule=w.get("schedule"),
+                    condition=w.get("condition"),
                     steps=steps,
                 )
             )
 
     @staticmethod
     def _load_roles(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for r in data.get('roles', []):
+        for r in data.get("roles", []):
             if not isinstance(r, dict):
                 continue
             spec.roles.append(
                 _MinimalRole(
-                    name=r.get('name', ''),
-                    permissions=r.get('permissions', []),
+                    name=r.get("name", ""),
+                    permissions=r.get("permissions", []),
                 )
             )
 
     @staticmethod
     def _load_integrations(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for ing in data.get('integrations', []):
+        for ing in data.get("integrations", []):
             if not isinstance(ing, dict):
                 continue
             spec.integrations.append(
                 _MinimalIntegration(
-                    name=ing.get('name', ''),
-                    type=ing.get('type', 'email'),
-                    config=ing.get('config', {}),
+                    name=ing.get("name", ""),
+                    type=ing.get("type", "email"),
+                    config=ing.get("config", {}),
                 )
             )
 
     @staticmethod
     def _load_webhooks(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for wh in data.get('webhooks', []):
+        for wh in data.get("webhooks", []):
             if not isinstance(wh, dict):
                 continue
             spec.webhooks.append(
                 _MinimalWebhook(
-                    name=wh.get('name', ''),
-                    source=wh.get('source'),
-                    event=wh.get('event'),
-                    auth=wh.get('auth'),
-                    secret=wh.get('secret'),
+                    name=wh.get("name", ""),
+                    source=wh.get("source"),
+                    event=wh.get("event"),
+                    auth=wh.get("auth"),
+                    secret=wh.get("secret"),
                 )
             )
 
     @staticmethod
     def _load_api_clients(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for ac in data.get('api_clients', []):
+        for ac in data.get("api_clients", []):
             if not isinstance(ac, dict):
                 continue
             spec.api_clients.append(
                 _MinimalApiClient(
-                    name=ac.get('name', ''),
-                    base_url=ac.get('base_url'),
-                    auth=ac.get('auth'),
-                    token=ac.get('token'),
-                    openapi=ac.get('openapi'),
-                    retry=ac.get('retry', 0),
-                    timeout=ac.get('timeout'),
-                    methods=ac.get('methods', []),
+                    name=ac.get("name", ""),
+                    base_url=ac.get("base_url"),
+                    auth=ac.get("auth"),
+                    token=ac.get("token"),
+                    openapi=ac.get("openapi"),
+                    retry=ac.get("retry", 0),
+                    timeout=ac.get("timeout"),
+                    methods=ac.get("methods", []),
                 )
             )
 
     @staticmethod
     def _load_data_sources(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for ds in data.get('data_sources', []):
+        for ds in data.get("data_sources", []):
             if not isinstance(ds, dict):
                 continue
             spec.data_sources.append(
                 _MinimalDataSource(
-                    name=ds.get('name', ''),
-                    source=ds.get('source', 'json'),
-                    file=ds.get('file'),
-                    url=ds.get('url'),
-                    schema=ds.get('schema'),
-                    auth=ds.get('auth'),
-                    token=ds.get('token'),
-                    cache=ds.get('cache'),
-                    read_only=ds.get('read_only', False),
-                    env_overrides=ds.get('env_overrides', False),
+                    name=ds.get("name", ""),
+                    source=ds.get("source", "json"),
+                    file=ds.get("file"),
+                    url=ds.get("url"),
+                    schema=ds.get("schema"),
+                    auth=ds.get("auth"),
+                    token=ds.get("token"),
+                    cache=ds.get("cache"),
+                    read_only=ds.get("read_only", False),
+                    env_overrides=ds.get("env_overrides", False),
                 )
             )
 
     @staticmethod
     def _load_templates(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for t in data.get('templates', []):
+        for t in data.get("templates", []):
             if not isinstance(t, dict):
                 continue
             spec.templates.append(
                 _MinimalTemplate(
-                    name=t.get('name', ''),
-                    type=t.get('type', 'html'),
-                    file=t.get('file'),
-                    content=t.get('content'),
-                    vars=t.get('vars', []),
-                    engine=t.get('engine', 'jinja2'),
+                    name=t.get("name", ""),
+                    type=t.get("type", "html"),
+                    file=t.get("file"),
+                    content=t.get("content"),
+                    vars=t.get("vars", []),
+                    engine=t.get("engine", "jinja2"),
                 )
             )
 
     @staticmethod
     def _load_documents(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for d in data.get('documents', []):
+        for d in data.get("documents", []):
             if not isinstance(d, dict):
                 continue
             spec.documents.append(
                 _MinimalDocument(
-                    name=d.get('name', ''),
-                    type=d.get('type', 'pdf'),
-                    template=d.get('template'),
-                    data=d.get('data', {}),
-                    output=d.get('output'),
-                    styling=d.get('styling', {}),
-                    metadata=d.get('metadata', {}),
-                    signature=d.get('signature', {}),
-                    hooks=d.get('hooks', {}),
-                    partials=d.get('partials', []),
+                    name=d.get("name", ""),
+                    type=d.get("type", "pdf"),
+                    template=d.get("template"),
+                    data=d.get("data", {}),
+                    output=d.get("output"),
+                    styling=d.get("styling", {}),
+                    metadata=d.get("metadata", {}),
+                    signature=d.get("signature", {}),
+                    hooks=d.get("hooks", {}),
+                    partials=d.get("partials", []),
                 )
             )
 
     @staticmethod
     def _load_reports(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for r in data.get('reports', []):
+        for r in data.get("reports", []):
             if not isinstance(r, dict):
                 continue
             spec.reports.append(
                 _MinimalReport(
-                    name=r.get('name', ''),
-                    schedule=r.get('schedule'),
-                    template=r.get('template'),
-                    output=r.get('output', 'pdf'),
-                    query=r.get('query', {}),
-                    recipients=r.get('recipients', {}),
-                    retention=r.get('retention'),
+                    name=r.get("name", ""),
+                    schedule=r.get("schedule"),
+                    template=r.get("template"),
+                    output=r.get("output", "pdf"),
+                    query=r.get("query", {}),
+                    recipients=r.get("recipients", {}),
+                    retention=r.get("retention"),
                 )
             )
 
     @staticmethod
     def _load_environments(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for env in data.get('environments', []):
+        for env in data.get("environments", []):
             if not isinstance(env, dict):
                 continue
             spec.environments.append(
                 _MinimalEnvironment(
-                    name=env.get('name', ''),
-                    runtime=env.get('runtime', 'docker-compose'),
-                    ssh_host=env.get('ssh_host'),
-                    env_file=env.get('env_file'),
-                    replicas=env.get('replicas', 1),
-                    config=env.get('config', {}),
+                    name=env.get("name", ""),
+                    runtime=env.get("runtime", "docker-compose"),
+                    ssh_host=env.get("ssh_host"),
+                    env_file=env.get("env_file"),
+                    replicas=env.get("replicas", 1),
+                    config=env.get("config", {}),
                 )
             )
 
     @staticmethod
     def _load_infrastructures(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for infra in data.get('infrastructures', []):
+        for infra in data.get("infrastructures", []):
             if not isinstance(infra, dict):
                 continue
             spec.infrastructures.append(
                 _MinimalInfrastructure(
-                    name=infra.get('name', ''),
-                    type=infra.get('type', 'docker-compose'),
-                    provider=infra.get('provider'),
-                    namespace=infra.get('namespace'),
-                    replicas=infra.get('replicas', 1),
-                    config=infra.get('config', {}),
+                    name=infra.get("name", ""),
+                    type=infra.get("type", "docker-compose"),
+                    provider=infra.get("provider"),
+                    namespace=infra.get("namespace"),
+                    replicas=infra.get("replicas", 1),
+                    config=infra.get("config", {}),
                 )
             )
 
     @staticmethod
     def _load_ingresses(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for ing in data.get('ingresses', []):
+        for ing in data.get("ingresses", []):
             if not isinstance(ing, dict):
                 continue
             spec.ingresses.append(
                 _MinimalIngress(
-                    name=ing.get('name', ''),
-                    type=ing.get('type', 'traefik'),
-                    tls=ing.get('tls', False),
-                    cert_manager=ing.get('cert_manager'),
-                    rate_limit=ing.get('rate_limit'),
-                    config=ing.get('config', {}),
+                    name=ing.get("name", ""),
+                    type=ing.get("type", "traefik"),
+                    tls=ing.get("tls", False),
+                    cert_manager=ing.get("cert_manager"),
+                    rate_limit=ing.get("rate_limit"),
+                    config=ing.get("config", {}),
                 )
             )
 
     @staticmethod
     def _load_ci_configs(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        for ci in data.get('ci_configs', []):
+        for ci in data.get("ci_configs", []):
             if not isinstance(ci, dict):
                 continue
             spec.ci_configs.append(
                 _MinimalCiConfig(
-                    name=ci.get('name', ''),
-                    type=ci.get('type', 'github'),
-                    runner=ci.get('runner'),
-                    stages=ci.get('stages', []),
-                    config=ci.get('config', {}),
+                    name=ci.get("name", ""),
+                    type=ci.get("type", "github"),
+                    runner=ci.get("runner"),
+                    stages=ci.get("stages", []),
+                    config=ci.get("config", {}),
                 )
             )
 
     @staticmethod
     def _load_deploy(data: Dict[str, Any], spec: _MinimalDoqlSpec) -> None:
-        deploy = data.get('deploy', {})
+        deploy = data.get("deploy", {})
         if isinstance(deploy, dict):
             spec.deploy = _MinimalDeploy(
-                target=deploy.get('target', 'docker-compose'),
-                rootless=deploy.get('rootless', False),
-                containers=deploy.get('containers', []),
-                config=deploy.get('config', {}),
-                directives=deploy.get('directives', {}),
+                target=deploy.get("target", "docker-compose"),
+                rootless=deploy.get("rootless", False),
+                containers=deploy.get("containers", []),
+                config=deploy.get("config", {}),
+                directives=deploy.get("directives", {}),
             )
 
     def _build_minimal_spec(self, data: Dict[str, Any]) -> _MinimalDoqlSpec:
         spec = _MinimalDoqlSpec(
-            app_name=data.get('app_name', 'Untitled'),
-            version=data.get('version', '0.1.0'),
-            domain=data.get('domain'),
-            languages=data.get('languages', []),
-            scenarios=data.get('scenarios', []),
-            tests=data.get('tests', []),
-            env_refs=data.get('env_refs', []),
+            app_name=data.get("app_name", "Untitled"),
+            version=data.get("version", "0.1.0"),
+            domain=data.get("domain"),
+            languages=data.get("languages", []),
+            scenarios=data.get("scenarios", []),
+            tests=data.get("tests", []),
+            env_refs=data.get("env_refs", []),
         )
         self._load_entities(data, spec)
         self._load_databases(data, spec)

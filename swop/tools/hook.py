@@ -15,13 +15,12 @@ clean CLI surfacing and test assertions.
 
 from __future__ import annotations
 
-import os
 import shutil
 import stat
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 HOOK_MARKER = "# swop:managed-hook"
 HOOK_NAME = "pre-commit"
@@ -145,9 +144,7 @@ def install_hook(root: Path, *, force: bool = False) -> HookResult:
             action="install",
             hook_path=hook,
             status="skipped",
-            detail=(
-                "an existing non-swop hook is present; pass --force to overwrite."
-            ),
+            detail=("an existing non-swop hook is present; pass --force to overwrite."),
         )
     hook.write_text(HOOK_TEMPLATE, encoding="utf-8")
     _make_executable(hook)
@@ -196,9 +193,13 @@ def hook_status(root: Path) -> HookResult:
     if hook is None:
         return HookResult(action="status", status="error", detail="not a git repo")
     if not hook.exists():
-        return HookResult(action="status", hook_path=hook, status="skipped", detail="not installed")
+        return HookResult(
+            action="status", hook_path=hook, status="skipped", detail="not installed"
+        )
     if _is_swop_hook(hook):
-        return HookResult(action="status", hook_path=hook, status="ok", detail="swop-managed")
+        return HookResult(
+            action="status", hook_path=hook, status="ok", detail="swop-managed"
+        )
     return HookResult(
         action="status",
         hook_path=hook,

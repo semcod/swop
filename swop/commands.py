@@ -4,11 +4,15 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 from swop.core import SwopRuntime
 from swop.graph import DataModel, ModelField, Service
-from swop.markpact import DoqlBridge, ManifestParser, ManifestSyncEngine, build_project_graph
+from swop.markpact import (
+    DoqlBridge,
+    ManifestParser,
+    ManifestSyncEngine,
+    build_project_graph,
+)
 from swop.config import SwopConfigError, load_config
 from swop.manifests import generate_manifests
 from swop.proto import (
@@ -94,11 +98,16 @@ def _cmd_doctor(args: argparse.Namespace) -> int:
 
     deep_ok = True
     if getattr(args, "deep", False):
-        config_path = Path(args.config) if getattr(args, "config", None) else root / "swop.yaml"
+        config_path = (
+            Path(args.config) if getattr(args, "config", None) else root / "swop.yaml"
+        )
         try:
             config = load_config(config_path)
         except SwopConfigError as exc:
-            print(f"\n[ERROR] --deep requires a loadable swop.yaml: {exc}", file=sys.stderr)
+            print(
+                f"\n[ERROR] --deep requires a loadable swop.yaml: {exc}",
+                file=sys.stderr,
+            )
             return 2
         print()
         deep_report = run_deep_doctor(config)
@@ -208,7 +217,9 @@ def _cmd_gen_proto(args: argparse.Namespace) -> int:
         print(f"[ERROR] {exc}", file=sys.stderr)
         return 2
 
-    manifests_dir = Path(args.manifests) if args.manifests else config.state_path / "manifests"
+    manifests_dir = (
+        Path(args.manifests) if args.manifests else config.state_path / "manifests"
+    )
     if not manifests_dir.exists():
         print(
             f"[ERROR] manifests directory not found: {manifests_dir}\n"
@@ -232,7 +243,9 @@ def _cmd_gen_grpc_python(args: argparse.Namespace) -> int:
         print(f"[ERROR] {exc}", file=sys.stderr)
         return 2
 
-    proto_dir = Path(args.proto) if args.proto else config.state_path / "generated" / "proto"
+    proto_dir = (
+        Path(args.proto) if args.proto else config.state_path / "generated" / "proto"
+    )
     out_dir = Path(args.out) if args.out else config.state_path / "generated" / "python"
     result = compile_proto_python(proto_dir, out_dir, grpc=not args.no_grpc)
     print(result.format())
@@ -248,7 +261,9 @@ def _cmd_gen_grpc_ts(args: argparse.Namespace) -> int:
         print(f"[ERROR] {exc}", file=sys.stderr)
         return 2
 
-    proto_dir = Path(args.proto) if args.proto else config.state_path / "generated" / "proto"
+    proto_dir = (
+        Path(args.proto) if args.proto else config.state_path / "generated" / "proto"
+    )
     out_dir = Path(args.out) if args.out else config.state_path / "generated" / "ts"
     result = compile_proto_typescript(proto_dir, out_dir, ts_plugin=args.plugin)
     print(result.format())
@@ -275,7 +290,9 @@ def _cmd_gen_services(args: argparse.Namespace) -> int:
         )
         return 2
 
-    out_dir = Path(args.out) if args.out else config.state_path / "generated" / "services"
+    out_dir = (
+        Path(args.out) if args.out else config.state_path / "generated" / "services"
+    )
     proto_python_dir = (
         Path(args.proto_python)
         if args.proto_python
@@ -302,7 +319,9 @@ def _cmd_gen_services(args: argparse.Namespace) -> int:
 
 def _cmd_gen_registry(args: argparse.Namespace) -> int:
     root = Path(args.root).resolve() if args.root else Path.cwd()
-    contracts_dir = Path(args.contracts) if getattr(args, "contracts", None) else root / "contracts"
+    contracts_dir = (
+        Path(args.contracts) if getattr(args, "contracts", None) else root / "contracts"
+    )
     contracts = load_contracts(contracts_dir)
     if not contracts:
         print(f"[REGISTRY] no contracts found in {contracts_dir}")
@@ -318,7 +337,10 @@ def _cmd_gen_registry(args: argparse.Namespace) -> int:
             print(f"  ✅ {c.name}")
 
     if not all_valid:
-        print("\n❌ Validation failed. Fix errors above before generating.", file=sys.stderr)
+        print(
+            "\n❌ Validation failed. Fix errors above before generating.",
+            file=sys.stderr,
+        )
         return 1
 
     # Optional cross-check against Pydantic Literal[...] annotations in layers.python.
@@ -326,13 +348,18 @@ def _cmd_gen_registry(args: argparse.Namespace) -> int:
         cross_results = cross_check_contracts(contracts, root=root)
         cross_errors = [(c, r) for c, r in cross_results if not r.ok]
         if cross_errors:
-            print("\n❌ Cross-check failed (contract enum vs Pydantic Literal):", file=sys.stderr)
+            print(
+                "\n❌ Cross-check failed (contract enum vs Pydantic Literal):",
+                file=sys.stderr,
+            )
             for contract, result in cross_errors:
                 for err in result.errors:
                     print(f"  ❌ {err}", file=sys.stderr)
             return 1
         else:
-            print("\n🔗 Cross-check passed (contract enums match Pydantic Literal[...] annotations)")
+            print(
+                "\n🔗 Cross-check passed (contract enums match Pydantic Literal[...] annotations)"
+            )
 
     if getattr(args, "check", False):
         print("\n✅ All contracts valid (--check mode, no files written)")
@@ -418,7 +445,9 @@ def _cmd_refactor(args: argparse.Namespace) -> int:
         print(json.dumps(summary, indent=2, default=str))
     else:
         print(f"[REFACTOR] graph nodes={summary['nodes']} edges={summary['edges']}")
-        print(f"[REFACTOR] clusters={summary['clusters']} modules={len(summary['modules'])}")
+        print(
+            f"[REFACTOR] clusters={summary['clusters']} modules={len(summary['modules'])}"
+        )
         for module in summary["modules"]:
             print(
                 f"  - {module['name']:<32} route={module['route']} "
@@ -456,6 +485,7 @@ def _generate_build_graph(blocks: list, args: argparse.Namespace):
         graph = build_project_graph(spec)
     elif graph_blocks:
         import yaml
+
         graph = SwopRuntime().graph
         for block in graph_blocks:
             data = yaml.safe_load(block.body)

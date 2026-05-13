@@ -288,7 +288,9 @@ def _extract_detections(
 
 
 def _module_name_from_path(rel_path: str) -> str:
-    without_suffix = rel_path[:-len(_PY_SUFFIX)] if rel_path.endswith(_PY_SUFFIX) else rel_path
+    without_suffix = (
+        rel_path[: -len(_PY_SUFFIX)] if rel_path.endswith(_PY_SUFFIX) else rel_path
+    )
     parts = [p for p in without_suffix.split("/") if p]
     # Drop a trailing "__init__" segment so that e.g. ``pkg/__init__.py`` becomes ``pkg``.
     if parts and parts[-1] == "__init__":
@@ -461,7 +463,14 @@ def _classify(
 
     for decorator_node in node.decorator_list:
         det = _classify_decorator(
-            node, decorator_node, decorator_names, bases, qualname, module, context, rel_path
+            node,
+            decorator_node,
+            decorator_names,
+            bases,
+            qualname,
+            module,
+            context,
+            rel_path,
         )
         if det is not None:
             return det
@@ -502,7 +511,9 @@ def _handler_target_from_method(node: ast.ClassDef) -> Optional[str]:
             return annotation.id
         if isinstance(annotation, ast.Attribute):
             return annotation.attr
-        if isinstance(annotation, ast.Subscript) and isinstance(annotation.value, ast.Name):
+        if isinstance(annotation, ast.Subscript) and isinstance(
+            annotation.value, ast.Name
+        ):
             return annotation.value.id
     return None
 
@@ -546,7 +557,9 @@ def _extract_plain_field(stmt: ast.Assign, seen: set[str]) -> Iterator[FieldDef]
             continue
         default = _render_default(stmt.value)
         seen.add(name)
-        yield FieldDef(name=name, type="", required=False, nullable=False, default=default)
+        yield FieldDef(
+            name=name, type="", required=False, nullable=False, default=default
+        )
 
 
 def _extract_fields(node: ast.ClassDef) -> List[FieldDef]:

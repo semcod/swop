@@ -24,7 +24,11 @@ Usage::
 
 from swop.contracts.reader import load_contracts, validate_contract
 from swop.contracts.adapter import contracts_to_detections, ContractDetectionAdapter
-from swop.contracts.registry import ContractRegistry, generate_registry_json, generate_registry_md
+from swop.contracts.registry import (
+    ContractRegistry,
+    generate_registry_json,
+    generate_registry_md,
+)
 
 __all__ = [
     "load_contracts",

@@ -69,7 +69,9 @@ class FingerprintCache:
                 for key, entry in self._entries.items()
             },
         }
-        self.path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+        self.path.write_text(
+            json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8"
+        )
 
     # ------------------------------------------------------------------
     # API
@@ -88,7 +90,9 @@ class FingerprintCache:
 
     def put(self, key: str, fingerprint: str, detections: List[Detection]) -> None:
         self.load()
-        self._entries[key] = CacheEntry(fingerprint=fingerprint, detections=list(detections))
+        self._entries[key] = CacheEntry(
+            fingerprint=fingerprint, detections=list(detections)
+        )
 
     def drop(self, key: str) -> None:
         self.load()

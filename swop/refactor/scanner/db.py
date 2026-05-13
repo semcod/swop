@@ -9,7 +9,7 @@ valid SQLite database.
 import sqlite3
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, Iterable, List
+from typing import Iterable, List
 
 
 @dataclass

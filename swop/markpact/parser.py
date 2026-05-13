@@ -19,9 +19,9 @@ Include directives::
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 
 # New format: ```<lang> markpact:<kind> <meta>
@@ -32,9 +32,7 @@ CODEBLOCK_RE = re.compile(
 )
 
 # Include directive
-INCLUDE_RE = re.compile(
-    r"<!--\s*markpact:include\s+path=(\S+)\s*-->"
-)
+INCLUDE_RE = re.compile(r"<!--\s*markpact:include\s+path=(\S+)\s*-->")
 
 
 @dataclass
@@ -52,10 +50,12 @@ class ManifestBlock:
 
     def as_yaml(self) -> Dict[str, Any]:
         import yaml
+
         return yaml.safe_load(self.body) or {}
 
     def as_json(self) -> Dict[str, Any]:
         import json
+
         return json.loads(self.body)
 
 
@@ -91,7 +91,7 @@ class ManifestParser:
                 body=m.group("body").strip(),
                 lang=(m.group("lang") or "").strip(),
                 source_file=source_file,
-                line_start=text[:m.start()].count("\n") + 1,
+                line_start=text[: m.start()].count("\n") + 1,
             )
             blocks.append(block)
 

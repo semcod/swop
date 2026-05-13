@@ -139,7 +139,9 @@ def generate_manifests(
             path = ctx_dir / KIND_FILENAMES[kind]
             path.write_text(body, encoding="utf-8")
             result.files.append(
-                ManifestFile(context=context, kind=kind, path=path, entries=len(kind_dets))
+                ManifestFile(
+                    context=context, kind=kind, path=path, entries=len(kind_dets)
+                )
             )
 
     return result
@@ -270,7 +272,9 @@ def _render_handler(handler: Detection) -> Dict[str, object]:
     return out
 
 
-def _render_bus(detection: Detection, config: SwopConfig) -> Optional[Dict[str, object]]:
+def _render_bus(
+    detection: Detection, config: SwopConfig
+) -> Optional[Dict[str, object]]:
     if config.bus is None:
         return None
     bus_type = (config.bus.type or "rabbitmq").lower()
@@ -325,7 +329,9 @@ def _render_query_response_metadata(
     root_name = _first_custom_type_name(return_type)
     if not root_name:
         return {"type": return_type}
-    resolved = _resolve_class_definition(root_name, source_path, config.project_root, cache)
+    resolved = _resolve_class_definition(
+        root_name, source_path, config.project_root, cache
+    )
     if resolved is None:
         return {"type": root_name}
     response_path, response_class = resolved
@@ -356,7 +362,9 @@ def _collect_supporting_types(
     cache: Dict[str, Any],
 ) -> List[Dict[str, object]]:
     source_path = config.project_root / source_file
-    return _collect_supporting_types_from_fields(source_path, fields, config, cache, seen=set())
+    return _collect_supporting_types_from_fields(
+        source_path, fields, config, cache, seen=set()
+    )
 
 
 def _collect_supporting_types_from_fields(
@@ -372,7 +380,9 @@ def _collect_supporting_types_from_fields(
         for symbol in _annotation_type_names(annotation):
             if symbol in seen:
                 continue
-            resolved = _resolve_class_definition(symbol, source_path, config.project_root, cache)
+            resolved = _resolve_class_definition(
+                symbol, source_path, config.project_root, cache
+            )
             if resolved is None:
                 continue
             resolved_path, resolved_class = resolved
@@ -410,7 +420,9 @@ def _first_custom_type_name(annotation: str) -> Optional[str]:
     return names[0] if names else None
 
 
-def _find_handler_return_type(class_node: ast.ClassDef, method_name: str) -> Optional[str]:
+def _find_handler_return_type(
+    class_node: ast.ClassDef, method_name: str
+) -> Optional[str]:
     for stmt in class_node.body:
         if not isinstance(stmt, (ast.FunctionDef, ast.AsyncFunctionDef)):
             continue
@@ -451,20 +463,20 @@ def _module_classes(path: Path, cache: Dict[str, Any]) -> Dict[str, ast.ClassDef
     if module is None:
         classes[path] = {}
         return classes[path]
-    index = {
-        node.name: node
-        for node in module.body
-        if isinstance(node, ast.ClassDef)
-    }
+    index = {node.name: node for node in module.body if isinstance(node, ast.ClassDef)}
     classes[path] = index
     return index
 
 
-def _find_class_in_module(path: Path, class_name: str, cache: Dict[str, Any]) -> Optional[ast.ClassDef]:
+def _find_class_in_module(
+    path: Path, class_name: str, cache: Dict[str, Any]
+) -> Optional[ast.ClassDef]:
     return _module_classes(path, cache).get(class_name)
 
 
-def _module_imports(path: Path, project_root: Path, cache: Dict[str, Any]) -> Dict[str, List[Tuple[Path, str]]]:
+def _module_imports(
+    path: Path, project_root: Path, cache: Dict[str, Any]
+) -> Dict[str, List[Tuple[Path, str]]]:
     imports = cache["imports"]
     if path in imports:
         return imports[path]
@@ -475,7 +487,9 @@ def _module_imports(path: Path, project_root: Path, cache: Dict[str, Any]) -> Di
         return mapping
     for stmt in module.body:
         if isinstance(stmt, ast.ImportFrom):
-            targets = _resolve_import_module_paths(path, project_root, stmt.module, stmt.level)
+            targets = _resolve_import_module_paths(
+                path, project_root, stmt.module, stmt.level
+            )
             if not targets:
                 continue
             for alias in stmt.names:
@@ -488,7 +502,9 @@ def _module_imports(path: Path, project_root: Path, cache: Dict[str, Any]) -> Di
         elif isinstance(stmt, ast.Import):
             for alias in stmt.names:
                 name = alias.asname or alias.name.split(".")[-1]
-                module_targets = _resolve_import_module_paths(path, project_root, alias.name, 0)
+                module_targets = _resolve_import_module_paths(
+                    path, project_root, alias.name, 0
+                )
                 exported_name = alias.name.split(".")[-1]
                 for target in module_targets:
                     mapping.setdefault(name, []).append((target, exported_name))
@@ -533,7 +549,9 @@ def _resolve_class_definition(
     local = _find_class_in_module(source_path, class_name, cache)
     if local is not None:
         return source_path, local
-    for candidate, exported_name in _module_imports(source_path, project_root, cache).get(class_name, []):
+    for candidate, exported_name in _module_imports(
+        source_path, project_root, cache
+    ).get(class_name, []):
         target = _resolve_symbol_from_module(
             candidate,
             exported_name,
@@ -573,7 +591,9 @@ def _resolve_symbol_from_module(
     if local is not None:
         return module_path, local
 
-    for candidate, exported_name in _module_imports(module_path, project_root, cache).get(symbol_name, []):
+    for candidate, exported_name in _module_imports(
+        module_path, project_root, cache
+    ).get(symbol_name, []):
         resolved = _resolve_symbol_from_module(
             candidate,
             exported_name,
@@ -586,7 +606,9 @@ def _resolve_symbol_from_module(
     return None
 
 
-def _search_class_files(class_name: str, project_root: Path, cache: Dict[str, Any]) -> List[Path]:
+def _search_class_files(
+    class_name: str, project_root: Path, cache: Dict[str, Any]
+) -> List[Path]:
     search = cache["search"]
     if class_name in search:
         return search[class_name]
@@ -642,7 +664,9 @@ def _extract_class_fields(node: ast.ClassDef) -> List[Dict[str, object]]:
             fields.append(
                 {
                     "name": name,
-                    "type": _unparse(stmt.annotation) if stmt.annotation is not None else "",
+                    "type": _unparse(stmt.annotation)
+                    if stmt.annotation is not None
+                    else "",
                     "required": required,
                     "nullable": _annotation_is_optional(stmt.annotation),
                     **({"default": default} if default is not None else {}),
@@ -708,7 +732,9 @@ def _annotation_is_optional(node: Optional[ast.AST]) -> bool:
     return False
 
 
-def _dedupe_type_defs(type_defs: Iterable[Dict[str, object]]) -> List[Dict[str, object]]:
+def _dedupe_type_defs(
+    type_defs: Iterable[Dict[str, object]],
+) -> List[Dict[str, object]]:
     by_name: Dict[Tuple[str, str], Dict[str, object]] = {}
     for item in type_defs:
         kind = str(item.get("kind", ""))

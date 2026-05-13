@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 
 @dataclass
@@ -16,8 +16,8 @@ class Contract:
     """One JSON contract loaded from disk."""
 
     path: Path
-    name: str           # the value of "command" / "query" / "event"
-    kind: str           # CQRS_COMMAND | CQRS_QUERY | DOMAIN_EVENT | …
+    name: str  # the value of "command" / "query" / "event"
+    kind: str  # CQRS_COMMAND | CQRS_QUERY | DOMAIN_EVENT | …
     raw: Dict[str, Any]
 
 

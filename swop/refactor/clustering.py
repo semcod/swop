@@ -12,7 +12,7 @@ Two clusterers are provided:
 
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
+from typing import Dict, List, Optional, Sequence, Set, Tuple
 
 from swop.refactor.graph import RefactorGraph
 
@@ -68,7 +68,9 @@ class LouvainLike:
                 changed = True
         return changed
 
-    def _gain_for(self, node: str, cluster_id: int, exclude_self: bool = False) -> float:
+    def _gain_for(
+        self, node: str, cluster_id: int, exclude_self: bool = False
+    ) -> float:
         gain = 0.0
         for neighbor, weight in self.graph.neighbors(node):
             if exclude_self and neighbor == node:

@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import shutil
 import subprocess
-import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable, List, Optional, Sequence
@@ -99,8 +98,7 @@ def compile_proto_python(
     except ImportError:
         result.ok = False
         result.errors.append(
-            "grpc_tools is not installed. Install it with: "
-            "pip install grpcio-tools"
+            "grpc_tools is not installed. Install it with: pip install grpcio-tools"
         )
         return result
 

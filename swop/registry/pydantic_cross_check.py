@@ -144,7 +144,9 @@ def _collect_literal_fields(tree: ast.AST) -> Dict[str, Set[str]]:
     for node in ast.walk(tree):
         if isinstance(node, ast.ClassDef):
             for stmt in node.body:
-                if isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name):
+                if isinstance(stmt, ast.AnnAssign) and isinstance(
+                    stmt.target, ast.Name
+                ):
                     values = _extract_literal_values(stmt.annotation)
                     if values is not None:
                         out[stmt.target.id] = values
@@ -255,8 +257,7 @@ def _classify_drift(
         return (
             "error",
             "Contract advertises values Pydantic will reject at runtime "
-            "(HTTP 422 for client): "
-            + ", ".join(sorted(extra_in_contract)),
+            "(HTTP 422 for client): " + ", ".join(sorted(extra_in_contract)),
         )
     return None
 

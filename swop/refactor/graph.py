@@ -42,7 +42,9 @@ class RefactorGraph:
         self.nodes[node_id] = node
         return node
 
-    def add_edge(self, a: str, b: str, weight: float = 1.0, kind: str = "coupling") -> Edge:
+    def add_edge(
+        self, a: str, b: str, weight: float = 1.0, kind: str = "coupling"
+    ) -> Edge:
         if a == b:
             raise ValueError(f"self-loop not allowed: {a}")
         key = tuple(sorted((a, b)))
@@ -79,7 +81,12 @@ class RefactorGraph:
                 for nid, n in self.nodes.items()
             },
             "edges": [
-                {"source": e.source, "target": e.target, "weight": e.weight, "kind": e.kind}
+                {
+                    "source": e.source,
+                    "target": e.target,
+                    "weight": e.weight,
+                    "kind": e.kind,
+                }
                 for e in self._edges.values()
             ],
         }

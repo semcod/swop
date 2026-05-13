@@ -9,7 +9,7 @@ production.
 """
 
 from pathlib import Path
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable
 
 import yaml
 
@@ -54,7 +54,9 @@ class ComposeBuilder:
 
     # ---------------- helpers ----------------------------------------
 
-    def _write_module_compose(self, spec: ModuleSpec, service_name: str, port: int) -> None:
+    def _write_module_compose(
+        self, spec: ModuleSpec, service_name: str, port: int
+    ) -> None:
         compose = {
             "version": "3.9",
             "services": {
@@ -83,17 +85,17 @@ class ComposeBuilder:
     def _write_dockerfile(self, spec: ModuleSpec) -> None:
         """Generate a minimal Dockerfile for the module."""
         dockerfile_path = self.out_dir / spec.name / "Dockerfile"
-        
+
         # Create placeholder files in empty directories so COPY doesn't fail
         ui_dir = self.out_dir / spec.name / "ui"
         api_dir = self.out_dir / spec.name / "api"
         model_dir = self.out_dir / spec.name / "model"
-        
+
         for d in [ui_dir, api_dir, model_dir]:
             d.mkdir(parents=True, exist_ok=True)
             if not any(d.iterdir()):
                 (d / ".gitkeep").write_text("", encoding="utf-8")
-        
+
         # Generate a basic Python-based Dockerfile
         dockerfile_content = """FROM python:3.11-slim
 

@@ -84,9 +84,7 @@ class ResolutionReport:
         payload = {
             "manifests_dir": str(self.manifests_dir) if self.manifests_dir else None,
             "counts": self.counts(),
-            "changes": [
-                {**asdict(c), "kind": c.kind.value} for c in self.changes
-            ],
+            "changes": [{**asdict(c), "kind": c.kind.value} for c in self.changes],
         }
         return json.dumps(payload, indent=2, sort_keys=False)
 
@@ -97,9 +95,7 @@ class ResolutionReport:
         lines = [
             f"[RESOLVE] {counts['total']} change(s): "
             + ", ".join(
-                f"{k}={v}"
-                for k, v in counts.items()
-                if k not in {"total", "breaking"}
+                f"{k}={v}" for k, v in counts.items() if k not in {"total", "breaking"}
             )
             + (f"  |  breaking={counts['breaking']}" if counts["breaking"] else "")
         ]
@@ -115,7 +111,11 @@ class ResolutionReport:
 
 _KINDS = ("command", "query", "event")
 _KIND_BLOCK = {"command": "commands", "query": "queries", "event": "events"}
-_KIND_FILENAME = {"command": "commands.yml", "query": "queries.yml", "event": "events.yml"}
+_KIND_FILENAME = {
+    "command": "commands.yml",
+    "query": "queries.yml",
+    "event": "events.yml",
+}
 
 
 def resolve_schema_drift(
@@ -125,7 +125,9 @@ def resolve_schema_drift(
     manifests_dir: Optional[Path] = None,
 ) -> ResolutionReport:
     """Diff the current scan against stored manifests."""
-    manifests_root = Path(manifests_dir) if manifests_dir else config.state_path / "manifests"
+    manifests_root = (
+        Path(manifests_dir) if manifests_dir else config.state_path / "manifests"
+    )
     resolution = ResolutionReport(manifests_dir=manifests_root)
 
     current = _index_from_detections(report.detections)
@@ -156,7 +158,11 @@ def apply_resolution(
     --apply``, which simply re-emits the manifests from the current
     scan (effectively fast-forwarding the stored schema).
     """
-    target = Path(out_dir) if out_dir else (resolution.manifests_dir or config.state_path / "manifests")
+    target = (
+        Path(out_dir)
+        if out_dir
+        else (resolution.manifests_dir or config.state_path / "manifests")
+    )
     generate_manifests(report, config, out_dir=target)
     return target
 
@@ -335,7 +341,7 @@ def _diff_fields(
                 target=kind,
                 name=name,
                 field=fname,
-                detail=f"new field (type={f.get('type','?')!r}, required={f.get('required', False)})",
+                detail=f"new field (type={f.get('type', '?')!r}, required={f.get('required', False)})",
                 breaking=bool(f.get("required", False)),
             )
         )
@@ -394,7 +400,8 @@ def _diff_fields(
                     old=str(old_f.get("nullable", False)),
                     new=str(new_f.get("nullable", False)),
                     detail=f"nullable {old_f.get('nullable', False)} → {new_f.get('nullable', False)}",
-                    breaking=not bool(new_f.get("nullable", False)) and bool(old_f.get("nullable", False)),
+                    breaking=not bool(new_f.get("nullable", False))
+                    and bool(old_f.get("nullable", False)),
                 )
             )
 
@@ -443,7 +450,9 @@ def _diff_entry(
     resolution: ResolutionReport,
 ) -> None:
     _diff_fields(
-        context, kind, name,
+        context,
+        kind,
+        name,
         old.get("fields", {}) or {},
         new.get("fields", {}) or {},
         resolution,

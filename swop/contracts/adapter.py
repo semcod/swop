@@ -10,7 +10,6 @@ that ``swop resolve`` can diff ``declared`` vs ``implemented``.
 
 from __future__ import annotations
 
-from dataclasses import replace
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -28,7 +27,12 @@ def _contract_kind(contract: Dict[str, Any]) -> str:
 
 
 def _contract_name(contract: Dict[str, Any]) -> str:
-    return contract.get("command") or contract.get("query") or contract.get("event") or "Unknown"
+    return (
+        contract.get("command")
+        or contract.get("query")
+        or contract.get("event")
+        or "Unknown"
+    )
 
 
 def _contract_context(contract: Dict[str, Any]) -> str:
@@ -118,7 +122,9 @@ def contracts_to_detections(
     detections: List[Detection] = []
     for c in contracts:
         path = c.get("_path")
-        src = str(Path(path).relative_to(project_root)) if project_root and path else path
+        src = (
+            str(Path(path).relative_to(project_root)) if project_root and path else path
+        )
         detections.append(contract_to_detection(c, source_file=src, source_line=1))
     return detections
 
@@ -134,13 +140,17 @@ class ContractDetectionAdapter:
             print(det.kind, det.name)
     """
 
-    def __init__(self, contracts: List[Dict[str, Any]], root: Optional[Path] = None) -> None:
+    def __init__(
+        self, contracts: List[Dict[str, Any]], root: Optional[Path] = None
+    ) -> None:
         self.contracts = contracts
         self.root = root
         self.detections = contracts_to_detections(contracts, project_root=root)
 
     @classmethod
-    def from_directory(cls, contracts_dir: Path, root: Optional[Path] = None) -> "ContractDetectionAdapter":
+    def from_directory(
+        cls, contracts_dir: Path, root: Optional[Path] = None
+    ) -> "ContractDetectionAdapter":
         from swop.contracts.reader import load_contracts
 
         contracts = load_contracts(contracts_dir)

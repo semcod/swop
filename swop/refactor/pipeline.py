@@ -11,7 +11,7 @@ detection-based clustering instead.
 """
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
@@ -80,7 +80,9 @@ class RefactorPipeline:
     # ------------------------------------------------------------------
 
     def run(self) -> RefactorResult:
-        frontend_scanner = FrontendScanner(self.frontend, pages_subdir=self.frontend_pages_subdir)
+        frontend_scanner = FrontendScanner(
+            self.frontend, pages_subdir=self.frontend_pages_subdir
+        )
         pages = frontend_scanner.scan()
 
         backend_signals = BackendSignals()
@@ -101,7 +103,14 @@ class RefactorPipeline:
 
         route_for_seed = {self._seed_cluster_name(r): r for r in self.routes}
         modules = [
-            self._cluster_to_spec(cluster, graph, pages, backend_signals, db_signals, route_for_seed.get(cluster.id))
+            self._cluster_to_spec(
+                cluster,
+                graph,
+                pages,
+                backend_signals,
+                db_signals,
+                route_for_seed.get(cluster.id),
+            )
             for cluster in clusters
             if cluster.id != "unassigned" and cluster.nodes
         ]
@@ -136,7 +145,9 @@ class RefactorPipeline:
 
         for page in pages:
             ui_id = f"ui:{page.slug}"
-            graph.add_node(ui_id, "ui", path=str(page.path), ids=page.ids, events=page.events)
+            graph.add_node(
+                ui_id, "ui", path=str(page.path), ids=page.ids, events=page.events
+            )
             for call in page.api_calls:
                 api_id = f"api:{call}"
                 graph.add_node(api_id, "api", label=call)
@@ -184,13 +195,17 @@ class RefactorPipeline:
                     graph.add_edge(ui.id, model.id, weight=0.5, kind="binds")
 
     @staticmethod
-    def _link_models_to_tables(graph: RefactorGraph, models: Iterable[ModelSignals]) -> None:
+    def _link_models_to_tables(
+        graph: RefactorGraph, models: Iterable[ModelSignals]
+    ) -> None:
         for model in models:
             if not model.tablename:
                 continue
             table_id = f"table:{model.tablename}"
             if table_id in graph.nodes:
-                graph.add_edge(f"model:{model.name}", table_id, weight=2.0, kind="binds")
+                graph.add_edge(
+                    f"model:{model.name}", table_id, weight=2.0, kind="binds"
+                )
 
     # ------------------------------------------------------------------
     # Seed resolution
@@ -254,7 +269,9 @@ class RefactorPipeline:
         spec.endpoints = [route_index[rid] for rid in ids if rid in route_index]
         spec.api_calls = sorted(
             {
-                node.payload.get("label") or node.payload.get("url") or node.id.split(":", 1)[-1]
+                node.payload.get("label")
+                or node.payload.get("url")
+                or node.id.split(":", 1)[-1]
                 for nid in ids
                 for node in [graph.nodes[nid]]
                 if node.type == "api" and nid not in route_index
