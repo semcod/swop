@@ -2,12 +2,18 @@
 
 app {
   name: swop;
-  version: 0.2.8;
+  version: 0.2.16;
+  description: "Bi-directional runtime reconciler and drift-aware state graph for full-stack systems";
+  license: Apache-2.0;
+  authors: "Your Name <your.email@example.com>, Tom Sapletta <tom@sapletta.com>";
+  keywords: "sync, reconcile, drift, graph, runtime, state, dsl";
+  homepage: https://github.com/yourusername/inspect;
+  repository: https://github.com/yourusername/inspect;
 }
 
 dependencies {
   runtime: pyyaml>=6.0;
-  dev: "pytest>=7.0, pytest-cov>=4.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
+  dev: "pytest>=9.0.0, pytest-cov>=7.0.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60";
 }
 
 interface[type="api"] {
@@ -19,7 +25,15 @@ interface[type="cli"] {
   framework: argparse;
 }
 interface[type="cli"] page[name="swop"] {
+  entry: swop.cli:main;
+}
 
+tests {
+  import: testql-scenarios/**/*.testql.toon.yaml;
+}
+
+env_vars {
+  keys: OPENROUTER_API_KEY, LLM_MODEL;
 }
 
 deploy {
@@ -29,5 +43,8 @@ deploy {
 environment[name="local"] {
   runtime: python;
   env_file: .env;
+  template_file: .env.example;
   python_version: >=3.8;
+  vars: LLM_MODEL, OPENROUTER_API_KEY;
+  runtime_llm: OPENROUTER_API_KEY;
 }
