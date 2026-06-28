@@ -1,78 +1,79 @@
-# inspect | 85f 14391L | python:82,shell:2,less:1 | 2026-04-23
-# stats: 393 func | 103 cls | 85 mod | CC̄=4.8 | critical:38 | cycles:0
-# alerts[5]: CC generate_registry_md=32; CC validate_contract=21; CC test_render_proto_for_context_builds_expected_shape=20; CC test_manifest_yaml_shape_for_command=18; CC _map_python_type=17
-# hotspots[5]: build_project_graph fan=19; generate_services fan=19; _write_context_package fan=18; _scan_file fan=16; compile_proto_python fan=14
+# swop | 87f 16339L | python:84,shell:2,less:1 | 2026-05-29
+# stats: 444 func | 104 cls | 87 mod | CC̄=4.9 | critical:47 | cycles:0
+# alerts[5]: CC generate_registry_md=32; CC render_proto_for_context=26; CC validate_contract=21; CC test_render_proto_for_context_builds_expected_shape=20; CC test_manifest_yaml_shape_for_command=19
+# hotspots[5]: build_project_graph fan=19; generate_services fan=19; render_proto_for_context fan=18; _write_context_package fan=18; _scan_file fan=16
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[85]:
+M[87]:
   app.doql.less,34
   examples/src/api.py,12
   examples/src/models.py,16
-  project.sh,43
+  project.sh,44
   swop/__init__.py,169
-  swop/cli.py,518
-  swop/commands.py,551
+  swop/cli.py,553
+  swop/commands.py,595
   swop/config.py,210
-  swop/contracts/__init__.py,38
-  swop/contracts/adapter.py,163
-  swop/contracts/reader.py,155
-  swop/core.py,106
+  swop/contracts/__init__.py,42
+  swop/contracts/adapter.py,173
+  swop/contracts/reader.py,170
+  swop/core.py,108
   swop/cqrs/__init__.py,29
   swop/cqrs/decorators.py,159
   swop/cqrs/registry.py,106
   swop/export/__init__.py,12
   swop/export/docker.py,33
-  swop/export/yaml.py,49
+  swop/export/yaml.py,48
   swop/graph.py,50
   swop/introspect/__init__.py,13
   swop/introspect/backend.py,33
   swop/introspect/frontend.py,41
   swop/manifests/__init__.py,24
-  swop/manifests/generator.py,245
+  swop/manifests/generator.py,746
   swop/markpact/__init__.py,28
-  swop/markpact/doql_bridge.py,507
-  swop/markpact/graph_builder.py,532
+  swop/markpact/doql_bridge.py,532
+  swop/markpact/graph_builder.py,541
   swop/markpact/parser.py,142
   swop/markpact/spec_models.py,213
-  swop/markpact/sync_engine.py,202
+  swop/markpact/sync_engine.py,212
   swop/proto/__init__.py,31
-  swop/proto/compiler.py,208
-  swop/proto/generator.py,423
-  swop/reconcile.py,112
+  swop/proto/compiler.py,206
+  swop/proto/generator.py,534
+  swop/reconcile.py,106
   swop/refactor/__init__.py,44
-  swop/refactor/clustering.py,159
-  swop/refactor/compose_builder.py,118
-  swop/refactor/graph.py,101
-  swop/refactor/module_builder.py,298
-  swop/refactor/pipeline.py,285
+  swop/refactor/clustering.py,161
+  swop/refactor/compose_builder.py,120
+  swop/refactor/graph.py,108
+  swop/refactor/module_builder.py,309
+  swop/refactor/pipeline.py,302
   swop/refactor/scanner/__init__.py,8
-  swop/refactor/scanner/backend.py,157
+  swop/refactor/scanner/backend.py,164
   swop/refactor/scanner/db.py,54
-  swop/refactor/scanner/frontend.py,129
-  swop/registry/__init__.py,37
-  swop/registry/bridge.py,51
-  swop/registry/generator.py,101
+  swop/refactor/scanner/frontend.py,139
+  swop/registry/__init__.py,45
+  swop/registry/bridge.py,77
+  swop/registry/generator.py,196
   swop/registry/loader.py,40
-  swop/registry/validator.py,96
+  swop/registry/pydantic_cross_check.py,360
+  swop/registry/validator.py,112
   swop/resolve/__init__.py,35
-  swop/resolve/resolver.py,457
+  swop/resolve/resolver.py,482
   swop/scan/__init__.py,33
-  swop/scan/cache.py,112
+  swop/scan/cache.py,116
   swop/scan/render.py,142
-  swop/scan/report.py,210
-  swop/scan/scanner.py,596
+  swop/scan/report.py,217
+  swop/scan/scanner.py,616
   swop/services/__init__.py,31
-  swop/services/generator.py,687
+  swop/services/generator.py,684
   swop/sync.py,48
   swop/tools/__init__.py,33
-  swop/tools/doctor.py,194
-  swop/tools/doctor_deep.py,370
-  swop/tools/hook.py,221
+  swop/tools/doctor.py,195
+  swop/tools/doctor_deep.py,369
+  swop/tools/hook.py,222
   swop/tools/init.py,161
   swop/utils.py,24
   swop/versioning.py,26
   swop/watch/__init__.py,18
-  swop/watch/engine.py,213
+  swop/watch/engine.py,211
   tests/__init__.py,4
   tests/test_cli.py,27
   tests/test_config.py,128
@@ -80,9 +81,10 @@ M[85]:
   tests/test_cqrs.py,145
   tests/test_doctor_deep.py,276
   tests/test_hook.py,170
-  tests/test_manifests.py,336
+  tests/test_manifests.py,417
   tests/test_markpact.py,803
-  tests/test_proto.py,354
+  tests/test_proto.py,413
+  tests/test_pydantic_cross_check.py,437
   tests/test_refactor.py,191
   tests/test_resolve.py,423
   tests/test_scan.py,351
@@ -203,19 +205,41 @@ D:
     FrontendIntrospector: introspect(1),from_html(1)  # Introspect frontend artifacts to produce a runtime state dic
   swop/manifests/__init__.py:
   swop/manifests/generator.py:
-    e: generate_manifests,_handler_index,_render_manifest,_render_entry,_render_source,_render_field,_render_handler,_render_bus,_camel_to_dot,_safe_dirname,ManifestFile,ManifestGenerationResult
+    e: generate_manifests,_handler_index,_render_manifest,_render_entry,_render_source,_render_field,_render_handler,_render_bus,_camel_to_dot,_safe_dirname,_render_query_response_metadata,_collect_supporting_types,_collect_supporting_types_from_fields,_annotation_type_names,_first_custom_type_name,_find_handler_return_type,_module_ast,_module_classes,_find_class_in_module,_module_imports,_resolve_import_module_paths,_resolve_class_definition,_resolve_symbol_from_module,_search_class_files,_is_enum_class,_render_enum_type,_extract_class_fields,_expr_name,_unparse,_render_default,_annotation_is_optional,_dedupe_type_defs,ManifestFile,ManifestGenerationResult
     ManifestFile:
     ManifestGenerationResult: total_entries(0),by_context(0),format(0)
     generate_manifests(report;config)
     _handler_index(detections)
     _render_manifest(context;kind;detections;handler_index;config)
-    _render_entry(detection;kind;handler_index;config)
+    _render_entry(detection;kind;handler_index;config;cache)
     _render_source(detection)
     _render_field(field_def)
     _render_handler(handler)
     _render_bus(detection;config)
     _camel_to_dot(name)
     _safe_dirname(name)
+    _render_query_response_metadata(handler;config;cache)
+    _collect_supporting_types(source_file;fields;config;cache)
+    _collect_supporting_types_from_fields(source_path;fields;config;cache;seen)
+    _annotation_type_names(annotation)
+    _first_custom_type_name(annotation)
+    _find_handler_return_type(class_node;method_name)
+    _module_ast(path;cache)
+    _module_classes(path;cache)
+    _find_class_in_module(path;class_name;cache)
+    _module_imports(path;project_root;cache)
+    _resolve_import_module_paths(source_path;project_root;module_name;level)
+    _resolve_class_definition(class_name;source_path;project_root;cache)
+    _resolve_symbol_from_module(module_path;symbol_name;project_root;cache;seen)
+    _search_class_files(class_name;project_root;cache)
+    _is_enum_class(node)
+    _render_enum_type(name;node)
+    _extract_class_fields(node)
+    _expr_name(node)
+    _unparse(node)
+    _render_default(node)
+    _annotation_is_optional(node)
+    _dedupe_type_defs(type_defs)
   swop/markpact/__init__.py:
   swop/markpact/doql_bridge.py:
     e: MarkpactValidationError,DoqlBridge
@@ -283,7 +307,7 @@ D:
     compile_proto_python(proto_dir;out_dir)
     compile_proto_typescript(proto_dir;out_dir)
   swop/proto/generator.py:
-    e: _map_python_type,_load_manifest,_iter_contexts,generate_proto_from_manifests,render_proto_for_context,_render_message,_render_command_response,_render_query_response,_service_name,_safe_ident,ProtoFile,ProtoGenerationResult,_ProtoType
+    e: _map_python_type,_load_manifest,_iter_contexts,generate_proto_from_manifests,render_proto_for_context,_render_message,_render_command_response,_render_query_response,_collect_known_types,_render_type_definition,_render_enum,_service_name,_safe_ident,ProtoFile,ProtoGenerationResult,_ProtoType
     ProtoFile: total_rpcs(0)
     ProtoGenerationResult: format(0)
     _ProtoType:
@@ -292,9 +316,12 @@ D:
     _iter_contexts(manifests_dir)
     generate_proto_from_manifests(manifests_dir;out_dir)
     render_proto_for_context(context;commands;queries;events)
-    _render_message(name;fields;imports;context)
+    _render_message(name;fields;imports;context;known_type_names)
     _render_command_response(name;emits)
-    _render_query_response(name)
+    _render_query_response(name;result_type)
+    _collect_known_types(commands;queries;events)
+    _render_type_definition(type_def;imports;context;known_type_names)
+    _render_enum(name;values)
     _service_name(context;suffix)
     _safe_ident(name)
   swop/reconcile.py:
@@ -359,6 +386,20 @@ D:
     e: load_contracts,Contract
     Contract:  # One JSON contract loaded from disk.
     load_contracts(contracts_dir)
+  swop/registry/pydantic_cross_check.py:
+    e: _extract_literal_values,_node_name,_literal_slice_values,_collect_literal_fields,_load_literal_fields,_iter_enum_fields,_contract_schemas,_classify_drift,_parse_layer_path,cross_check_contract,cross_check_contracts,CrossCheckResult
+    CrossCheckResult: format(0)
+    _extract_literal_values(annotation)
+    _node_name(node)
+    _literal_slice_values(slice_node)
+    _collect_literal_fields(tree)
+    _load_literal_fields(python_path)
+    _iter_enum_fields(schema;prefix)
+    _contract_schemas(raw)
+    _classify_drift(block_kind;contract_set;pydantic_set)
+    _parse_layer_path(raw_layer)
+    cross_check_contract(contract)
+    cross_check_contracts(contracts)
   swop/registry/validator.py:
     e: validate_contract,_check_keys,_check_kind,_check_layer_paths,ValidationResult
     ValidationResult: format(0)
@@ -574,7 +615,7 @@ D:
     test_cli_hook_install_and_uninstall(tmp_path;capsys)
     test_cli_hook_install_non_git_errors(tmp_path;capsys)
   tests/test_manifests.py:
-    e: _write,customer_project,test_scan_extracts_fields_from_dataclass,test_scan_handler_records_method_name,test_generate_manifests_writes_per_context_files,test_manifest_yaml_shape_for_command,test_manifest_event_has_fields_but_no_bus,test_manifest_heuristic_detection_carries_confidence,test_generate_manifests_redis_bus,test_generate_manifests_no_bus_when_unconfigured,test_cli_gen_manifests,test_cli_gen_manifests_skip_heuristics
+    e: _write,customer_project,test_scan_extracts_fields_from_dataclass,test_scan_handler_records_method_name,test_generate_manifests_writes_per_context_files,test_manifest_yaml_shape_for_command,test_manifest_event_has_fields_but_no_bus,test_manifest_heuristic_detection_carries_confidence,test_manifest_query_includes_response_and_types,test_generate_manifests_redis_bus,test_generate_manifests_no_bus_when_unconfigured,test_cli_gen_manifests,test_cli_gen_manifests_skip_heuristics
     _write(path;body)
     customer_project(tmp_path)
     test_scan_extracts_fields_from_dataclass(customer_project)
@@ -583,6 +624,7 @@ D:
     test_manifest_yaml_shape_for_command(customer_project)
     test_manifest_event_has_fields_but_no_bus(customer_project)
     test_manifest_heuristic_detection_carries_confidence(customer_project)
+    test_manifest_query_includes_response_and_types(customer_project)
     test_generate_manifests_redis_bus(tmp_path)
     test_generate_manifests_no_bus_when_unconfigured(tmp_path)
     test_cli_gen_manifests(customer_project;capsys)
@@ -637,7 +679,7 @@ D:
     test_cli_generate_from_disk(tmp_path)
     test_cli_generate_from_disk_dry_run(tmp_path)
   tests/test_proto.py:
-    e: _write,test_map_python_type_basic,test_map_python_type_dict_becomes_map,test_map_python_type_unknown_name_is_stub,test_map_python_type_empty_is_string_stub,test_render_proto_for_context_builds_expected_shape,test_render_proto_adds_timestamp_import,test_render_proto_warns_on_unknown_user_type,project_with_manifests,test_generate_proto_from_manifests_writes_file,test_generate_proto_skips_empty_context_dirs,test_compile_proto_python_produces_pb2,test_compile_proto_python_without_grpc_tools_returns_helpful_error,test_compile_proto_typescript_missing_protoc_is_reported,test_cli_gen_proto_requires_manifests,test_cli_gen_proto_end_to_end,test_cli_gen_grpc_python_reports_ok_or_missing
+    e: _write,test_map_python_type_basic,test_map_python_type_dict_becomes_map,test_map_python_type_unknown_name_is_stub,test_map_python_type_empty_is_string_stub,test_render_proto_for_context_builds_expected_shape,test_render_proto_adds_timestamp_import,test_render_proto_warns_on_unknown_user_type,test_render_proto_renders_query_response_model_and_enum_types,test_render_proto_emits_optional_only_for_nullable_singular_fields,project_with_manifests,test_generate_proto_from_manifests_writes_file,test_generate_proto_skips_empty_context_dirs,test_compile_proto_python_produces_pb2,test_compile_proto_python_without_grpc_tools_returns_helpful_error,test_compile_proto_typescript_missing_protoc_is_reported,test_cli_gen_proto_requires_manifests,test_cli_gen_proto_end_to_end,test_cli_gen_grpc_python_reports_ok_or_missing
     _write(path;body)
     test_map_python_type_basic(annotation;expected_proto;expected_repeated)
     test_map_python_type_dict_becomes_map()
@@ -646,6 +688,8 @@ D:
     test_render_proto_for_context_builds_expected_shape()
     test_render_proto_adds_timestamp_import()
     test_render_proto_warns_on_unknown_user_type()
+    test_render_proto_renders_query_response_model_and_enum_types()
+    test_render_proto_emits_optional_only_for_nullable_singular_fields()
     project_with_manifests(tmp_path)
     test_generate_proto_from_manifests_writes_file(project_with_manifests)
     test_generate_proto_skips_empty_context_dirs(tmp_path)
@@ -655,6 +699,20 @@ D:
     test_cli_gen_proto_requires_manifests(tmp_path;capsys)
     test_cli_gen_proto_end_to_end(project_with_manifests;capsys)
     test_cli_gen_grpc_python_reports_ok_or_missing(project_with_manifests;capsys)
+  tests/test_pydantic_cross_check.py:
+    e: project_root,_write_contract,_write_pydantic_module,test_aligned_enum_and_literal_are_ok,test_contract_enum_narrower_than_literal_is_flagged,test_output_contract_wider_than_literal_is_warning_not_error,test_input_contract_wider_than_literal_is_error,test_input_pydantic_wider_than_contract_is_ok,test_missing_pydantic_field_is_silently_skipped,test_contract_without_layers_python_is_skipped,test_optional_literal_union_is_handled,test_cross_check_contracts_returns_pairs
+    project_root(tmp_path)
+    _write_contract(project_root;filename;data)
+    _write_pydantic_module(project_root;body)
+    test_aligned_enum_and_literal_are_ok(project_root)
+    test_contract_enum_narrower_than_literal_is_flagged(project_root)
+    test_output_contract_wider_than_literal_is_warning_not_error(project_root)
+    test_input_contract_wider_than_literal_is_error(project_root)
+    test_input_pydantic_wider_than_contract_is_ok(project_root)
+    test_missing_pydantic_field_is_silently_skipped(project_root)
+    test_contract_without_layers_python_is_skipped(tmp_path)
+    test_optional_literal_union_is_handled(project_root)
+    test_cross_check_contracts_returns_pairs(project_root)
   tests/test_refactor.py:
     e: synthetic_project,test_frontend_scanner_extracts_ids_and_api_calls,test_backend_scanner_extracts_models,test_frontend_find_pages_for_route,test_refactor_pipeline_seeded_writes_modules,test_louvain_like_groups_connected_nodes,test_seeded_clusterer_assigns_by_best_score
     synthetic_project(tmp_path)

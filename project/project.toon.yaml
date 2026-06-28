@@ -1,51 +1,52 @@
-# inspect | 1119 func | 48f | 24136L | python | 2026-04-23
+# swop | 425 func | 48f | 13663L | python | 2026-05-29
+# generated in 0.00s
 
 HEALTH:
-  CC̄=1.4  critical=33 (limit:10)  dup=2  cycles=0
+  CC̄=4.7  critical=43 (limit:10)  dup=0  cycles=0
 
 ALERTS[20]:
   !!! high_fan_out     _build_parser = 45 (limit:10)
   !!! cc_exceeded      generate_registry_md = 32 (limit:15)
+  !!! high_fan_out     render_proto_for_context = 28 (limit:10)
+  !!! cc_exceeded      render_proto_for_context = 26 (limit:15)
   !!! high_fan_out     generate_services = 24 (limit:10)
-  !!! high_fan_out     render_proto_for_context = 21 (limit:10)
   !!! high_fan_out     RefactorPipeline.run = 20 (limit:10)
   !!  cc_exceeded      RefactorPipeline._cluster_to_spec = 23 (limit:15)
   !!  cc_exceeded      validate_contract = 21 (limit:15)
   !!  high_fan_out     DoqlBridge._build_minimal_spec = 19 (limit:10)
-  !!  high_fan_out     generate_registry_md = 19 (limit:10)
-  !!  high_fan_out     _write_context_package = 18 (limit:10)
+  !!  high_fan_out     build_project_graph = 19 (limit:10)
 
-MODULES[83] (top by size):
-  M[project/calls.yaml] 2830L C:0 F:0 CC↑0 D:0 (yaml)
-  M[SUMD.md] 1149L C:0 F:379 CC↑0 D:1 (md)
-  M[SUMR.md] 950L C:0 F:0 CC↑0 D:0 (md)
-  M[project/map.toon.yaml] 736L C:0 F:379 CC↑0 D:0 (yaml)
-  M[swop/services/generator.py] 686L C:2 F:17 CC↑11 D:1 (python)
-  M[project/context.md] 601L C:0 F:0 CC↑0 D:0 (md)
-  M[swop/scan/scanner.py] 595L C:0 F:27 CC↑13 D:3 (python)
-  M[swop/commands.py] 550L C:0 F:26 CC↑14 D:0 (python)
-  M[swop/cli.py] 517L C:0 F:2 CC↑1 D:0 (python)
+MODULES[76] (top by size):
+  M[swop/manifests/generator.py] 745L C:2 F:34 CC↑16 D:3 (python)
+  M[swop/services/generator.py] 683L C:2 F:17 CC↑11 D:1 (python)
+  M[swop/scan/scanner.py] 615L C:0 F:27 CC↑13 D:3 (python)
+  M[swop/commands.py] 594L C:0 F:26 CC↑14 D:0 (python)
+  M[swop/cli.py] 552L C:0 F:2 CC↑1 D:0 (python)
+  M[swop/markpact/graph_builder.py] 540L C:0 F:19 CC↑13 D:1 (python)
+  M[swop/proto/generator.py] 533L C:3 F:14 CC↑26 D:1 (python)
+  M[swop/markpact/doql_bridge.py] 531L C:2 F:28 CC↑13 D:0 (python)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
-  M[swop/markpact/doql_bridge.py] 506L C:2 F:28 CC↑13 D:0 (python)
-  M[swop/resolve/resolver.py] 456L C:3 F:15 CC↑15 D:2 (python)
-  M[swop/proto/generator.py] 422L C:3 F:11 CC↑17 D:1 (python)
-  M[README.md] 418L C:2 F:2 CC↑0 D:0 (md)
-  M[examples/manifest.md] 387L C:2 F:3 CC↑0 D:5 (md)
-  LANGS: python:63/yaml:8/md:7/shell:2/txt:1/toml:1/json:1
+  M[swop/resolve/resolver.py] 481L C:3 F:15 CC↑15 D:2 (python)
+  M[README.md] 432L C:0 F:0 CC↑0 D:0 (md)
+  M[examples/manifest.md] 387L C:0 F:0 CC↑0 D:0 (md)
+  M[CHANGELOG.md] 377L C:0 F:0 CC↑0 D:0 (md)
+  M[swop/tools/doctor_deep.py] 368L C:3 F:10 CC↑15 D:1 (python)
+  M[swop/registry/pydantic_cross_check.py] 359L C:1 F:12 CC↑14 D:1 (python)
+  LANGS: python:67/md:4/shell:2/yaml:1/toml:1/json:1
 
 HOTSPOTS[10]:
   ★ _build_parser fan=45  // Orchestrates 45 calls
+  ★ render_proto_for_context fan=28  // Render one ``.proto`` file body for a single context.
   ★ generate_services fan=24  // Generate one service package per context + a docker-compose file.
-  ★ render_proto_for_context fan=21  // Render one ``.proto`` file body for a single context.
   ★ RefactorPipeline.run fan=20  // Orchestrates 20 calls
   ★ DoqlBridge._build_minimal_spec fan=19  // Orchestrates 19 calls
 
 REFACTOR[15]:
   [1] H/L Split generate_registry_md (CC=32)
-  [2] H/H Split god module swop/commands.py (550L, 0 classes)
-  [3] H/H Split god module swop/markpact/doql_bridge.py (506L, 2 classes)
-  [4] H/H Split god module swop/scan/scanner.py (595L, 0 classes)
-  [5] H/H Split god module swop/services/generator.py (686L, 2 classes)
+  [2] H/L Split render_proto_for_context (CC=26)
+  [3] H/H Split god module swop/proto/generator.py (533L, 3 classes)
+  [4] H/H Split god module swop/manifests/generator.py (745L, 2 classes)
+  [5] H/H Split god module swop/commands.py (594L, 0 classes)
 
 EVOLUTION:
-  2026-04-23 CC̄=1.4 crit=33 24136L // Automated analysis
+  2026-05-29 CC̄=4.7 crit=43 13663L // Automated analysis

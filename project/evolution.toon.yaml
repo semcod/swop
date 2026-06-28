@@ -1,57 +1,58 @@
-# code2llm/evolution | 1114 func | 46f | 2026-04-23
+# code2llm/evolution | 423 func | 47f | 2026-05-29
+# generated in 0.00s
 
 NEXT[10] (ranked by impact):
-  [1] !! SPLIT           swop/scan/scanner.py
-      WHY: 595L, 0 classes, max CC=13
-      EFFORT: ~4h  IMPACT: 7735
+  [1] !! SPLIT           swop/manifests/generator.py
+      WHY: 745L, 2 classes, max CC=16
+      EFFORT: ~4h  IMPACT: 11920
 
-  [2] !! SPLIT           swop/commands.py
-      WHY: 550L, 0 classes, max CC=14
-      EFFORT: ~4h  IMPACT: 7700
+  [2] !! SPLIT           swop/scan/scanner.py
+      WHY: 615L, 0 classes, max CC=13
+      EFFORT: ~4h  IMPACT: 7995
 
   [3] !! SPLIT           swop/services/generator.py
-      WHY: 686L, 2 classes, max CC=11
-      EFFORT: ~4h  IMPACT: 7546
+      WHY: 683L, 2 classes, max CC=11
+      EFFORT: ~4h  IMPACT: 7513
 
-  [4] !! SPLIT-FUNC      generate_registry_md  CC=32  fan=19
+  [4] !! SPLIT-FUNC      render_proto_for_context  CC=26  fan=28
+      WHY: CC=26 exceeds 15
+      EFFORT: ~1h  IMPACT: 728
+
+  [5] !! SPLIT-FUNC      generate_registry_md  CC=32  fan=19
       WHY: CC=32 exceeds 15
       EFFORT: ~1h  IMPACT: 608
 
-  [5] !  SPLIT-FUNC      _check_manifests_vs_proto  CC=15  fan=18
+  [6] !  SPLIT-FUNC      _check_manifests_vs_proto  CC=15  fan=18
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 270
 
-  [6] !  SPLIT-FUNC      _check_proto_vs_python  CC=15  fan=18
+  [7] !  SPLIT-FUNC      _check_proto_vs_python  CC=15  fan=18
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 270
 
-  [7] !  SPLIT-FUNC      _check_manifests_vs_services  CC=15  fan=17
+  [8] !  SPLIT-FUNC      _check_manifests_vs_services  CC=15  fan=17
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 255
 
-  [8] !  SPLIT-FUNC      _index_from_manifests  CC=15  fan=15
+  [9] !  SPLIT-FUNC      _map_python_type  CC=18  fan=14
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 252
+
+  [10] !  SPLIT-FUNC      _index_from_manifests  CC=15  fan=15
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 225
 
-  [9] !  SPLIT-FUNC      _map_python_type  CC=17  fan=12
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 204
-
-  [10] !  SPLIT-FUNC      RefactorPipeline._cluster_to_spec  CC=23  fan=8
-      WHY: CC=23 exceeds 15
-      EFFORT: ~1h  IMPACT: 184
-
 
 RISKS[3]:
+  ⚠ Splitting swop/manifests/generator.py may break 34 import paths
   ⚠ Splitting swop/services/generator.py may break 17 import paths
   ⚠ Splitting swop/scan/scanner.py may break 27 import paths
-  ⚠ Splitting swop/commands.py may break 26 import paths
 
 METRICS-TARGET:
-  CC̄:          1.4 → ≤1.0
+  CC̄:          4.8 → ≤3.4
   max-CC:      32 → ≤16
-  god-modules: 6 → 0
-  high-CC(≥15): 8 → ≤4
+  god-modules: 9 → 0
+  high-CC(≥15): 10 → ≤5
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -79,4 +80,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=1.4 → now CC̄=1.4
+  prev CC̄=1.4 → now CC̄=4.8

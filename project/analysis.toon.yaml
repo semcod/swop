@@ -1,78 +1,175 @@
-# code2llm | 83f 18486L | python:63,yaml:8,md:7,shell:2,json:1,toml:1,txt:1 | 2026-04-23
-# CC̄=1.4 | critical:8/1119 | dups:0 | cycles:0
+# code2llm | 76f 13663L | python:67,md:4,shell:2,yaml:1,json:1,toml:1 | 2026-05-29
+# generated in 0.03s
+# CC̅=4.7 | critical:10/425 | dups:0 | cycles:0
 
-HEALTH[8]:
+HEALTH[10]:
+  🟡 CC    generate_registry_md CC=32 (limit:15)
+  🟡 CC    _map_python_type CC=18 (limit:15)
+  🟡 CC    render_proto_for_context CC=26 (limit:15)
+  🟡 CC    validate_contract CC=21 (limit:15)
+  🟡 CC    _extract_class_fields CC=16 (limit:15)
+  🟡 CC    _cluster_to_spec CC=23 (limit:15)
   🟡 CC    _check_manifests_vs_proto CC=15 (limit:15)
   🟡 CC    _check_proto_vs_python CC=15 (limit:15)
   🟡 CC    _check_manifests_vs_services CC=15 (limit:15)
-  🟡 CC    generate_registry_md CC=32 (limit:15)
-  🟡 CC    _map_python_type CC=17 (limit:15)
-  🟡 CC    validate_contract CC=21 (limit:15)
-  🟡 CC    _cluster_to_spec CC=23 (limit:15)
   🟡 CC    _index_from_manifests CC=15 (limit:15)
 
 REFACTOR[1]:
-  1. split 8 high-CC methods  (CC>15)
+  1. split 10 high-CC methods  (CC>15)
 
-PIPELINES[196]:
-  [1] Src [list_devices]: list_devices
+PIPELINES[211]:
+  [1] Src [__init__]: __init__
       PURITY: 100% pure
-  [2] Src [create_reading]: create_reading
+  [2] Src [add_model]: add_model
       PURITY: 100% pure
-  [3] Src [iter_source_roots]: iter_source_roots
+  [3] Src [add_service]: add_service
       PURITY: 100% pure
-  [4] Src [exists]: exists
+  [4] Src [add_ui_binding]: add_ui_binding
       PURITY: 100% pure
-  [5] Src [compute]: compute
+  [5] Src [introspect]: introspect
+      PURITY: 100% pure
+  [6] Src [run_sync]: run_sync
+      PURITY: 100% pure
+  [7] Src [state_yaml]: state_yaml
+      PURITY: 100% pure
+  [8] Src [docker_compose]: docker_compose
+      PURITY: 100% pure
+  [9] Src [main]: main → _build_parser
+      PURITY: 100% pure
+  [10] Src [frontend_to_graph]: frontend_to_graph
+      PURITY: 100% pure
+  [11] Src [merge_frontend]: merge_frontend
+      PURITY: 100% pure
+  [12] Src [merge_backend]: merge_backend
+      PURITY: 100% pure
+  [13] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [14] Src [export_yaml]: export_yaml
+      PURITY: 100% pure
+  [15] Src [commit]: commit
+      PURITY: 100% pure
+  [16] Src [stable_hash]: stable_hash
+      PURITY: 100% pure
+  [17] Src [is_callable]: is_callable
+      PURITY: 100% pure
+  [18] Src [get_docstring]: get_docstring
+      PURITY: 100% pure
+  [19] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [20] Src [export_yaml]: export_yaml
+      PURITY: 100% pure
+  [21] Src [list_devices]: list_devices
+      PURITY: 100% pure
+  [22] Src [create_reading]: create_reading
+      PURITY: 100% pure
+  [23] Src [__init__]: __init__
+      PURITY: 100% pure
+  [24] Src [__init__]: __init__
+      PURITY: 100% pure
+  [25] Src [from_blocks]: from_blocks
+      PURITY: 100% pure
+  [26] Src [_parse_block]: _parse_block
+      PURITY: 100% pure
+  [27] Src [_merge_fragment]: _merge_fragment
+      PURITY: 100% pure
+  [28] Src [_build_spec]: _build_spec
+      PURITY: 100% pure
+  [29] Src [_load_entities]: _load_entities
+      PURITY: 100% pure
+  [30] Src [_load_databases]: _load_databases
+      PURITY: 100% pure
+  [31] Src [_load_interfaces]: _load_interfaces
+      PURITY: 100% pure
+  [32] Src [_load_workflows]: _load_workflows
+      PURITY: 100% pure
+  [33] Src [_load_roles]: _load_roles
+      PURITY: 100% pure
+  [34] Src [_load_integrations]: _load_integrations
+      PURITY: 100% pure
+  [35] Src [_load_webhooks]: _load_webhooks
+      PURITY: 100% pure
+  [36] Src [_load_api_clients]: _load_api_clients
+      PURITY: 100% pure
+  [37] Src [_load_data_sources]: _load_data_sources
+      PURITY: 100% pure
+  [38] Src [_load_templates]: _load_templates
+      PURITY: 100% pure
+  [39] Src [_load_documents]: _load_documents
+      PURITY: 100% pure
+  [40] Src [_load_reports]: _load_reports
+      PURITY: 100% pure
+  [41] Src [_load_environments]: _load_environments
+      PURITY: 100% pure
+  [42] Src [_load_infrastructures]: _load_infrastructures
+      PURITY: 100% pure
+  [43] Src [_load_ingresses]: _load_ingresses
+      PURITY: 100% pure
+  [44] Src [_load_ci_configs]: _load_ci_configs
+      PURITY: 100% pure
+  [45] Src [_load_deploy]: _load_deploy
+      PURITY: 100% pure
+  [46] Src [_build_minimal_spec]: _build_minimal_spec
+      PURITY: 100% pure
+  [47] Src [from_file]: from_file
+      PURITY: 100% pure
+  [48] Src [from_files]: from_files
+      PURITY: 100% pure
+  [49] Src [from_text]: from_text
+      PURITY: 100% pure
+  [50] Src [get_meta_value]: get_meta_value
       PURITY: 100% pure
 
 LAYERS:
-  swop/                           CC̄=4.5    ←in:1  →out:101  !! split
-  │ !! generator                  686L  2C   17m  CC=11     ←1
-  │ !! scanner                    595L  0C   27m  CC=13     ←3
-  │ !! commands                   550L  0C   26m  CC=14     ←0
-  │ !! cli                        517L  0C    2m  CC=1      ←0
-  │ !! doql_bridge                506L  2C   28m  CC=13     ←0
-  │ !! resolver                   456L  3C   15m  CC=15     ←2
-  │ !! generator                  422L  3C   11m  CC=17     ←1
-  │ !! doctor_deep                369L  3C   10m  CC=15     ←1
-  │ !! pipeline                   284L  2C   10m  CC=23     ←0
-  │ generator                  244L  2C   12m  CC=10     ←3
-  │ hook                       220L  1C    8m  CC=13     ←1
-  │ engine                     212L  2C    7m  CC=9      ←1
+  swop/                           CC̄=4.8    ←in:1  →out:25  !! split
+  │ !! generator                  745L  2C   34m  CC=16     ←3
+  │ !! generator                  683L  2C   17m  CC=11     ←1
+  │ !! scanner                    615L  0C   27m  CC=13     ←3
+  │ !! commands                   594L  0C   26m  CC=14     ←0
+  │ !! cli                        552L  0C    2m  CC=1      ←0
+  │ !! graph_builder              540L  0C   19m  CC=13     ←1
+  │ !! generator                  533L  3C   14m  CC=26     ←1
+  │ !! doql_bridge                531L  2C   28m  CC=13     ←0
+  │ !! resolver                   481L  3C   15m  CC=15     ←2
+  │ !! doctor_deep                368L  3C   10m  CC=15     ←1
+  │ pydantic_cross_check       359L  1C   12m  CC=14     ←1
+  │ module_builder             308L  3C    8m  CC=6      ←0
+  │ !! pipeline                   301L  2C   10m  CC=23     ←0
+  │ hook                       221L  1C    8m  CC=13     ←1
+  │ report                     216L  4C   11m  CC=7      ←0
   │ spec_models                212L  20C    0m  CC=0.0    ←0
+  │ sync_engine                211L  2C    7m  CC=11     ←0
+  │ engine                     210L  2C    7m  CC=9      ←1
   │ config                     209L  5C    9m  CC=8      ←2
-  │ report                     209L  4C   11m  CC=7      ←1
-  │ compiler                   207L  1C    6m  CC=10     ←1
-  │ sync_engine                201L  2C    7m  CC=11     ←0
-  │ doctor                     193L  2C   10m  CC=7      ←1
+  │ compiler                   205L  1C    6m  CC=10     ←1
+  │ !! generator                  195L  1C    6m  CC=32     ←1
+  │ doctor                     194L  2C   10m  CC=7      ←1
+  │ adapter                    172L  1C   12m  CC=6      ←0
+  │ !! reader                     169L  1C    4m  CC=21     ←2
   │ __init__                   168L  0C    0m  CC=0.0    ←0
-  │ adapter                    162L  1C   12m  CC=6      ←0
+  │ backend                    163L  4C    7m  CC=11     ←0
   │ init                       160L  1C    3m  CC=14     ←1
+  │ clustering                 160L  3C    8m  CC=12     ←0
   │ decorators                 158L  0C    4m  CC=7      ←0
-  │ clustering                 158L  3C    8m  CC=12     ←0
-  │ backend                    156L  4C    7m  CC=11     ←0
-  │ !! reader                     154L  1C    4m  CC=21     ←0
   │ render                     141L  0C    3m  CC=8      ←1
   │ parser                     141L  2C   11m  CC=11     ←0
-  │ frontend                   128L  2C    8m  CC=10     ←0
-  │ reconcile                  111L  4C    7m  CC=7      ←0
-  │ cache                      111L  2C   10m  CC=7      ←1
-  │ core                       105L  1C    8m  CC=3      ←0
+  │ frontend                   138L  2C    8m  CC=10     ←0
+  │ compose_builder            119L  1C    5m  CC=5      ←0
+  │ cache                      115L  2C   10m  CC=7      ←0
+  │ validator                  111L  1C    5m  CC=7      ←0
+  │ core                       107L  1C    8m  CC=3      ←0
+  │ graph                      107L  3C    7m  CC=4      ←0
+  │ reconcile                  105L  4C    7m  CC=7      ←0
   │ registry                   105L  2C   12m  CC=3      ←1
-  │ !! generator                  100L  1C    6m  CC=32     ←1
-  │ graph                      100L  3C    7m  CC=4      ←0
-  │ validator                   95L  1C    5m  CC=7      ←1
+  │ bridge                      76L  0C    2m  CC=9      ←0
   │ db                          53L  2C    3m  CC=5      ←0
-  │ bridge                      50L  0C    2m  CC=9      ←0
   │ graph                       49L  6C    0m  CC=0.0    ←0
-  │ yaml                        48L  1C    2m  CC=5      ←0
   │ sync                        47L  1C    3m  CC=7      ←0
+  │ yaml                        47L  1C    2m  CC=5      ←0
+  │ __init__                    44L  0C    0m  CC=0.0    ←0
   │ __init__                    43L  0C    0m  CC=0.0    ←0
+  │ __init__                    41L  0C    0m  CC=0.0    ←0
   │ frontend                    40L  1C    2m  CC=4      ←0
-  │ loader                      39L  1C    1m  CC=8      ←2
-  │ __init__                    37L  0C    0m  CC=0.0    ←0
-  │ __init__                    36L  0C    0m  CC=0.0    ←0
+  │ loader                      39L  1C    1m  CC=8      ←0
   │ __init__                    34L  0C    0m  CC=0.0    ←0
   │ docker                      32L  1C    2m  CC=3      ←0
   │ backend                     32L  1C    4m  CC=3      ←0
@@ -90,54 +187,39 @@ LAYERS:
   │ __init__                    11L  0C    0m  CC=0.0    ←0
   │ __init__                     7L  0C    0m  CC=0.0    ←0
   │
-  examples/                       CC̄=0.4    ←in:78  →out:0
-  │ manifest.md                387L  2C    3m  CC=0.0    ←5
+  examples/                       CC̄=1.0    ←in:0  →out:0
+  │ manifest.md                387L  0C    0m  CC=0.0    ←0
   │ models                      16L  2C    0m  CC=0.0    ←0
   │ api                         12L  0C    2m  CC=1      ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ !! SUMD.md                   1149L  0C  379m  CC=0.0    ←1
-  │ !! SUMR.md                    950L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
-  │ README.md                  418L  2C    2m  CC=0.0    ←0
-  │ CHANGELOG.md               270L  0C    0m  CC=0.0    ←0
+  │ README.md                  432L  0C    0m  CC=0.0    ←0
+  │ CHANGELOG.md               377L  0C    0m  CC=0.0    ←0
   │ sumd.json                  102L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              76L  0C    0m  CC=0.0    ←0
-  │ project.sh                  43L  0C    0m  CC=0.0    ←0
+  │ project.sh                  44L  0C    0m  CC=0.0    ←0
+  │ TODO.md                      8L  0C    0m  CC=0.0    ←0
   │ tree.sh                      1L  0C    0m  CC=0.0    ←0
-  │
-  project/                        CC̄=0.0    ←in:0  →out:0
-  │ !! calls.yaml                2830L  0C    0m  CC=0.0    ←0
-  │ !! map.toon.yaml              736L  0C  379m  CC=0.0    ←0
-  │ !! context.md                 601L  0C    0m  CC=0.0    ←0
-  │ README.md                  339L  0C    0m  CC=0.0    ←0
-  │ calls.toon.yaml            254L  0C    0m  CC=0.0    ←0
-  │ analysis.toon.yaml         144L  0C    0m  CC=0.0    ←0
-  │ duplication.toon.yaml       84L  0C    0m  CC=0.0    ←0
-  │ evolution.toon.yaml         82L  0C    0m  CC=0.0    ←0
-  │ project.toon.yaml           51L  0C    0m  CC=0.0    ←0
-  │ prompt.txt                  47L  0C    0m  CC=0.0    ←0
   │
 
 COUPLING:
-                            swop        examples       swop.scan      swop.tools      swop.watch   swop.registry    swop.resolve  swop.manifests      swop.proto            SUMD  swop.contracts   swop.services
-            swop              ──              77               5               6               2               3               2               1               3               1                               1  !! fan-out
-        examples             ←77              ──                                              ←1                                                                                                                  hub
-       swop.scan               1                              ──              ←1              ←1                                                                                                                  hub
-      swop.tools              ←6                               1              ──                                               1                                                                                  hub
-      swop.watch              ←2               1               1                              ──                                               1                                                                
-   swop.registry              ←3                                                                              ──                                                                              ←1                
-    swop.resolve              ←2                                              ←1                                              ──               1                                                                
-  swop.manifests              ←1                                                              ←1                              ←1              ──                                                                
-      swop.proto              ←3                                                                                                                              ──                                                
-            SUMD              ←1                                                                                                                                              ──                                
-  swop.contracts                                                                                               1                                                                              ──                
-   swop.services              ←1                                                                                                                                                                              ──
+                            swop       swop.scan      swop.tools    swop.resolve      swop.watch  swop.manifests      swop.proto  swop.contracts   swop.registry   swop.markpact   swop.services
+            swop              ──               5               6               2               2               1               3               2               2               1               1  !! fan-out
+       swop.scan               1              ──              ←1                              ←1                                                                                                  hub
+      swop.tools              ←6               1              ──               1                                                                                                                  hub
+    swop.resolve              ←2                              ←1              ──                               1                                                                                
+      swop.watch              ←2               1                                              ──               1                                                                                
+  swop.manifests              ←1                                              ←1              ←1              ──                                                                                
+      swop.proto              ←3                                                                                              ──                                                                
+  swop.contracts              ←2                                                                                                              ──                                                
+   swop.registry              ←2                                                                                                                              ──                                
+   swop.markpact              ←1                                                                                                                                              ──                
+   swop.services              ←1                                                                                                                                                              ──
   CYCLES: none
-  HUB: swop.scan/ (fan-in=7)
-  HUB: examples/ (fan-in=78)
   HUB: swop.tools/ (fan-in=6)
-  SMELL: swop/ fan-out=101 → split needed
+  HUB: swop.scan/ (fan-in=7)
+  SMELL: swop/ fan-out=25 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
