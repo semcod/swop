@@ -1,0 +1,2481 @@
+source: code2llm
+# generated in 0.07s
+schema: code2llm.planfile_tickets.v1
+project_root: /home/tom/github/semcod/swop
+tickets:
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.proto.generator.render_proto_for_context
+    (CC=26)'
+  description: 'code2llm reports `swop.proto.generator.render_proto_for_context` at
+    `swop/proto/generator.py:255` with cyclomatic complexity 26 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/proto/generator.py
+  dedupe_key: code2llm:cc:swop/proto/generator.py:swop.proto.generator.render_proto_for_context
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.registry.generator.generate_registry_md
+    (CC=32)'
+  description: 'code2llm reports `swop.registry.generator.generate_registry_md` at
+    `swop/registry/generator.py:69` with cyclomatic complexity 32 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/registry/generator.py
+  dedupe_key: code2llm:cc:swop/registry/generator.py:swop.registry.generator.generate_registry_md
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_parser'
+  description: 'code2llm reports `God Function: _build_parser` in `swop/cli.py:29`.
+
+
+    Function ''_build_parser'' is oversized: CC=1, fan-out=45, mutations=155.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/cli.py
+  dedupe_key: 'code2llm:smell:god_function:swop/cli.py:29:God Function: _build_parser'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _scan_file'
+  description: 'code2llm reports `God Function: _scan_file` in `swop/scan/scanner.py:81`.
+
+
+    Function ''_scan_file'' is oversized: CC=13, fan-out=17, mutations=23.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:god_function:swop/scan/scanner.py:81:God Function: _scan_file'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: compile_proto_typescript'
+  description: 'code2llm reports `God Function: compile_proto_typescript` in `swop/proto/compiler.py:140`.
+
+
+    Function ''compile_proto_typescript'' is oversized: CC=10, fan-out=15, mutations=21.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/proto/compiler.py
+  dedupe_key: 'code2llm:smell:god_function:swop/proto/compiler.py:140:God Function:
+    compile_proto_typescript'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: cross_check_contract'
+  description: 'code2llm reports `God Function: cross_check_contract` in `swop/registry/pydantic_cross_check.py:283`.
+
+
+    Function ''cross_check_contract'' is oversized: CC=14, fan-out=17, mutations=24.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/registry/pydantic_cross_check.py
+  dedupe_key: 'code2llm:smell:god_function:swop/registry/pydantic_cross_check.py:283:God
+    Function: cross_check_contract'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_services'
+  description: 'code2llm reports `God Function: generate_services` in `swop/services/generator.py:76`.
+
+
+    Function ''generate_services'' is oversized: CC=11, fan-out=24, mutations=18.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/services/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/services/generator.py:76:God Function:
+    generate_services'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: init_project'
+  description: 'code2llm reports `God Function: init_project` in `swop/tools/init.py:86`.
+
+
+    Function ''init_project'' is oversized: CC=14, fan-out=18, mutations=18.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/tools/init.py
+  dedupe_key: 'code2llm:smell:god_function:swop/tools/init.py:86:God Function: init_project'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: block'
+  description: 'code2llm reports `Shotgun Surgery: block` in `swop/registry/pydantic_cross_check.py:200`.
+
+
+    Mutation of variable ''block'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/registry/pydantic_cross_check.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/registry/pydantic_cross_check.py:200:Shotgun
+    Surgery: block'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: blocks'
+  description: 'code2llm reports `Shotgun Surgery: blocks` in `swop/registry/pydantic_cross_check.py:200`.
+
+
+    Mutation of variable ''blocks'' spans 9 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/registry/pydantic_cross_check.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/registry/pydantic_cross_check.py:200:Shotgun
+    Surgery: blocks'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: body'
+  description: 'code2llm reports `Shotgun Surgery: body` in `swop/tools/hook.py:70`.
+
+
+    Mutation of variable ''body'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/tools/hook.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/tools/hook.py:70:Shotgun Surgery:
+    body'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: config'
+  description: 'code2llm reports `Shotgun Surgery: config` in `swop/commands.py:94`.
+
+
+    Mutation of variable ''config'' spans 16 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/commands.py:94:Shotgun Surgery:
+    config'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: config_path'
+  description: 'code2llm reports `Shotgun Surgery: config_path` in `swop/commands.py:94`.
+
+
+    Mutation of variable ''config_path'' spans 10 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/commands.py:94:Shotgun Surgery:
+    config_path'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: contexts'
+  description: 'code2llm reports `Shotgun Surgery: contexts` in `swop/scan/scanner.py:145`.
+
+
+    Mutation of variable ''contexts'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/scan/scanner.py:145:Shotgun Surgery:
+    contexts'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: data'
+  description: 'code2llm reports `Shotgun Surgery: data` in `swop/config.py:111`.
+
+
+    Mutation of variable ''data'' spans 7 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/config.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/config.py:111:Shotgun Surgery:
+    data'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: engine'
+  description: 'code2llm reports `Shotgun Surgery: engine` in `swop/commands.py:530`.
+
+
+    Mutation of variable ''engine'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/commands.py:530:Shotgun Surgery:
+    engine'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: errors'
+  description: 'code2llm reports `Shotgun Surgery: errors` in `swop/registry/validator.py:81`.
+
+
+    Mutation of variable ''errors'' spans 7 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/registry/validator.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/registry/validator.py:81:Shotgun
+    Surgery: errors'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: fields'
+  description: 'code2llm reports `Shotgun Surgery: fields` in `swop/contracts/adapter.py:42`.
+
+
+    Mutation of variable ''fields'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/contracts/adapter.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/contracts/adapter.py:42:Shotgun
+    Surgery: fields'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: graph'
+  description: 'code2llm reports `Shotgun Surgery: graph` in `swop/markpact/graph_builder.py:328`.
+
+
+    Mutation of variable ''graph'' spans 27 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/markpact/graph_builder.py:328:Shotgun
+    Surgery: graph'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: key'
+  description: 'code2llm reports `Shotgun Surgery: key` in `swop/config.py:111`.
+
+
+    Mutation of variable ''key'' spans 8 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/config.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/config.py:111:Shotgun Surgery:
+    key'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: kind'
+  description: 'code2llm reports `Shotgun Surgery: kind` in `swop/scan/scanner.py:360`.
+
+
+    Mutation of variable ''kind'' spans 10 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/scan/scanner.py:360:Shotgun Surgery:
+    kind'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: known'
+  description: 'code2llm reports `Shotgun Surgery: known` in `swop/config.py:111`.
+
+
+    Mutation of variable ''known'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/config.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/config.py:111:Shotgun Surgery:
+    known'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: manifests_dir'
+  description: 'code2llm reports `Shotgun Surgery: manifests_dir` in `swop/commands.py:403`.
+
+
+    Mutation of variable ''manifests_dir'' spans 8 functions. Changing this logic
+    requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/commands.py:403:Shotgun Surgery:
+    manifests_dir'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: name'
+  description: 'code2llm reports `Shotgun Surgery: name` in `swop/scan/scanner.py:551`.
+
+
+    Mutation of variable ''name'' spans 41 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/scan/scanner.py:551:Shotgun Surgery:
+    name'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: out_dir'
+  description: 'code2llm reports `Shotgun Surgery: out_dir` in `swop/proto/compiler.py:140`.
+
+
+    Mutation of variable ''out_dir'' spans 9 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/proto/compiler.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/proto/compiler.py:140:Shotgun Surgery:
+    out_dir'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: parser'
+  description: 'code2llm reports `Shotgun Surgery: parser` in `swop/commands.py:461`.
+
+
+    Mutation of variable ''parser'' spans 7 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/commands.py:461:Shotgun Surgery:
+    parser'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: path'
+  description: 'code2llm reports `Shotgun Surgery: path` in `swop/tools/doctor.py:130`.
+
+
+    Mutation of variable ''path'' spans 19 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/tools/doctor.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/tools/doctor.py:130:Shotgun Surgery:
+    path'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: proto_dir'
+  description: 'code2llm reports `Shotgun Surgery: proto_dir` in `swop/proto/compiler.py:140`.
+
+
+    Mutation of variable ''proto_dir'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/proto/compiler.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/proto/compiler.py:140:Shotgun Surgery:
+    proto_dir'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: report'
+  description: 'code2llm reports `Shotgun Surgery: report` in `swop/tools/doctor.py:183`.
+
+
+    Mutation of variable ''report'' spans 10 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/tools/doctor.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/tools/doctor.py:183:Shotgun Surgery:
+    report'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: resolved'
+  description: 'code2llm reports `Shotgun Surgery: resolved` in `swop/manifests/generator.py:316`.
+
+
+    Mutation of variable ''resolved'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/manifests/generator.py:316:Shotgun
+    Surgery: resolved'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: result'
+  description: 'code2llm reports `Shotgun Surgery: result` in `swop/tools/init.py:86`.
+
+
+    Mutation of variable ''result'' spans 19 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/tools/init.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/tools/init.py:86:Shotgun Surgery:
+    result'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: root'
+  description: 'code2llm reports `Shotgun Surgery: root` in `swop/tools/doctor.py:183`.
+
+
+    Mutation of variable ''root'' spans 17 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/tools/doctor.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/tools/doctor.py:183:Shotgun Surgery:
+    root'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: routes'
+  description: 'code2llm reports `Shotgun Surgery: routes` in `swop/markpact/graph_builder.py:62`.
+
+
+    Mutation of variable ''routes'' spans 16 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/markpact/graph_builder.py:62:Shotgun
+    Surgery: routes'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: runtime'
+  description: 'code2llm reports `Shotgun Surgery: runtime` in `swop/commands.py:565`.
+
+
+    Mutation of variable ''runtime'' spans 8 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/commands.py:565:Shotgun Surgery:
+    runtime'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: seen'
+  description: 'code2llm reports `Shotgun Surgery: seen` in `swop/scan/scanner.py:551`.
+
+
+    Mutation of variable ''seen'' spans 12 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/scan/scanner.py:551:Shotgun Surgery:
+    seen'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: service_name'
+  description: 'code2llm reports `Shotgun Surgery: service_name` in `swop/markpact/graph_builder.py:328`.
+
+
+    Mutation of variable ''service_name'' spans 16 functions. Changing this logic
+    requires work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/markpact/graph_builder.py:328:Shotgun
+    Surgery: service_name'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: source'
+  description: 'code2llm reports `Shotgun Surgery: source` in `swop/services/generator.py:149`.
+
+
+    Mutation of variable ''source'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/services/generator.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/services/generator.py:149:Shotgun
+    Surgery: source'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: target'
+  description: 'code2llm reports `Shotgun Surgery: target` in `swop/services/generator.py:149`.
+
+
+    Mutation of variable ''target'' spans 12 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - swop/services/generator.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:swop/services/generator.py:149:Shotgun
+    Surgery: target'
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.contracts.reader.validate_contract (CC=21)'
+  description: 'code2llm reports `swop.contracts.reader.validate_contract` at `swop/contracts/reader.py:62`
+    with cyclomatic complexity 21 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/contracts/reader.py
+  dedupe_key: code2llm:cc:swop/contracts/reader.py:swop.contracts.reader.validate_contract
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.manifests.generator._extract_class_fields
+    (CC=16)'
+  description: 'code2llm reports `swop.manifests.generator._extract_class_fields`
+    at `swop/manifests/generator.py:653` with cyclomatic complexity 16 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: code2llm:cc:swop/manifests/generator.py:swop.manifests.generator._extract_class_fields
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.proto.generator._map_python_type (CC=18)'
+  description: 'code2llm reports `swop.proto.generator._map_python_type` at `swop/proto/generator.py:113`
+    with cyclomatic complexity 18 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/proto/generator.py
+  dedupe_key: code2llm:cc:swop/proto/generator.py:swop.proto.generator._map_python_type
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.refactor.pipeline.RefactorPipeline._cluster_to_spec
+    (CC=23)'
+  description: 'code2llm reports `swop.refactor.pipeline.RefactorPipeline._cluster_to_spec`
+    at `swop/refactor/pipeline.py:245` with cyclomatic complexity 23 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/refactor/pipeline.py
+  dedupe_key: code2llm:cc:swop/refactor/pipeline.py:swop.refactor.pipeline.RefactorPipeline._cluster_to_spec
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.resolve.resolver._index_from_manifests
+    (CC=15)'
+  description: 'code2llm reports `swop.resolve.resolver._index_from_manifests` at
+    `swop/resolve/resolver.py:215` with cyclomatic complexity 15 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/resolve/resolver.py
+  dedupe_key: code2llm:cc:swop/resolve/resolver.py:swop.resolve.resolver._index_from_manifests
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.tools.doctor_deep._check_manifests_vs_proto
+    (CC=15)'
+  description: 'code2llm reports `swop.tools.doctor_deep._check_manifests_vs_proto`
+    at `swop/tools/doctor_deep.py:156` with cyclomatic complexity 15 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/tools/doctor_deep.py
+  dedupe_key: code2llm:cc:swop/tools/doctor_deep.py:swop.tools.doctor_deep._check_manifests_vs_proto
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.tools.doctor_deep._check_manifests_vs_services
+    (CC=15)'
+  description: 'code2llm reports `swop.tools.doctor_deep._check_manifests_vs_services`
+    at `swop/tools/doctor_deep.py:285` with cyclomatic complexity 15 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/tools/doctor_deep.py
+  dedupe_key: code2llm:cc:swop/tools/doctor_deep.py:swop.tools.doctor_deep._check_manifests_vs_services
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: swop.tools.doctor_deep._check_proto_vs_python
+    (CC=15)'
+  description: 'code2llm reports `swop.tools.doctor_deep._check_proto_vs_python` at
+    `swop/tools/doctor_deep.py:214` with cyclomatic complexity 15 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - swop/tools/doctor_deep.py
+  dedupe_key: code2llm:cc:swop/tools/doctor_deep.py:swop.tools.doctor_deep._check_proto_vs_python
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: drift, self, graph'
+  description: 'code2llm reports `Data Clump: drift, self, graph` in `swop/export/yaml.py:21`.
+
+
+    Arguments (drift, self, graph) are used together in multiple functions: swop.export.yaml.StateExporter.to_dict,
+    swop.export.yaml.StateExporter.export_yaml.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/export/yaml.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/export/yaml.py:21:Data Clump: drift,
+    self, graph'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: drift, self, graph'
+  description: 'code2llm reports `Data Clump: drift, self, graph` in `swop/export/yaml.py:46`.
+
+
+    Arguments (drift, self, graph) are used together in multiple functions: swop.export.yaml.StateExporter.to_dict,
+    swop.export.yaml.StateExporter.export_yaml.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/export/yaml.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/export/yaml.py:46:Data Clump: drift,
+    self, graph'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: kind, name, old, resolution, context, new'
+  description: 'code2llm reports `Data Clump: kind, name, old, resolution, context,
+    new` in `swop/resolve/resolver.py:409`.
+
+
+    Arguments (kind, name, old, resolution, context, new) are used together in multiple
+    functions: swop.resolve.resolver._diff_metadata, swop.resolve.resolver._diff_entry.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/resolve/resolver.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/resolve/resolver.py:409:Data Clump:
+    kind, name, old, resolution, context, new'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: kind, name, old, resolution, context, new'
+  description: 'code2llm reports `Data Clump: kind, name, old, resolution, context,
+    new` in `swop/resolve/resolver.py:444`.
+
+
+    Arguments (kind, name, old, resolution, context, new) are used together in multiple
+    functions: swop.resolve.resolver._diff_metadata, swop.resolve.resolver._diff_entry.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/resolve/resolver.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/resolve/resolver.py:444:Data Clump:
+    kind, name, old, resolution, context, new'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, graph, actual'
+  description: 'code2llm reports `Data Clump: self, graph, actual` in `swop/reconcile.py:45`.
+
+
+    Arguments (self, graph, actual) are used together in multiple functions: swop.reconcile.DriftDetector.compute,
+    swop.reconcile.ResyncEngine.reconcile.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/reconcile.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/reconcile.py:45:Data Clump: self, graph,
+    actual'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: self, graph, actual'
+  description: 'code2llm reports `Data Clump: self, graph, actual` in `swop/reconcile.py:74`.
+
+
+    Arguments (self, graph, actual) are used together in multiple functions: swop.reconcile.DriftDetector.compute,
+    swop.reconcile.ResyncEngine.reconcile.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/reconcile.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/reconcile.py:74:Data Clump: self, graph,
+    actual'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: spec, result, module_path, self'
+  description: 'code2llm reports `Data Clump: spec, result, module_path, self` in
+    `swop/refactor/module_builder.py:77`.
+
+
+    Arguments (spec, result, module_path, self) are used together in multiple functions:
+    swop.refactor.module_builder.ModuleBuilder._write_ui, swop.refactor.module_builder.ModuleBuilder._write_api,
+    swop.refactor.module_builder.ModuleBuilder._write_models, swop.refactor.module_builder.ModuleBuilder._write_db,
+    swop.refactor.module_builder.ModuleBuilder._write_api_server, swop.refactor.module_builder.ModuleBuilder._write_manifest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/refactor/module_builder.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/refactor/module_builder.py:77:Data Clump:
+    spec, result, module_path, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: spec, result, module_path, self'
+  description: 'code2llm reports `Data Clump: spec, result, module_path, self` in
+    `swop/refactor/module_builder.py:109`.
+
+
+    Arguments (spec, result, module_path, self) are used together in multiple functions:
+    swop.refactor.module_builder.ModuleBuilder._write_ui, swop.refactor.module_builder.ModuleBuilder._write_api,
+    swop.refactor.module_builder.ModuleBuilder._write_models, swop.refactor.module_builder.ModuleBuilder._write_db,
+    swop.refactor.module_builder.ModuleBuilder._write_api_server, swop.refactor.module_builder.ModuleBuilder._write_manifest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/refactor/module_builder.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/refactor/module_builder.py:109:Data
+    Clump: spec, result, module_path, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: spec, result, module_path, self'
+  description: 'code2llm reports `Data Clump: spec, result, module_path, self` in
+    `swop/refactor/module_builder.py:129`.
+
+
+    Arguments (spec, result, module_path, self) are used together in multiple functions:
+    swop.refactor.module_builder.ModuleBuilder._write_ui, swop.refactor.module_builder.ModuleBuilder._write_api,
+    swop.refactor.module_builder.ModuleBuilder._write_models, swop.refactor.module_builder.ModuleBuilder._write_db,
+    swop.refactor.module_builder.ModuleBuilder._write_api_server, swop.refactor.module_builder.ModuleBuilder._write_manifest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/refactor/module_builder.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/refactor/module_builder.py:129:Data
+    Clump: spec, result, module_path, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: spec, result, module_path, self'
+  description: 'code2llm reports `Data Clump: spec, result, module_path, self` in
+    `swop/refactor/module_builder.py:170`.
+
+
+    Arguments (spec, result, module_path, self) are used together in multiple functions:
+    swop.refactor.module_builder.ModuleBuilder._write_ui, swop.refactor.module_builder.ModuleBuilder._write_api,
+    swop.refactor.module_builder.ModuleBuilder._write_models, swop.refactor.module_builder.ModuleBuilder._write_db,
+    swop.refactor.module_builder.ModuleBuilder._write_api_server, swop.refactor.module_builder.ModuleBuilder._write_manifest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/refactor/module_builder.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/refactor/module_builder.py:170:Data
+    Clump: spec, result, module_path, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: spec, result, module_path, self'
+  description: 'code2llm reports `Data Clump: spec, result, module_path, self` in
+    `swop/refactor/module_builder.py:184`.
+
+
+    Arguments (spec, result, module_path, self) are used together in multiple functions:
+    swop.refactor.module_builder.ModuleBuilder._write_ui, swop.refactor.module_builder.ModuleBuilder._write_api,
+    swop.refactor.module_builder.ModuleBuilder._write_models, swop.refactor.module_builder.ModuleBuilder._write_db,
+    swop.refactor.module_builder.ModuleBuilder._write_api_server, swop.refactor.module_builder.ModuleBuilder._write_manifest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/refactor/module_builder.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/refactor/module_builder.py:184:Data
+    Clump: spec, result, module_path, self'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: spec, result, module_path, self'
+  description: 'code2llm reports `Data Clump: spec, result, module_path, self` in
+    `swop/refactor/module_builder.py:293`.
+
+
+    Arguments (spec, result, module_path, self) are used together in multiple functions:
+    swop.refactor.module_builder.ModuleBuilder._write_ui, swop.refactor.module_builder.ModuleBuilder._write_api,
+    swop.refactor.module_builder.ModuleBuilder._write_models, swop.refactor.module_builder.ModuleBuilder._write_db,
+    swop.refactor.module_builder.ModuleBuilder._write_api_server, swop.refactor.module_builder.ModuleBuilder._write_manifest.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - swop/refactor/module_builder.py
+  dedupe_key: 'code2llm:smell:data_clump:swop/refactor/module_builder.py:293:Data
+    Clump: spec, result, module_path, self'
+- signal: code2llm_smell_feature_envy
+  title: 'Address code smell: Feature Envy: _build_parser'
+  description: 'code2llm reports `Feature Envy: _build_parser` in `swop/cli.py:29`.
+
+
+    Function ''_build_parser'' mutates multiple variables in other modules: sub.add_parser(''diff'',
+    help=''Compute drift and exit non-zero if drift exists''), sub.add_parser(''sync'',
+    help=''Run one reconciliation pass''), sub.add_parser(''state'', help=''Dump current
+    runtime state as YAML'').
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - feature-envy
+  files:
+  - swop/cli.py
+  dedupe_key: 'code2llm:smell:feature_envy:swop/cli.py:29:Feature Envy: _build_parser'
+- signal: code2llm_smell_feature_envy
+  title: 'Address code smell: Feature Envy: _scan_file'
+  description: 'code2llm reports `Feature Envy: _scan_file` in `swop/scan/scanner.py:81`.
+
+
+    Function ''_scan_file'' mutates multiple variables in other modules: report.files_cached,
+    report.files_scanned, summary.files_scanned, report.errors, report.ignored, report.contexts,
+    report.files_skipped, summary.files_cached.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - feature-envy
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:feature_envy:swop/scan/scanner.py:81:Feature Envy: _scan_file'
+- signal: code2llm_smell_feature_envy
+  title: 'Address code smell: Feature Envy: init_project'
+  description: 'code2llm reports `Feature Envy: init_project` in `swop/tools/init.py:86`.
+
+
+    Function ''init_project'' mutates multiple variables in other modules: result.updated,
+    result.created, result.skipped.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - feature-envy
+  files:
+  - swop/tools/init.py
+  dedupe_key: 'code2llm:smell:feature_envy:swop/tools/init.py:86:Feature Envy: init_project'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _annotation_is_optional'
+  description: 'code2llm reports `God Function: _annotation_is_optional` in `swop/scan/scanner.py:594`.
+
+
+    Function ''_annotation_is_optional'' is oversized: CC=13, fan-out=1, mutations=4.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:god_function:swop/scan/scanner.py:594:God Function:
+    _annotation_is_optional'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_api_clients'
+  description: 'code2llm reports `God Function: _build_api_clients` in `swop/markpact/graph_builder.py:246`.
+
+
+    Function ''_build_api_clients'' is oversized: CC=8, fan-out=2, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:246:God
+    Function: _build_api_clients'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_ci_configs'
+  description: 'code2llm reports `God Function: _build_ci_configs` in `swop/markpact/graph_builder.py:357`.
+
+
+    Function ''_build_ci_configs'' is oversized: CC=7, fan-out=3, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:357:God
+    Function: _build_ci_configs'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_data_sources'
+  description: 'code2llm reports `God Function: _build_data_sources` in `swop/markpact/graph_builder.py:384`.
+
+
+    Function ''_build_data_sources'' is oversized: CC=10, fan-out=2, mutations=20.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:384:God
+    Function: _build_data_sources'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_databases'
+  description: 'code2llm reports `God Function: _build_databases` in `swop/markpact/graph_builder.py:124`.
+
+
+    Function ''_build_databases'' is oversized: CC=6, fan-out=2, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:124:God
+    Function: _build_databases'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_deploy'
+  description: 'code2llm reports `God Function: _build_deploy` in `swop/markpact/graph_builder.py:519`.
+
+
+    Function ''_build_deploy'' is oversized: CC=5, fan-out=4, mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:519:God
+    Function: _build_deploy'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_documents'
+  description: 'code2llm reports `God Function: _build_documents` in `swop/markpact/graph_builder.py:454`.
+
+
+    Function ''_build_documents'' is oversized: CC=7, fan-out=2, mutations=14.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:454:God
+    Function: _build_documents'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_environments'
+  description: 'code2llm reports `God Function: _build_environments` in `swop/markpact/graph_builder.py:270`.
+
+
+    Function ''_build_environments'' is oversized: CC=6, fan-out=2, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:270:God
+    Function: _build_environments'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_infrastructures'
+  description: 'code2llm reports `God Function: _build_infrastructures` in `swop/markpact/graph_builder.py:299`.
+
+
+    Function ''_build_infrastructures'' is oversized: CC=6, fan-out=2, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:299:God
+    Function: _build_infrastructures'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_ingresses'
+  description: 'code2llm reports `God Function: _build_ingresses` in `swop/markpact/graph_builder.py:328`.
+
+
+    Function ''_build_ingresses'' is oversized: CC=6, fan-out=2, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:328:God
+    Function: _build_ingresses'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_integrations'
+  description: 'code2llm reports `God Function: _build_integrations` in `swop/markpact/graph_builder.py:202`.
+
+
+    Function ''_build_integrations'' is oversized: CC=4, fan-out=2, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:202:God
+    Function: _build_integrations'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_minimal_spec'
+  description: 'code2llm reports `God Function: _build_minimal_spec` in `swop/markpact/doql_bridge.py:486`.
+
+
+    Function ''_build_minimal_spec'' is oversized: CC=1, fan-out=19, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/doql_bridge.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/doql_bridge.py:486:God Function:
+    _build_minimal_spec'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_models'
+  description: 'code2llm reports `God Function: _build_models` in `swop/markpact/graph_builder.py:40`.
+
+
+    Function ''_build_models'' is oversized: CC=7, fan-out=3, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:40:God Function:
+    _build_models'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_reports'
+  description: 'code2llm reports `God Function: _build_reports` in `swop/markpact/graph_builder.py:487`.
+
+
+    Function ''_build_reports'' is oversized: CC=7, fan-out=2, mutations=14.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:487:God
+    Function: _build_reports'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_services'
+  description: 'code2llm reports `God Function: _build_services` in `swop/markpact/graph_builder.py:62`.
+
+
+    Function ''_build_services'' is oversized: CC=13, fan-out=7, mutations=15.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:62:God Function:
+    _build_services'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_templates'
+  description: 'code2llm reports `God Function: _build_templates` in `swop/markpact/graph_builder.py:425`.
+
+
+    Function ''_build_templates'' is oversized: CC=7, fan-out=2, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:425:God
+    Function: _build_templates'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_ui_bindings'
+  description: 'code2llm reports `God Function: _build_ui_bindings` in `swop/markpact/graph_builder.py:99`.
+
+
+    Function ''_build_ui_bindings'' is oversized: CC=11, fan-out=8, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:99:God Function:
+    _build_ui_bindings'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_webhooks'
+  description: 'code2llm reports `God Function: _build_webhooks` in `swop/markpact/graph_builder.py:222`.
+
+
+    Function ''_build_webhooks'' is oversized: CC=7, fan-out=2, mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:222:God
+    Function: _build_webhooks'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_workflows'
+  description: 'code2llm reports `God Function: _build_workflows` in `swop/markpact/graph_builder.py:150`.
+
+
+    Function ''_build_workflows'' is oversized: CC=9, fan-out=3, mutations=18.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:150:God
+    Function: _build_workflows'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _check_scan_vs_manifests'
+  description: 'code2llm reports `God Function: _check_scan_vs_manifests` in `swop/tools/doctor_deep.py:117`.
+
+
+    Function ''_check_scan_vs_manifests'' is oversized: CC=8, fan-out=8, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/tools/doctor_deep.py
+  dedupe_key: 'code2llm:smell:god_function:swop/tools/doctor_deep.py:117:God Function:
+    _check_scan_vs_manifests'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _classify_heuristic'
+  description: 'code2llm reports `God Function: _classify_heuristic` in `swop/scan/scanner.py:402`.
+
+
+    Function ''_classify_heuristic'' is oversized: CC=7, fan-out=5, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:god_function:swop/scan/scanner.py:402:God Function:
+    _classify_heuristic'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _cmd_doctor'
+  description: 'code2llm reports `God Function: _cmd_doctor` in `swop/commands.py:94`.
+
+
+    Function ''_cmd_doctor'' is oversized: CC=7, fan-out=10, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:94:God Function: _cmd_doctor'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _cmd_gen_manifests'
+  description: 'code2llm reports `God Function: _cmd_gen_manifests` in `swop/commands.py:192`.
+
+
+    Function ''_cmd_gen_manifests'' is oversized: CC=8, fan-out=8, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:192:God Function: _cmd_gen_manifests'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _cmd_gen_registry'
+  description: 'code2llm reports `God Function: _cmd_gen_registry` in `swop/commands.py:320`.
+
+
+    Function ''_cmd_gen_registry'' is oversized: CC=14, fan-out=10, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:320:God Function: _cmd_gen_registry'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _cmd_gen_services'
+  description: 'code2llm reports `God Function: _cmd_gen_services` in `swop/commands.py:273`.
+
+
+    Function ''_cmd_gen_services'' is oversized: CC=12, fan-out=9, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:273:God Function: _cmd_gen_services'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _cmd_generate'
+  description: 'code2llm reports `God Function: _cmd_generate` in `swop/commands.py:565`.
+
+
+    Function ''_cmd_generate'' is oversized: CC=7, fan-out=11, mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:565:God Function: _cmd_generate'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _cmd_resolve'
+  description: 'code2llm reports `God Function: _cmd_resolve` in `swop/commands.py:403`.
+
+
+    Function ''_cmd_resolve'' is oversized: CC=9, fan-out=10, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:403:God Function: _cmd_resolve'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _cmd_scan'
+  description: 'code2llm reports `God Function: _cmd_scan` in `swop/commands.py:155`.
+
+
+    Function ''_cmd_scan'' is oversized: CC=14, fan-out=12, mutations=5.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:155:God Function: _cmd_scan'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _cmd_watch'
+  description: 'code2llm reports `God Function: _cmd_watch` in `swop/commands.py:373`.
+
+
+    Function ''_cmd_watch'' is oversized: CC=6, fan-out=13, mutations=6.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:373:God Function: _cmd_watch'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _collect_source'
+  description: 'code2llm reports `God Function: _collect_source` in `swop/cqrs/decorators.py:41`.
+
+
+    Function ''_collect_source'' is oversized: CC=3, fan-out=2, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/cqrs/decorators.py
+  dedupe_key: 'code2llm:smell:god_function:swop/cqrs/decorators.py:41:God Function:
+    _collect_source'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _collect_supporting_types_from_fields'
+  description: 'code2llm reports `God Function: _collect_supporting_types_from_fields`
+    in `swop/manifests/generator.py:370`.
+
+
+    Function ''_collect_supporting_types_from_fields'' is oversized: CC=7, fan-out=11,
+    mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/manifests/generator.py:370:God Function:
+    _collect_supporting_types_from_fields'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _diff_context_kind'
+  description: 'code2llm reports `God Function: _diff_context_kind` in `swop/resolve/resolver.py:261`.
+
+
+    Function ''_diff_context_kind'' is oversized: CC=11, fan-out=12, mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/resolve/resolver.py
+  dedupe_key: 'code2llm:smell:god_function:swop/resolve/resolver.py:261:God Function:
+    _diff_context_kind'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _diff_fields'
+  description: 'code2llm reports `God Function: _diff_fields` in `swop/resolve/resolver.py:327`.
+
+
+    Function ''_diff_fields'' is oversized: CC=13, fan-out=9, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/resolve/resolver.py
+  dedupe_key: 'code2llm:smell:god_function:swop/resolve/resolver.py:327:God Function:
+    _diff_fields'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _from_dict'
+  description: 'code2llm reports `God Function: _from_dict` in `swop/config.py:179`.
+
+
+    Function ''_from_dict'' is oversized: CC=8, fan-out=12, mutations=20.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/config.py
+  dedupe_key: 'code2llm:smell:god_function:swop/config.py:179:God Function: _from_dict'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _generate_build_graph'
+  description: 'code2llm reports `God Function: _generate_build_graph` in `swop/commands.py:472`.
+
+
+    Function ''_generate_build_graph'' is oversized: CC=14, fan-out=12, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/commands.py
+  dedupe_key: 'code2llm:smell:god_function:swop/commands.py:472:God Function: _generate_build_graph'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _git_dir'
+  description: 'code2llm reports `God Function: _git_dir` in `swop/tools/hook.py:70`.
+
+
+    Function ''_git_dir'' is oversized: CC=13, fan-out=15, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/tools/hook.py
+  dedupe_key: 'code2llm:smell:god_function:swop/tools/hook.py:70:God Function: _git_dir'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _index_from_detections'
+  description: 'code2llm reports `God Function: _index_from_detections` in `swop/resolve/resolver.py:175`.
+
+
+    Function ''_index_from_detections'' is oversized: CC=10, fan-out=7, mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/resolve/resolver.py
+  dedupe_key: 'code2llm:smell:god_function:swop/resolve/resolver.py:175:God Function:
+    _index_from_detections'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _iter_python_files'
+  description: 'code2llm reports `God Function: _iter_python_files` in `swop/scan/scanner.py:202`.
+
+
+    Function ''_iter_python_files'' is oversized: CC=10, fan-out=11, mutations=5.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:god_function:swop/scan/scanner.py:202:God Function:
+    _iter_python_files'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _merge_gitignore'
+  description: 'code2llm reports `God Function: _merge_gitignore` in `swop/tools/init.py:145`.
+
+
+    Function ''_merge_gitignore'' is oversized: CC=9, fan-out=8, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/tools/init.py
+  dedupe_key: 'code2llm:smell:god_function:swop/tools/init.py:145:God Function: _merge_gitignore'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _module_ast'
+  description: 'code2llm reports `God Function: _module_ast` in `swop/manifests/generator.py:440`.
+
+
+    Function ''_module_ast'' is oversized: CC=4, fan-out=3, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/manifests/generator.py:440:God Function:
+    _module_ast'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _module_classes'
+  description: 'code2llm reports `God Function: _module_classes` in `swop/manifests/generator.py:458`.
+
+
+    Function ''_module_classes'' is oversized: CC=5, fan-out=2, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/manifests/generator.py:458:God Function:
+    _module_classes'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _module_imports'
+  description: 'code2llm reports `God Function: _module_imports` in `swop/manifests/generator.py:477`.
+
+
+    Function ''_module_imports'' is oversized: CC=14, fan-out=6, mutations=16.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/manifests/generator.py:477:God Function:
+    _module_imports'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _render_compose'
+  description: 'code2llm reports `God Function: _render_compose` in `swop/services/generator.py:540`.
+
+
+    Function ''_render_compose'' is oversized: CC=6, fan-out=6, mutations=11.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/services/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/services/generator.py:540:God Function:
+    _render_compose'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _render_entry'
+  description: 'code2llm reports `God Function: _render_entry` in `swop/manifests/generator.py:193`.
+
+
+    Function ''_render_entry'' is oversized: CC=14, fan-out=14, mutations=15.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/manifests/generator.py:193:God Function:
+    _render_entry'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _render_enum'
+  description: 'code2llm reports `God Function: _render_enum` in `swop/proto/generator.py:501`.
+
+
+    Function ''_render_enum'' is oversized: CC=7, fan-out=8, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/proto/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/proto/generator.py:501:God Function:
+    _render_enum'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _render_message'
+  description: 'code2llm reports `God Function: _render_message` in `swop/proto/generator.py:402`.
+
+
+    Function ''_render_message'' is oversized: CC=13, fan-out=10, mutations=17.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/proto/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/proto/generator.py:402:God Function:
+    _render_message'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _render_query_response_metadata'
+  description: 'code2llm reports `God Function: _render_query_response_metadata` in
+    `swop/manifests/generator.py:316`.
+
+
+    Function ''_render_query_response_metadata'' is oversized: CC=7, fan-out=8, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/manifests/generator.py:316:God Function:
+    _render_query_response_metadata'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _render_server'
+  description: 'code2llm reports `God Function: _render_server` in `swop/services/generator.py:304`.
+
+
+    Function ''_render_server'' is oversized: CC=7, fan-out=6, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/services/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/services/generator.py:304:God Function:
+    _render_server'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _resolve_import_module_paths'
+  description: 'code2llm reports `God Function: _resolve_import_module_paths` in `swop/manifests/generator.py:515`.
+
+
+    Function ''_resolve_import_module_paths'' is oversized: CC=9, fan-out=9, mutations=10.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/manifests/generator.py:515:God Function:
+    _resolve_import_module_paths'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _write_context_package'
+  description: 'code2llm reports `God Function: _write_context_package` in `swop/services/generator.py:149`.
+
+
+    Function ''_write_context_package'' is oversized: CC=7, fan-out=18, mutations=13.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/services/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/services/generator.py:149:God Function:
+    _write_context_package'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: build_project_graph'
+  description: 'code2llm reports `God Function: build_project_graph` in `swop/markpact/graph_builder.py:14`.
+
+
+    Function ''build_project_graph'' is oversized: CC=1, fan-out=19, mutations=1.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/graph_builder.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/graph_builder.py:14:God Function:
+    build_project_graph'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: compile_proto_python'
+  description: 'code2llm reports `God Function: compile_proto_python` in `swop/proto/compiler.py:77`.
+
+
+    Function ''compile_proto_python'' is oversized: CC=8, fan-out=17, mutations=19.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/proto/compiler.py
+  dedupe_key: 'code2llm:smell:god_function:swop/proto/compiler.py:77:God Function:
+    compile_proto_python'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: contract_to_detection'
+  description: 'code2llm reports `God Function: contract_to_detection` in `swop/contracts/adapter.py:65`.
+
+
+    Function ''contract_to_detection'' is oversized: CC=6, fan-out=9, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/contracts/adapter.py
+  dedupe_key: 'code2llm:smell:god_function:swop/contracts/adapter.py:65:God Function:
+    contract_to_detection'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: from_blocks'
+  description: 'code2llm reports `God Function: from_blocks` in `swop/markpact/doql_bridge.py:102`.
+
+
+    Function ''from_blocks'' is oversized: CC=13, fan-out=8, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/doql_bridge.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/doql_bridge.py:102:God Function:
+    from_blocks'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_manifests'
+  description: 'code2llm reports `God Function: generate_manifests` in `swop/manifests/generator.py:117`.
+
+
+    Function ''generate_manifests'' is oversized: CC=10, fan-out=11, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/manifests/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/manifests/generator.py:117:God Function:
+    generate_manifests'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_proto_from_manifests'
+  description: 'code2llm reports `God Function: generate_proto_from_manifests` in
+    `swop/proto/generator.py:210`.
+
+
+    Function ''generate_proto_from_manifests'' is oversized: CC=8, fan-out=15, mutations=17.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/proto/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/proto/generator.py:210:God Function:
+    generate_proto_from_manifests'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: generate_registry_json'
+  description: 'code2llm reports `God Function: generate_registry_json` in `swop/registry/generator.py:33`.
+
+
+    Function ''generate_registry_json'' is oversized: CC=7, fan-out=8, mutations=13.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/registry/generator.py
+  dedupe_key: 'code2llm:smell:god_function:swop/registry/generator.py:33:God Function:
+    generate_registry_json'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: parse'
+  description: 'code2llm reports `God Function: parse` in `swop/markpact/parser.py:72`.
+
+
+    Function ''parse'' is oversized: CC=11, fan-out=16, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/parser.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/parser.py:72:God Function:
+    parse'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: render_html'
+  description: 'code2llm reports `God Function: render_html` in `swop/scan/render.py:24`.
+
+
+    Function ''render_html'' is oversized: CC=8, fan-out=10, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/scan/render.py
+  dedupe_key: 'code2llm:smell:god_function:swop/scan/render.py:24:God Function: render_html'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: resolve_schema_drift'
+  description: 'code2llm reports `God Function: resolve_schema_drift` in `swop/resolve/resolver.py:121`.
+
+
+    Function ''resolve_schema_drift'' is oversized: CC=4, fan-out=13, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/resolve/resolver.py
+  dedupe_key: 'code2llm:smell:god_function:swop/resolve/resolver.py:121:God Function:
+    resolve_schema_drift'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: run'
+  description: 'code2llm reports `God Function: run` in `swop/refactor/clustering.py:109`.
+
+
+    Function ''run'' is oversized: CC=12, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/refactor/clustering.py
+  dedupe_key: 'code2llm:smell:god_function:swop/refactor/clustering.py:109:God Function:
+    run'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: run'
+  description: 'code2llm reports `God Function: run` in `swop/refactor/pipeline.py:82`.
+
+
+    Function ''run'' is oversized: CC=10, fan-out=20, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/refactor/pipeline.py
+  dedupe_key: 'code2llm:smell:god_function:swop/refactor/pipeline.py:82:God Function:
+    run'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: run_doctor'
+  description: 'code2llm reports `God Function: run_doctor` in `swop/tools/doctor.py:183`.
+
+
+    Function ''run_doctor'' is oversized: CC=2, fan-out=9, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/tools/doctor.py
+  dedupe_key: 'code2llm:smell:god_function:swop/tools/doctor.py:183:God Function:
+    run_doctor'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: scan_file'
+  description: 'code2llm reports `God Function: scan_file` in `swop/refactor/scanner/frontend.py:88`.
+
+
+    Function ''scan_file'' is oversized: CC=5, fan-out=14, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/refactor/scanner/frontend.py
+  dedupe_key: 'code2llm:smell:god_function:swop/refactor/scanner/frontend.py:88:God
+    Function: scan_file'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: scan_project'
+  description: 'code2llm reports `God Function: scan_project` in `swop/scan/scanner.py:145`.
+
+
+    Function ''scan_project'' is oversized: CC=10, fan-out=14, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/scan/scanner.py
+  dedupe_key: 'code2llm:smell:god_function:swop/scan/scanner.py:145:God Function:
+    scan_project'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: update_manifest'
+  description: 'code2llm reports `God Function: update_manifest` in `swop/markpact/sync_engine.py:163`.
+
+
+    Function ''update_manifest'' is oversized: CC=3, fan-out=12, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/sync_engine.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/sync_engine.py:163:God Function:
+    update_manifest'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Module: swop.markpact.spec_models'
+  description: 'code2llm reports `God Module: swop.markpact.spec_models` in `swop/markpact/spec_models.py:1`.
+
+
+    Module ''swop.markpact.spec_models'' is too large (0 functions, 20 classes). Consider
+    splitting into sub-modules.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - swop/markpact/spec_models.py
+  dedupe_key: 'code2llm:smell:god_function:swop/markpact/spec_models.py:1:God Module:
+    swop.markpact.spec_models'
+applied: []
+skipped: []

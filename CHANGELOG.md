@@ -29,6 +29,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fix(tests): CLI interface improvements
 - docs: add markdown output and changelog generation; update README
 
+## [0.2.17] - 2026-06-29
+
+### Docs
+- Update README.md
+
+### Test
+- Update testql-scenarios/generated-cli-tests.testql.toon.yaml
+- Update testql-scenarios/generated-from-pytests.testql.toon.yaml
+
+### Other
+- Update project/logic.pl
+- Update project/planfile-tickets.yaml
+
 ## [0.2.16] - 2026-04-26
 
 ### Docs
