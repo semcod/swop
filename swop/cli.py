@@ -543,6 +543,11 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Optional[List[str]] = None) -> int:
+    try:
+        from swop.autoupdate import check_for_updates
+        check_for_updates("swop")
+    except Exception:
+        pass
     parser = _build_parser()
     args = parser.parse_args(argv)
     return args.func(args)
