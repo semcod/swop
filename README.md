@@ -2,14 +2,14 @@
 
 **Bi-directional runtime reconciler and drift-aware state graph for full-stack systems.**
 
-[![Version](https://img.shields.io/badge/version-0.2.17-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.2.18-blue)](VERSION)
 [![Python](https://img.shields.io/badge/python-3.8+-blue)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.17-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.2.18-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![AI Cost](https://img.shields.io/badge/AI%20Cost-$2.77-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-14.8h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
 - 🤖 **LLM usage:** $2.7733 (27 commits)

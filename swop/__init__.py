@@ -2,7 +2,7 @@
 swop - bi-directional runtime reconciler for full-stack state graphs.
 """
 
-__version__ = "0.2.17"
+__version__ = "0.2.18"
 
 from swop.config import (
     BoundedContextConfig,
